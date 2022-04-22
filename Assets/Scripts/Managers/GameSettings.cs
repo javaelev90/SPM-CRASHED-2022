@@ -7,7 +7,15 @@ public class GameSettings : ScriptableObject
 {
     [SerializeField] private string gameTitle;
     [SerializeField] private string gameVersion;
+    [SerializeField] Character characterChoice;
 
     public string GameTitle { get { return gameTitle; } }
     public string GameVersion { get { return gameVersion; } }
+}
+
+public enum Character
+{
+    NONE,
+    SOLDIER,
+    ENGINEER
 }
