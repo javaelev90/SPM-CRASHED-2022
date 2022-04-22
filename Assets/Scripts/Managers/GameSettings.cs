@@ -9,6 +9,7 @@ public class GameSettings : ScriptableObject
     [SerializeField] private string gameVersion;
     [SerializeField] Character characterChoice;
 
+    public Character CharacterChoice { get; set; }
     public string GameTitle { get { return gameTitle; } }
     public string GameVersion { get { return gameVersion; } }
 }

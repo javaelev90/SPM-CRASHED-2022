@@ -4,32 +4,36 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using ExitGames.Client.Photon;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] TMP_InputField lobbyNameInput;
     [SerializeField] GameObject playerList;
     [SerializeField] GameObject lobbyPlayerPrefab;
-    private List<GameObject> currentRoomList;
 
+    private List<GameObject> currentRoomList = new List<GameObject>();
 
-    // Start is called before the first frame update
+    // Joined server
+    // Click character
+    //  Send RPC, choose character
+    //      receiving - disable character
+    //      sending   - highlight selection
+
     void Start()
     {
         PhotonNetwork.GameVersion = "0.1";
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
+        if (PhotonNetwork.LocalPlayer.NickName == "")
+        {
+            PhotonNetwork.LocalPlayer.NickName = "Player";
+        }
     }
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinLobby();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
     public void JoinRoom()
@@ -55,11 +59,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined a room successfully!");
-        //PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity);
-        //PhotonNetwork.Instantiate(pathPlayer, spawnPosition.position, Quaternion.identity);
         if (PhotonNetwork.IsMasterClient)
         {
-            //objectInstantiater.InitializeWorld();
+            AddPlayer(PhotonNetwork.LocalPlayer);
         }
     }
 
