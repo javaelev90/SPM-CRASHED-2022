@@ -10,6 +10,7 @@ public abstract class SingletonScriptableObject<T> : ScriptableObject where T : 
         {
             if(instance == null)
             {
+                Resources.LoadAll<T>("ScriptableObjects");
                 T[] results = Resources.FindObjectsOfTypeAll<T>();
                 if(results.Length == 0)
                 {

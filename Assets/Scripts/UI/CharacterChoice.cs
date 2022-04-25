@@ -7,10 +7,10 @@ using UnityEngine.EventSystems;
 
 public class CharacterChoice : MonoBehaviourPunCallbacks
 {
-    [SerializeField] Character character;
+    [SerializeField] public Character character;
     LobbyManager lobbyManager;
 
-    private Toggle choiceButton;
+    public Toggle choiceButton;
 
     private void Start()
     {
@@ -24,6 +24,12 @@ public class CharacterChoice : MonoBehaviourPunCallbacks
         ToggleButton();
     }
 
+    [PunRPC]
+    public void SyncChoice(bool isActive)
+    {
+        choiceButton.interactable = isActive;
+    }
+
     public void ChoosePlayer()
     {
         if (lobbyManager.PlayerChoice != character && choiceButton.interactable)
@@ -34,7 +40,9 @@ public class CharacterChoice : MonoBehaviourPunCallbacks
         {
             lobbyManager.PlayerChoice = Character.NONE;
         }
+        PlayerPrefs.SetInt("CharacterChoice", (int)lobbyManager.PlayerChoice);
         photonView.RPC("SendPlayerChoice", RpcTarget.OthersBuffered);
+        lobbyManager.SetPlayerReady(lobbyManager.PlayerChoice != Character.NONE, PhotonNetwork.LocalPlayer.UserId);
 
     }
 

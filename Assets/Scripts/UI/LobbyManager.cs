@@ -11,15 +11,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] TMP_InputField lobbyNameInput;
     [SerializeField] GameObject playerList;
     [SerializeField] GameObject lobbyPlayerPrefab;
+    [SerializeField] List<CharacterChoice> choices;
 
     private ArrayList currentRoomList = new ArrayList();
     public Character PlayerChoice { get; set; }
     public bool IsMaster { get { return PhotonNetwork.IsMasterClient; } }
     // Joined server
     // Click character
-    //  Send RPC, choose character
-    //      receiving - disable character
-    //      sending   - highlight selection
+    // Send RPC, choose character
+    //     receiving - disable character
+    //     sending   - highlight selection
 
     void Start()
     {
@@ -45,6 +46,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void SetPlayerReady(bool ready, string userId)
+    {
+        foreach (GameObject player in currentRoomList)
+        {
+            LobbyPlayerMenuHandler playerInfo = player.GetComponent<LobbyPlayerMenuHandler>();
+            if (playerInfo.LobbyPlayerId == userId)
+            {
+                playerInfo.photonView.RPC("UpdateReadyCheck", RpcTarget.AllBuffered, ready);
+            }
+        }
+    }
+
     public void CreateRoom()
     {
         if (lobbyNameInput.text.Length > 1)
@@ -57,7 +70,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             PhotonNetwork.CreateRoom(lobbyNameInput.text, roomOptions, null, null);
         }
     }
-
+      
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined a room successfully!");
@@ -71,14 +84,37 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             {
                 AddPlayer(player);
             }
+            SyncOptions();
         }
         
     }
 
+    public override void OnLeftRoom()
+    {
+        foreach (CharacterChoice choice in choices)
+        {
+            choice.choiceButton.interactable = true;
+            PlayerChoice = Character.NONE;
+        }
+    }
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        base.OnPlayerEnteredRoom(newPlayer);
         AddPlayer(newPlayer);
+    }
+
+    public void SyncOptions()
+    {
+        if (IsMaster)
+        {
+            foreach (CharacterChoice choice in choices)
+            {
+                if (choice.character == PlayerChoice)
+                {
+                    choice.photonView.RPC("SyncChoice", RpcTarget.All, !choice.choiceButton.interactable);
+                }
+            }
+        }
     }
 
     private void AddPlayer(Player newPlayer)
@@ -93,18 +129,31 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        base.OnPlayerLeftRoom(otherPlayer);
         RemovePlayer(otherPlayer);
     }
 
     private void RemovePlayer(Player otherPlayer)
     {
-        foreach (GameObject item in currentRoomList)
+        GameObject playerToRemove = default;
+        lock (currentRoomList)
         {
-            if (item.GetComponent<LobbyPlayerMenuHandler>().LobbyPlayerId == otherPlayer.UserId)
+            foreach (GameObject item in currentRoomList)
             {
-                Destroy(item);
-                break;
+                if (item.GetComponent<LobbyPlayerMenuHandler>().LobbyPlayerId == otherPlayer.UserId)
+                {
+                    playerToRemove = item;
+                    break;
+                }
+            }
+            Destroy(playerToRemove);
+            currentRoomList.Remove(playerToRemove);
+        }
+
+        foreach (CharacterChoice choice in choices)
+        {
+            if (choice.choiceButton.interactable == false)
+            {
+                choice.choiceButton.interactable = true;
             }
         }
     }
@@ -114,6 +163,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         foreach (GameObject player in currentRoomList)
         {
             LobbyPlayerMenuHandler playerInfo = player.GetComponent<LobbyPlayerMenuHandler>();
+            Debug.Log($"User {playerInfo.LobbyPlayerId} is ready {playerInfo.IsReady}");
             if (!playerInfo.IsReady)
             {
                 return false;
@@ -127,7 +177,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (IsMaster && AreAllPlayersReady())
         {
             Debug.Log("Everyone is ready, starting game.");
-            PhotonNetwork.LoadLevel("Game");
+            PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.GameSceneName);
         }
     }
 
