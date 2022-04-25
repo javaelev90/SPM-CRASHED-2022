@@ -53,7 +53,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             LobbyPlayerMenuHandler playerInfo = player.GetComponent<LobbyPlayerMenuHandler>();
             if (playerInfo.LobbyPlayerId == userId)
             {
-                playerInfo.photonView.RPC("UpdateReadyCheck", RpcTarget.AllBuffered, ready);
+                playerInfo.IsReady = ready;
             }
         }
     }
@@ -86,7 +86,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             }
             SyncOptions();
         }
-        
     }
 
     public override void OnLeftRoom()
@@ -149,6 +148,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             currentRoomList.Remove(playerToRemove);
         }
 
+        RemovePlayerChoice();
+    }
+
+    private void RemovePlayerChoice()
+    {
         foreach (CharacterChoice choice in choices)
         {
             if (choice.choiceButton.interactable == false)

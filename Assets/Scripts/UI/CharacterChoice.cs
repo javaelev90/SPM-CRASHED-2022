@@ -19,9 +19,10 @@ public class CharacterChoice : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void SendPlayerChoice()
+    public void SendPlayerChoice(bool selected, string userId)
     {
         ToggleButton();
+        lobbyManager.SetPlayerReady(selected, userId);
     }
 
     [PunRPC]
@@ -41,9 +42,8 @@ public class CharacterChoice : MonoBehaviourPunCallbacks
             lobbyManager.PlayerChoice = Character.NONE;
         }
         PlayerPrefs.SetInt("CharacterChoice", (int)lobbyManager.PlayerChoice);
-        photonView.RPC("SendPlayerChoice", RpcTarget.OthersBuffered);
+        photonView.RPC("SendPlayerChoice", RpcTarget.OthersBuffered, lobbyManager.PlayerChoice != Character.NONE, PhotonNetwork.LocalPlayer.UserId);
         lobbyManager.SetPlayerReady(lobbyManager.PlayerChoice != Character.NONE, PhotonNetwork.LocalPlayer.UserId);
-
     }
 
     private void ToggleButton()
