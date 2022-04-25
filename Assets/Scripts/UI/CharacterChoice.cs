@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CharacterChoice : MonoBehaviourPunCallbacks
 {
     [SerializeField] Character character;
-    private Button choiceButton;
+    LobbyManager lobbyManager;
+
+    private Toggle choiceButton;
 
     private void Start()
     {
-        choiceButton = GetComponent<Button>();
+        choiceButton = GetComponent<Toggle>();
+        lobbyManager = FindObjectOfType<LobbyManager>();
     }
 
     [PunRPC]
@@ -22,17 +26,20 @@ public class CharacterChoice : MonoBehaviourPunCallbacks
 
     public void ChoosePlayer()
     {
-        //if (GlobalSettings.GameSettings.CharacterChoice == character)
-        //{
-        photonView.RPC("SendPlayerChoice", RpcTarget.Others);
-        //GlobalSettings.GameSettings.CharacterChoice = character;
-        //Debug.Log(GlobalSettings.GameSettings.CharacterChoice);
-        
-        //}
+        if (lobbyManager.PlayerChoice != character && choiceButton.interactable)
+        {
+            lobbyManager.PlayerChoice = character;
+        } 
+        else if (lobbyManager.PlayerChoice == character)
+        {
+            lobbyManager.PlayerChoice = Character.NONE;
+        }
+        photonView.RPC("SendPlayerChoice", RpcTarget.OthersBuffered);
+
     }
 
     private void ToggleButton()
     {
-        choiceButton.enabled = !choiceButton.enabled;
+        choiceButton.interactable = !choiceButton.interactable;
     }
 }

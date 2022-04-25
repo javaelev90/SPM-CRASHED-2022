@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
-using ExitGames.Client.Photon;
+
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -12,8 +12,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject playerList;
     [SerializeField] GameObject lobbyPlayerPrefab;
 
-    private List<GameObject> currentRoomList = new List<GameObject>();
-
+    private ArrayList currentRoomList = new ArrayList();
+    public Character PlayerChoice { get; set; }
+    public bool IsMaster { get { return PhotonNetwork.IsMasterClient; } }
     // Joined server
     // Click character
     //  Send RPC, choose character
@@ -51,6 +52,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = 2;
             roomOptions.PlayerTtl = 50;
+            roomOptions.PublishUserId = true;
 
             PhotonNetwork.CreateRoom(lobbyNameInput.text, roomOptions, null, null);
         }
@@ -59,10 +61,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined a room successfully!");
-        if (PhotonNetwork.IsMasterClient)
+        if (IsMaster)
         {
             AddPlayer(PhotonNetwork.LocalPlayer);
         }
+        else
+        {
+            foreach (Player player in PhotonNetwork.PlayerList)
+            {
+                AddPlayer(player);
+            }
+        }
+        
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -73,10 +83,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void AddPlayer(Player newPlayer)
     {
-        GameObject playerInfo = Instantiate(lobbyPlayerPrefab, playerList.transform.position, Quaternion.identity);
-        playerInfo.transform.parent = playerList.transform;
+        Debug.Log($"User {newPlayer.UserId} connected");
+        GameObject playerInfo = PhotonNetwork.Instantiate("Prefabs/UI/MenuLobby/" + lobbyPlayerPrefab.name, playerList.transform.position, Quaternion.identity);
+        playerInfo.transform.SetParent(playerList.transform, false);
         playerInfo.GetComponent<LobbyPlayerMenuHandler>().SetPlayerName(newPlayer.NickName);
-        playerInfo.GetComponent<LobbyPlayerMenuHandler>().LobbyPlayerId = newPlayer.ActorNumber;
+        playerInfo.GetComponent<LobbyPlayerMenuHandler>().LobbyPlayerId = newPlayer.UserId;
         currentRoomList.Add(playerInfo);
     }
 
@@ -88,21 +99,36 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void RemovePlayer(Player otherPlayer)
     {
-        currentRoomList.RemoveAll(item => 
+        foreach (GameObject item in currentRoomList)
         {
-            if(item.GetComponent<LobbyPlayerMenuHandler>().LobbyPlayerId == otherPlayer.ActorNumber)
+            if (item.GetComponent<LobbyPlayerMenuHandler>().LobbyPlayerId == otherPlayer.UserId)
             {
                 Destroy(item);
-                return true;
+                break;
             }
-            return false;
-        });
+        }
     }
 
+    private bool AreAllPlayersReady()
+    {
+        foreach (GameObject player in currentRoomList)
+        {
+            LobbyPlayerMenuHandler playerInfo = player.GetComponent<LobbyPlayerMenuHandler>();
+            if (!playerInfo.IsReady)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel("Game");
+        if (IsMaster && AreAllPlayersReady())
+        {
+            Debug.Log("Everyone is ready, starting game.");
+            PhotonNetwork.LoadLevel("Game");
+        }
     }
 
     public void LeaveRoom()
