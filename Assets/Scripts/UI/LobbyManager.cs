@@ -4,7 +4,8 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
-
+using System;
+using EventCallbacksSystem;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -38,12 +39,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
-    public void JoinRoom()
+    public void JoinOrCreateRoom()
     {
-        if (lobbyNameInput.text.Length > 1)
+        bool inputIsLongEnough = false;
+        if (lobbyNameInput.text.Trim().Length > 2)
         {
-            PhotonNetwork.JoinRoom(lobbyNameInput.text);
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = 2;
+            roomOptions.PlayerTtl = 50;
+            roomOptions.PublishUserId = true;
+
+            PhotonNetwork.JoinOrCreateRoom(lobbyNameInput.text, roomOptions, null, null);
+            inputIsLongEnough = true;
         }
+        EventSystem.Instance.FireEvent(new StartLobbyEvent(inputIsLongEnough));
     }
 
     public void SetPlayerReady(bool ready, string userId)
@@ -55,19 +64,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             {
                 playerInfo.IsReady = ready;
             }
-        }
-    }
-
-    public void CreateRoom()
-    {
-        if (lobbyNameInput.text.Length > 1)
-        {
-            RoomOptions roomOptions = new RoomOptions();
-            roomOptions.MaxPlayers = 2;
-            roomOptions.PlayerTtl = 50;
-            roomOptions.PublishUserId = true;
-
-            PhotonNetwork.CreateRoom(lobbyNameInput.text, roomOptions, null, null);
         }
     }
       
@@ -188,6 +184,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
+        EventSystem.Instance.FireEvent(new LeaveLobbyEvent());
     }
 
 }

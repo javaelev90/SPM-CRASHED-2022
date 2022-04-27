@@ -23,4 +23,18 @@ namespace EventCallbacksSystem
         private bool isTriggered = true;
         public bool IsTriggered { get { return isTriggered; } }
     }
+
+    public class StartLobbyEvent : Event
+    {
+        public bool IsNameLongEnough { get; set; }
+        public StartLobbyEvent(bool isNameLongEnough)
+        {
+            IsNameLongEnough = isNameLongEnough;
+        }
+    }    
+    
+    public class LeaveLobbyEvent : Event
+    {
+    }
+
 }
