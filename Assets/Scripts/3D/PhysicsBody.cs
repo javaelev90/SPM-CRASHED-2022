@@ -6,12 +6,16 @@ using Photon.Pun;
 [RequireComponent(typeof(CapsuleCollider))]
 public class PhysicsBody : MonoBehaviourPunCallbacks
 {
+    [Header("Variables Setting")]
+    [SerializeField] private bool saveAsTextFile = false;
+    [SerializeField] private string variablesSetting = "Save 1";
+
     [Header("Multiplayer")]
     private bool isMine;
 
     [Header("Properties of body")]
     [SerializeField] private float skinWidth = 0.5f;
-    [SerializeField] private float groundCheckDistance;
+    [SerializeField] private float groundCheckDistance = 5f;
 
     [Header("Physics")]
     [SerializeField] private float mass = 1f;
@@ -41,9 +45,16 @@ public class PhysicsBody : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        groundCheckDistance = 10 * skinWidth;
+        //groundCheckDistance = 10 * skinWidth;
         capsuleCollider = GetComponent<CapsuleCollider>();
         isMine = photonView.IsMine;
+        Debug.Log(1);
+        if (saveAsTextFile)
+        {
+            PhysicsVariabelsHandeler.SavePhysics(variablesSetting, skinWidth, groundCheckDistance, mass, gravity,
+                airResistance, decelerationFactor, accelerationFactor, staticFrictionCoefficient, kineticFrictionCoefficient);
+        }
+
     }
 
     private void Update()
