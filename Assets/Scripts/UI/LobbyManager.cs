@@ -184,7 +184,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
+        ResetLobbySettings();
         EventSystem.Instance.FireEvent(new LeaveLobbyEvent());
+    }
+
+    private void ResetLobbySettings()
+    {
+        PlayerChoice = Character.NONE;
+        PlayerPrefs.SetInt("CharacterChoice", (int)Character.NONE);
+        currentRoomList.Clear();
     }
 
 }

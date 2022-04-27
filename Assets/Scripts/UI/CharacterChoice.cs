@@ -42,7 +42,7 @@ public class CharacterChoice : MonoBehaviourPunCallbacks
             lobbyManager.PlayerChoice = Character.NONE;
         }
 
-        GlobalSettings.GameSettings.CharacterChoice = lobbyManager.PlayerChoice;
+        PlayerPrefs.SetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName, (int)lobbyManager.PlayerChoice);
         photonView.RPC("SendPlayerChoice", RpcTarget.OthersBuffered, lobbyManager.PlayerChoice != Character.NONE, PhotonNetwork.LocalPlayer.UserId);
         lobbyManager.SetPlayerReady(lobbyManager.PlayerChoice != Character.NONE, PhotonNetwork.LocalPlayer.UserId);
     }
