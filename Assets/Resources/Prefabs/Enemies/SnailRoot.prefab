@@ -242,10 +242,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 407230730788055436}
+  - component: {fileID: 652936647}
+  - component: {fileID: 5444124235424776678}
   - component: {fileID: 407230730788055437}
   - component: {fileID: 1314737261}
   - component: {fileID: 1314737262}
-  m_Layer: 0
+  - component: {fileID: 8174094902349623044}
+  - component: {fileID: 1997831261326966099}
+  m_Layer: 9
   m_Name: Snail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,6 +273,46 @@ Transform:
   m_Father: {fileID: 407230730308412194}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &652936647
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407230730788055439}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.55
+  m_Height: 2.3
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.45, z: 0}
+--- !u!114 &5444124235424776678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407230730788055439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c33956b2aaa368408767be89146408e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveAsTextFile: 0
+  variablesSetting: Save 1
+  skinWidth: 0.01
+  groundCheckDistance: 1
+  mass: 1
+  gravity: 9.81
+  airResistance: 0.6
+  decelerationFactor: 13
+  accelerationFactor: 10
+  staticFrictionCoefficient: 0.6
+  kineticFrictionCoefficient: 0.3
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 448
 --- !u!114 &407230730788055437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +339,7 @@ MonoBehaviour:
   visibleTargets: []
   distanceToTarget: 0
   wayPointSystem: {fileID: 407230730096783429}
-  timeToExplosion: 0
+  timeToExplosion: 2
 --- !u!114 &1314737261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,9 +355,8 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 10
   healthHandler: {fileID: 1314737262}
-  damage: 3
-  explosionRadius: 3
-  explosionOrigin: {fileID: 0}
+  damage: 2
+  explosionRadius: 10
   layersToHit:
     serializedVersion: 2
     m_Bits: 832
@@ -330,6 +373,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarHandler: {fileID: 402761397}
+--- !u!114 &8174094902349623044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407230730788055439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1997831261326966099}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1997831261326966099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407230730788055439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 0
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!1 &407230731976113860
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,7 +440,6 @@ GameObject:
   - component: {fileID: 407230731976113861}
   - component: {fileID: 407230731976113856}
   - component: {fileID: 407230731976113859}
-  - component: {fileID: 407230731976113858}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -412,20 +510,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &407230731976113858
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407230731976113860}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &407230732148822481
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,7 +521,6 @@ GameObject:
   - component: {fileID: 407230732148822494}
   - component: {fileID: 407230732148822493}
   - component: {fileID: 407230732148822492}
-  - component: {fileID: 407230732148822495}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -508,19 +591,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &407230732148822495
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407230732148822481}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3969078763278284144
 PrefabInstance:
   m_ObjectHideFlags: 0

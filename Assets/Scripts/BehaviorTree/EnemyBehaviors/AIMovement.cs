@@ -23,12 +23,18 @@ public class AIMovement : MonoBehaviour
     [SerializeField] private float timeToExplosion;
     private float counter;
 
+    // Simons skräp
+    private EnemyCharacter enemyCharacter;
+
     private void Start()
     {
         StartCoroutine("FindTargetsWithDelay");
         Debug.Log(wayPointSystem != null ? "Not null" : "null");
-        enemyBlowUpDistance = viewRadius / 2;
+        enemyBlowUpDistance = 5;
         counter = timeToExplosion;
+
+        //Simons skräp
+        enemyCharacter = GetComponent<EnemyCharacter>();
     }
 
     IEnumerator FindTargetsWithDelay()
@@ -65,12 +71,12 @@ public class AIMovement : MonoBehaviour
 
     void BlowUp()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, enemyBlowUpDistance, targetMask);
+        Collider[] targets = Physics.OverlapSphere(transform.position, enemyCharacter.ExplosionRadius, enemyCharacter.LayersToHit);
         if(targets.Length > 0)
         {
             foreach(Collider coll in targets)
             {
-                coll.transform.GetComponent<HealthHandler>().TakeDamage(10);
+                coll.transform.GetComponent<HealthHandler>().TakeDamage(enemyCharacter.Damage);
             }
         }
         gameObject.SetActive(false);

@@ -12,8 +12,10 @@ public class EnemyCharacter : MonoBehaviour
     [Header("Damage")]
     [SerializeField] private int damage;
     [SerializeField] private float explosionRadius;
-    [SerializeField] private Transform explosionOrigin;
     [SerializeField] private LayerMask layersToHit;
+    public int Damage { get { return damage; } }
+    public float ExplosionRadius { get { return explosionRadius; } }
+    public LayerMask LayersToHit { get { return layersToHit; } }
 
     // Start is called before the first frame update
     void Start()
