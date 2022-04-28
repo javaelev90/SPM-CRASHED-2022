@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthBarHandler : MonoBehaviour
+public class HealthBarHandler : MonoBehaviour
 {
     private Image healthBarImage;
 
@@ -27,5 +27,6 @@ public class PlayerHealthBarHandler : MonoBehaviour
     void Start()
     {
         healthBarImage = GetComponent<Image>();
+        SetHealthBarValue(1f);
     }
 }
