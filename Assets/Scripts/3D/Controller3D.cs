@@ -168,7 +168,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
             cameraRotation.y += cameraLooking.x * gamepadSensitivity * Time.deltaTime;
         }
 
-        if (currentControlScheme == "Keyboard&Mouse")
+        if (currentControlScheme == "KeyboardMouse")
         {
             cameraRotation.x -= cameraLooking.y * mouseSensitivity * Time.deltaTime;
             cameraRotation.y += cameraLooking.x * mouseSensitivity * Time.deltaTime;
