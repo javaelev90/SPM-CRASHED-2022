@@ -57,6 +57,7 @@ public class AIMovement : MonoBehaviour
         if(visibleTargets.Count > 0 && distanceToTarget < enemyBlowUpDistance)
         {
             isBlowingUp = true;
+            GetComponent<ParticleSystem>().Play(false);
         }
 
         if (isBlowingUp)
@@ -64,12 +65,12 @@ public class AIMovement : MonoBehaviour
             counter -= Time.deltaTime;
             if(counter <= 0f)
             {
-                BlowUp();
+                GetComponent<EnemyCharacter>().Die();
             }
         }
     }
 
-    void BlowUp()
+    public void BlowUp()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, enemyCharacter.ExplosionRadius, enemyCharacter.LayersToHit);
         if(targets.Length > 0)
@@ -79,7 +80,6 @@ public class AIMovement : MonoBehaviour
                 coll.transform.GetComponent<HealthHandler>().TakeDamage(enemyCharacter.Damage);
             }
         }
-        gameObject.SetActive(false);
         isBlowingUp = false;
     }
 
