@@ -45,7 +45,7 @@ public class AIMovement : MonoBehaviour
             transform.Translate(0, 0, movementSpeed * Time.deltaTime);
         }
 
-        if(distanceToTarget < enemyBlowUpDistance)
+        if(visibleTargets.Count > 0 && distanceToTarget < enemyBlowUpDistance)
         {
             isBlowingUp = true;
         }
