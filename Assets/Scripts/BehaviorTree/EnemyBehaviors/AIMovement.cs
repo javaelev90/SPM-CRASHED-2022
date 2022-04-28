@@ -20,12 +20,15 @@ public class AIMovement : MonoBehaviour
     private Vector3 directionToTarget;
     private float enemyBlowUpDistance;
     private bool isBlowingUp;
+    [SerializeField] private float timeToExplosion;
+    private float counter;
 
     private void Start()
     {
         StartCoroutine("FindTargetsWithDelay");
         Debug.Log(wayPointSystem != null ? "Not null" : "null");
         enemyBlowUpDistance = viewRadius / 2;
+        counter = timeToExplosion;
     }
 
     IEnumerator FindTargetsWithDelay()
@@ -45,9 +48,18 @@ public class AIMovement : MonoBehaviour
             transform.Translate(0, 0, movementSpeed * Time.deltaTime);
         }
 
-        if(distanceToTarget < enemyBlowUpDistance)
+        if(visibleTargets.Count > 0 && distanceToTarget < enemyBlowUpDistance)
         {
             isBlowingUp = true;
+        }
+
+        if (isBlowingUp)
+        {
+            counter -= Time.deltaTime;
+            if(counter <= 0f)
+            {
+                BlowUp();
+            }
         }
     }
 
@@ -56,8 +68,12 @@ public class AIMovement : MonoBehaviour
         Collider[] targets = Physics.OverlapSphere(transform.position, enemyBlowUpDistance, targetMask);
         if(targets.Length > 0)
         {
-
+            foreach(Collider coll in targets)
+            {
+                coll.transform.GetComponent<HealthHandler>().TakeDamage(10);
+            }
         }
+        gameObject.SetActive(false);
         isBlowingUp = false;
     }
 
