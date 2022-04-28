@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class HealthHandler : MonoBehaviour
+public class HealthHandler : MonoBehaviourPunCallbacks
 {
     [SerializeField] private HealthBarHandler healthBarHandler;
     public int MaxHealth { get; internal set; }
@@ -13,6 +14,24 @@ public class HealthHandler : MonoBehaviour
     public bool IsAlive { get; internal set; }
 
     public void TakeDamage(int amount)
+    {
+        photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        IsAlive = true;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    [PunRPC]
+    private void TakeDamageRPC(int amount)
     {
         if (IsAlive)
         {
@@ -32,17 +51,5 @@ public class HealthHandler : MonoBehaviour
                 }
             }
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        IsAlive = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class EnemyCharacter : MonoBehaviour
+public class EnemyCharacter : MonoBehaviourPunCallbacks
 {
     [Header("Health")]
     [SerializeField] private int maxHealth;
@@ -20,10 +21,7 @@ public class EnemyCharacter : MonoBehaviour
 
     public void Die()
     {
-        GetComponent<AIMovement>().BlowUp();
-        explosionObject.transform.parent = null;
-        explosionObject.GetComponent<ParticleSystem>().Play();
-        gameObject.SetActive(false);
+        photonView.RPC(nameof(DieRPC), RpcTarget.All);
     }
 
     // Start is called before the first frame update
@@ -37,5 +35,14 @@ public class EnemyCharacter : MonoBehaviour
     void Update()
     {
         
+    }
+
+    [PunRPC]
+    private void DieRPC()
+    {
+        GetComponent<AIMovement>().BlowUp();
+        explosionObject.transform.parent = null;
+        explosionObject.GetComponent<ParticleSystem>().Play();
+        gameObject.SetActive(false);
     }
 }
