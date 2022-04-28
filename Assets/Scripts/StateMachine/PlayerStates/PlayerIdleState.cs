@@ -23,9 +23,9 @@ public class PlayerIdleState : State
             stateMachine.ChangeState<PlayerWalkState>();
         }
 
-        if (player.Body.Grounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            stateMachine.ChangeState<PlayerJumpState>();
-        }
+        //if (player.Body.Grounded && Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    stateMachine.ChangeState<PlayerJumpState>();
+        //}
     }
 }

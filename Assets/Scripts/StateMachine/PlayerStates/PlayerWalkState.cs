@@ -28,10 +28,10 @@ public class PlayerWalkState : State
             player.Body.Decelerate();
         }
 
-        if (player.Body.Grounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            stateMachine.ChangeState<PlayerJumpState>();
-        }
+        //if (player.Body.Grounded && Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    stateMachine.ChangeState<PlayerJumpState>();
+        //}
 
         if (player.Body.Velocity.magnitude <= 0.0005f)
         {
