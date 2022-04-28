@@ -13,37 +13,34 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        if (!pooledObjectPrefab.GetComponent<PooledObject>())
+        {
+            throw new MissingComponentException();
+        }
         pooledObjects = new List<PooledObject>();
         activeObjects = new Dictionary<int, PooledObject>();
 
-        //objectPool = PhotonNetwork.PrefabPool as DefaultPool;
-        
-        //if (objectPool != null && pooledObjectPrefab != null)
-        //{
-        //    objectPool.ResourceCache.Add(pooledObjectPrefab.name, pooledObjectPrefab);
-        //}
         LoadPool();
     }
 
     private void LoadPool()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         for(int i = 0; i < maxPoolSize; i++)
         {
             PooledObject pooledObject = Instantiate(
                     pooledObjectPrefab.transform.position,
-                    Quaternion.identity,
-                    null
+                    Quaternion.identity
                 );
             pooledObject.ObjectPool = this;
-            //pooledObject.gameObject.SetActive(false);
             pooledObject.photonView.RPC("UpdateActiveState", RpcTarget.All, false);
             pooledObjects.Add(pooledObject);
         }
     }
 
-    private PooledObject Instantiate(Vector3 position, Quaternion rotation, Transform parent = null)
+    private PooledObject Instantiate(Vector3 position, Quaternion rotation)
     {
-        return PhotonNetwork.Instantiate("Prefabs/" +pooledObjectPrefab.name, position, rotation).GetComponent<PooledObject>();
+        return PhotonNetwork.Instantiate("Prefabs/Enemies/"+pooledObjectPrefab.name, position, rotation).GetComponent<PooledObject>();
     }
 
     public void Spawn(Vector3 position)

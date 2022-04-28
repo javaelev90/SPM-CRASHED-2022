@@ -10,11 +10,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float delayBetweenSpawns = 1f;
     private SphereCollider spawnerBounds;
     private float cooldownCounter = 0f;
-    private float yOffset = 0.5f;
+    private float yOffset = 1f;
 
     private void Start()
     {
         spawnerBounds = GetComponent<SphereCollider>();
+        //objectPool = FindObjectOfType<PhotonObjectPool>();
     }
 
     private void Update()
@@ -24,12 +25,11 @@ public class EnemySpawner : MonoBehaviour
             cooldownCounter += Time.deltaTime;
             if(cooldownCounter > delayBetweenSpawns)
             {
-                int spawnedEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-                if (spawnedEnemies < numberToSpawn)
-                {
-                    SpawnEnemies(numberToSpawn - spawnedEnemies);
-                }
-                cooldownCounter = 0;
+                //if (spawnedEnemies < numberToSpawn)
+                //{
+                SpawnEnemies(numberToSpawn);
+                //}
+                //cooldownCounter = 0;
             }
         }
     }
