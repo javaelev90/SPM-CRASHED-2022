@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace BehaviorTree
 {
@@ -13,6 +11,7 @@ namespace BehaviorTree
         {
             nodes = passedNodes;
         }
+
         public override NodeStates Evaluate()
         {
             bool anyChildRunning = false;
