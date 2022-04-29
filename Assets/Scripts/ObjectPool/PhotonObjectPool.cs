@@ -33,7 +33,8 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
                     Quaternion.identity
                 );
             pooledObject.ObjectPool = this;
-            pooledObject.photonView.RPC("UpdateActiveState", RpcTarget.All, false);
+            //pooledObject.transform.GetChild(0).GetComponent<PhotonView>().RPC("UpdateActiveState", RpcTarget.All, false);
+            pooledObject.UpdateActiveState(false);
             pooledObjects.Add(pooledObject);
         }
     }
@@ -65,10 +66,11 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
             return;
         }
         PooledObject pooledObject = pooledObjects[0];
-        pooledObject.photonView.RPC("UpdateActiveState", RpcTarget.All, true);
-        pooledObject.transform.position = position;
+        pooledObject.UpdateActiveState(true);
+        //photonView.RPC("UpdateActiveState", RpcTarget.All, true);
+        pooledObject.photonViewObject.transform.position = position;
         pooledObjects.RemoveAt(0);
-        activeObjects.Add(pooledObject.gameObject.GetPhotonView().ViewID, pooledObject);
+        activeObjects.Add(pooledObject.photonViewObject.ViewID, pooledObject);
     }
 
     [PunRPC]
@@ -82,7 +84,9 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         if(activeObjects.TryGetValue(gameObjectPhotonId, out PooledObject pooledObject))
         {
             pooledObject.Recycle();
-            pooledObject.photonView.RPC("UpdateActiveState", RpcTarget.All, false);
+            //PhotonView photonView = pooledObject.transform.GetChild(0).GetComponent<PhotonView>();
+            //photonView.RPC("UpdateActiveState", RpcTarget.All, false);
+            pooledObject.UpdateActiveState(false);
         }
     }
 
