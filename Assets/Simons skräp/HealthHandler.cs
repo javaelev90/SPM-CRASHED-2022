@@ -15,8 +15,11 @@ public class HealthHandler : MonoBehaviourPunCallbacks
 
     public void TakeDamage(int amount)
     {
-        photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);
-    }
+        if (isEnemy)
+            photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);
+        else
+            TakeDamageRPC(amount);
+    }   
 
     // Start is called before the first frame update
     void Start()
