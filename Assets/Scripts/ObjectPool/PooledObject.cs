@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using Photon.Pun;
 
-public class PooledObject : MonoBehaviourPun
+public class PooledObject : MonoBehaviour
 {
     public enum RecyclingBehavior
     {
@@ -16,6 +16,7 @@ public class PooledObject : MonoBehaviourPun
     public RecyclingBehavior recyclingBehaviour;
     public PhotonObjectPool ObjectPool { get; set; }
     public Action CustomRecycleFunction { get; set; }
+    public PhotonView photonViewObject;
 
     public void Recycle()
     {
@@ -47,9 +48,9 @@ public class PooledObject : MonoBehaviourPun
         CustomRecycleFunction?.Invoke();
     }
 
-    [PunRPC]
-    private void UpdateActiveState(bool active)
+    public void UpdateActiveState(bool active)
     {
-        gameObject.SetActive(active);
+        photonViewObject.RPC("UpdateActiveState", RpcTarget.All, active);
     }
+
 }

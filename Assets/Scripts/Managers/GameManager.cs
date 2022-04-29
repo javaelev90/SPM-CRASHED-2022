@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Initialize()
     {
-
+        
         PhotonNetwork.Instantiate("Prefabs/" + characterPrefab.name, spawnPoint.position, spawnPoint.rotation);
 
         if(PhotonNetwork.IsMasterClient)
