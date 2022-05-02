@@ -99,12 +99,12 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
     private void OnEnable()
     {
-        playerActions.Enable();
+        playerActions.Player.Enable();
     }
 
     private void OnDisable()
     {
-        playerActions.Disable();
+        playerActions.Player.Disable();
     }
 
     // Update is called once per frame
@@ -112,7 +112,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
     {
         if (isMine)
         {
-            //InputHandling();
+            InputHandling();
             PlayerRotation();
             WeaponRotation();
             TurretHandling();
@@ -120,23 +120,39 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
             RoatateCamera();
 
+            /*
             if (playerActions.Player.PickUp.IsPressed())
             {
                 Debug.Log("Fuck");
             }
+            */
         }
     }
 
-    public void InputHandling(InputAction.CallbackContext value)
+    public void Jump()
+    {
+        float jumpForce = 5f;
+        groundHit = IsGrounded();
+        if (playerActions.Player.Jump.IsPressed())
+        {
+            Vector3 jumpMovement = Vector3.up * jumpForce;
+
+            Body.Velocity += jumpMovement;
+        }
+    }
+
+    public void InputHandling() //InputAction.CallbackContext value
     {
         groundHit = IsGrounded();
         if (isMine)
         {
-            Vector2 movementInput = value.ReadValue<Vector2>();
+            Vector3 movementInput = playerActions.Player.Move.ReadValue<Vector2>();
             input = new Vector3(movementInput.x, 0, movementInput.y);
 
             input = mainCam.transform.rotation * input;
             input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
+
+            //Body.Velocity += input;
 
             /*
             input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
