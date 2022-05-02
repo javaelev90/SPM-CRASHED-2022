@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using Photon.Pun;
 
-public class PooledObject : MonoBehaviour
+public class PooledObject : MonoBehaviourPunCallbacks, IRecycleable
 {
     public enum RecyclingBehavior
     {
@@ -13,10 +13,11 @@ public class PooledObject : MonoBehaviour
         Custom,
         CustomAndTransform
     }
+
     public RecyclingBehavior recyclingBehaviour;
     public PhotonObjectPool ObjectPool { get; set; }
     public Action CustomRecycleFunction { get; set; }
-    public PhotonView photonViewObject;
+    public List<PooledObjectPhotonView> photonViewObjects;
 
     public void Recycle()
     {
@@ -26,15 +27,29 @@ public class PooledObject : MonoBehaviour
                 break;
             case RecyclingBehavior.Transform:
                 RecycleTransform();
+                RecycleChildObject();
                 break;
             case RecyclingBehavior.Custom:
                 RecycleCustom();
+                RecycleChildObject();
                 break;
             case RecyclingBehavior.CustomAndTransform:
                 RecycleTransform();
                 RecycleCustom();
+                RecycleChildObject();
                 break;
         }
+    }
+
+    public void UpdateActiveState(bool active)
+    {
+        photonView.RPC(nameof(UpdateActiveStateRPC), RpcTarget.All, active);
+    }
+
+    [PunRPC]
+    private void UpdateActiveStateRPC(bool active)
+    {
+        gameObject.SetActive(active);
     }
 
     private void RecycleTransform()
@@ -48,9 +63,11 @@ public class PooledObject : MonoBehaviour
         CustomRecycleFunction?.Invoke();
     }
 
-    public void UpdateActiveState(bool active)
+    private void RecycleChildObject()
     {
-        photonViewObject.RPC("UpdateActiveState", RpcTarget.All, active);
+        foreach (PooledObjectPhotonView pooledObjectPhotonView in photonViewObjects)
+        {
+            pooledObjectPhotonView.Recycle();
+        }
     }
-
 }

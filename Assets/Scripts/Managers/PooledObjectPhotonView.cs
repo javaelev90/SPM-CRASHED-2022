@@ -2,14 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System;
 
-public class PooledObjectPhotonView : MonoBehaviourPunCallbacks
+[RequireComponent(typeof(PhotonView))]
+public class PooledObjectPhotonView : MonoBehaviourPunCallbacks, IRecycleable
 {
-    [SerializeField] public GameObject rootObject;
+    [SerializeField] public PooledObject rootObject;
+    public Action customRecyclingFunction;
+
+    public void Recycle()
+    {
+        photonView.RPC(nameof(RecycleRPC), RpcTarget.All);
+    }
 
     [PunRPC]
-    private void UpdateActiveState(bool active)
+    private void RecycleRPC()
     {
-        rootObject.SetActive(active);
+        customRecyclingFunction?.Invoke();
+    }
+
+    public void UpdateActiveState(bool active)
+    {
+        photonView.RPC(nameof(UpdateActiveStateRPC), RpcTarget.All, active);
+    }
+
+    [PunRPC]
+    private void UpdateActiveStateRPC(bool active)
+    {
+        rootObject.gameObject.SetActive(active);
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.InputSystem;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class EnemySpawner : MonoBehaviour
     private SphereCollider spawnerBounds;
     private float cooldownCounter = 0f;
     private float yOffset = 1f;
+
+    private bool resetpress = false;
 
     private void Start()
     {
@@ -23,13 +26,18 @@ public class EnemySpawner : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
         {
             cooldownCounter += Time.deltaTime;
-            if(cooldownCounter > delayBetweenSpawns)
+            if(cooldownCounter > delayBetweenSpawns && Keyboard.current.tKey.isPressed && !resetpress)
             {
                 //if (spawnedEnemies < numberToSpawn)
                 //{
                 SpawnEnemies(numberToSpawn);
                 //}
                 //cooldownCounter = 0;
+                resetpress = true;
+            }
+            else if (!Keyboard.current.tKey.isPressed && resetpress)
+            {
+                resetpress = false;
             }
         }
     }
