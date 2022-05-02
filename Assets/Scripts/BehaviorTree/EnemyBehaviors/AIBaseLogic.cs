@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class AIBaseLogic : MonoBehaviour
 {
+    [Header("Vision parameters")]
     public float viewRadius;
-
     [Range(0, 360)]
     public float viewAngle;
-
     public float delayToNewTarget = 1f;
     public LayerMask obstacleMask;
     public LayerMask targetMask;
@@ -17,10 +16,15 @@ public class AIBaseLogic : MonoBehaviour
     public float distanceToTarget;
     public Vector3 directionToTarget;
 
+    [Header("Navigation")]
+    [SerializeField] private WayPointSystem wayPointSystem;
+
     [Header("BehaviorTree")]
-    private Sequence rootNode;
+    private Selector rootNode;
     private AggroNode aggroNode;
     private ChaseNode chaseNode;
+    private WalkNode walkNode;
+    private Sequence attackSequence;
     private Material material;
     [SerializeField] private float timeToAggro = 1f;
 
@@ -36,12 +40,10 @@ public class AIBaseLogic : MonoBehaviour
 
         chaseNode = new ChaseNode(this);
         aggroNode = new AggroNode(this, material);
-        List<Node> nodes = new List<Node>();
-        nodes.Add(aggroNode);
-        nodes.Add(chaseNode);
-
-        //rootNode = new Selector(nodes);
-        rootNode = new Sequence(nodes);
+        attackSequence = new Sequence(new List<Node> { aggroNode, chaseNode }); 
+        walkNode = new WalkNode(this, wayPointSystem);
+        
+        rootNode = new Selector(new List<Node> { attackSequence, walkNode});
     }
 
     private void Update()

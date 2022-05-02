@@ -25,6 +25,7 @@ public class WayPointSystem : MonoBehaviour
         {
             position.x = Random.Range(-spreadRadius, spreadRadius) + 1;
             position.z = Random.Range(-spreadRadius, spreadRadius) + 1;
+            position.y = 0f;
             t.position = position;
         }
 
@@ -38,13 +39,23 @@ public class WayPointSystem : MonoBehaviour
 
     private void Update()
     {
-        timeCounter -= Time.deltaTime;
-        if(timeCounter <= 0f)
+        //timeCounter -= Time.deltaTime;
+        //if(timeCounter <= 0f)
+        //{
+        //    int random = Random.Range(0, transform.childCount);
+        //    randomPosition = transform.GetChild(random);
+        //    timeCounter = delay;
+        //}
+    }
+
+    public Transform NewRandomPosition
+    {
+        get
         {
             int random = Random.Range(0, transform.childCount);
             randomPosition = transform.GetChild(random);
-            timeCounter = delay;
+            return randomPosition;
         }
     }
-    
+
 }
