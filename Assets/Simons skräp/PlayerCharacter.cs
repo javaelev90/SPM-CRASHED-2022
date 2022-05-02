@@ -8,6 +8,9 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private int currentHealth;
     [SerializeField] private HealthHandler healthHandler;
 
+    [Header("Respawn")]
+    [SerializeField] private Transform spawnPos;
+
     [Header("Shoot")]
     [SerializeField] private int damage;
     [SerializeField] private float shootRange; // Not used at the moment
@@ -35,6 +38,11 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
+    public void Die()
+    {
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,5 +62,12 @@ public class PlayerCharacter : MonoBehaviour
         {
             shootCooldownTimer -= Time.deltaTime; // Reduce cooldown timer
         }
+    }
+
+    private void Respawn()
+    {
+        healthHandler.CurrentHealth = currentHealth;
+        transform.position = spawnPos.position;
+        healthHandler.IsAlive = true;
     }
 }
