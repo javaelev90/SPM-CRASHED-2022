@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class WayPointSystem : MonoBehaviour
@@ -10,7 +9,8 @@ public class WayPointSystem : MonoBehaviour
     private float timeCounter;
     private Vector3 position = Vector3.zero;
     private Transform randomPosition;
-    public Transform RandomPosition { get { return randomPosition; } }
+    public Transform RandomPosition
+    { get { return randomPosition; } }
 
     private void Awake()
     {
@@ -25,7 +25,7 @@ public class WayPointSystem : MonoBehaviour
         {
             position.x = Random.Range(-spreadRadius, spreadRadius) + 1;
             position.z = Random.Range(-spreadRadius, spreadRadius) + 1;
-            position.y = 0f;
+            position.y = 1f;
             t.position = position;
         }
 
@@ -57,5 +57,4 @@ public class WayPointSystem : MonoBehaviour
             return randomPosition;
         }
     }
-
 }

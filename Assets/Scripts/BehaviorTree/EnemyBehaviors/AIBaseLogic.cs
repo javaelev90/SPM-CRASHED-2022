@@ -2,6 +2,7 @@ using BehaviorTree;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AIBaseLogic : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class AIBaseLogic : MonoBehaviour
 
     [Header("Navigation")]
     [SerializeField] private WayPointSystem wayPointSystem;
-
+    private NavMeshAgent agent;
     [Header("BehaviorTree")]
     private Selector rootNode;
     private AggroNode aggroNode;
@@ -28,8 +29,10 @@ public class AIBaseLogic : MonoBehaviour
     private Material material;
     [SerializeField] private float timeToAggro = 1f;
 
+
     public float TimeToAggro
     { get { return timeToAggro; } }
+
     public bool IsWithinRange { get; set; }
     public bool IsAggresive { get; set; }
 
@@ -37,13 +40,14 @@ public class AIBaseLogic : MonoBehaviour
     {
         StartCoroutine("FindTargetsWithDelay", delayToNewTarget);
         material = GetComponent<MeshRenderer>().material;
+        agent = GetComponent<NavMeshAgent>();
 
-        chaseNode = new ChaseNode(this);
+        chaseNode = new ChaseNode(this, agent);
         aggroNode = new AggroNode(this, material);
-        attackSequence = new Sequence(new List<Node> { aggroNode, chaseNode }); 
-        walkNode = new WalkNode(this, wayPointSystem);
-        
-        rootNode = new Selector(new List<Node> { attackSequence, walkNode});
+        attackSequence = new Sequence(new List<Node> { aggroNode, chaseNode });
+        walkNode = new WalkNode(this, agent, wayPointSystem);
+
+        rootNode = new Selector(new List<Node> { attackSequence, walkNode });
     }
 
     private void Update()
@@ -87,5 +91,11 @@ public class AIBaseLogic : MonoBehaviour
             angleInDegrees += transform.eulerAngles.y;
 
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0f, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, viewRadius);
     }
 }

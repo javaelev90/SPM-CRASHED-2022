@@ -1,18 +1,20 @@
 using BehaviorTree;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ChaseNode : Node
 {
     private AIBaseLogic ai;
-    private float rotationSpeed = 5f;
-    private float chaseSpeed = 7f;
+    private NavMeshAgent agent;
+    private float chaseSpeed = 10f;
     private float distanceToTarget;
     private bool withinRange;
-
-    public ChaseNode(AIBaseLogic ai)
+    public ChaseNode(AIBaseLogic ai, NavMeshAgent agent)
     {
         this.ai = ai;
+        this.agent = agent;
         distanceToTarget = ai.viewRadius / 2;
+        agent.speed = chaseSpeed;
     }
 
     public override NodeStates Evaluate()
@@ -22,7 +24,7 @@ public class ChaseNode : Node
             return NodeStates.FAILURE;
         }
 
-        if (Vector3.Distance(ai.transform.position, ai.visibleTargets[0].position) < distanceToTarget)
+        if (Vector3.Distance(agent.transform.position, ai.visibleTargets[0].position) < distanceToTarget)
         {
             withinRange = true;
             return NodeStates.SUCCESS;
@@ -33,17 +35,13 @@ public class ChaseNode : Node
             ChaseTarget();
             return NodeStates.RUNNING;
         }
-
     }
 
     private void ChaseTarget()
     {
         if (!withinRange)
         {
-            Quaternion rotateTo = Quaternion.LookRotation(ai.directionToTarget, Vector3.up);
-            ai.transform.rotation = Quaternion.Slerp(ai.transform.rotation, rotateTo, rotationSpeed * Time.deltaTime);
-            ai.transform.Translate(0, 0, chaseSpeed * Time.deltaTime);
+            agent.SetDestination(ai.visibleTargets[0].position);
         }
     }
-
 }
