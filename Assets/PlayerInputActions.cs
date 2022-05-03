@@ -116,6 +116,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlaceTurret"",
+                    ""type"": ""Button"",
+                    ""id"": ""8424eecc-608d-4c1b-a734-9365a2579e3b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -233,7 +242,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c8e6e68c-c156-401b-af9c-2edb006cf2dc"",
                     ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Move"",
@@ -437,6 +446,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3b7debbf-a632-470b-9f94-ebb3a11db1d5"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PlaceTurret"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8cd33137-4f80-410f-b158-7a7cab77f497"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""PlaceTurret"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -483,6 +514,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
         m_Player_Revive = m_Player.FindAction("Revive", throwIfNotFound: true);
         m_Player_DropShitPart = m_Player.FindAction("DropShitPart", throwIfNotFound: true);
+        m_Player_PlaceTurret = m_Player.FindAction("PlaceTurret", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -552,6 +584,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_DropItem;
     private readonly InputAction m_Player_Revive;
     private readonly InputAction m_Player_DropShitPart;
+    private readonly InputAction m_Player_PlaceTurret;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -566,6 +599,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @DropItem => m_Wrapper.m_Player_DropItem;
         public InputAction @Revive => m_Wrapper.m_Player_Revive;
         public InputAction @DropShitPart => m_Wrapper.m_Player_DropShitPart;
+        public InputAction @PlaceTurret => m_Wrapper.m_Player_PlaceTurret;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -605,6 +639,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @DropShitPart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropShitPart;
                 @DropShitPart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropShitPart;
                 @DropShitPart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropShitPart;
+                @PlaceTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlaceTurret;
+                @PlaceTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlaceTurret;
+                @PlaceTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlaceTurret;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -639,6 +676,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @DropShitPart.started += instance.OnDropShitPart;
                 @DropShitPart.performed += instance.OnDropShitPart;
                 @DropShitPart.canceled += instance.OnDropShitPart;
+                @PlaceTurret.started += instance.OnPlaceTurret;
+                @PlaceTurret.performed += instance.OnPlaceTurret;
+                @PlaceTurret.canceled += instance.OnPlaceTurret;
             }
         }
     }
@@ -673,5 +713,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnDropItem(InputAction.CallbackContext context);
         void OnRevive(InputAction.CallbackContext context);
         void OnDropShitPart(InputAction.CallbackContext context);
+        void OnPlaceTurret(InputAction.CallbackContext context);
     }
 }
