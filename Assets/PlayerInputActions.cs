@@ -125,6 +125,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShipPickUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""404869e7-1df2-4e36-94f6-7ed0b38cc292"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -468,6 +477,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""PlaceTurret"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de5f3045-cba3-4b00-bc7c-5015cda71033"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ShipPickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d89042d7-7ac8-40d5-bfb6-53bde8d43fda"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""ShipPickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -515,6 +546,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Revive = m_Player.FindAction("Revive", throwIfNotFound: true);
         m_Player_DropShitPart = m_Player.FindAction("DropShitPart", throwIfNotFound: true);
         m_Player_PlaceTurret = m_Player.FindAction("PlaceTurret", throwIfNotFound: true);
+        m_Player_ShipPickUp = m_Player.FindAction("ShipPickUp", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -585,6 +617,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Revive;
     private readonly InputAction m_Player_DropShitPart;
     private readonly InputAction m_Player_PlaceTurret;
+    private readonly InputAction m_Player_ShipPickUp;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -600,6 +633,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Revive => m_Wrapper.m_Player_Revive;
         public InputAction @DropShitPart => m_Wrapper.m_Player_DropShitPart;
         public InputAction @PlaceTurret => m_Wrapper.m_Player_PlaceTurret;
+        public InputAction @ShipPickUp => m_Wrapper.m_Player_ShipPickUp;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -642,6 +676,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @PlaceTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlaceTurret;
                 @PlaceTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlaceTurret;
                 @PlaceTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlaceTurret;
+                @ShipPickUp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShipPickUp;
+                @ShipPickUp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShipPickUp;
+                @ShipPickUp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShipPickUp;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -679,6 +716,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @PlaceTurret.started += instance.OnPlaceTurret;
                 @PlaceTurret.performed += instance.OnPlaceTurret;
                 @PlaceTurret.canceled += instance.OnPlaceTurret;
+                @ShipPickUp.started += instance.OnShipPickUp;
+                @ShipPickUp.performed += instance.OnShipPickUp;
+                @ShipPickUp.canceled += instance.OnShipPickUp;
             }
         }
     }
@@ -714,5 +754,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnRevive(InputAction.CallbackContext context);
         void OnDropShitPart(InputAction.CallbackContext context);
         void OnPlaceTurret(InputAction.CallbackContext context);
+        void OnShipPickUp(InputAction.CallbackContext context);
     }
 }

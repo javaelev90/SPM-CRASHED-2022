@@ -103,6 +103,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ShipPickUp",
+                    "type": "Button",
+                    "id": "404869e7-1df2-4e36-94f6-7ed0b38cc292",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -444,6 +453,28 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "PlaceTurret",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de5f3045-cba3-4b00-bc7c-5015cda71033",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ShipPickUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d89042d7-7ac8-40d5-bfb6-53bde8d43fda",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ShipPickUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -26,12 +26,14 @@ public class Engineer : Controller3D
     /// PLAYER NEED A CHILD OBJECT CALLED CarryPos
     /// </summary>
     [SerializeField] private Transform destination;
-    private Transform player;
-    private GameObject shipPart;
+    [SerializeField] private Transform player;
+    private GameObject[] shipPart;
+    private float checkRadius = 5f;
 
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(Wait(5));
         //playerActions = new PlayerInputActions();
     }
     protected override void Awake()
@@ -44,6 +46,7 @@ public class Engineer : Controller3D
     {
         base.Update();
         targetTime -= Time.deltaTime;
+        PickUpShipPart();
         //Debug.Log(targetTime);
     }
 
@@ -90,28 +93,33 @@ public class Engineer : Controller3D
 
     public void PickUpShipPart()
     {
-        Collider[] colliderHits = Physics.OverlapSphere(transform.position, radius);
-
-        foreach (Collider col in colliderHits)
+        if(player != null)
         {
-            if (col.tag == ("ShipPart") && playerActions.Player.PickUp.IsPressed())
+            Collider[] colliderHits = Physics.OverlapSphere(transform.position, checkRadius);
+            Debug.Log(colliderHits);
+
+            foreach (Collider col in colliderHits)
             {
-                Debug.Log("Inside");
-                destination = player.transform.Find("CarryPos");
-                //GetComponent<Rigidbody>().useGravity = false;
-                this.transform.position = destination.position;
-                this.transform.parent = GameObject.Find("CarryPos").transform;
-            }
-            if (playerActions.Player.DropShitPart.IsPressed())
-            {
-                this.transform.parent = null;
-                //GetComponent<Rigidbody>().useGravity = true;
-            }
-            else
-            {
-                //Debug.Log("Outside");
+                if (col.tag == ("ShipPart") && playerActions.Player.ShipPickUp.IsPressed())
+                {
+                    destination = player.transform.Find("CarryPos");
+                    shipPart = GameObject.FindGameObjectsWithTag("ShipPart");
+                    //GetComponent<Rigidbody>().useGravity = false;
+                    col.transform.position = destination.position;
+                    col.transform.parent = GameObject.Find("CarryPos").transform;
+                }
+                if (playerActions.Player.DropShitPart.IsPressed())
+                {
+                    col.transform.parent = null;
+                    //GetComponent<Rigidbody>().useGravity = true;
+                }
+                else
+                {
+                    //Debug.Log("Outside");
+                }
             }
         }
+        
     }
 
     IEnumerator Wait(float sec)
@@ -122,5 +130,10 @@ public class Engineer : Controller3D
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, checkRadius);
     }
 }

@@ -126,12 +126,9 @@ public class Controller3D : MonoBehaviourPunCallbacks
     public void InputHandling() //InputAction.CallbackContext value
     {
         //groundHit = IsGrounded();
-        Debug.Log("FUCK");
         if (isMine)
         {
-            Debug.Log("FUCK YOU");
             Vector3 movementInput = playerActions.Player.Move.ReadValue<Vector2>();
-            Debug.Log(movementInput);
             input = new Vector3(movementInput.x, 0, movementInput.y);
 
             input = mainCam.transform.rotation * input;
@@ -158,7 +155,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
     public void MoveCamera(InputAction.CallbackContext obj)
     {
         cameraLooking = obj.ReadValue<Vector2>();
-        Debug.Log(cameraLooking);
+        //Debug.Log(cameraLooking);
     }
 
     private void RoatateCamera()

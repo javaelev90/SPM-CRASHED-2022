@@ -356,6 +356,7 @@ MonoBehaviour:
   metalCostTurret: 1
   turretPrefab: {fileID: 1503096766842467002, guid: 3358d40555310ec4d8266bc256c4335e, type: 3}
   destination: {fileID: 431206142263564548}
+  player: {fileID: 5125041606170365177}
 --- !u!114 &5344456586567406286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,6 +510,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8424eecc-608d-4c1b-a734-9365a2579e3b
     m_ActionName: Player/PlaceTurret[/XInputControllerWindows/leftTrigger,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1484468382420821516}
+        m_TargetAssemblyTypeName: Engineer, Assembly-CSharp
+        m_MethodName: PickUpShipPart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 404869e7-1df2-4e36-94f6-7ed0b38cc292
+    m_ActionName: Player/ShipPickUp[/XInputControllerWindows/buttonWest,/XInputControllerWindows1/buttonWest,/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
