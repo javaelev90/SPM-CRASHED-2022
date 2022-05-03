@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11a628ad4f33d1247a3d1fcae6437deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRotation: {fileID: 9152344171175105241}
+  weaponRotation: {fileID: 571670694635274859}
   muzzlePoint: {fileID: 5498475569760189414}
   bullet: {fileID: 0}
   bulletSpeed: 0
@@ -155,7 +155,6 @@ MonoBehaviour:
   smoothFactorQuick: 0.5
   smoothFactorSlow: 1
   radius: 1
-  mainCam: {fileID: 0}
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -170,14 +169,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 47252abbc27c0fa4aa9ca165dfa25a57, type: 2}
   - {fileID: 11400000, guid: f6609b2bd3dacc8449a4615594518fe2, type: 2}
   - {fileID: 11400000, guid: d7ab4444ed09af64faff96bdbf7451bd, type: 2}
-  turret: {fileID: 0}
-  turretPos: {fileID: 0}
-  maxTurretToSpawn: 3
-  turretCount: 0
-  turretOffset: {x: 0, y: 0, z: 0}
-  gooCostTurret: 1
-  metalCostTurret: 1
   playerInput: {fileID: 0}
+  healthHandler: {fileID: 0}
+  fireLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  interactionDistance: 1
   weapon: {fileID: 0}
 --- !u!114 &2142802736974156291
 MonoBehaviour:
@@ -384,6 +381,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9fb3e0f1-c1a1-4650-9c40-3f106dfae2fa
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8424eecc-608d-4c1b-a734-9365a2579e3b
+    m_ActionName: Player/PlaceTurret[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 404869e7-1df2-4e36-94f6-7ed0b38cc292
+    m_ActionName: Player/ShipPickUp[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -408,7 +413,8 @@ MonoBehaviour:
   automaticWeapon: 0
   layersThatShouldBeHit:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 512
+  hitmesh: {fileID: 5938402320316291365, guid: c6a14cd568ce4784d83061d3b1cfb138, type: 3}
 --- !u!1 &571670694635274859
 GameObject:
   m_ObjectHideFlags: 0

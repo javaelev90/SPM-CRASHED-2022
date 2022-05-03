@@ -184,7 +184,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
         transform.rotation = Quaternion.Euler(transform.rotation.x, cameraRotation.y, transform.rotation.z);
     }
 
-    private void WeaponRotation()
+    protected void WeaponRotation()
     {
         weaponRotation.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f);
 

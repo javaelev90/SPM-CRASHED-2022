@@ -10,18 +10,14 @@ public class Weapon : MonoBehaviour
 
     [Header("Weapon settings")]
     [SerializeField] float weaponRange = 15f;
-    [SerializeField] float weaponDamage = 1f;
+    [SerializeField] int weaponDamage = 1;
     [SerializeField] float delayBetweenShots = 0.5f;
     [Tooltip("If gun will shoot continuously when shoot button is pressed vs one shot per click.")]
     [SerializeField] public bool automaticWeapon = false;
     [SerializeField] LayerMask layersThatShouldBeHit;
+    [SerializeField] GameObject hitmesh;
 
     private float shotCooldown = 0f;
-
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
@@ -30,29 +26,34 @@ public class Weapon : MonoBehaviour
 
     private void Cooldown()
     {
-        if (OnCoolDown())
+        if (OnCoolDown() == true)
         {
-            shotCooldown += Time.deltaTime;
+            shotCooldown -= Time.deltaTime;
         }
     }
 
     private bool OnCoolDown()
     {
-        return shotCooldown < delayBetweenShots;
+        return shotCooldown >= 0;
     }
 
     public void Shoot()
     {
-        if(!OnCoolDown())
+        if(OnCoolDown() == false)
         {
-            if(Physics.Raycast(Camera.main.ViewportPointToRay(Vector3.zero),
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,
                 out RaycastHit hitInfo, weaponRange, layersThatShouldBeHit))
             {
-                if (hitInfo.transform.gameObject.CompareTag("Enemy"))
+                HealthHandler healthHandler = hitInfo.transform.GetComponent<HealthHandler>();
+                Debug.Log("Hit the enemy?");
+                if (healthHandler)
                 {
-                    //hitInfo.transform.GetComponent<AIMovement>().
+                    Debug.Log("Hit the enemy.");
+                    healthHandler.TakeDamage(weaponDamage);
                 }
             }
+            // Add cooldown time
+            shotCooldown = delayBetweenShots;
         }
     }
 }
