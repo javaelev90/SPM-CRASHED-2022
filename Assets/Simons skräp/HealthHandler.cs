@@ -12,6 +12,8 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     [SerializeField] private bool isEnemy;
 
     public bool IsAlive { get; internal set; }
+    public HealthState hs {get; set;}
+
 
     public void TakeDamage(int amount)
     {
