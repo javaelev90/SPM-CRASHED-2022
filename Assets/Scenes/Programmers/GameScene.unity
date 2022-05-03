@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 342393173}
   - component: {fileID: 342393172}
-  - component: {fileID: 342393171}
   m_Layer: 0
   m_Name: EnemySpawner (1)
   m_TagString: Untagged
@@ -141,19 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!135 &342393171
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 342393170}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 11.4
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &342393172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +155,8 @@ MonoBehaviour:
   objectPool: {fileID: 1737924835}
   numberToSpawn: 10
   delayBetweenSpawns: 1
+  spawnRadius: 20.5
+  spawnWithinRadius: 1
 --- !u!4 &342393173
 Transform:
   m_ObjectHideFlags: 0
@@ -177,7 +165,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 342393170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.64, y: 3.65, z: -27.98}
+  m_LocalPosition: {x: -17.64, y: 4.9, z: -27.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -193,7 +181,6 @@ GameObject:
   m_Component:
   - component: {fileID: 764329550}
   - component: {fileID: 764329551}
-  - component: {fileID: 764329552}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -209,7 +196,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 764329549}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.27, y: 8.39, z: 22.05}
+  m_LocalPosition: {x: -1.27, y: 8.39, z: 14.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -230,19 +217,8 @@ MonoBehaviour:
   objectPool: {fileID: 1737924835}
   numberToSpawn: 10
   delayBetweenSpawns: 1
---- !u!135 &764329552
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 764329549}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 13.25
-  m_Center: {x: 0, y: 0, z: 0}
+  spawnRadius: 20.5
+  spawnWithinRadius: 1
 --- !u!1 &860160533
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +521,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pooledObjectPrefab: {fileID: 407230730308412197, guid: 0cf7f0086388c3d4cb484be52379bfac, type: 3}
   maxPoolSize: 50
-  pooledObjects: []
 --- !u!114 &1737924836
 MonoBehaviour:
   m_ObjectHideFlags: 0
