@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505469119939958381}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.74, z: 1.77}
+  m_LocalPosition: {x: 0, y: 0.66, z: 1.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5125041606170365177}
@@ -346,6 +346,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 47252abbc27c0fa4aa9ca165dfa25a57, type: 2}
   - {fileID: 11400000, guid: f6609b2bd3dacc8449a4615594518fe2, type: 2}
   - {fileID: 11400000, guid: d7ab4444ed09af64faff96bdbf7451bd, type: 2}
+  animator: {fileID: 0}
   playerInput: {fileID: 5344456586567406286}
   turret: {fileID: 2411392565204665798, guid: 3358d40555310ec4d8266bc256c4335e, type: 3}
   turretPos: {fileID: 2520650330550881837}
@@ -357,6 +358,12 @@ MonoBehaviour:
   turretPrefab: {fileID: 1503096766842467002, guid: 3358d40555310ec4d8266bc256c4335e, type: 3}
   destination: {fileID: 431206142263564548}
   player: {fileID: 5125041606170365177}
+  muzzlePosition: {fileID: 1099855166}
+  weaponRange: 15
+  delayBetweenShots: 0.5
+  stunLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &5344456586567406286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,7 +474,19 @@ MonoBehaviour:
     m_ActionId: 9fb3e0f1-c1a1-4650-9c40-3f106dfae2fa
     m_ActionName: Player/Jump[/XInputControllerWindows/buttonEast,/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1484468382420821516}
+        m_TargetAssemblyTypeName: Engineer, Assembly-CSharp
+        m_MethodName: StunEnemy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: af5459e9-1079-40ca-9f71-bba305ed9045
     m_ActionName: Player/Shoot[/XInputControllerWindows/rightTrigger,/Mouse/leftButton]
   - m_PersistentCalls:
