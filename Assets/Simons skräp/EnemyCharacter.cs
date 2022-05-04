@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class EnemyCharacter : MonoBehaviour
+public class EnemyCharacter : MonoBehaviourPunCallbacks
 {
     [Header("Health")]
     [SerializeField] private int maxHealth;
@@ -12,8 +13,16 @@ public class EnemyCharacter : MonoBehaviour
     [Header("Damage")]
     [SerializeField] private int damage;
     [SerializeField] private float explosionRadius;
-    [SerializeField] private Transform explosionOrigin;
     [SerializeField] private LayerMask layersToHit;
+    [SerializeField] private GameObject explosionObject;
+    public int Damage { get { return damage; } }
+    public float ExplosionRadius { get { return explosionRadius; } }
+    public LayerMask LayersToHit { get { return layersToHit; } }
+
+    public void Die()
+    {
+        photonView.RPC(nameof(DieRPC), RpcTarget.All);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -26,5 +35,14 @@ public class EnemyCharacter : MonoBehaviour
     void Update()
     {
         
+    }
+
+    [PunRPC]
+    private void DieRPC()
+    {
+        GetComponent<AIMovement>().BlowUp();
+        explosionObject.transform.parent = null;
+        explosionObject.GetComponent<ParticleSystem>().Play();
+        gameObject.SetActive(false);
     }
 }

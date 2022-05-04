@@ -1,0 +1,66 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+
+public class LocalPooledObject : MonoBehaviour
+{
+    public enum RecyclingBehavior
+    {
+        Nothing,
+        Transform,
+        Custom,
+        CustomAndTransform
+    }
+
+    public RecyclingBehavior recyclingBehaviour;
+    public LocalObjectPool ObjectPool { get; set; }
+    public Action CustomRecycleFunction { get; set; }
+    public List<LocalPooledObjectPart> localObjectPart;
+
+    public void Recycle()
+    {
+        switch (recyclingBehaviour)
+        {
+            case RecyclingBehavior.Nothing:
+                break;
+            case RecyclingBehavior.Transform:
+                RecycleTransform();
+                RecycleChildObject();
+                break;
+            case RecyclingBehavior.Custom:
+                RecycleCustom();
+                RecycleChildObject();
+                break;
+            case RecyclingBehavior.CustomAndTransform:
+                RecycleTransform();
+                RecycleCustom();
+                RecycleChildObject();
+                break;
+        }
+    }
+
+    public void UpdateActiveState(bool active)
+    {
+        gameObject.SetActive(active);
+    }
+
+    private void RecycleTransform()
+    {
+        transform.localScale = ObjectPool.pooledObjectPrefab.transform.localScale;
+        transform.rotation = ObjectPool.pooledObjectPrefab.transform.rotation;
+    }
+
+    private void RecycleCustom()
+    {
+        CustomRecycleFunction?.Invoke();
+    }
+
+    private void RecycleChildObject()
+    {
+        foreach (LocalPooledObjectPart pooledObjectPart in localObjectPart)
+        {
+            pooledObjectPart.Recycle();
+        }
+    }
+}
