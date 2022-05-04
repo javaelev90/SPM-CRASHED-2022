@@ -13,35 +13,36 @@ public class ChaseNode : Node
     {
         this.ai = ai;
         this.agent = agent;
-        distanceToTarget = ai.viewRadius / 2;
+        //distanceToTarget = ai.viewRadius / 2;
         agent.speed = chaseSpeed;
     }
 
     public override NodeStates Evaluate()
     {
-        if (ai.visibleTargets.Count == 0)
-        {
-            return NodeStates.FAILURE;
-        }
+        return NodeStates.SUCCESS;
+        //    if (ai.visibleTargets.Count == 0)
+        //    {
+        //        return NodeStates.FAILURE;
+        //    }
 
-        if (Vector3.Distance(agent.transform.position, ai.visibleTargets[0].position) < distanceToTarget)
-        {
-            withinRange = true;
-            return NodeStates.SUCCESS;
-        }
-        else
-        {
-            withinRange = false;
-            ChaseTarget();
-            return NodeStates.RUNNING;
-        }
-    }
+        //    if (Vector3.Distance(agent.transform.position, ai.visibleTargets[0].position) < distanceToTarget)
+        //    {
+        //        withinRange = true;
+        //        return NodeStates.SUCCESS;
+        //    }
+        //    else
+        //    {
+        //        withinRange = false;
+        //        ChaseTarget();
+        //        return NodeStates.RUNNING;
+        //    }
+        //}
 
-    private void ChaseTarget()
-    {
-        if (!withinRange)
-        {
-            agent.SetDestination(ai.visibleTargets[0].position);
-        }
+        //private void ChaseTarget()
+        //{
+        //    if (!withinRange)
+        //    {
+        //        agent.SetDestination(ai.visibleTargets[0].position);
+        //    }
     }
 }

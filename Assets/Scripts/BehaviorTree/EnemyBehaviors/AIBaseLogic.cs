@@ -1,4 +1,3 @@
-using BehaviorTree;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,52 +6,30 @@ using UnityEngine.AI;
 public class AIBaseLogic : MonoBehaviour
 {
     [Header("Vision parameters")]
-    public float viewRadius;
+    [SerializeField] protected float viewRadius;
     [Range(0, 360)]
-    public float viewAngle;
-    public float delayToNewTarget = 1f;
-    public LayerMask obstacleMask;
-    public LayerMask targetMask;
-    public List<Transform> visibleTargets = new List<Transform>();
-    public float distanceToTarget;
-    public Vector3 directionToTarget;
+    [SerializeField] protected float viewAngle;
+    [SerializeField] private float delayToNewTarget = 1f;
+    [SerializeField] private LayerMask obstacleMask;
+    [SerializeField] private LayerMask targetMask;
+    protected List<Transform> visibleTargets = new List<Transform>();
+    protected float distanceToTarget;
+    protected Vector3 directionToTarget;
 
     [Header("Navigation")]
     [SerializeField] private WayPointSystem wayPointSystem;
-    private NavMeshAgent agent;
-    [Header("BehaviorTree")]
-    private Selector rootNode;
-    private AggroNode aggroNode;
-    private ChaseNode chaseNode;
-    private WalkNode walkNode;
-    private Sequence attackSequence;
-    private Material material;
+    protected NavMeshAgent agent;
     [SerializeField] private float timeToAggro = 1f;
-
 
     public float TimeToAggro
     { get { return timeToAggro; } }
-
     public bool IsWithinRange { get; set; }
     public bool IsAggresive { get; set; }
 
-    private void Start()
+    private void Awake()
     {
         StartCoroutine("FindTargetsWithDelay", delayToNewTarget);
-        material = GetComponent<MeshRenderer>().material;
         agent = GetComponent<NavMeshAgent>();
-
-        chaseNode = new ChaseNode(this, agent);
-        aggroNode = new AggroNode(this, material);
-        attackSequence = new Sequence(new List<Node> { aggroNode, chaseNode });
-        walkNode = new WalkNode(this, agent, wayPointSystem);
-
-        rootNode = new Selector(new List<Node> { attackSequence, walkNode });
-    }
-
-    private void Update()
-    {
-        rootNode.Evaluate();
     }
 
     private IEnumerator FindTargetsWithDelay(float delay)
@@ -83,6 +60,11 @@ public class AIBaseLogic : MonoBehaviour
                 }
             }
         }
+
+        //if(targetInViewRadius.Length == 0)
+        //{
+        //    visibleTargets.Clear();
+        //}
     }
 
     public Vector3 DirectionFromAngle(float angleInDegrees, bool angleIsGlobal)
@@ -93,9 +75,4 @@ public class AIBaseLogic : MonoBehaviour
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0f, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, viewRadius);
-    }
 }
