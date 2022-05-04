@@ -49,8 +49,8 @@ public class AIBaseLogic : MonoBehaviour
             timeStunnedCounter -= Time.deltaTime;
             if (timeStunnedCounter <= 0f)
             {
-                timeStunnedCounter = timeStunned;
                 IsStunned = false;
+                timeStunnedCounter = timeStunned;
             }
         }
         else
@@ -76,7 +76,6 @@ public class AIBaseLogic : MonoBehaviour
                 }
             }
         }
-
     }
 
     public void StunnedBy(Transform target)
