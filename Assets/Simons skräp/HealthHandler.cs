@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class HealthHandler : MonoBehaviourPunCallbacks
+public class HealthHandlerTest : MonoBehaviourPunCallbacks
 {
     [SerializeField] private HealthBarHandler healthBarHandler;
     public int MaxHealth { get; internal set; }
@@ -12,6 +12,8 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     [SerializeField] private bool isEnemy;
 
     public bool IsAlive { get; internal set; }
+    public HealthState hs {get; set;}
+
 
     public void TakeDamage(int amount)
     {

@@ -142,8 +142,4 @@ public class AIMovement : MonoBehaviour
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0f, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 
-    private void OnDisable()
-    {
-        StopAllCoroutines();
-    }
 }

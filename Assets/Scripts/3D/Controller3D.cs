@@ -10,8 +10,8 @@ public class Controller3D : MonoBehaviourPunCallbacks
     private bool isMine;
 
     [Header("Weapon")]
-    [SerializeField] private GameObject weaponRotation;
-    [SerializeField] private GameObject muzzlePoint;
+    [SerializeField] public GameObject weaponRotation;
+    [SerializeField] public GameObject muzzlePoint;
     [SerializeField] private PhotonView bullet;
     [SerializeField] private float bulletSpeed;
     private string pathBullet = "Prefab/Player/Bullet";
@@ -27,7 +27,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
     [SerializeField] Vector3 cameraOffsetFPS;
     [SerializeField] float smoothFactorQuick = 0.23f;
     [SerializeField] float smoothFactorSlow = 0.05f;
-    [SerializeField] float radius = 1.0f;
+    [SerializeField] protected float radius = 1.0f;
     private Vector3 smoothedPos;
     private Vector3 topPos;
     private Vector2 cameraRotation;
@@ -35,7 +35,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
     private Vector3 offset;
 
     [Header("Physics")]
-    [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] public LayerMask obstacleLayer;
     [SerializeField] RaycastHit groundHit;
     private CapsuleCollider capsuleCollider;
     private Vector3 upperPoint;
@@ -51,35 +51,22 @@ public class Controller3D : MonoBehaviourPunCallbacks
     [Header("States")]
     [SerializeField] private StateMachine stateMachine;
     [SerializeField] private State[] states;
+    [SerializeField] public Animator animator;
 
     [Header("PhysicsBody")]
     private PhysicsBody body;
     public PhysicsBody Body => body;
 
-    [Header("Turrets")]
-    [SerializeField] private PhotonView turret;
-    [SerializeField] private Transform turretPos;
-    [SerializeField] private int maxTurretToSpawn = 3;
-    [SerializeField] private int turretCount;
-    [SerializeField] private Vector3 turretOffset;
-    [SerializeField] private int gooCostTurret = 1;
-    [SerializeField] private int metalCostTurret = 1;
-    private GameObject turretObject;
-    private bool canPutDownTurret;
-    private string pathTurret = "Prefab/Player/TurretAssembly";
 
+    
     [Header("InputSystem")]
-    private PlayerInputActions playerActions;
+    public PlayerInputActions playerActions;
     public PlayerInput playerInput;
     private string currentControlScheme; // The controlls we are currently using (Keyboard&Mouse or Gamepad)
     Vector2 cameraLooking; // The input from mouse/gamepad that is used to move camera
 
-    public PlayerInputActions GetPlayerActions()
-    {
-        return playerActions;
-    }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         playerActions = new PlayerInputActions();
@@ -99,44 +86,56 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
     private void OnEnable()
     {
-        playerActions.Enable();
+        playerActions.Player.Enable();
     }
 
     private void OnDisable()
     {
-        playerActions.Disable();
+        playerActions.Player.Disable();
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (isMine)
         {
-            //InputHandling();
+            InputHandling();
             PlayerRotation();
-            WeaponRotation();
-            TurretHandling();
+            
             stateMachine.UpdateStates();
 
             RoatateCamera();
 
-            if (playerActions.Player.PickUp.IsPressed())
-            {
-                Debug.Log("Fuck");
-            }
+
         }
     }
 
-    public void InputHandling(InputAction.CallbackContext value)
+    public void Jump()
     {
-        groundHit = IsGrounded();
+        float jumpForce = 5f;
+        
+        
+        //groundHit = IsGrounded();
+        if (playerActions.Player.Jump.IsPressed() && Body.Grounded)
+        {
+            Vector3 jumpMovement = Vector3.up * jumpForce;
+
+            Body.Velocity += jumpMovement;
+        }
+    }
+
+    public void InputHandling() //InputAction.CallbackContext value
+    {
+        //groundHit = IsGrounded();
         if (isMine)
         {
-            Vector2 movementInput = value.ReadValue<Vector2>();
+            Vector3 movementInput = playerActions.Player.Move.ReadValue<Vector2>();
             input = new Vector3(movementInput.x, 0, movementInput.y);
 
             input = mainCam.transform.rotation * input;
             input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
+
+            //Body.Velocity += input;
 
             /*
             input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
@@ -186,15 +185,16 @@ public class Controller3D : MonoBehaviourPunCallbacks
         transform.rotation = Quaternion.Euler(transform.rotation.x, cameraRotation.y, transform.rotation.z);
     }
 
-    private void WeaponRotation()
+    protected void WeaponRotation()
     {
         weaponRotation.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f);
 
         Debug.DrawRay(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 100f, Color.red);
 
+        /*
         if (!canPutDownTurret)
         {
-            /*
+            
             if (Input.GetMouseButtonDown(0))
             {
                 GameObject bull = PhotonNetwork.Instantiate(pathBullet, muzzlePoint.transform.position, weaponRotation.transform.rotation);
@@ -202,45 +202,93 @@ public class Controller3D : MonoBehaviourPunCallbacks
                 projectile.Velocity = weaponRotation.transform.rotation * Vector3.forward * bulletSpeed;
                 projectile.IsShot = true;
             }
-            */
+            
         }
+        */
 
 
     }
 
-    private void TurretHandling()
+    /*
+    public void TurretHandling()
     {
-        //Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out RaycastHit hit, obstacleLayer);
-        /*
-        if (turretCount < maxTurretToSpawn && (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
+        Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out RaycastHit hit, obstacleLayer);
+        
+        if (turretCount < maxTurretToSpawn && playerActions.Player.PlaceTurret.IsPressed()) //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
         {
+            GameObject turretObject;
+
             
-            if (Input.GetMouseButtonDown(1))
+            //
+            if (canPutDownTurret && turretObject != null && playerActions.Player.PlaceTurret.IsPressed()) //Input.GetMouseButton(1)
             {
+                turretObject.transform.position = turretPos.position;
+                turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
+            }
+            //
+            
+
+            if (targetTime < 0.0f)
+            {
+
                 canPutDownTurret = true;
-                turretObject = PhotonNetwork.Instantiate(pathTurret, turretPos.position, Quaternion.identity);
-            }
+                turretObject = PhotonNetwork.Instantiate("Prefabs/" + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
 
-            if (canPutDownTurret && turretObject != null && Input.GetMouseButton(1))
-            {
-                turretObject.transform.position = turretPos.position;
-                turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
-            }
+                if (canPutDownTurret && turretObject != null && playerActions.Player.PlaceTurret.IsPressed())//Input.GetMouseButtonUp(1))
+                {
+                    turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
+                    turretObject.transform.position = turretPos.position;
+                    turretObject.GetComponent<Turret>().IsPlaced = true;
+                    turretCount++;
+                    canPutDownTurret = false;
+                    //inventory.removeMetalAndGreenGoo(metalCostTurret,gooCostTurret);
 
-            if (canPutDownTurret && Input.GetMouseButtonUp(1))
-            {
-                turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
-                turretObject.transform.position = turretPos.position;
-                turretObject.GetComponent<Turret>().IsPlaced = true;
-                turretCount++;
-                canPutDownTurret = false;
-                inventory.removeMetalAndGreenGoo(metalCostTurret,gooCostTurret);
-                
+                }
+
+                targetTime = 1f;
             }
-            
         }
-    */
+    
     }
+*/
+
+    /*
+    public void PickUpShipPart()
+    {
+        Collider[] colliderHits = Physics.OverlapSphere(transform.position, radius);
+
+        foreach (Collider col in colliderHits)
+        {
+            if (col.tag == ("ShipPart") && playerActions.Player.PickUp.IsPressed())
+            {
+                Debug.Log("Inside");
+                destination = player.transform.Find("CarryPos");
+                //GetComponent<Rigidbody>().useGravity = false;
+                this.transform.position = destination.position;
+                this.transform.parent = GameObject.Find("CarryPos").transform;
+            }
+            if (playerActions.Player.DropShitPart.IsPressed())
+            {
+                this.transform.parent = null;
+                //GetComponent<Rigidbody>().useGravity = true;
+            }
+            else
+            {
+                //Debug.Log("Outside");
+            }
+        }
+    }
+
+    IEnumerator Wait(float sec)
+    {
+        while (player == null)
+        {
+            yield return new WaitForSeconds(sec);
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+
+    }
+    */
 
     private void UpdateCamera()
     {
