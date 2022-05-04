@@ -57,6 +57,10 @@ public class ObjectSpawner : MonoBehaviour
             cooldownCounter = 0;
             spawnedObjects++;
         }
+        if (spawnedObjects == numberToSpawn)
+        {
+            ResetSpawner();
+        }
     }
 
     private void SpawnMultipleObjects(int numberToSpawn)
