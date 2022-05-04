@@ -81,11 +81,9 @@ public class Engineer : Controller3D
             if (Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out hit, weaponRange, stunLayer))
             {
                 AIBaseLogic aIBaseLogic = hit.transform.GetComponent<AIBaseLogic>();
-                //HealthHandler healthHandler = hit.transform.GetComponent<HealthHandler>();
-                Debug.Log("Hit the enemy?");
                 if (aIBaseLogic)
                 {
-                    Debug.Log("Stun the enemy.");
+                    Debug.Log("Enemy stunned");
                     aIBaseLogic.StunnedBy(transform);
                 }
             }
@@ -97,7 +95,13 @@ public class Engineer : Controller3D
 
     public void TurretHandling()
     {
-        //Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out RaycastHit hit, obstacleLayer);
+        Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out RaycastHit hit, obstacleLayer);
+
+        if (playerActions.Player.DeleteTurret.IsPressed())
+        {
+
+        }
+
 
         if (turretCount < maxTurretToSpawn && playerActions.Player.PlaceTurret.IsPressed()) //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
         {
