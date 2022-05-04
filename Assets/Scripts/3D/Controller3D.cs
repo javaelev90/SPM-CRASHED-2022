@@ -51,6 +51,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
     [Header("States")]
     [SerializeField] private StateMachine stateMachine;
     [SerializeField] private State[] states;
+    [SerializeField] public Animator animator;
 
     [Header("PhysicsBody")]
     private PhysicsBody body;
