@@ -26,12 +26,12 @@ public class StoneEnemy : AIBaseLogic
 
     protected override void Update()
     {
+        base.Update();
+        
         if (IsStunned)
         {
             return;
         }
-
-        base.Update();
         // om spelare syns ska den räkna ut distansen och agera därefter
         if (IsWithinSight)
         {
