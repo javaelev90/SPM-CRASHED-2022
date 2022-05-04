@@ -358,6 +358,7 @@ GameObject:
   - component: {fileID: 6663201117975485866}
   - component: {fileID: 2925152201826919833}
   - component: {fileID: 3528305090825885242}
+  - component: {fileID: -2848051172062990726}
   m_Layer: 6
   m_Name: Soldier
   m_TagString: Player
@@ -510,6 +511,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 47252abbc27c0fa4aa9ca165dfa25a57, type: 2}
   - {fileID: 11400000, guid: f6609b2bd3dacc8449a4615594518fe2, type: 2}
   - {fileID: 11400000, guid: d7ab4444ed09af64faff96bdbf7451bd, type: 2}
+  animator: {fileID: -2848051172062990726}
   playerInput: {fileID: 0}
   healthHandler: {fileID: 0}
   fireLayer:
@@ -756,6 +758,25 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   hitmesh: {fileID: 5938402320316291365, guid: c6a14cd568ce4784d83061d3b1cfb138, type: 3}
+--- !u!95 &-2848051172062990726
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334875400098420458}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0a88a2b5195f54b4aa9b89224c8106d2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &571670694635274859
 GameObject:
   m_ObjectHideFlags: 0
