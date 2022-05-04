@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace BehaviorTree
 {
     public enum NodeStates
     {
-        FAILURE, 
+        FAILURE,
         RUNNING,
         SUCCESS
     }
@@ -15,17 +11,20 @@ namespace BehaviorTree
     public abstract class Node
     {
         /* delegate that return the state of the node*/
+
         public delegate NodeStates NodeReturn();
 
         /* The current state of the node */
         protected NodeStates nodeState;
 
-        public NodeStates NodeState { get { return nodeState; } }
+        public NodeStates NodeState
+        { get { return nodeState; } }
 
-        public Node() { }
+        public Node()
+        { }
 
         /* Implementing classes us this method evaluate the desired set of conditions */
-        public abstract NodeStates Evaluate();
 
+        public abstract NodeStates Evaluate();
     }
 }
