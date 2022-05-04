@@ -42,6 +42,14 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         return PhotonNetwork.InstantiateRoomObject("Prefabs/Enemies/"+pooledObjectPrefab.name, position, rotation).GetComponent<PooledObject>();
     }
 
+    public void DeSpawnPool()
+    {
+        if (activeObjects.Count > 0)
+        {
+            photonView.RPC(nameof(DeSpawnPoolMaster), RpcTarget.MasterClient);
+        }
+    }
+
     public void Spawn(Vector3 position)
     {
         if(pooledObjects.Count > 0)
@@ -65,6 +73,7 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         }
         PooledObject pooledObject = pooledObjects.Dequeue();
         pooledObject.transform.position = position;
+        pooledObject.transform.SetParent(transform);
         activeObjects.Add(pooledObject.photonView.ViewID, pooledObject);
         pooledObject.UpdateActiveState(true);
     }
@@ -84,6 +93,25 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
             if (activeObjects.Remove(gameObjectPhotonId))
             {
                 pooledObjects.Enqueue(pooledObject);
+            }
+        }
+    }
+
+    [PunRPC]
+    private void DeSpawnPoolMaster()
+    {
+        if (PhotonNetwork.IsMasterClient == false)
+        {
+            Debug.LogError($"[PhotonObjectPool::DeSpawnPoolMaster] Only the master is allowed to spawn objects.");
+            return;
+        }
+        foreach (var item in activeObjects)
+        {
+            item.Value.Recycle();
+            item.Value.UpdateActiveState(false);
+            if (activeObjects.Remove(item.Key))
+            {
+                pooledObjects.Enqueue(item.Value);
             }
         }
     }
