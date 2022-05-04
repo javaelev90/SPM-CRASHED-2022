@@ -46,39 +46,37 @@ public class AIBaseLogic : MonoBehaviour
     {
         if (IsStunned)
         {
-            return;
-        }
-
-        if (IsWithinSight)
-        {
-            timeCounterAggro -= Time.deltaTime;
-
-            if (timeCounterAggro <= 0f)
-            {
-                IsAggresive = true;
-                timeCounterAggro = timeToAggro;
-            }
-        }
-        else if(!IsWithinSight && IsAggresive)
-        {
-            timeCounterAggro -= Time.deltaTime;
-
-            if (timeCounterAggro <= 0f)
-            {
-                IsAggresive = false;
-                timeCounterAggro = timeToAggro;
-            }
-        }
-
-        if (IsStunned)
-        {
             timeStunnedCounter -= Time.deltaTime;
-            if(timeStunnedCounter <= 0f)
+            if (timeStunnedCounter <= 0f)
             {
                 timeStunnedCounter = timeStunned;
                 IsStunned = false;
             }
         }
+        else
+        {
+            if (IsWithinSight)
+            {
+                timeCounterAggro -= Time.deltaTime;
+
+                if (timeCounterAggro <= 0f)
+                {
+                    IsAggresive = true;
+                    timeCounterAggro = timeToAggro;
+                }
+            }
+            else if (!IsWithinSight && IsAggresive)
+            {
+                timeCounterAggro -= Time.deltaTime;
+
+                if (timeCounterAggro <= 0f)
+                {
+                    IsAggresive = false;
+                    timeCounterAggro = timeToAggro;
+                }
+            }
+        }
+
     }
 
     public void StunnedBy(Transform target)
