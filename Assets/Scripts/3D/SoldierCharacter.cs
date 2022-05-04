@@ -6,10 +6,12 @@ using Photon.Pun;
 [RequireComponent(typeof(Weapon))]
 public class SoldierCharacter : Controller3D
 {
-    [SerializeField] HealthHandler healthHandler;
-    [SerializeField] LayerMask fireLayer;
-    [SerializeField] float interactionDistance = 1f;
-    [SerializeField] Weapon weapon;
+    [SerializeField] private int maxHealth;
+    [SerializeField] private int currentHealth;
+    [SerializeField] private HealthHandler healthHandler;
+    [SerializeField] private LayerMask fireLayer;
+    [SerializeField] private float interactionDistance = 1f;
+    [SerializeField] private Weapon weapon;
 
     protected override void Awake()
     {
@@ -41,13 +43,13 @@ public class SoldierCharacter : Controller3D
 
     public void ConsumeFood()
     {
-        //if (Input.GetKey(KeyCode.X))
-        //{
-        //    if (inventory.CookedAlienMeat > 0)
-        //    {
-        //        inventory.eat();
-        //        photonView.RPC("AddHealth", RpcTarget.All, 1);
-        //    }
-        //}
+        if (Input.GetKey(KeyCode.X))
+        {
+            if (inventory.CookedAlienMeat > 0)
+            {
+                inventory.eat();
+                photonView.RPC("AddHealth", RpcTarget.All, 1);
+            }
+        }
     }
 }

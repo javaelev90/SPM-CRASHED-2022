@@ -318,6 +318,8 @@ GameObject:
   - component: {fileID: 407230730788055436}
   - component: {fileID: 652936647}
   - component: {fileID: 5444124235424776678}
+  - component: {fileID: 7674441214672813119}
+  - component: {fileID: 8390596057044248913}
   - component: {fileID: 407230730788055437}
   - component: {fileID: 5216869225718345402}
   - component: {fileID: 8499108048209497745}
@@ -388,6 +390,42 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 448
+--- !u!114 &7674441214672813119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407230730788055439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b7dbfc37d26e341b3d51b800f32db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 4
+  currentHealth: 4
+  healthHandler: {fileID: 8390596057044248913}
+  damage: 1
+  explosionRadius: 3
+  layersToHit:
+    serializedVersion: 2
+    m_Bits: 576
+  explosionObject: {fileID: 1236452947378205838}
+--- !u!114 &8390596057044248913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407230730788055439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootObject: {fileID: 407230730308412197}
+  healthBarHandler: {fileID: 402761397}
+  isEnemy: 1
 --- !u!114 &407230730788055437
 MonoBehaviour:
   m_ObjectHideFlags: 0

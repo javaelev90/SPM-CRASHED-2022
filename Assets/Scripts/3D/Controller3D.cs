@@ -57,7 +57,8 @@ public class Controller3D : MonoBehaviourPunCallbacks
     private PhysicsBody body;
     public PhysicsBody Body => body;
 
-
+    [Header("Inventory")]
+    [SerializeField] protected Inventory inventory;
     
     [Header("InputSystem")]
     public PlayerInputActions playerActions;

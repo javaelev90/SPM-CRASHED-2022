@@ -352,6 +352,7 @@ GameObject:
   - component: {fileID: 8365122013251108616}
   - component: {fileID: 2291940920720541037}
   - component: {fileID: 756052432852545110}
+  - component: {fileID: 1832423352981339314}
   - component: {fileID: 8717762005252281733}
   - component: {fileID: 3123330079750310864}
   - component: {fileID: 2142802736974156291}
@@ -446,6 +447,21 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1832423352981339314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334875400098420458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootObject: {fileID: 334875400098420458}
+  healthBarHandler: {fileID: 519849385}
+  isEnemy: 0
 --- !u!114 &8717762005252281733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,7 +528,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6609b2bd3dacc8449a4615594518fe2, type: 2}
   - {fileID: 11400000, guid: d7ab4444ed09af64faff96bdbf7451bd, type: 2}
   animator: {fileID: -2848051172062990726}
+  inventory: {fileID: 0}
   playerInput: {fileID: 0}
+  maxHealth: 0
+  currentHealth: 0
   healthHandler: {fileID: 0}
   fireLayer:
     serializedVersion: 2
@@ -732,6 +751,50 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 404869e7-1df2-4e36-94f6-7ed0b38cc292
     m_ActionName: Player/ShipPickUp[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 07bc1ff4-f384-40cb-abe8-5f5392c0cd19
+    m_ActionName: Player/DeleteTurret[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ea2e5572-02c0-4882-926f-6ff7c5d74ee5
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7b59757f-db4a-46e3-833c-2e1843efb424
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ca329318-b638-4b80-9f61-623bfda40e60
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 09c8a48a-9ecc-4d8a-ba49-d05ae7db61e8
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 15dc3589-83b5-4450-a1ec-feff94482c60
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c461155d-eb7c-476b-a6f0-b65ab14ab0f1
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dac08541-47e2-4fbc-804c-dcfe0760f575
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 13bbaa9d-7ef1-4058-928a-5a79d67f5be1
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 65e7863c-808d-4cd3-8be3-f7cf53343906
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d3babd0a-5cae-48b1-906c-b0804f017fda
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

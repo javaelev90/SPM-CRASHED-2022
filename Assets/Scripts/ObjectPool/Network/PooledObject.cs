@@ -46,6 +46,11 @@ public class PooledObject : MonoBehaviourPunCallbacks, IRecycleable
         photonView.RPC(nameof(UpdateActiveStateRPC), RpcTarget.All, active);
     }
 
+    public void DeSpawn()
+    {
+        ObjectPool.DeSpawn(photonView.ViewID);
+    }
+
     [PunRPC]
     private void UpdateActiveStateRPC(bool active)
     {

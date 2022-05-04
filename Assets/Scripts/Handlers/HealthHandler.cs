@@ -5,10 +5,11 @@ using Photon.Pun;
 
 public class HealthHandler : MonoBehaviourPunCallbacks
 {
-
+    
     public int MaxHealth { get; internal set; }
     public int CurrentHealth { get; internal set; }
-
+    [SerializeField] private GameObject rootObject;
+    [SerializeField] private HealthBarHandler healthBarHandler; 
     [SerializeField] private bool isEnemy;
 
     public bool IsAlive { get; internal set; }
@@ -23,17 +24,13 @@ public class HealthHandler : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        ResetHealth();
+    }
+
+    private void ResetHealth()
+    {
+        CurrentHealth = MaxHealth;
         IsAlive = true;
-    }
-
-    void Update()
-    {
-
-    }
-
-    public void DeSpawn()
-    {
-        // sätt tillbaka till poolen
     }
 
     [PunRPC]
@@ -42,20 +39,52 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         if (IsAlive)
         {
             CurrentHealth -= amount;
-            //healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+            healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
 
             if (CurrentHealth <= 0)
             {
                 IsAlive = false;
-                if (isEnemy)
-                {
-                    //GetComponent<EnemyCharacter>().Die();
-                }
-                else
-                {
-                    //GetComponent<PlayerCharacter>().Die();
-                }
+                Die();
             }
         }
+    }
+
+    public void Die()
+    {
+        if (isEnemy)
+        {
+            //rootObject.DeSpawn();
+            GetComponent<EnemyCharacter>().Die();
+        }
+        else
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC(nameof(SpawnReviveBadgeRPC), RpcTarget.All);
+            }
+            CurrentHealth = 0;
+            transform.root.gameObject.SetActive(false);
+        }
+    }
+
+    [PunRPC]
+    private void SpawnReviveBadgeRPC()
+    {
+        PhotonNetwork.InstantiateRoomObject("Prefabs/Pickups/ReviveBadge", transform.position, Quaternion.identity, 0, new object[] { rootObject.GetComponent<PhotonView>().ViewID });
+    }
+
+    public void Revive()
+    {
+        photonView.RPC(nameof(ReviveRPC),RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void ReviveRPC()
+    {
+        Debug.Log("Trying to revive");
+        transform.root.gameObject.SetActive(true);
+        ResetHealth();
+        //transform.position = startPosition;
+
     }
 }
