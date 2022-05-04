@@ -27,35 +27,38 @@ public class StoneEnemy : AIBaseLogic
     protected override void Update()
     {
         base.Update();
-        
+
         if (IsStunned)
         {
             return;
         }
-        // om spelare syns ska den räkna ut distansen och agera därefter
-        if (IsWithinSight)
-        {
-            if (distanceToTarget < deadZoneRange)
-            {
-                fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
-                isFleeing = true;
-                agent.isStopped = false;
-                IsAggresive = false;
-            }
-
-            if (IsAggresive)
-            {
-                Move();
-            }
-        }
         else
         {
-            isFleeing = false;
-        }
+            // om spelare syns ska den räkna ut distansen och agera därefter
+            if (IsWithinSight)
+            {
+                if (distanceToTarget < deadZoneRange)
+                {
+                    fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
+                    isFleeing = true;
+                    agent.isStopped = false;
+                    IsAggresive = false;
+                }
 
-        if (isFleeing)
-        {
-            FleeToPosition();
+                if (IsAggresive)
+                {
+                    Move();
+                }
+            }
+            else
+            {
+                isFleeing = false;
+            }
+
+            if (isFleeing)
+            {
+                FleeToPosition();
+            }
         }
     }
 
