@@ -147,11 +147,13 @@ public class Engineer : Controller3D
             {
                 if (col.tag == ("ShipPart") && playerActions.Player.ShipPickUp.IsPressed())
                 {
-                    destination = player.transform.Find("CarryPos");
-                    shipPart = GameObject.FindGameObjectsWithTag("ShipPart");
+                    //destination = player.transform.Find("CarryPos");
+                    //shipPart = GameObject.FindGameObjectsWithTag("ShipPart");
                     //GetComponent<Rigidbody>().useGravity = false;
-                    col.transform.position = destination.position;
-                    col.transform.parent = GameObject.Find("CarryPos").transform;
+                    //col.transform.position = destination.position;
+                    //col.transform.parent = GameObject.Find("CarryPos").transform;
+                    col.GetComponent<EventStarter>().StartEvent();
+
                 }
                 if (playerActions.Player.DropShitPart.IsPressed())
                 {

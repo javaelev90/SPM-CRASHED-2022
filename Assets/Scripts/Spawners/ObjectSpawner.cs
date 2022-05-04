@@ -19,7 +19,7 @@ public class ObjectSpawner : MonoBehaviour
     private float cooldownCounter = 0f;
     private float yOffset = 1f;
     private int spawnedObjects = 0;
-    private bool spawnerIsTriggered = true;
+    private bool spawnerIsTriggered = false;
 
     private void Update()
     {
