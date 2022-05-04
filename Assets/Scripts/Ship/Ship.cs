@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Ship : MonoBehaviour
 {
@@ -9,10 +10,13 @@ public class Ship : MonoBehaviour
     private bool triggerActive = false;
     [SerializeField] Transform player;
 
+    Controller3D playeriut;
+
     void Start()
     {
         StartCoroutine(Wait(5));
         //Wait(5);
+        //playeriut = new PlayerInputActions();
     }
 
     IEnumerator Wait(float sec)
@@ -38,7 +42,9 @@ public class Ship : MonoBehaviour
 
             foreach (Collider col in colliderHits)
             {
-                if (col.tag == ("Player") && Input.GetKeyDown(KeyCode.E) && Panel != null && PartPickup != null)
+               //  Debug.Log(playeriut.playerActions.Player.PickUp.IsPressed() );
+                Controller3D controller = col.transform.gameObject.GetComponent<Controller3D>();
+                if (col.tag == ("Player") && controller.playerActions.Player.PickUp.IsPressed() && Panel != null && PartPickup != null)
                 {
                     Debug.Log("Inside");
                     Destroy(PartPickup.gameObject);
@@ -73,6 +79,22 @@ public class Ship : MonoBehaviour
             */
         }
 
+    }
+
+    private void hasResources(){
+
+    Collider[] colliderHits = Physics.OverlapSphere(transform.position, radius);
+        foreach (Collider col in colliderHits){
+
+        Controller3D controller = col.transform.gameObject.GetComponent<Controller3D>();
+        if(controller.playerActions.Player.PickUp.IsPressed() && gameObject.CompareTag("GreenGoo")){
+
+        }
+        if(controller.playerActions.Player.PickUp.IsPressed() && gameObject.CompareTag("Metal")){
+                
+        }
+         
+        }
     }
 
     private void OnDrawGizmosSelected()

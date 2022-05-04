@@ -96,7 +96,7 @@ public class Engineer : Controller3D
         if(player != null)
         {
             Collider[] colliderHits = Physics.OverlapSphere(transform.position, checkRadius);
-            Debug.Log(colliderHits);
+//            Debug.Log(colliderHits);
 
             foreach (Collider col in colliderHits)
             {
