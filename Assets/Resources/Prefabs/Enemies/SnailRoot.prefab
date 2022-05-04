@@ -250,7 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recyclingBehaviour: 3
   photonViewObjects:
-  - {fileID: 8499108048209497745}
+  - {fileID: 642678397344466168}
 --- !u!114 &5267896853407714504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 407230730788055437}
   - component: {fileID: 1314737261}
   - component: {fileID: 1314737262}
-  - component: {fileID: 2754414004869023728}
+  - component: {fileID: 642678397344466168}
   - component: {fileID: 8174094902349623044}
   - component: {fileID: 1997831261326966099}
   - component: {fileID: 4215343781300908072}
@@ -453,7 +453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarHandler: {fileID: 402761397}
   isEnemy: 1
---- !u!114 &2754414004869023728
+--- !u!114 &642678397344466168
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -462,10 +462,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 407230730788055439}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e5ab52752bbcbd4ba3a407964308ccf, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf84300c0c682347921ff853d6ab630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recyclingBehaviour: 1
+  rootObject: {fileID: 2198279588736655070}
 --- !u!114 &8174094902349623044
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -172,6 +172,8 @@ MonoBehaviour:
   objectPool: {fileID: 1364385114909209669}
   numberToSpawn: 10
   delayBetweenSpawns: 1
+  spawnRadius: 1
+  spawnWithinRadius: 1
 --- !u!135 &6526136
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1210,6 +1212,8 @@ MonoBehaviour:
   objectPool: {fileID: 1364385114909209669}
   numberToSpawn: 10
   delayBetweenSpawns: 1
+  spawnRadius: 1
+  spawnWithinRadius: 1
 --- !u!135 &621892126
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1561,6 +1565,8 @@ MonoBehaviour:
   objectPool: {fileID: 1364385114909209669}
   numberToSpawn: 10
   delayBetweenSpawns: 1
+  spawnRadius: 1
+  spawnWithinRadius: 1
 --- !u!135 &664840676
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2747,8 +2753,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a03c722c49b9b44b921f898283a7bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPool: {fileID: 1364385112964885454, guid: 386c8549ce6727e438c07905d3d7da8c, type: 3}
-  characterPrefab: {fileID: 8748316980067425399, guid: 543637b582ec0ef45a5072b6a7c699d3, type: 3}
+  objectPool: {fileID: 1364385114909209659}
+  soldierPrefab: {fileID: 334875400098420458, guid: 471de40bc3680664b9f26a10602882dc, type: 3}
+  engineerPrefab: {fileID: 5125041606170365157, guid: 5854e12e70968754c943fad24d996f6c, type: 3}
   spawnPoint: {fileID: 627556825}
 --- !u!4 &1075122890
 Transform:
@@ -4192,6 +4199,8 @@ MonoBehaviour:
   objectPool: {fileID: 1364385114909209669}
   numberToSpawn: 10
   delayBetweenSpawns: 1
+  spawnRadius: 1
+  spawnWithinRadius: 1
 --- !u!1 &1781610085
 GameObject:
   m_ObjectHideFlags: 0
@@ -5100,6 +5109,8 @@ MonoBehaviour:
   objectPool: {fileID: 1364385114909209669}
   numberToSpawn: 10
   delayBetweenSpawns: 1
+  spawnRadius: 1
+  spawnWithinRadius: 1
 --- !u!135 &2023928383
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5426,6 +5437,8 @@ MonoBehaviour:
   objectPool: {fileID: 1364385114909209669}
   numberToSpawn: 10
   delayBetweenSpawns: 1
+  spawnRadius: 1
+  spawnWithinRadius: 1
 --- !u!135 &2098076531
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5554,6 +5567,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5978ab5fe795ae348a619cd9d776e2b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledObjectPrefab: {fileID: 2037991316985461723, guid: 7f32d7a21ce9a8047b760a390c7112d8, type: 3}
+  pooledObjectPrefab: {fileID: 407230730308412197, guid: 0cf7f0086388c3d4cb484be52379bfac, type: 3}
   maxPoolSize: 120
-  pooledObjects: []
