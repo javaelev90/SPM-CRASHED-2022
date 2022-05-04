@@ -15,7 +15,7 @@ public class AggroNode : Node
 
     public override NodeStates Evaluate()
     {
-        if (ai.IsWithinRange)
+        if (ai.IsWithinSight)
         {
             timeCounter -= Time.deltaTime;
 

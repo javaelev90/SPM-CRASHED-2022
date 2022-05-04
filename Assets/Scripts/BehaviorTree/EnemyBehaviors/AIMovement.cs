@@ -23,7 +23,7 @@ public class AIMovement : MonoBehaviour
     [SerializeField] private float timeToExplosion;
     private float counter;
 
-    // Simons skräp
+    // Simons skrï¿½p
     private EnemyCharacter enemyCharacter;
 
     private void Start()
@@ -33,7 +33,7 @@ public class AIMovement : MonoBehaviour
         enemyBlowUpDistance = 5;
         counter = timeToExplosion;
 
-        //Simons skräp
+        //Simons skrï¿½p
         enemyCharacter = GetComponent<EnemyCharacter>();
     }
 

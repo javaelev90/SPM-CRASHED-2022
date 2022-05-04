@@ -21,31 +21,36 @@ public class StoneEnemy : AIBaseLogic
         maxThrowRange = viewRadius / 1.5f;
         deadZoneRange = viewRadius / 2.01f;
         fleePos = new GameObject();
+        fleePos.name = "Fleeposition";
     }
 
-    private void Update()
+    protected override void Update()
     {
-        // om spelare syns ska den räkna ut distansen och agera därefter
-        if (IsWithinRange)
+        if (IsStunned)
         {
-            float distance = DistanceToTarget(visibleTargets[0].position);
+            return;
+        }
 
-            if (distance < deadZoneRange)
+        base.Update();
+        // om spelare syns ska den räkna ut distansen och agera därefter
+        if (IsWithinSight)
+        {
+            if (distanceToTarget < deadZoneRange)
             {
-                fleePos.transform.position = transform.position + -1 * (directionToTarget * viewRadius);
+                fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
                 isFleeing = true;
                 agent.isStopped = false;
+                IsAggresive = false;
             }
 
-            if (!isFleeing)
+            if (IsAggresive)
             {
-                Move(distance);
+                Move();
             }
         }
         else
         {
             isFleeing = false;
-            agent.isStopped = false;
         }
 
         if (isFleeing)
@@ -70,11 +75,6 @@ public class StoneEnemy : AIBaseLogic
     private void FleeToPosition()
     {
         agent.destination = fleePos.transform.position;
-        Debug.Log("Agents remaining distance " + agent.remainingDistance);
-        if (agent.remainingDistance < 0.05f)
-        {
-            Debug.Log("Should stop fleeing and stuff");
-        }
     }
 
     private float DistanceToTarget(Vector3 position)
@@ -83,12 +83,17 @@ public class StoneEnemy : AIBaseLogic
     }
 
 
-    private void Move(float distance)
+    private void Move()
     {
-        if (distance < maxThrowRange && minThrowRange <= distance)
+        if (distanceToTarget < maxThrowRange && minThrowRange < distanceToTarget)
         {
+            isFleeing = false;
             agent.isStopped = true;
             Throw();
+        }
+        else
+        {
+            agent.isStopped = false;
         }
         agent.destination = visibleTargets[0].position;
         Rotate();

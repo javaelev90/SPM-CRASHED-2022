@@ -31,6 +31,11 @@ public class HealthHandler : MonoBehaviourPunCallbacks
 
     }
 
+    public void DeSpawn()
+    {
+        // sätt tillbaka till poolen
+    }
+
     [PunRPC]
     private void TakeDamageRPC(int amount)
     {

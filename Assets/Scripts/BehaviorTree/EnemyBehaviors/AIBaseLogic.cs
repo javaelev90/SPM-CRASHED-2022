@@ -13,23 +13,85 @@ public class AIBaseLogic : MonoBehaviour
     [SerializeField] private LayerMask obstacleMask;
     [SerializeField] private LayerMask targetMask;
     protected List<Transform> visibleTargets = new List<Transform>();
+    protected Transform target;
     protected float distanceToTarget;
     protected Vector3 directionToTarget;
 
     [Header("Navigation")]
     [SerializeField] private WayPointSystem wayPointSystem;
     protected NavMeshAgent agent;
+
+    [Header("Aggro parameters")]
     [SerializeField] private float timeToAggro = 1f;
+    private float timeCounterAggro;
+
+    [Header("Stun parameters")]
+    [SerializeField] private float timeStunned;
+    private float timeStunnedCounter;
+    public bool IsStunned { get; set; }
 
     public float TimeToAggro
     { get { return timeToAggro; } }
-    public bool IsWithinRange { get; set; }
+    public bool IsWithinSight { get; set; }
     public bool IsAggresive { get; set; }
 
     private void Awake()
     {
         StartCoroutine("FindTargetsWithDelay", delayToNewTarget);
         agent = GetComponent<NavMeshAgent>();
+        timeStunnedCounter = timeStunned;
+    }
+
+    protected virtual void Update()
+    {
+        if (IsStunned)
+        {
+            return;
+        }
+
+        if (IsWithinSight)
+        {
+            timeCounterAggro -= Time.deltaTime;
+
+            if (timeCounterAggro <= 0f)
+            {
+                IsAggresive = true;
+                timeCounterAggro = timeToAggro;
+            }
+        }
+        else if(!IsWithinSight && IsAggresive)
+        {
+            timeCounterAggro -= Time.deltaTime;
+
+            if (timeCounterAggro <= 0f)
+            {
+                IsAggresive = false;
+                timeCounterAggro = timeToAggro;
+            }
+        }
+
+        if (IsStunned)
+        {
+            timeStunnedCounter -= Time.deltaTime;
+            if(timeStunnedCounter <= 0f)
+            {
+                timeStunnedCounter = timeStunned;
+                IsStunned = false;
+            }
+        }
+    }
+
+    public void StunnedBy(Transform target)
+    {
+        this.target = target;
+        IsStunned = true;
+    }
+
+    public void FindAttackingTarget(Transform target)
+    {
+        this.target = target;
+        Debug.Log("target is set: " + target.name);
+        IsAggresive = true;
     }
 
     private IEnumerator FindTargetsWithDelay(float delay)
@@ -43,9 +105,8 @@ public class AIBaseLogic : MonoBehaviour
 
     private void FindVisibleTargets()
     {
-        visibleTargets.Clear();
         Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-        IsWithinRange = targetInViewRadius.Length > 0;
+        IsWithinSight = targetInViewRadius.Length > 0;
 
         for (int i = 0; i < targetInViewRadius.Length; i++)
         {
@@ -61,10 +122,10 @@ public class AIBaseLogic : MonoBehaviour
             }
         }
 
-        //if(targetInViewRadius.Length == 0)
-        //{
-        //    visibleTargets.Clear();
-        //}
+        if (targetInViewRadius.Length == 0)
+        {
+            visibleTargets.Clear();
+        }
     }
 
     public Vector3 DirectionFromAngle(float angleInDegrees, bool angleIsGlobal)
