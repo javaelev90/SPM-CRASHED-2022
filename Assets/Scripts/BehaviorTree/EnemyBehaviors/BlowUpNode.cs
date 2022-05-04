@@ -15,7 +15,7 @@ public class BlowUpNode : Node
     {
         this.ai = ai;
         this.agent = agent;
-        enemyBlowUpDistance = ai.viewRadius / 2;
+        //enemyBlowUpDistance = ai.viewRadius / 2;
     }
 
     public override NodeStates Evaluate()
@@ -33,15 +33,15 @@ public class BlowUpNode : Node
     [PunRPC]
     private void BlowUpRPC()
     {
-        Collider[] targets = Physics.OverlapSphere(agent.transform.position, enemyBlowUpDistance, ai.targetMask);
-        if (targets.Length > 0)
-        {
-            foreach(Collider coll in targets)
-            {
-                coll.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, 10);
-                //coll.GetComponent<Enemy>().TakeDamage(10);
-            }
-        }
+        //Collider[] targets = Physics.OverlapSphere(agent.transform.position, enemyBlowUpDistance, ai.targetMask);
+        //if (targets.Length > 0)
+        //{
+        //    foreach(Collider coll in targets)
+        //    {
+        //        coll.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, 10);
+        //        //coll.GetComponent<Enemy>().TakeDamage(10);
+        //    }
+        //}
     }
 
 }
