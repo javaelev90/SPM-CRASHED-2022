@@ -5,13 +5,14 @@ using Photon.Pun;
 
 public class HealthHandler : MonoBehaviourPunCallbacks
 {
-    
-    public int MaxHealth { get; internal set; }
-    public int CurrentHealth { get; internal set; }
+    [Header("Required components")]
     [SerializeField] private GameObject rootObject;
     [SerializeField] private HealthBarHandler healthBarHandler; 
-    [SerializeField] private bool isEnemy;
 
+    [Header("Health")]
+    [SerializeField] private int MaxHealth;
+    private int CurrentHealth;
+    [SerializeField] private bool isEnemy;
     public bool IsAlive { get; internal set; }
 
     public void TakeDamage(int amount)
@@ -73,18 +74,32 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         PhotonNetwork.InstantiateRoomObject("Prefabs/Pickups/ReviveBadge", transform.position, Quaternion.identity, 0, new object[] { rootObject.GetComponent<PhotonView>().ViewID });
     }
 
-    public void Revive()
+    public void Revive(Vector3 revivePosition)
     {
-        photonView.RPC(nameof(ReviveRPC),RpcTarget.All);
+        photonView.RPC(nameof(ReviveRPC),RpcTarget.All, revivePosition);
     }
 
     [PunRPC]
-    private void ReviveRPC()
+    private void ReviveRPC(Vector3 revivePosition)
     {
         Debug.Log("Trying to revive");
         transform.root.gameObject.SetActive(true);
         ResetHealth();
-        //transform.position = startPosition;
+        transform.position = revivePosition;
+
+    }
+
+    [PunRPC]
+    private void AddHealth(int amount)
+    {
+        if(CurrentHealth + amount > MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
+        else
+        {
+            CurrentHealth += amount;
+        }
 
     }
 }

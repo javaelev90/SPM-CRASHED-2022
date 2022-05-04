@@ -6,9 +6,6 @@ using Photon.Pun;
 [RequireComponent(typeof(Weapon))]
 public class SoldierCharacter : Controller3D
 {
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int currentHealth;
-    [SerializeField] private HealthHandler healthHandler;
     [SerializeField] private LayerMask fireLayer;
     [SerializeField] private float interactionDistance = 1f;
     [SerializeField] private Weapon weapon;

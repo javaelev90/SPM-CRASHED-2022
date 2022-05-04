@@ -8,7 +8,7 @@ public class EnemyCharacter : MonoBehaviourPunCallbacks
     [Header("Health")]
     [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
-    [SerializeField] private HealthHandler healthHandler;
+    [SerializeField] private HealthHandlerTest healthHandler;
 
     [Header("Damage")]
     [SerializeField] private int damage;

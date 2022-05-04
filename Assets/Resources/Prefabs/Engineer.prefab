@@ -309,12 +309,15 @@ GameObject:
   - component: {fileID: 5125041606170365176}
   - component: {fileID: 5125041606170365159}
   - component: {fileID: 5125041606170365158}
+  - component: {fileID: 2813428470660306397}
   - component: {fileID: 4469745541425131366}
   - component: {fileID: 6298950803575883625}
-  - component: {fileID: 2813428470660306397}
+  - component: {fileID: 8720005142403483374}
+  - component: {fileID: 2433093780270635284}
   - component: {fileID: 3595819507681349455}
   - component: {fileID: 1484468382420821516}
   - component: {fileID: 5344456586567406286}
+  - component: {fileID: -4059197858113975227}
   m_Layer: 6
   m_Name: Engineer
   m_TagString: Player
@@ -404,6 +407,29 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2813428470660306397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5125041606170365157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 3595819507681349455}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &4469745541425131366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,8 +470,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootObject: {fileID: 5125041606170365157}
   healthBarHandler: {fileID: 810019847775400831}
+  MaxHealth: 15
   isEnemy: 0
---- !u!114 &2813428470660306397
+--- !u!114 &8720005142403483374
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -454,20 +481,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 5125041606170365157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a247f7e707f8a6498fce19d1ba19a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 3595819507681349455}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
+  pickupLayer:
+    serializedVersion: 2
+    m_Bits: 16384
+  fireLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  spaceShipLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  pickUpDistance: 2
+  inventory: {fileID: 2433093780270635284}
+--- !u!114 &2433093780270635284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5125041606170365157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4328438d4e98e48b3d1a7b8b00b28d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  metal: 0
+  greenGoo: 0
+  alienMeat: 0
+  cookedAlienMeat: 0
+  hasReviveBadge: 0
 --- !u!114 &3595819507681349455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,7 +525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 2
@@ -492,7 +536,7 @@ MonoBehaviour:
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
   m_RotationModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     InterpolateOption: 1
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 5
@@ -541,7 +585,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6609b2bd3dacc8449a4615594518fe2, type: 2}
   - {fileID: 11400000, guid: d7ab4444ed09af64faff96bdbf7451bd, type: 2}
   animator: {fileID: 0}
-  inventory: {fileID: 0}
+  inventory: {fileID: 2433093780270635284}
   playerInput: {fileID: 5344456586567406286}
   turret: {fileID: 2411392565204665798, guid: 3358d40555310ec4d8266bc256c4335e, type: 3}
   turretPos: {fileID: 2520650330550881837}
@@ -685,7 +729,19 @@ MonoBehaviour:
     m_ActionId: af5459e9-1079-40ca-9f71-bba305ed9045
     m_ActionName: Player/Shoot[/XInputControllerWindows/rightTrigger,/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8720005142403483374}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: PickUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 29b9d3d4-9dbd-4816-bd1c-51174b903866
     m_ActionName: Player/PickUp[/XInputControllerWindows/buttonWest,/Keyboard/e]
   - m_PersistentCalls:
@@ -693,7 +749,19 @@ MonoBehaviour:
     m_ActionId: 2d8de990-b82a-4220-9d0a-a629d8370a0b
     m_ActionName: Player/Cook[/XInputControllerWindows/buttonNorth,/Keyboard/c]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8720005142403483374}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: Eat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 28840f60-17d7-41c8-ba97-7169f1c54bb1
     m_ActionName: Player/Eat[/XInputControllerWindows/buttonSouth,/Keyboard/x]
   - m_PersistentCalls:
@@ -701,7 +769,19 @@ MonoBehaviour:
     m_ActionId: d1d5ac02-6de6-46aa-b993-9465947fb9be
     m_ActionName: Player/DropItem[/XInputControllerWindows/leftShoulder,/Keyboard/q]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8720005142403483374}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: Revive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d72dd956-53fe-48e8-aeea-d100ef4beb59
     m_ActionName: Player/Revive[/XInputControllerWindows/buttonWest,/Keyboard/e]
   - m_PersistentCalls:
@@ -789,6 +869,25 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!95 &-4059197858113975227
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5125041606170365157}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b8a7b4962d3ece94aa5fb59658779440, type: 3}
+  m_Controller: {fileID: 9100000, guid: 0a88a2b5195f54b4aa9b89224c8106d2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5882971585194565831
 GameObject:
   m_ObjectHideFlags: 0
