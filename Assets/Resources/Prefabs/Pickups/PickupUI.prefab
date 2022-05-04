@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2410566174608708298}
   - component: {fileID: 2410566174608708295}
   - component: {fileID: 2410566174608708292}
-  - component: {fileID: 2410566174608708293}
   m_Layer: 5
   m_Name: Metal
   m_TagString: Untagged
@@ -80,26 +79,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Metal : 0'
---- !u!114 &2410566174608708293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2410566174608708299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73f81f14d2411ee4c915a18a9514aa0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  greenGoo: {fileID: 0}
-  goo: 0
-  metalText: {fileID: 0}
-  metal: 0
-  cockAlien: {fileID: 0}
-  cAlien: 0
-  rawAlien: {fileID: 0}
-  rAlien: 0
 --- !u!1 &2410566174613545385
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +90,6 @@ GameObject:
   - component: {fileID: 2410566174613545381}
   - component: {fileID: 2410566174613545386}
   - component: {fileID: 2410566174613545384}
-  - component: {fileID: 2410566174613545387}
   m_Layer: 5
   m_Name: 'Raw '
   m_TagString: Untagged
@@ -180,26 +158,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Raw alien meat : 0'
---- !u!114 &2410566174613545387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2410566174613545385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73f81f14d2411ee4c915a18a9514aa0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  greenGoo: {fileID: 0}
-  goo: 0
-  metalText: {fileID: 0}
-  metal: 0
-  cockAlien: {fileID: 0}
-  cAlien: 0
-  rawAlien: {fileID: 0}
-  rAlien: 0
 --- !u!1 &2410566174705996492
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +169,6 @@ GameObject:
   - component: {fileID: 2410566174705996488}
   - component: {fileID: 2410566174705996489}
   - component: {fileID: 2410566174705996495}
-  - component: {fileID: 2410566174705996494}
   m_Layer: 5
   m_Name: Cook
   m_TagString: Untagged
@@ -280,26 +237,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Cooked alien meat : 0'
---- !u!114 &2410566174705996494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2410566174705996492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73f81f14d2411ee4c915a18a9514aa0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  greenGoo: {fileID: 0}
-  goo: 0
-  metalText: {fileID: 0}
-  metal: 0
-  cockAlien: {fileID: 0}
-  cAlien: 0
-  rawAlien: {fileID: 0}
-  rAlien: 0
 --- !u!1 &2410566174948169798
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,7 +248,6 @@ GameObject:
   - component: {fileID: 2410566174948169793}
   - component: {fileID: 2410566174948169795}
   - component: {fileID: 2410566174948169792}
-  - component: {fileID: 2410566174948169794}
   m_Layer: 5
   m_Name: Goo
   m_TagString: Untagged
@@ -380,26 +316,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Green Goo : 0'
---- !u!114 &2410566174948169794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2410566174948169798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73f81f14d2411ee4c915a18a9514aa0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  greenGoo: {fileID: 0}
-  goo: 0
-  metalText: {fileID: 0}
-  metal: 0
-  cockAlien: {fileID: 0}
-  cAlien: 0
-  rawAlien: {fileID: 0}
-  rAlien: 0
 --- !u!1 &2410566175000735422
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +328,7 @@ GameObject:
   - component: {fileID: 2410566175000735419}
   - component: {fileID: 2410566175000735416}
   - component: {fileID: 2410566175000735417}
-  - component: {fileID: 2410566175000735413}
+  - component: {fileID: 9221165813036917255}
   m_Layer: 5
   m_Name: PickupUI
   m_TagString: InventoryHandler
@@ -504,7 +420,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2410566175000735413
+--- !u!114 &9221165813036917255
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -513,7 +429,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2410566175000735422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73f81f14d2411ee4c915a18a9514aa0b, type: 3}
+  m_Script: {fileID: 11500000, guid: c3a73a0aeb00de845b73a3fbd39c0f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   greenGoo: {fileID: 2410566174948169792}
