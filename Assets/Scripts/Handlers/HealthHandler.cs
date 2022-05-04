@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class HealthHandlerTest : MonoBehaviourPunCallbacks
+public class HealthHandler : MonoBehaviourPunCallbacks
 {
 
     public int MaxHealth { get; internal set; }
