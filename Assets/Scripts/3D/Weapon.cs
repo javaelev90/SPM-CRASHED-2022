@@ -50,6 +50,13 @@ public class Weapon : MonoBehaviour
                     Debug.Log("Hit the enemy.");
                     healthHandler.TakeDamage(weaponDamage);
                 }
+
+                AIBaseLogic ai = hitInfo.transform.GetComponent<AIBaseLogic>();
+                if (ai)
+                {
+                    Debug.Log(ai.transform.name);
+                    ai.FindAttackingTarget(transform);
+                }
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;

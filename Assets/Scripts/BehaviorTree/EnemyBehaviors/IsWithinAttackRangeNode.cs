@@ -11,7 +11,7 @@ public class IsWithinAttackRangeNode : Node
 
     public override NodeStates Evaluate()
     {
-        if (ai.IsWithinRange)
+        if (ai.IsWithinSight)
         {
             return NodeStates.SUCCESS;
         }
