@@ -7,9 +7,8 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
 {
     [SerializeField] public GameObject pooledObjectPrefab;
     [SerializeField] private int maxPoolSize;
-    public List<PooledObject> pooledObjects;
+    public Queue<PooledObject> pooledObjects;
     public Dictionary<int, PooledObject> activeObjects;
-    //private DefaultPool objectPool;
 
     private void Start()
     {
@@ -17,7 +16,7 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         {
             throw new MissingComponentException();
         }
-        pooledObjects = new List<PooledObject>();
+        pooledObjects = new Queue<PooledObject>();
         activeObjects = new Dictionary<int, PooledObject>();
 
         LoadPool();
@@ -33,15 +32,14 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
                     Quaternion.identity
                 );
             pooledObject.ObjectPool = this;
-            //pooledObject.transform.GetChild(0).GetComponent<PhotonView>().RPC("UpdateActiveState", RpcTarget.All, false);
             pooledObject.UpdateActiveState(false);
-            pooledObjects.Add(pooledObject);
+            pooledObjects.Enqueue(pooledObject);
         }
     }
 
     private PooledObject Instantiate(Vector3 position, Quaternion rotation)
     {
-        return PhotonNetwork.Instantiate("Prefabs/Enemies/"+pooledObjectPrefab.name, position, rotation).GetComponent<PooledObject>();
+        return PhotonNetwork.InstantiateRoomObject("Prefabs/Enemies/"+pooledObjectPrefab.name, position, rotation).GetComponent<PooledObject>();
     }
 
     public void Spawn(Vector3 position)
@@ -65,12 +63,10 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
             Debug.LogError($"[PhotonObjectPool::MasterSpawn] Only the master is allowed to spawn objects.");
             return;
         }
-        PooledObject pooledObject = pooledObjects[0];
+        PooledObject pooledObject = pooledObjects.Dequeue();
+        pooledObject.transform.position = position;
+        activeObjects.Add(pooledObject.photonView.ViewID, pooledObject);
         pooledObject.UpdateActiveState(true);
-        //photonView.RPC("UpdateActiveState", RpcTarget.All, true);
-        pooledObject.photonViewObject.transform.position = position;
-        pooledObjects.RemoveAt(0);
-        activeObjects.Add(pooledObject.photonViewObject.ViewID, pooledObject);
     }
 
     [PunRPC]
@@ -84,9 +80,11 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         if(activeObjects.TryGetValue(gameObjectPhotonId, out PooledObject pooledObject))
         {
             pooledObject.Recycle();
-            //PhotonView photonView = pooledObject.transform.GetChild(0).GetComponent<PhotonView>();
-            //photonView.RPC("UpdateActiveState", RpcTarget.All, false);
             pooledObject.UpdateActiveState(false);
+            if (activeObjects.Remove(gameObjectPhotonId))
+            {
+                pooledObjects.Enqueue(pooledObject);
+            }
         }
     }
 

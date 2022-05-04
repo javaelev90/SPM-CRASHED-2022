@@ -46,6 +46,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""9fb3e0f1-c1a1-4650-9c40-3f106dfae2fa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Shoot"",
                     ""type"": ""Button"",
                     ""id"": ""af5459e9-1079-40ca-9f71-bba305ed9045"",
@@ -103,6 +112,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""DropShitPart"",
                     ""type"": ""Button"",
                     ""id"": ""3b24c6b1-8f19-4823-abe6-e0456941d946"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlaceTurret"",
+                    ""type"": ""Button"",
+                    ""id"": ""8424eecc-608d-4c1b-a734-9365a2579e3b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShipPickUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""404869e7-1df2-4e36-94f6-7ed0b38cc292"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -166,10 +193,65 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""Arrows"",
+                    ""id"": ""82d9e124-bccb-47ea-a11e-2920d59f3e08"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""8449e878-f26f-41ee-b79e-7b94f9cc8473"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""b9b062d5-f9e0-43a3-a60d-e73ea4d3444b"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a3407dfb-0f50-4129-a164-b9096477f5c8"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ee1b6356-0f0c-4c3b-9ddd-8c719a0cc17d"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""c8e6e68c-c156-401b-af9c-2edb006cf2dc"",
                     ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Move"",
@@ -289,7 +371,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6c0229ac-433a-4dee-a18e-11df8c8e6a09"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -333,7 +415,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d34e9460-c22f-4334-9d17-3084e340e240"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -349,6 +431,72 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""DropShitPart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6feff050-8186-4615-9661-24d4a13fda3f"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d00e167b-75d8-4d0e-8df2-dd7c1323e6fe"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3b7debbf-a632-470b-9f94-ebb3a11db1d5"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PlaceTurret"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8cd33137-4f80-410f-b158-7a7cab77f497"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""PlaceTurret"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de5f3045-cba3-4b00-bc7c-5015cda71033"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ShipPickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d89042d7-7ac8-40d5-bfb6-53bde8d43fda"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""ShipPickUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -389,6 +537,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
         m_Player_Cook = m_Player.FindAction("Cook", throwIfNotFound: true);
@@ -396,6 +545,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
         m_Player_Revive = m_Player.FindAction("Revive", throwIfNotFound: true);
         m_Player_DropShitPart = m_Player.FindAction("DropShitPart", throwIfNotFound: true);
+        m_Player_PlaceTurret = m_Player.FindAction("PlaceTurret", throwIfNotFound: true);
+        m_Player_ShipPickUp = m_Player.FindAction("ShipPickUp", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -457,6 +608,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
+    private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_PickUp;
     private readonly InputAction m_Player_Cook;
@@ -464,12 +616,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_DropItem;
     private readonly InputAction m_Player_Revive;
     private readonly InputAction m_Player_DropShitPart;
+    private readonly InputAction m_Player_PlaceTurret;
+    private readonly InputAction m_Player_ShipPickUp;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
         public InputAction @Cook => m_Wrapper.m_Player_Cook;
@@ -477,6 +632,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @DropItem => m_Wrapper.m_Player_DropItem;
         public InputAction @Revive => m_Wrapper.m_Player_Revive;
         public InputAction @DropShitPart => m_Wrapper.m_Player_DropShitPart;
+        public InputAction @PlaceTurret => m_Wrapper.m_Player_PlaceTurret;
+        public InputAction @ShipPickUp => m_Wrapper.m_Player_ShipPickUp;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -492,6 +649,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
+                @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
@@ -513,6 +673,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @DropShitPart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropShitPart;
                 @DropShitPart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropShitPart;
                 @DropShitPart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDropShitPart;
+                @PlaceTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlaceTurret;
+                @PlaceTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlaceTurret;
+                @PlaceTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlaceTurret;
+                @ShipPickUp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShipPickUp;
+                @ShipPickUp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShipPickUp;
+                @ShipPickUp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShipPickUp;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -523,6 +689,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
@@ -544,6 +713,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @DropShitPart.started += instance.OnDropShitPart;
                 @DropShitPart.performed += instance.OnDropShitPart;
                 @DropShitPart.canceled += instance.OnDropShitPart;
+                @PlaceTurret.started += instance.OnPlaceTurret;
+                @PlaceTurret.performed += instance.OnPlaceTurret;
+                @PlaceTurret.canceled += instance.OnPlaceTurret;
+                @ShipPickUp.started += instance.OnShipPickUp;
+                @ShipPickUp.performed += instance.OnShipPickUp;
+                @ShipPickUp.canceled += instance.OnShipPickUp;
             }
         }
     }
@@ -570,6 +745,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnPickUp(InputAction.CallbackContext context);
         void OnCook(InputAction.CallbackContext context);
@@ -577,5 +753,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnDropItem(InputAction.CallbackContext context);
         void OnRevive(InputAction.CallbackContext context);
         void OnDropShitPart(InputAction.CallbackContext context);
+        void OnPlaceTurret(InputAction.CallbackContext context);
+        void OnShipPickUp(InputAction.CallbackContext context);
     }
 }
