@@ -27,7 +27,7 @@ public class LightingManager : MonoBehaviour
     public float DayLength { get { return dayLength; } }
     public float NightLength { get { return nightLength; } }
 
-    public float TimeOfDay { get { return timeOfDay; } }
+    public float TimeUntilCycle { get { return timeOfDay < dayLength && timeOfDay > 0 ? dayLength - timeOfDay : timeOfDay < 0 ? -timeOfDay : nightLength - timeOfDay + dayLength; } } // Math magic to return the correct number for timer
 
     private void Start()
     {

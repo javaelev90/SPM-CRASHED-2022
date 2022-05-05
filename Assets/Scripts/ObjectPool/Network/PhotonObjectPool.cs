@@ -52,7 +52,6 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
 
     public void Spawn(Vector3 position, int photonViewTargetId)
     {
-        Debug.Log(position);
         if(pooledObjects.Count > 0)
         {
             photonView.RPC(nameof(MasterSpawn), RpcTarget.MasterClient, position, photonViewTargetId);

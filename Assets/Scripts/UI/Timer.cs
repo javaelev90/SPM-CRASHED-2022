@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System.Collections;
 
 public class Timer : MonoBehaviour
 {
@@ -22,43 +23,37 @@ public class Timer : MonoBehaviour
     [Header("Other stuff")]
     [SerializeField] private LightingManager lightingManager;
 
-    private float timer;
+    private float timeLeft = 0;
     private float flashTimer = 0;
-    private float flashduration = 0.5f; 
+    private float flashduration = 0.5f;
+    private bool flashing = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        if(lightingManager.TimeOfDay < lightingManager.DayLength)
+        if(!lightingManager.IsNight)
         {
             day.gameObject.SetActive(true);
             night.gameObject.SetActive(false);
-            timer = lightingManager.DayLength - lightingManager.TimeOfDay;
+            
         }
         else
         {
             day.gameObject.SetActive(false);
             night.gameObject.SetActive(true);
-            timer = lightingManager.NightLength - lightingManager.TimeOfDay + lightingManager.DayLength;
         }
+        timeLeft = lightingManager.TimeUntilCycle;
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer -= Time.deltaTime;
-        updateTimer(timer);
+        timeLeft = lightingManager.TimeUntilCycle;
+        updateTimer(timeLeft);
 
-        if (timer > 0 && timer < 5)
+        if (timeLeft > 0 && timeLeft < 5 && !flashing)
         {
-            Flash3();
-        }
-        else if (timer <= 0)
-        {
-            setTextDisplay(true);
-            day.gameObject.SetActive(!day.gameObject.activeSelf);
-            night.gameObject.SetActive(!night.gameObject.activeSelf);
-            reset();
+            StartCoroutine(Flash3());
         }
     }
 
@@ -73,23 +68,15 @@ public class Timer : MonoBehaviour
         sekundTwo.text = currentTime[3].ToString();
     }
 
-    private void reset(){
-        if (!lightingManager.IsNight)
-        {
-            timer = lightingManager.DayLength;
-        }
-        else
-        {
-            timer = lightingManager.NightLength;
-        }
-        
-    }
-    private void Flash3 (){
+    private void Flash33 (){
         flashTimer += Time.deltaTime;
         if(flashTimer > flashduration){
             setTextDisplay(!minutEtt.enabled);
             flashTimer = 0;
         }
+        setTextDisplay(true);
+        day.gameObject.SetActive(!day.gameObject.activeSelf);
+        night.gameObject.SetActive(!night.gameObject.activeSelf);
     }
 
     private void setTextDisplay(bool enabled){
@@ -98,5 +85,24 @@ public class Timer : MonoBehaviour
         separate.enabled = enabled;
         sekundEtt.enabled = enabled;
         sekundTwo.enabled = enabled;
+    }
+
+    private IEnumerator Flash3()
+    {
+        flashing = true;
+
+        while (flashing)
+        {
+            setTextDisplay(!minutEtt.enabled);
+            yield return new WaitForSeconds(flashduration);
+            if(timeLeft > 5)
+            {
+                flashing = false;
+            }
+        }
+
+        setTextDisplay(true);
+        day.gameObject.SetActive(!day.gameObject.activeSelf);
+        night.gameObject.SetActive(!night.gameObject.activeSelf);
     }
 }
