@@ -116,6 +116,15 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Projectile projectile;
+        if((projectile = other.transform.GetComponent<Projectile>()) != null)
+        {
+            GetComponent<HealthHandler>().TakeDamage(projectile.DamageDealer);
+        }
+    }
+
     public Vector3 DirectionFromAngle(float angleInDegrees, bool angleIsGlobal)
     {
         if (!angleIsGlobal)

@@ -105,15 +105,22 @@ public class GasEnemy : AIBaseLogic
 
     private void MoveToWayPoint()
     {
-        timeCounterWaypoint -= Time.deltaTime;
-        if (timeCounterWaypoint <= 0f)
+        if (eventTarget)
         {
-            wayPoint = wayPointSystem.NewRandomPosition;
-            timeCounterWaypoint = timeToWayPoint;
+            agent.SetDestination(eventTarget.position);
         }
+        else
+        {
+            timeCounterWaypoint -= Time.deltaTime;
+            if (timeCounterWaypoint <= 0f)
+            {
+                wayPoint = wayPointSystem.NewRandomPosition;
+                timeCounterWaypoint = timeToWayPoint;
+            }
 
-        if (agent.isOnNavMesh)
-            agent.destination = wayPoint.position;
+            if (agent.isOnNavMesh)
+                agent.destination = wayPoint.position;
+        }
     }
 
     private void AttackBasedOnSight()
