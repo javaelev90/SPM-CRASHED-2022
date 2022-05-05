@@ -73,6 +73,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Punch"",
+                    ""type"": ""Button"",
+                    ""id"": ""dcff7b73-0fa1-48a4-a49e-3a64ad62947c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Cook"",
                     ""type"": ""Button"",
                     ""id"": ""2d8de990-b82a-4220-9d0a-a629d8370a0b"",
@@ -519,6 +528,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""DeleteTurret"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d95bfbe7-1f3a-4bee-afa8-d74661568da9"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76106e0a-ba12-4074-8c1d-9cb1ba0af1fe"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -933,6 +964,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
+        m_Player_Punch = m_Player.FindAction("Punch", throwIfNotFound: true);
         m_Player_Cook = m_Player.FindAction("Cook", throwIfNotFound: true);
         m_Player_Eat = m_Player.FindAction("Eat", throwIfNotFound: true);
         m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
@@ -1017,6 +1049,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_PickUp;
+    private readonly InputAction m_Player_Punch;
     private readonly InputAction m_Player_Cook;
     private readonly InputAction m_Player_Eat;
     private readonly InputAction m_Player_DropItem;
@@ -1034,6 +1067,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
+        public InputAction @Punch => m_Wrapper.m_Player_Punch;
         public InputAction @Cook => m_Wrapper.m_Player_Cook;
         public InputAction @Eat => m_Wrapper.m_Player_Eat;
         public InputAction @DropItem => m_Wrapper.m_Player_DropItem;
@@ -1066,6 +1100,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @PickUp.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
                 @PickUp.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
                 @PickUp.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUp;
+                @Punch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPunch;
+                @Punch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPunch;
+                @Punch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPunch;
                 @Cook.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCook;
                 @Cook.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCook;
                 @Cook.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCook;
@@ -1109,6 +1146,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @PickUp.started += instance.OnPickUp;
                 @PickUp.performed += instance.OnPickUp;
                 @PickUp.canceled += instance.OnPickUp;
+                @Punch.started += instance.OnPunch;
+                @Punch.performed += instance.OnPunch;
+                @Punch.canceled += instance.OnPunch;
                 @Cook.started += instance.OnCook;
                 @Cook.performed += instance.OnCook;
                 @Cook.canceled += instance.OnCook;
@@ -1267,6 +1307,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnPickUp(InputAction.CallbackContext context);
+        void OnPunch(InputAction.CallbackContext context);
         void OnCook(InputAction.CallbackContext context);
         void OnEat(InputAction.CallbackContext context);
         void OnDropItem(InputAction.CallbackContext context);

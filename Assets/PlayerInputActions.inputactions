@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Punch",
+                    "type": "Button",
+                    "id": "dcff7b73-0fa1-48a4-a49e-3a64ad62947c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Cook",
                     "type": "Button",
                     "id": "2d8de990-b82a-4220-9d0a-a629d8370a0b",
@@ -495,6 +504,28 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "DeleteTurret",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d95bfbe7-1f3a-4bee-afa8-d74661568da9",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Punch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76106e0a-ba12-4074-8c1d-9cb1ba0af1fe",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Punch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

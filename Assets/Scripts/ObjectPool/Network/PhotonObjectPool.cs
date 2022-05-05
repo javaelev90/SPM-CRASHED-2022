@@ -39,7 +39,7 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
 
     private PooledObject Instantiate(Vector3 position, Quaternion rotation)
     {
-        return PhotonNetwork.InstantiateRoomObject("Prefabs/Enemies/"+pooledObjectPrefab.name, position, rotation).GetComponent<PooledObject>();
+        return PhotonNetwork.Instantiate("Prefabs/Enemies/"+pooledObjectPrefab.name, position, rotation).GetComponent<PooledObject>();
     }
 
     public void DeSpawnPool()

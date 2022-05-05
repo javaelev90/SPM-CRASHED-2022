@@ -6,7 +6,7 @@ using Photon.Pun;
 public class HealthHandler : MonoBehaviourPunCallbacks
 {
     [Header("Required components")]
-    [SerializeField] private GameObject rootObject;
+    [SerializeField] private PooledObject rootObject;
     [SerializeField] private HealthBarHandler healthBarHandler;
 
     [Header("Health")]
@@ -55,8 +55,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     {
         if (isEnemy)
         {
-            //rootObject.DeSpawn();
-            /*GetComponent<EnemyCharacter>().Die()*/;
+            rootObject.DeSpawn();
         }
         else
         {
