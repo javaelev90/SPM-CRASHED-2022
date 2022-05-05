@@ -701,7 +701,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 3}
   m_SizeDelta: {x: 150, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3536792488389128154
@@ -804,6 +804,7 @@ MonoBehaviour:
   recyclingBehaviour: 3
   photonViewObjects:
   - {fileID: 4455291304399106652}
+  photonViewTargetId: -1
 --- !u!114 &3536792488537908559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -822,7 +823,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 3536792488537908557}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -839,7 +841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 2
@@ -5961,7 +5963,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 4455291304399106643}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -5999,7 +6002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootObject: {fileID: 4455291304399106642}
+  rootObject: {fileID: 3536792488537908558}
   healthBarHandler: {fileID: 3536792488389128152}
   MaxHealth: 5
   isEnemy: 1
@@ -6029,7 +6032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 2
@@ -6040,7 +6043,7 @@ MonoBehaviour:
     ExtrapolateIncludingRoundTripTime: 1
     ExtrapolateNumberOfStoredPositions: 1
   m_RotationModel:
-    SynchronizeEnabled: 0
+    SynchronizeEnabled: 1
     InterpolateOption: 1
     InterpolateRotateTowardsSpeed: 180
     InterpolateLerpSpeed: 5

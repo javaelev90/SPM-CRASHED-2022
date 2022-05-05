@@ -35,17 +35,22 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     protected float timeStunnedCounter;
 
     protected bool IsMasterClient { get; set; }
-
+    private Coroutine findTargets;
     public float TimeToAggro
     { get { return timeToAggro; } }
     public bool IsWithinSight { get; set; }
     public bool IsAggresive { get; set; }
 
-    private void Awake()
+    private void OnEnable()
     {
-        StartCoroutine("FindTargetsWithDelay", delayToNewTarget);
+        findTargets = StartCoroutine("FindTargetsWithDelay", delayToNewTarget);
         agent = GetComponent<NavMeshAgent>();
         IsMasterClient = PhotonNetwork.IsMasterClient;
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(findTargets);
     }
 
     protected virtual void Update()

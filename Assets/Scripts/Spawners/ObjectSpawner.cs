@@ -19,7 +19,7 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] PhotonView initialTarget;
 
     private float cooldownCounter = 0f;
-    private float yOffset = 1f;
+    [SerializeField] private float yOffset = 1f;
     private int spawnedObjects = 0;
     private bool spawnerIsTriggered = true;
     private int photonViewTargetId = -1;
