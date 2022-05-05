@@ -43,7 +43,7 @@ public class PlayerWalkState : State
     public override void Exit()
     {
         base.Exit();
-        //player.animator.SetBool("isRunning", false);
+       // player.animator.SetBool("isRunning", false);
 
 
     }

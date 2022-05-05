@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject soldierPrefab;
     [SerializeField] private GameObject engineerPrefab;
     [SerializeField] private Transform spawnPoint;
+    public static GameObject playerObject;
 
     private Character character;
 
@@ -30,11 +31,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (character == Character.SOLDIER)
         {
-            PhotonNetwork.Instantiate("Prefabs/" + soldierPrefab.name, spawnPoint.position, spawnPoint.rotation);
+            playerObject = PhotonNetwork.Instantiate("Prefabs/" + soldierPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
         else
         {
-            PhotonNetwork.Instantiate("Prefabs/" + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
+            playerObject = PhotonNetwork.Instantiate("Prefabs/" + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
     }
     // Update is called once per frame

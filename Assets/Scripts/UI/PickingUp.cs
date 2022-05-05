@@ -5,111 +5,112 @@ using Photon.Pun;
 
 public class PickingUp : MonoBehaviourPunCallbacks
 {
-    private Transform camera;
-    [SerializeField] private float pickUpDistence = 2;
+    [Header("Interaction layers")]
     [SerializeField] private LayerMask pickupLayer;
-
     [SerializeField] private LayerMask fireLayer;
-
     [SerializeField] private LayerMask spaceShipLayer;
-    [SerializeField] private Inventory inventory;
-    [SerializeField] private HealthState healthState;
-    private GameObject otherPlayer;
-    public Handler handler;
-    private RaycastHit pickup;
 
-    // Start is called before the first frame update
+    
+    [SerializeField] private float pickUpDistance = 3;
+    [SerializeField] private Inventory inventory;
+
+    private Transform mainCamera;
+    private GameObject otherPlayer;
+    private RaycastHit pickup;
+    private bool isEngineer;
     void Start()
     {
-        camera = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        isEngineer = GetComponent<Engineer>() == null; 
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PickUp()
     {
-        //if (photonView.IsMine)
-        //{
-        if (Physics.Raycast(camera.position,
-        camera.TransformDirection(Vector3.forward),
-        out pickup,
-        pickUpDistence,
-        pickupLayer))
+        if (PickUpHitCheck(pickupLayer))
         {
-            Pickup_Typs.Pickup typ = pickup.collider.gameObject.GetComponent<Pickup>().getTyp();
-            if (Input.GetKey(KeyCode.E))
-            {
-                    
-                if (typ == Pickup_Typs.Pickup.Metal)
-                {
-                    inventory.addMetal(pickup.transform.gameObject.GetComponent<Pickup>().amount);
-                    //pickup.transform.gameObject.GetComponent<Pickup>().ObjectDestory();
-                    //PhotonNetwork.Destroy(pickup.transform.gameObject);
-                    Destroy(pickup.transform.gameObject);
-                    pickup.transform.gameObject.GetComponent<PhotonView>().RPC("ObjectDestory", RpcTarget.All);
-                        
-                    //photonView.RPC("ObjectDestory", RpcTarget.All, pickup.transform.gameObject.GetComponent<PhotonView>().ViewID);
-                }
-                else if (typ == Pickup_Typs.Pickup.GreenGoo)
-                {
-                    inventory.addGreenGoo(pickup.transform.gameObject.GetComponent<Pickup>().amount);
-                    //PhotonNetwork.Destroy(pickup.transform.gameObject);
-                    Destroy(pickup.transform.gameObject);
-                    pickup.transform.gameObject.GetComponent<PhotonView>().RPC("ObjectDestory", RpcTarget.All);
-                }
-                else if (typ == Pickup_Typs.Pickup.AlienMeat)
-                {
-                    inventory.addAlienMeat(pickup.transform.gameObject.GetComponent<Pickup>().amount);
-                    //PhotonNetwork.Destroy(pickup.transform.gameObject);
-                    Destroy(pickup.transform.gameObject);
-                    pickup.transform.gameObject.GetComponent<PhotonView>().RPC("ObjectDestory", RpcTarget.All);
-                }
-                else if (typ == Pickup_Typs.Pickup.Revive)
-                {
-                    inventory.HasReviveBadge = true;
-                    otherPlayer = pickup.transform.gameObject.GetComponent<Pickup>().getPlayerToRevive();
-                    //PhotonNetwork.Destroy(pickup.transform.gameObject);
-                    //photonView.RPC("ObjectDestory", RpcTarget.All, pickup.transform.gameObject);
-                    pickup.transform.gameObject.GetComponent<PhotonView>().RPC("ObjectDestory", RpcTarget.All);
-                }
-                    
-            }
-                
-        }
+            Pickup pickUpComponent = pickup.transform.gameObject.GetComponent<Pickup>();
+            Pickup_Typs.Pickup typ = pickUpComponent.getTyp();
+            PhotonView pickUpPhotonView = pickup.transform.gameObject.GetComponent<PhotonView>();
 
-        if (Physics.Raycast(camera.position,
-                camera.TransformDirection(Vector3.forward),
+            if (typ == Pickup_Typs.Pickup.Metal && isEngineer == true)
+            {
+                inventory.addMetal(pickUpComponent.amount);
+
+                Destroy(pickup.transform.gameObject);
+                pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+
+            }
+            else if (typ == Pickup_Typs.Pickup.GreenGoo)
+            {
+                inventory.addGreenGoo(pickUpComponent.amount);
+                Destroy(pickup.transform.gameObject);
+                pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+            }
+            else if (typ == Pickup_Typs.Pickup.AlienMeat)
+            {
+                inventory.addAlienMeat(pickUpComponent.amount);
+                Destroy(pickup.transform.gameObject);
+                pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+            }
+            else if (typ == Pickup_Typs.Pickup.Revive)
+            {
+                inventory.HasReviveBadge = true;
+                otherPlayer = pickUpComponent.getPlayerToRevive();
+                pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+            }
+        }
+    }
+    
+    public void Revive()
+    {
+        if (PickUpHitCheck(spaceShipLayer))
+        {
+            if (inventory.HasReviveBadge)
+            {
+                inventory.HasReviveBadge = false;
+                otherPlayer.GetComponent<PhotonView>().RPC("ReviveRPC", RpcTarget.AllViaServer, transform.position);
+            }
+        }
+    }
+
+    public void Cook()
+    {
+        if (PickUpHitCheck(fireLayer) && isEngineer == false)
+        {
+            inventory.cook();
+        }
+    }
+
+    public void Eat()
+    {
+        if (inventory.CookedAlienMeat > 0)
+        {
+            inventory.eat();
+            photonView.RPC("AddHealth", RpcTarget.All, 1);
+        }
+    }
+
+    public void DropItem()
+    {
+        photonView.RPC(nameof(DropItemRPC), RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    private void DropItemRPC()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+
+        }
+    }
+
+
+    private bool PickUpHitCheck(LayerMask layer)
+    {
+        return Physics.Raycast(mainCamera.position,
+                mainCamera.TransformDirection(Vector3.forward),
                 out pickup,
-                pickUpDistence,
-                spaceShipLayer))
-        {
-            if (Input.GetKey(KeyCode.E))
-            {
-                if (inventory.HasReviveBadge)
-                {
-                    inventory.HasReviveBadge = false;
-                    //otherPlayer.GetComponent<HealthState>().Revive();
-                    otherPlayer.GetComponent<PhotonView>().RPC("Revive", RpcTarget.AllViaServer);
-                }
-            }
-        }
-
-        if (Physics.Raycast(camera.position,
-            camera.TransformDirection(Vector3.forward),
-            out pickup,
-            pickUpDistence,
-            fireLayer))
-            {
-                if(Input.GetKey(KeyCode.C)){
-                    inventory.cook();
-                }
-            }
-            if (Input.GetKey(KeyCode.X))
-            {
-                if(inventory.CookedAlienMeat > 0){
-                inventory.eat();
-                photonView.RPC("AddHealth", RpcTarget.All, 1);
-            }
-            //}
-        }
+                pickUpDistance,
+                layer);
     }
 }

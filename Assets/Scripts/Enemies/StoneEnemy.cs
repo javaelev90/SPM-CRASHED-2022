@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,11 +29,85 @@ public class StoneEnemy : AIBaseLogic
     {
         if (IsStunned)
         {
-            return;
+            agent.isStopped = true;
+            timeStunnedCounter -= Time.deltaTime;
+            if (timeStunnedCounter <= 0f)
+            {
+                IsAttacked = true;
+                timeStunnedCounter = timeStunned;
+                IsStunned = false;
+                isFleeing = false;
+                agent.isStopped = false;
+            }
+        }
+        else
+        {
+            if (!IsAttacked)
+            {
+                AggroBasedOnSight();
+                AttackBasedOnSight();
+            }
+
+            if (IsAttacked)
+            {
+                AggroBasedOnAttack();
+            }
+
+            if (isFleeing)
+            {
+                FleeToPosition();
+            }
         }
 
-        base.Update();
-        // om spelare syns ska den räkna ut distansen och agera därefter
+    }
+
+    private void AggroBasedOnAttack()
+    {
+        if (IsAttacked)
+        {
+            timeCounterAttacked -= Time.deltaTime;
+            if (timeCounterAttacked <= 0f)
+            {
+                IsAttacked = false;
+            }
+
+            if (distanceToTarget < deadZoneRange)
+            {
+                fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
+                isFleeing = true;
+                agent.isStopped = false;
+            }
+
+            Move();
+        }
+    }
+
+    private void AggroBasedOnSight()
+    {
+        if (IsWithinSight)
+        {
+            timeCounterAggro -= Time.deltaTime;
+
+            if (timeCounterAggro <= 0f)
+            {
+                IsAggresive = true;
+                timeCounterAggro = timeToAggro;
+            }
+        }
+        else if (!IsWithinSight && IsAggresive)
+        {
+            timeCounterAggro -= Time.deltaTime;
+
+            if (timeCounterAggro <= 0f)
+            {
+                IsAggresive = false;
+                timeCounterAggro = timeToAggro;
+            }
+        }
+    }
+
+    private void AttackBasedOnSight()
+    {
         if (IsWithinSight)
         {
             if (distanceToTarget < deadZoneRange)
@@ -52,11 +127,6 @@ public class StoneEnemy : AIBaseLogic
         {
             isFleeing = false;
         }
-
-        if (isFleeing)
-        {
-            FleeToPosition();
-        }
     }
 
     private void Throw()
@@ -65,7 +135,7 @@ public class StoneEnemy : AIBaseLogic
         if (timer <= 0f)
         {
             timer = timeToThrow;
-            GameObject bull = Instantiate(bullet, transform.position, Quaternion.identity);
+            GameObject bull = PhotonNetwork.Instantiate("Resources/Prefabs/Bullet", transform.position, Quaternion.identity);
             Projectile proj = bull.GetComponent<Projectile>();
             proj.Velocity += directionToTarget * 10f;
             proj.IsShot = true;
@@ -76,12 +146,6 @@ public class StoneEnemy : AIBaseLogic
     {
         agent.destination = fleePos.transform.position;
     }
-
-    private float DistanceToTarget(Vector3 position)
-    {
-        return Vector3.Distance(transform.position, position);
-    }
-
 
     private void Move()
     {
@@ -95,20 +159,19 @@ public class StoneEnemy : AIBaseLogic
         {
             agent.isStopped = false;
         }
-        agent.destination = visibleTargets[0].position;
+        agent.destination = target.position;
         Rotate();
     }
 
     private void Rotate()
     {
         float dot = Vector3.Dot(transform.forward, directionToTarget);
-        if (dot < 0.6f)
-        {
-            Quaternion rotateTo = Quaternion.LookRotation(directionToTarget, transform.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, rotationSpeed * Time.deltaTime);
-        }
+        Quaternion rotateTo = Quaternion.LookRotation(directionToTarget, transform.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, rotationSpeed * Time.deltaTime);
+        //if (dot < 0.6f)
+        //{
+        //}
     }
-
     private void OnDrawGizmos()
     {
         Debug.DrawLine(transform.position, transform.position + transform.forward * 5f, Color.blue);

@@ -42,12 +42,20 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         return PhotonNetwork.InstantiateRoomObject("Prefabs/Enemies/"+pooledObjectPrefab.name, position, rotation).GetComponent<PooledObject>();
     }
 
-    public void Spawn(Vector3 position)
+    public void DeSpawnPool()
+    {
+        if (activeObjects.Count > 0)
+        {
+            photonView.RPC(nameof(DeSpawnPoolMaster), RpcTarget.MasterClient);
+        }
+    }
+
+    public void Spawn(Vector3 position, int photonViewTargetId)
     {
         Debug.Log(position);
         if(pooledObjects.Count > 0)
         {
-            photonView.RPC(nameof(MasterSpawn), RpcTarget.MasterClient, position);
+            photonView.RPC(nameof(MasterSpawn), RpcTarget.MasterClient, position, photonViewTargetId);
         }
     }
 
@@ -57,7 +65,7 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void MasterSpawn(Vector3 position)
+    private void MasterSpawn(Vector3 position, int photonViewTargetId)
     {
         if (PhotonNetwork.IsMasterClient == false)
         {
@@ -66,6 +74,8 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         }
         PooledObject pooledObject = pooledObjects.Dequeue();
         pooledObject.transform.position = position;
+        pooledObject.transform.SetParent(transform);
+        pooledObject.photonViewTargetId = photonViewTargetId;
         activeObjects.Add(pooledObject.photonView.ViewID, pooledObject);
         pooledObject.UpdateActiveState(true);
     }
@@ -85,6 +95,25 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
             if (activeObjects.Remove(gameObjectPhotonId))
             {
                 pooledObjects.Enqueue(pooledObject);
+            }
+        }
+    }
+
+    [PunRPC]
+    private void DeSpawnPoolMaster()
+    {
+        if (PhotonNetwork.IsMasterClient == false)
+        {
+            Debug.LogError($"[PhotonObjectPool::DeSpawnPoolMaster] Only the master is allowed to spawn objects.");
+            return;
+        }
+        foreach (var item in activeObjects)
+        {
+            item.Value.Recycle();
+            item.Value.UpdateActiveState(false);
+            if (activeObjects.Remove(item.Key))
+            {
+                pooledObjects.Enqueue(item.Value);
             }
         }
     }
