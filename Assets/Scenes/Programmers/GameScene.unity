@@ -579,6 +579,56 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &956848696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 956848698}
+  - component: {fileID: 956848697}
+  m_Layer: 0
+  m_Name: instantiater
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &956848697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956848696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7c3d6c6fe39d364d92dd61afc3cc29e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenGooPrefab: {fileID: 0}
+  greenGooPositions: []
+  metalPrefab: {fileID: 0}
+  metalPositions: []
+  alienMeatPrefab: {fileID: 0}
+  alienMeatPositions: []
+  prefabPath: Prefabs/Pickups/
+--- !u!4 &956848698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956848696}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 332.4927, y: 60.439545, z: 342.27908}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1017397630
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,6 +863,7 @@ MonoBehaviour:
   soldierPrefab: {fileID: 9218574915160184169, guid: 5903ded0fe4bf55438c0f50d8150710f, type: 3}
   engineerPrefab: {fileID: 5125041606170365157, guid: 5854e12e70968754c943fad24d996f6c, type: 3}
   spawnPoint: {fileID: 1273106384}
+  objectInstantiater: {fileID: 956848697}
 --- !u!4 &1273106384
 Transform:
   m_ObjectHideFlags: 0

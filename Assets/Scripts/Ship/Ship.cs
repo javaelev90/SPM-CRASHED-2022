@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Ship : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class Ship : MonoBehaviour
         while (player == null)
         {
             yield return new WaitForSeconds(sec);
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+            player = GameObject.FindGameObjectsWithTag("Player").Where(gObject => gObject.GetComponent<Engineer>() != null).ToList()[0].transform;
         }
 
     }
@@ -51,7 +52,8 @@ public class Ship : MonoBehaviour
 
             foreach (Collider col in colliderHits)
             {
-                if (col.tag == ("Player") && Input.GetKeyDown(KeyCode.E) && Panel != null && PartPickup != null)
+                Engineer controller = col.transform.gameObject.GetComponent<Engineer>();
+                if (controller && controller.playerActions.Player.PickUp.IsPressed() && Panel != null && PartPickup != null)
                 {
                     Debug.Log("Inside");
                     Destroy(PartPickup.gameObject);
