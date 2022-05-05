@@ -16,7 +16,7 @@ public class ShowUI : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider player){
-        if((canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>()) || (canEngineerPickup && player.gameObject.GetComponent<SoldierCharacter>()))
+        if((canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>()) || (canEngineerPickup && player.gameObject.GetComponent<Engineer>()))
         {
            uiObject.SetActive(true);
         }
