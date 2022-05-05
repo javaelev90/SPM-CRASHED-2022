@@ -16,6 +16,7 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private float closestDistance = 5f;
     [SerializeField] private PhotonView bullet;
     [SerializeField] private float fireTimer = 1f;
+    [SerializeField] private int turretDamage;
     private string pathBullet = "Prefabs/Bullet";
     public bool IsPlaced { get; set; }
     private float counter;
@@ -28,38 +29,45 @@ public class Turret : MonoBehaviourPunCallbacks
         isMine = photonView.IsMine;
     }
 
+    private void FindTargets()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, radius, enemyLayer);
+        if (colliders.Length > 0)
+        {
+            currentTarget = colliders[0].transform;
+            Debug.Log(currentTarget);
+
+            foreach (Collider col in colliders)
+            {
+                newTarget = col.transform;
+                if (Vector3.Distance(newTarget.position, transform.position) < closestDistance)
+                {
+                    currentTarget = newTarget;
+                }
+            }
+
+            Vector3 direction = currentTarget.position - transform.position;
+            Quaternion rotateTo = Quaternion.LookRotation(direction, turretBody.transform.up);
+            turretBody.transform.rotation = Quaternion.Slerp(transform.rotation,  rotateTo, 1f);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
 
         if (IsPlaced)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, radius, enemyLayer);
-            if (colliders.Length > 0)
-            {
 
-                currentTarget = colliders[0].transform;
-                Debug.Log(currentTarget);
-
-                foreach (Collider col in colliders)
-                {
-                    newTarget = col.transform;
-                    if (Vector3.Distance(newTarget.position, transform.position) < closestDistance)
-                    {
-                        currentTarget = newTarget;
-                    }
-                }
-            }
+            FindTargets();
 
             if (currentTarget != null)
             {
 
-                if (Vector3.Distance(currentTarget.transform.position, transform.position) > radius)
-                {
-                    currentTarget = transform;
-                }
-
-                turretBody.transform.LookAt(currentTarget);
+                //if (Vector3.Distance(currentTarget.transform.position, transform.position) > radius)
+                //{
+                //    currentTarget = transform;
+                //}
 
                 counter -= Time.deltaTime;
                 if (counter <= 0f)
@@ -73,8 +81,10 @@ public class Turret : MonoBehaviourPunCallbacks
             }
             else
             {
-                turretBody.transform.LookAt(Vector3.forward, Vector3.up);
+                //turretBody.transform.LookAt(Vector3.forward, Vector3.up);
             }
+
+
 
             Debug.DrawRay(muzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
         }
