@@ -7,7 +7,9 @@ public class EventStarter : MonoBehaviour
     public float eventTime = 30f;
     public GameObject dome;
     public TeleportToShip teleportToShip;
+    public Ship ship;
     public List<ObjectSpawner> eventSpawners;
+    
     
     // Start is called before the first frame update
     private void Start()
@@ -38,7 +40,7 @@ public class EventStarter : MonoBehaviour
     {
         yield return new WaitForSeconds(eventTime);
         teleportToShip.TP();
-
+        ship.newPartObtained();
         Destroy(gameObject);
     }
 }

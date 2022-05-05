@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,21 @@ public class Ship : MonoBehaviour
     [SerializeField] private float radius = 10f;
     private bool triggerActive = false;
     [SerializeField] Transform player;
+    private int nextUpgrade;
+
+    public List<ShipUpgradeCost> shipUpgradeCost;
+
+    [Serializable]
+    public class ShipUpgradeCost
+    {
+        public int metalCost;
+        public int gooCost;
+        public bool partAvalibul = false;
+    }
 
     void Start()
     {
+        nextUpgrade = 0;
         StartCoroutine(Wait(5));
         //Wait(5);
     }
@@ -73,6 +86,29 @@ public class Ship : MonoBehaviour
             */
         }
 
+    }
+
+    public void newPartObtained()
+    {
+        foreach (ShipUpgradeCost shipUpgradeCost in shipUpgradeCost)
+        {
+            if (!shipUpgradeCost.partAvalibul)
+            {
+                shipUpgradeCost.partAvalibul = true;
+                break;
+            }
+        }
+    }
+
+    public bool UppgradeShip()
+    {
+        if (shipUpgradeCost[nextUpgrade].partAvalibul)
+        {
+            nextUpgrade++;
+            OpenUpgradePanel();
+            return true;
+        }
+        return false;
     }
 
     private void OnDrawGizmosSelected()
