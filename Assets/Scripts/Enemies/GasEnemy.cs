@@ -189,7 +189,6 @@ public class GasEnemy : AIBaseLogic
         }
     }
 
-
     private void OnDrawGizmos()
     {
         Debug.DrawLine(transform.position, transform.position + transform.forward * 5f, Color.blue);

@@ -220,10 +220,4 @@ public class StoneEnemy : AIBaseLogic
         Debug.DrawLine(transform.position, -(directionToTarget * viewRadius - transform.position), Color.cyan);
     }
 
-    void OnGUI()
-    {
-        float dot = Vector3.Dot(transform.forward, directionToTarget);
-
-        GUI.Label(new Rect(10, 10, 100, 20), "Dot: " + dot);
-    }
 }

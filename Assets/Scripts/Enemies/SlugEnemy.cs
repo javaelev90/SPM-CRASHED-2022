@@ -175,7 +175,6 @@ public class SlugEnemy : AIBaseLogic
         transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, rotationSpeed * Time.deltaTime);
     }
 
-
     private void OnDrawGizmos()
     {
         Debug.DrawLine(transform.position, transform.position + transform.forward * 5f, Color.blue);
