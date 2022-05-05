@@ -90,6 +90,21 @@ public class PickingUp : MonoBehaviourPunCallbacks
         }
     }
 
+    public void DropItem()
+    {
+        photonView.RPC(nameof(DropItemRPC), RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    private void DropItemRPC()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+
+        }
+    }
+
+
     private bool PickUpHitCheck(LayerMask layer)
     {
         return Physics.Raycast(mainCamera.position,
