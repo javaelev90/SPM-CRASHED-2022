@@ -12,9 +12,11 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     [SerializeField] protected float viewAngle;
     [SerializeField] private float delayToNewTarget = 1f;
     [SerializeField] private LayerMask obstacleMask;
-    [SerializeField] private LayerMask targetMask;
+    [SerializeField] protected LayerMask targetMask;
+    [SerializeField] protected PooledObject root;
     protected List<Transform> visibleTargets = new List<Transform>();
     protected Transform target;
+    protected Transform eventTarget;
     protected float distanceToTarget;
     protected Vector3 directionToTarget;
 
@@ -46,6 +48,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
         findTargets = StartCoroutine("FindTargetsWithDelay", delayToNewTarget);
         agent = GetComponent<NavMeshAgent>();
         IsMasterClient = PhotonNetwork.IsMasterClient;
+        eventTarget = PhotonView.Find(root.photonViewTargetId)?.transform;
     }
 
     private void OnDisable()
