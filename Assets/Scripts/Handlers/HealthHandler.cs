@@ -39,7 +39,6 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     {
         if (IsAlive)
         {
-            Debug.Log("Taken damage " + gameObject.GetInstanceID());
             CurrentHealth -= amount;
             healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
 

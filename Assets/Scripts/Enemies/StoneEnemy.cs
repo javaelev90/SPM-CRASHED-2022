@@ -170,7 +170,6 @@ public class StoneEnemy : AIBaseLogic
             proj.DamageDealer = stoneDamage;
             proj.Velocity += directionToTarget * 10f;
             proj.IsShot = true;
-            Debug.Log("Shot");
         }
     }
 

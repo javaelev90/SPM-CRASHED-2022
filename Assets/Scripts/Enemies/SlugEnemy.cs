@@ -160,7 +160,6 @@ public class SlugEnemy : AIBaseLogic
                 foreach (Collider coll in targets)
                 {
                     coll.transform.GetComponent<HealthHandler>().TakeDamage(explosionDamage);
-                    Debug.Log("Blow player up");
                 }
             }
             root.DeSpawn();
