@@ -47,13 +47,11 @@ public class ObjectSpawner : MonoBehaviour
     {
         spawnedObjects = 0;
         spawnerIsTriggered = false;
-        Debug.Log("Spawner reset, delay is " + delayBetweenSpawns);
     }
 
     public void TriggerSpawner()
     {
         spawnerIsTriggered = true;
-        Debug.Log("Spawner started");
     }
 
     private void SpawnObjects()

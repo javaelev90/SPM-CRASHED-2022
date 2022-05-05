@@ -23,7 +23,6 @@ public class NightSpawnersHandler : MonoBehaviour
         foreach(ObjectSpawner spawner in spawners)
         {
             numberOfSpawnsStarted++;
-            Debug.Log("Start spawning " + numberOfSpawnsStarted + "/21");
             spawner.TriggerSpawner();
         }
     }
@@ -34,7 +33,6 @@ public class NightSpawnersHandler : MonoBehaviour
         foreach (ObjectSpawner spawner in spawners)
         {
             numberOfSpawnsStopped++;
-            Debug.Log("Stop spawning " + numberOfSpawnsStopped + "/21");
             spawner.ResetSpawner();
         }
     }
