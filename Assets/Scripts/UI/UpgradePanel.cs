@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpgradePanel : MonoBehaviour
 {
@@ -24,11 +25,17 @@ public class UpgradePanel : MonoBehaviour
     {
         ErrorMsg?.SetActive(false);
         Panel.SetActive(false);
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void ToggleErrorMessage(bool active)
     {
         ErrorMsg?.SetActive(active);
+    }
+
+    public void SetErrorMessage(string errorMessage)
+    {
+        if(ErrorMsg)
+            ErrorMsg.GetComponent<Text>().text = errorMessage;
     }
 }
