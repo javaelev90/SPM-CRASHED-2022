@@ -15,7 +15,7 @@ public class ObjectInstantiater : MonoBehaviourPunCallbacks
     [SerializeField] GameObject alienMeatPrefab;
     [SerializeField] List<Transform> alienMeatPositions;
 
-    [SerializeField] string prefabPath = "Prefabs/Pickups";
+    [SerializeField] string prefabPath = "Prefabs/Pickups/";
 
     public void InitializeWorld()
     {

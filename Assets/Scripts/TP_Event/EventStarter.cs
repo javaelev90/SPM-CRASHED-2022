@@ -18,6 +18,7 @@ public class EventStarter : MonoBehaviour
         {
             if (child.GetComponent<ObjectSpawner>())
             {
+                child.GetComponent<ObjectSpawner>().ResetSpawner();
                 eventSpawners.Add(child.GetComponent<ObjectSpawner>());
             }
         }
