@@ -22,13 +22,16 @@ public class AIBaseLogic : MonoBehaviour
     protected NavMeshAgent agent;
 
     [Header("Aggro parameters")]
-    [SerializeField] private float timeToAggro = 1f;
-    private float timeCounterAggro;
+    [SerializeField] protected float timeToAggro = 1f;
+    [SerializeField] protected float timeToCoolWhenAttacked;
+    protected float timeCounterAggro;
+    protected float timeCounterAttacked;
+    public bool IsAttacked { get; set; }
+    public bool IsStunned { get; set; }
 
     [Header("Stun parameters")]
-    [SerializeField] private float timeStunned;
-    private float timeStunnedCounter;
-    public bool IsStunned { get; set; }
+    [SerializeField] protected float timeStunned;
+    protected float timeStunnedCounter;
 
     public float TimeToAggro
     { get { return timeToAggro; } }
@@ -39,56 +42,27 @@ public class AIBaseLogic : MonoBehaviour
     {
         StartCoroutine("FindTargetsWithDelay", delayToNewTarget);
         agent = GetComponent<NavMeshAgent>();
-        timeStunnedCounter = timeStunned;
     }
 
     protected virtual void Update()
     {
-        if (IsStunned)
-        {
-            timeStunnedCounter -= Time.deltaTime;
-            if (timeStunnedCounter <= 0f)
-            {
-                IsStunned = false;
-                timeStunnedCounter = timeStunned;
-            }
-        }
-        else
-        {
-            if (IsWithinSight)
-            {
-                timeCounterAggro -= Time.deltaTime;
 
-                if (timeCounterAggro <= 0f)
-                {
-                    IsAggresive = true;
-                    timeCounterAggro = timeToAggro;
-                }
-            }
-            else if (!IsWithinSight && IsAggresive)
-            {
-                timeCounterAggro -= Time.deltaTime;
-
-                if (timeCounterAggro <= 0f)
-                {
-                    IsAggresive = false;
-                    timeCounterAggro = timeToAggro;
-                }
-            }
-        }
     }
 
     public void StunnedBy(Transform target)
     {
         this.target = target;
         IsStunned = true;
+        timeStunnedCounter = timeStunned;
     }
 
     public void FindAttackingTarget(Transform target)
     {
         this.target = target;
-        Debug.Log("target is set: " + target.name);
-        IsAggresive = true;
+        IsAttacked = true;
+        timeCounterAttacked = timeToCoolWhenAttacked;
+        directionToTarget = (target.position - transform.position).normalized;
+        distanceToTarget = Vector3.Distance(transform.position, target.position);
     }
 
     private IEnumerator FindTargetsWithDelay(float delay)
@@ -102,19 +76,21 @@ public class AIBaseLogic : MonoBehaviour
 
     private void FindVisibleTargets()
     {
+
         Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
         IsWithinSight = targetInViewRadius.Length > 0;
 
         for (int i = 0; i < targetInViewRadius.Length; i++)
         {
-            Transform target = targetInViewRadius[i].transform;
-            directionToTarget = (target.position - transform.position).normalized;
+            Transform tempTarget = targetInViewRadius[i].transform;
+            directionToTarget = (tempTarget.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, directionToTarget) < viewAngle / 2)
             {
                 distanceToTarget = Vector3.Distance(transform.position, target.position);
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstacleMask))
                 {
-                    visibleTargets.Add(target);
+                    visibleTargets.Add(tempTarget);
+                    target = tempTarget;
                 }
             }
         }
@@ -123,6 +99,7 @@ public class AIBaseLogic : MonoBehaviour
         {
             visibleTargets.Clear();
         }
+
     }
 
     public Vector3 DirectionFromAngle(float angleInDegrees, bool angleIsGlobal)

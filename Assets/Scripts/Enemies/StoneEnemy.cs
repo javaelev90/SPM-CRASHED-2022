@@ -26,39 +26,105 @@ public class StoneEnemy : AIBaseLogic
 
     protected override void Update()
     {
-        base.Update();
-
         if (IsStunned)
         {
-            return;
+            timeStunnedCounter -= Time.deltaTime;
+            if (timeStunnedCounter <= 0f)
+            {
+                IsAttacked = true;
+                timeStunnedCounter = timeStunned;
+                IsStunned = false;
+                isFleeing = false;
+                agent.isStopped = true;
+            }
         }
         else
         {
-            // om spelare syns ska den räkna ut distansen och agera därefter
-            if (IsWithinSight)
+            if (!IsAttacked)
             {
-                if (distanceToTarget < deadZoneRange)
-                {
-                    fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
-                    isFleeing = true;
-                    agent.isStopped = false;
-                    IsAggresive = false;
-                }
-
-                if (IsAggresive)
-                {
-                    Move();
-                }
+                AggroBasedOnSight();
+                AttackBasedOnSight();
             }
-            else
+
+            if (IsAttacked)
             {
-                isFleeing = false;
+                AggroBasedOnAttack();
             }
 
             if (isFleeing)
             {
                 FleeToPosition();
             }
+        }
+
+    }
+
+    private void AggroBasedOnAttack()
+    {
+        if (IsAttacked)
+        {
+            timeCounterAttacked -= Time.deltaTime;
+            if (timeCounterAttacked <= 0f)
+            {
+                IsAttacked = false;
+            }
+
+            if (distanceToTarget < deadZoneRange)
+            {
+                fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
+                isFleeing = true;
+                agent.isStopped = false;
+            }
+
+            Move();
+        }
+    }
+
+    private void AggroBasedOnSight()
+    {
+        if (IsWithinSight)
+        {
+            timeCounterAggro -= Time.deltaTime;
+
+            if (timeCounterAggro <= 0f)
+            {
+                IsAggresive = true;
+                timeCounterAggro = timeToAggro;
+            }
+        }
+        else if (!IsWithinSight && IsAggresive)
+        {
+            timeCounterAggro -= Time.deltaTime;
+
+            if (timeCounterAggro <= 0f)
+            {
+                IsAggresive = false;
+                timeCounterAggro = timeToAggro;
+            }
+        }
+
+    }
+
+    private void AttackBasedOnSight()
+    {
+        if (IsWithinSight)
+        {
+            if (distanceToTarget < deadZoneRange)
+            {
+                fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
+                isFleeing = true;
+                agent.isStopped = false;
+                IsAggresive = false;
+            }
+
+            if (IsAggresive)
+            {
+                Move();
+            }
+        }
+        else
+        {
+            isFleeing = false;
         }
     }
 
@@ -80,12 +146,6 @@ public class StoneEnemy : AIBaseLogic
         agent.destination = fleePos.transform.position;
     }
 
-    private float DistanceToTarget(Vector3 position)
-    {
-        return Vector3.Distance(transform.position, position);
-    }
-
-
     private void Move()
     {
         if (distanceToTarget < maxThrowRange && minThrowRange < distanceToTarget)
@@ -98,20 +158,19 @@ public class StoneEnemy : AIBaseLogic
         {
             agent.isStopped = false;
         }
-        agent.destination = visibleTargets[0].position;
+        agent.destination = target.position;
         Rotate();
     }
 
     private void Rotate()
     {
         float dot = Vector3.Dot(transform.forward, directionToTarget);
-        if (dot < 0.6f)
-        {
-            Quaternion rotateTo = Quaternion.LookRotation(directionToTarget, transform.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, rotationSpeed * Time.deltaTime);
-        }
+        Quaternion rotateTo = Quaternion.LookRotation(directionToTarget, transform.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, rotationSpeed * Time.deltaTime);
+        //if (dot < 0.6f)
+        //{
+        //}
     }
-
     private void OnDrawGizmos()
     {
         Debug.DrawLine(transform.position, transform.position + transform.forward * 5f, Color.blue);
