@@ -34,6 +34,7 @@ public class Pickup : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     {
         playerToRevive = player;
     }
+
     [PunRPC]
     public void ObjectDestory()
     {

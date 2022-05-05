@@ -6,7 +6,7 @@ public class PlayerCharacter : MonoBehaviour
     [Header("Health")]
     [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
-    [SerializeField] private HealthHandler healthHandler;
+    [SerializeField] private HealthHandlerTest healthHandler;
 
     [Header("Respawn")]
     [SerializeField] private Transform spawnPos;
@@ -30,7 +30,7 @@ public class PlayerCharacter : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag("Enemy")) // If its an enemy we deal damage to it
                 {
                     Debug.Log("DIE ENEMY DIE!");
-                    hit.transform.gameObject.GetComponent<HealthHandler>().TakeDamage(damage);
+                    hit.transform.gameObject.GetComponent<HealthHandlerTest>().TakeDamage(damage);
                 }
             }
 
