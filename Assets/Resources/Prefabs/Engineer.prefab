@@ -592,9 +592,14 @@ MonoBehaviour:
   maxTurretToSpawn: 3
   turretCount: 0
   turretOffset: {x: 0, y: 0, z: 0}
-  gooCostTurret: 1
-  metalCostTurret: 1
+  gooCostTurret: 0
+  metalCostTurret: 0
   turretPrefab: {fileID: 1503096766842467002, guid: 3358d40555310ec4d8266bc256c4335e, type: 3}
+  greenGooPrefab: {fileID: 5563257113643808014, guid: e91eaeefca1cf6b44a325df71e90cc48, type: 3}
+  metalPrefab: {fileID: 5648485573748196395, guid: 8d9299097781d6a4cbbca1a773979f70, type: 3}
+  turretLayer:
+    serializedVersion: 2
+    m_Bits: 262144
   destination: {fileID: 431206142263564548}
   player: {fileID: 5125041606170365177}
   muzzlePosition: {fileID: 1099855166}

@@ -20,6 +20,9 @@ public class Engineer : Controller3D
     private bool canPutDownTurret;
     //private string pathTurret = "Resources/Prefabs/TurretAssembly";
     [SerializeField] private GameObject turretPrefab;
+    [SerializeField] private GameObject greenGooPrefab;
+    [SerializeField] private GameObject metalPrefab;
+    [SerializeField] public LayerMask turretLayer;
 
     [Header("Carry Ship Part")]
     /// <summary>
@@ -95,11 +98,23 @@ public class Engineer : Controller3D
 
     public void TurretHandling()
     {
-        Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out RaycastHit hit, obstacleLayer);
+        Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out RaycastHit hit, turretLayer);
 
         if (playerActions.Player.DeleteTurret.IsPressed())
         {
+            Transform greenGooDropPos = turretPrefab.transform.Find("DropMetal");
+            Transform metalDropPos = turretPrefab.transform.Find("DropGoo");
 
+            if (hit.collider.gameObject.tag == "Turret")
+            {
+                GameObject greenGooDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + greenGooPrefab.name, greenGooDropPos.transform.position, Quaternion.identity);
+                greenGooDrop.name = "Green Goo";
+                GameObject metalDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + metalPrefab.name, metalDropPos.transform.position, Quaternion.identity);
+                metalDrop.name = "Metal";
+                Debug.Log("Hit that lil turret bitch");
+
+                Destroy(hit.collider.gameObject);
+            }
         }
 
 
@@ -123,6 +138,8 @@ public class Engineer : Controller3D
                 canPutDownTurret = true;
                 turretObject = PhotonNetwork.Instantiate("Prefabs/" + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
 
+
+
                 if (canPutDownTurret && turretObject != null && playerActions.Player.PlaceTurret.IsPressed())//Input.GetMouseButtonUp(1))
                 {
                     turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
@@ -142,7 +159,7 @@ public class Engineer : Controller3D
 
     public void PickUpShipPart()
     {
-        if(player != null)
+        if (player != null)
         {
             Collider[] colliderHits = Physics.OverlapSphere(transform.position, checkRadius);
             //Debug.Log(colliderHits);
@@ -170,7 +187,7 @@ public class Engineer : Controller3D
                 }
             }
         }
-        
+
     }
 
     IEnumerator Wait(float sec)

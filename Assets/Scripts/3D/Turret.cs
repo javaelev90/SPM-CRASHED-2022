@@ -16,7 +16,7 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private float closestDistance = 5f;
     [SerializeField] private PhotonView bullet;
     [SerializeField] private float fireTimer = 1f;
-    private string pathBullet = "Prefab/Player/Bullet";
+    private string pathBullet = "Prefabs/Bullet";
     public bool IsPlaced { get; set; }
     private float counter;
     private bool isMine;
@@ -31,53 +31,54 @@ public class Turret : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (isMine)
+
+        if (IsPlaced)
         {
-            if (IsPlaced)
+            Collider[] colliders = Physics.OverlapSphere(transform.position, radius, enemyLayer);
+            if (colliders.Length > 0)
             {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, radius, enemyLayer);
-                if (colliders.Length > 0)
-                {
-                    currentTarget = colliders[0].transform;
 
-                    foreach (Collider col in colliders)
+                currentTarget = colliders[0].transform;
+                Debug.Log(currentTarget);
+
+                foreach (Collider col in colliders)
+                {
+                    newTarget = col.transform;
+                    if (Vector3.Distance(newTarget.position, transform.position) < closestDistance)
                     {
-                        newTarget = col.transform;
-                        if (Vector3.Distance(newTarget.position, transform.position) < closestDistance)
-                        {
-                            currentTarget = newTarget;
-                        }
+                        currentTarget = newTarget;
                     }
                 }
-
-                if (currentTarget != null)
-                {
-
-                    if (Vector3.Distance(currentTarget.transform.position, transform.position) > radius)
-                    {
-                        currentTarget = transform;
-                    }
-
-                    turretBody.transform.LookAt(currentTarget);
-
-                    counter -= Time.deltaTime;
-                    if (counter <= 0f)
-                    {
-                        GameObject bullet = PhotonNetwork.Instantiate(pathBullet, muzzlePoint.transform.position, turretBody.transform.rotation);
-                        Projectile projectile = bullet.GetComponent<Projectile>();
-                        projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
-                        projectile.IsShot = true;
-                        counter = fireTimer;
-                    }
-                }
-                else
-                {
-                    turretBody.transform.LookAt(Vector3.forward, Vector3.up);
-                }
-
-                Debug.DrawRay(muzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
             }
+
+            if (currentTarget != null)
+            {
+
+                if (Vector3.Distance(currentTarget.transform.position, transform.position) > radius)
+                {
+                    currentTarget = transform;
+                }
+
+                turretBody.transform.LookAt(currentTarget);
+
+                counter -= Time.deltaTime;
+                if (counter <= 0f)
+                {
+                    GameObject bullet = PhotonNetwork.Instantiate(pathBullet, muzzlePoint.transform.position, turretBody.transform.rotation);
+                    Projectile projectile = bullet.GetComponent<Projectile>();
+                    projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
+                    projectile.IsShot = true;
+                    counter = fireTimer;
+                }
+            }
+            else
+            {
+                turretBody.transform.LookAt(Vector3.forward, Vector3.up);
+            }
+
+            Debug.DrawRay(muzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
         }
+
     }
 
     private void OnDrawGizmos()

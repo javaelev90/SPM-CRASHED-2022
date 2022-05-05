@@ -6,12 +6,12 @@ using System.Linq;
 
 public class Ship : MonoBehaviour
 {
-    [SerializeField] private GameObject Panel;
+    [SerializeField] private UpgradePanel Panel;
     [SerializeField] private float radius = 10f;
     private bool triggerActive = false;
-    [SerializeField] Transform player;
+    [SerializeField] Engineer player;
     private int nextUpgrade;
-
+    public bool allShipPartsCollected = false;
     public List<ShipUpgradeCost> shipUpgradeCost;
 
     [Serializable]
@@ -34,7 +34,7 @@ public class Ship : MonoBehaviour
         while (player == null)
         {
             yield return new WaitForSeconds(sec);
-            player = GameObject.FindGameObjectsWithTag("Player").Where(gObject => gObject.GetComponent<Engineer>() != null).ToList()[0].transform;
+            player = FindObjectOfType<Engineer>();
         }
 
     }
@@ -43,49 +43,18 @@ public class Ship : MonoBehaviour
     {
         if(player != null)
         {
-            Transform PartPickupDest;
-            PartPickupDest = player.transform.Find("CarryPos");
-            Transform PartPickup;
-            PartPickup = PartPickupDest.transform.Find("ShipPickup");
-
             Collider[] colliderHits = Physics.OverlapSphere(transform.position, radius);
 
             foreach (Collider col in colliderHits)
             {
-                Engineer controller = col.transform.gameObject.GetComponent<Engineer>();
-                if (controller && controller.playerActions.Player.PickUp.IsPressed() && Panel != null && PartPickup != null)
+                if (col.transform.gameObject.GetComponent<Engineer>())
                 {
-                    Debug.Log("Inside");
-                    Destroy(PartPickup.gameObject);
-                    OpenUpgradePanel();
-                }
-                else
-                {
-                    //Debug.Log("Outside");
+                    if (player && player.playerActions.Player.PickUp.IsPressed() && Panel != null && Panel.gameObject.activeSelf == false && shipUpgradeCost[nextUpgrade].partAvalibul)
+                    {
+                        OpenUpgradePanel();
+                    }
                 }
             }
-
-            /*
-            if (Physics.SphereCast(ray, radius, out hit, 10f))
-            {
-                if (hit.collider.tag == "Player")
-                {
-                    Debug.Log("Inside");
-                    OpenUpgradePanel();
-                }
-            }
-            */
-
-            /*
-            if (Physics.Raycast(ray, out hit, height))
-            {
-
-                if (hit.collider.tag == ("Player"))
-                {
-                    OpenUpgradePanel();
-                }
-            }
-            */
         }
 
     }
@@ -108,9 +77,37 @@ public class Ship : MonoBehaviour
         {
             nextUpgrade++;
             OpenUpgradePanel();
+            allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
             return true;
         }
         return false;
+    }
+
+    private bool TakeResources()
+    {
+        if (player != null)
+        {
+            Inventory inventory = player.gameObject.GetComponent<Inventory>();
+            if (inventory.GreenGoo >= shipUpgradeCost[nextUpgrade].gooCost && inventory.Metal >= shipUpgradeCost[nextUpgrade].metalCost)
+            {
+                return inventory.removeMetalAndGreenGoo(shipUpgradeCost[nextUpgrade].metalCost, shipUpgradeCost[nextUpgrade].gooCost);
+            }
+        }
+        return false;
+    }
+
+    public void TestUpgrade()
+    {
+        if (TakeResources() == false)
+        {
+            Panel.ToggleErrorMessage(true);
+            Panel.SetErrorMessage($"Too few resources to upgrade.\n Requires metal: {shipUpgradeCost[nextUpgrade].metalCost}, green goo: {shipUpgradeCost[nextUpgrade].gooCost}");
+        }
+        else
+        {
+            UppgradeShip();
+            Panel.ClosePanel();
+        }
     }
 
     private void OnDrawGizmosSelected()
@@ -120,11 +117,12 @@ public class Ship : MonoBehaviour
 
     public void OpenUpgradePanel()
     {
-        //triggerActive = true;
         if(Panel != null)
         {
-            bool isActive = Panel.activeSelf;
-            Panel.SetActive(!isActive);
+            bool isActive = Panel.gameObject.activeSelf;
+            Panel.gameObject.SetActive(!isActive);
+            Panel.ToggleErrorMessage(false);
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }

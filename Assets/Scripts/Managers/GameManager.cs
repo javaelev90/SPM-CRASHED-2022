@@ -6,6 +6,7 @@ using Photon.Pun;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
+    [SerializeField] private Ship ship; 
     [SerializeField] private GameObject objectPool;
     [SerializeField] private GameObject soldierPrefab;
     [SerializeField] private GameObject engineerPrefab;
@@ -16,11 +17,24 @@ public class GameManager : MonoBehaviourPunCallbacks
     private Character character;
 
     private bool IsMine { get { return photonView.IsMine; } }
-
+    private bool gameIsOver = false;
     private void Awake()
     {
         character = (Character)PlayerPrefs.GetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName);
         Initialize();
+    }
+
+    private void Update()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (ship.allShipPartsCollected && gameIsOver == false)
+            {
+                gameIsOver = true;
+                PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.WinSceneName);
+            }
+        }
+
     }
 
     void Start()
