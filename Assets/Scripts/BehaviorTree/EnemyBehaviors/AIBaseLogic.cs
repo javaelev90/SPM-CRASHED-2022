@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class AIBaseLogic : MonoBehaviour
+public class AIBaseLogic : MonoBehaviourPunCallbacks
 {
     [Header("Vision parameters")]
     [SerializeField] protected float viewRadius;
@@ -18,7 +19,7 @@ public class AIBaseLogic : MonoBehaviour
     protected Vector3 directionToTarget;
 
     [Header("Navigation")]
-    [SerializeField] private WayPointSystem wayPointSystem;
+    [SerializeField] protected WayPointSystem wayPointSystem;
     protected NavMeshAgent agent;
 
     [Header("Aggro parameters")]
@@ -33,6 +34,8 @@ public class AIBaseLogic : MonoBehaviour
     [SerializeField] protected float timeStunned;
     protected float timeStunnedCounter;
 
+    protected bool IsMasterClient { get; set; }
+
     public float TimeToAggro
     { get { return timeToAggro; } }
     public bool IsWithinSight { get; set; }
@@ -42,6 +45,7 @@ public class AIBaseLogic : MonoBehaviour
     {
         StartCoroutine("FindTargetsWithDelay", delayToNewTarget);
         agent = GetComponent<NavMeshAgent>();
+        IsMasterClient = PhotonNetwork.IsMasterClient;
     }
 
     protected virtual void Update()
@@ -54,6 +58,8 @@ public class AIBaseLogic : MonoBehaviour
         this.target = target;
         IsStunned = true;
         timeStunnedCounter = timeStunned;
+        directionToTarget = (target.position - transform.position).normalized;
+        distanceToTarget = Vector3.Distance(transform.position, target.position);
     }
 
     public void FindAttackingTarget(Transform target)
@@ -86,7 +92,7 @@ public class AIBaseLogic : MonoBehaviour
             directionToTarget = (tempTarget.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, directionToTarget) < viewAngle / 2)
             {
-                distanceToTarget = Vector3.Distance(transform.position, target.position);
+                distanceToTarget = Vector3.Distance(transform.position, tempTarget.position);
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstacleMask))
                 {
                     visibleTargets.Add(tempTarget);
