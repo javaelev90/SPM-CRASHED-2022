@@ -30,15 +30,20 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Initialize()
     {
-        if (character == Character.SOLDIER)
+        if (PhotonNetwork.IsMasterClient)
         {
             objectInstantiater.InitializeWorld();
+        }
+
+        if (character == Character.SOLDIER)
+        {
             playerObject = PhotonNetwork.Instantiate("Prefabs/" + soldierPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
         else
         {
             playerObject = PhotonNetwork.Instantiate("Prefabs/" + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
+
     }
 
 }
