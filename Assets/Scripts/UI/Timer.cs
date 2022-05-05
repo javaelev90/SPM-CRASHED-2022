@@ -29,10 +29,18 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        day.gameObject.SetActive(true);
-        night.gameObject.SetActive(false);
-        reset();
-        timer -= lightingManager.IsNight ? lightingManager.TimeOfDay - lightingManager.DayLength : lightingManager.TimeOfDay;
+        if(lightingManager.TimeOfDay < lightingManager.DayLength)
+        {
+            day.gameObject.SetActive(true);
+            night.gameObject.SetActive(false);
+            timer = lightingManager.DayLength - lightingManager.TimeOfDay;
+        }
+        else
+        {
+            day.gameObject.SetActive(false);
+            night.gameObject.SetActive(true);
+            timer = lightingManager.NightLength - lightingManager.TimeOfDay + lightingManager.DayLength;
+        }
     }
 
     // Update is called once per frame

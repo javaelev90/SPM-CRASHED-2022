@@ -21,6 +21,13 @@ public class ObjectSpawner : MonoBehaviour
     private int spawnedObjects = 0;
     private bool spawnerIsTriggered = true;
 
+    public float TotalSpawnDuration { set { delayBetweenSpawns = value/numberToSpawn; } }
+
+    private void Start()
+    {
+        cooldownCounter = delayBetweenSpawns;
+    }
+
     private void Update()
     {
         if (PhotonNetwork.IsMasterClient && spawnerIsTriggered)
@@ -33,11 +40,13 @@ public class ObjectSpawner : MonoBehaviour
     {
         spawnedObjects = 0;
         spawnerIsTriggered = false;
+        Debug.Log("Spawner reset, delay is " + delayBetweenSpawns);
     }
 
     public void TriggerSpawner()
     {
         spawnerIsTriggered = true;
+        Debug.Log("Spawner started");
     }
 
     private void SpawnObjects()

@@ -8,23 +8,33 @@ public class NightSpawnersHandler : MonoBehaviour
     [SerializeField] private ObjectSpawner[] spawners;
 
     // Start is called before the first frame update
-    void Start()
+    public void SetupSpawners(float spawnDuration)
     {
-        
+        foreach(ObjectSpawner spawner in spawners)
+        {
+            spawner.TotalSpawnDuration = spawnDuration;
+            spawner.ResetSpawner();
+        }
     }
 
     public void StartNightSpawning()
     {
+        int numberOfSpawnsStarted = 0;
         foreach(ObjectSpawner spawner in spawners)
         {
+            numberOfSpawnsStarted++;
+            Debug.Log("Start spawning " + numberOfSpawnsStarted + "/21");
             spawner.TriggerSpawner();
         }
     }
 
     public void StopNightSpawning()
     {
+        int numberOfSpawnsStopped = 0;
         foreach (ObjectSpawner spawner in spawners)
         {
+            numberOfSpawnsStopped++;
+            Debug.Log("Stop spawning " + numberOfSpawnsStopped + "/21");
             spawner.ResetSpawner();
         }
     }
