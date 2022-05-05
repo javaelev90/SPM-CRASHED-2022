@@ -5,16 +5,11 @@ using UnityEngine;
 public class UpgradePanel : MonoBehaviour
 {
     [SerializeField] private GameObject Panel;
+    [SerializeField] private GameObject ErrorMsg;
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.None;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // Test Upgrade
@@ -27,7 +22,13 @@ public class UpgradePanel : MonoBehaviour
     // When hitting X
     public void ClosePanel()
     {
+        ErrorMsg?.SetActive(false);
         Panel.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void ToggleErrorMessage(bool active)
+    {
+        ErrorMsg?.SetActive(active);
     }
 }

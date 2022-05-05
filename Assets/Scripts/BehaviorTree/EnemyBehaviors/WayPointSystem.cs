@@ -32,22 +32,6 @@ public class WayPointSystem : MonoBehaviour
         randomPosition = transform.GetChild(0);
     }
 
-    private void Start()
-    {
-        timeCounter = delay;
-    }
-
-    private void Update()
-    {
-        //timeCounter -= Time.deltaTime;
-        //if(timeCounter <= 0f)
-        //{
-        //    int random = Random.Range(0, transform.childCount);
-        //    randomPosition = transform.GetChild(random);
-        //    timeCounter = delay;
-        //}
-    }
-
     public Transform NewRandomPosition
     {
         get

@@ -7,7 +7,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
 {
     [Header("Required components")]
     [SerializeField] private GameObject rootObject;
-    [SerializeField] private HealthBarHandler healthBarHandler; 
+    [SerializeField] private HealthBarHandler healthBarHandler;
 
     [Header("Health")]
     [SerializeField] private int MaxHealth;
@@ -39,6 +39,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     {
         if (IsAlive)
         {
+            Debug.Log("Taken damage " + gameObject.GetInstanceID());
             CurrentHealth -= amount;
             healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
 
@@ -55,7 +56,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         if (isEnemy)
         {
             //rootObject.DeSpawn();
-            GetComponent<EnemyCharacter>().Die();
+            /*GetComponent<EnemyCharacter>().Die()*/;
         }
         else
         {
@@ -76,7 +77,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
 
     public void Revive(Vector3 revivePosition)
     {
-        photonView.RPC(nameof(ReviveRPC),RpcTarget.All, revivePosition);
+        photonView.RPC(nameof(ReviveRPC), RpcTarget.All, revivePosition);
     }
 
     [PunRPC]
@@ -92,7 +93,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     [PunRPC]
     private void AddHealth(int amount)
     {
-        if(CurrentHealth + amount > MaxHealth)
+        if (CurrentHealth + amount > MaxHealth)
         {
             CurrentHealth = MaxHealth;
         }
