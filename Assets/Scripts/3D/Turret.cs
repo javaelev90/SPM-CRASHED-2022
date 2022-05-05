@@ -17,6 +17,7 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private PhotonView bullet;
     [SerializeField] private float fireTimer = 1f;
     [SerializeField] private int turretDamage;
+    [SerializeField] private Transform pivot;
     private string pathBullet = "Prefabs/Bullet";
     public bool IsPlaced { get; set; }
     private float counter;
