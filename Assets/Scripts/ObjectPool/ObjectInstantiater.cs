@@ -11,9 +11,6 @@ public class ObjectInstantiater : MonoBehaviourPunCallbacks
     [Header("Metal")]
     [SerializeField] GameObject metalPrefab;
     [SerializeField] List<Transform> metalPositions;
-    [Header("Alien Meat")]
-    [SerializeField] GameObject alienMeatPrefab;
-    [SerializeField] List<Transform> alienMeatPositions;
 
     [SerializeField] string prefabPath = "Prefabs/Pickups/";
 
@@ -26,14 +23,15 @@ public class ObjectInstantiater : MonoBehaviourPunCallbacks
     {
         CreatePrefabs(greenGooPrefab, greenGooPositions);
         CreatePrefabs(metalPrefab, metalPositions);
-        CreatePrefabs(alienMeatPrefab, alienMeatPositions);
     }
 
     private void CreatePrefabs(GameObject prefab, List<Transform> positions)
     {
         foreach (Transform location in positions)
         {
-            PhotonNetwork.InstantiateRoomObject(prefabPath + prefab.name, location.position, location.rotation);
+            float y = Terrain.activeTerrain.SampleHeight(new Vector3(location.position.x, 10f, location.position.z));
+            Vector3 newLocation = new Vector3(location.position.x, y + 0.5f, location.position.z);
+            PhotonNetwork.InstantiateRoomObject(prefabPath + prefab.name, newLocation, location.rotation);
         }
     }
 }
