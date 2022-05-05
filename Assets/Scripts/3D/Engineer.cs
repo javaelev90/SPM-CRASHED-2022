@@ -143,10 +143,13 @@ public class Engineer : Controller3D
                 if (canPutDownTurret && turretObject != null && playerActions.Player.PlaceTurret.IsPressed())//Input.GetMouseButtonUp(1))
                 {
                     turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
-                    turretObject.transform.position = turretPos.position;
-                    turretObject.GetComponent<Turret>().IsPlaced = true;
-                    turretCount++;
-                    canPutDownTurret = false;
+                    if (hit.collider != null && hit.distance < 3f)
+                    {
+                        turretObject.transform.position = hit.transform.position;
+                        turretObject.GetComponent<Turret>().IsPlaced = true;
+                        turretCount++;
+                        canPutDownTurret = false;
+                    }
                     //inventory.removeMetalAndGreenGoo(metalCostTurret,gooCostTurret);
 
                 }
