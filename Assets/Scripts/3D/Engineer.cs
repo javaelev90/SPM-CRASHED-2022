@@ -29,6 +29,15 @@ public class Engineer : Controller3D
     [SerializeField] private Transform player;
     private GameObject[] shipPart;
     private float checkRadius = 5f;
+    RaycastHit hit;
+
+    [Header("Stun")]
+    [SerializeField] Transform muzzlePosition;
+    [SerializeField] float weaponRange = 15f;
+    [SerializeField] float delayBetweenShots = 0.5f;
+    [SerializeField] public LayerMask stunLayer;
+    private float shotCooldown = 0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,14 +54,54 @@ public class Engineer : Controller3D
     protected override void Update()
     {
         base.Update();
+        Cooldown();
         targetTime -= Time.deltaTime;
         PickUpShipPart();
+        TurretHandling();
         //Debug.Log(targetTime);
+    }
+
+    private void Cooldown()
+    {
+        if (OnCoolDown() == true)
+        {
+            shotCooldown -= Time.deltaTime;
+        }
+    }
+
+    private bool OnCoolDown()
+    {
+        return shotCooldown >= 0;
+    }
+
+    public void StunEnemy()
+    {
+        if (OnCoolDown() == false)
+        {
+            if (Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out hit, weaponRange, stunLayer))
+            {
+                AIBaseLogic aIBaseLogic = hit.transform.GetComponent<AIBaseLogic>();
+                if (aIBaseLogic)
+                {
+                    Debug.Log("Enemy stunned");
+                    aIBaseLogic.StunnedBy(transform);
+                }
+            }
+            // Add cooldown time
+            shotCooldown = delayBetweenShots;
+        }
+
     }
 
     public void TurretHandling()
     {
         Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out RaycastHit hit, obstacleLayer);
+
+        if (playerActions.Player.DeleteTurret.IsPressed())
+        {
+
+        }
+
 
         if (turretCount < maxTurretToSpawn && playerActions.Player.PlaceTurret.IsPressed()) //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
         {
@@ -96,17 +145,19 @@ public class Engineer : Controller3D
         if(player != null)
         {
             Collider[] colliderHits = Physics.OverlapSphere(transform.position, checkRadius);
-            Debug.Log(colliderHits);
+            //Debug.Log(colliderHits);
 
             foreach (Collider col in colliderHits)
             {
                 if (col.tag == ("ShipPart") && playerActions.Player.ShipPickUp.IsPressed())
                 {
-                    destination = player.transform.Find("CarryPos");
-                    shipPart = GameObject.FindGameObjectsWithTag("ShipPart");
+                    //destination = player.transform.Find("CarryPos");
+                    //shipPart = GameObject.FindGameObjectsWithTag("ShipPart");
                     //GetComponent<Rigidbody>().useGravity = false;
-                    col.transform.position = destination.position;
-                    col.transform.parent = GameObject.Find("CarryPos").transform;
+                    //col.transform.position = destination.position;
+                    //col.transform.parent = GameObject.Find("CarryPos").transform;
+                    col.GetComponent<EventStarter>().StartEvent();
+
                 }
                 if (playerActions.Player.DropShitPart.IsPressed())
                 {
@@ -135,5 +186,6 @@ public class Engineer : Controller3D
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, checkRadius);
+        //Gizmos.DrawRay(transform.position, hit.transform.position);
     }
 }

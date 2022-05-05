@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Pickup : MonoBehaviourPunCallbacks
+public class Pickup : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
     [SerializeField] private Pickup_Typs.Pickup typ;
     [SerializeField] private GameObject playerToRevive;
@@ -34,12 +34,23 @@ public class Pickup : MonoBehaviourPunCallbacks
     {
         playerToRevive = player;
     }
+
     [PunRPC]
     public void ObjectDestory()
     {
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Destroy(gameObject);
+        }
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        object[] instantiationData = info.photonView.InstantiationData;
+        if (instantiationData != null && instantiationData.Length > 0)
+        {
+            int photonViewID = (int)instantiationData[0];
+            playerToRevive = PhotonView.Find(photonViewID).gameObject;
         }
     }
 }

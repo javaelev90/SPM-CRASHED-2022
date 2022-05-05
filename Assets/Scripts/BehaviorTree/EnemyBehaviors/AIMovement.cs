@@ -57,7 +57,7 @@ public class AIMovement : MonoBehaviour
         if(visibleTargets.Count > 0 && distanceToTarget < enemyBlowUpDistance)
         {
             isBlowingUp = true;
-            GetComponent<ParticleSystem>().Play(false);
+            //GetComponent<ParticleSystem>().Play(false);
         }
 
         if (isBlowingUp)
@@ -65,7 +65,7 @@ public class AIMovement : MonoBehaviour
             counter -= Time.deltaTime;
             if(counter <= 0f)
             {
-                GetComponent<EnemyCharacter>().Die();
+                //GetComponent<EnemyCharacter>().Die();
             }
         }
     }

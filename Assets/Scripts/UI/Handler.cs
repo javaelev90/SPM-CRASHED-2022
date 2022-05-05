@@ -14,11 +14,10 @@ public class Handler : MonoBehaviour
     public int cAlien;
     public Text rawAlien;
     public int rAlien;
-    public Inventory inventory {get; set;}
+    public Inventory inventory;
     // Start is called before the first frame update
     void Start()
     {
-
     }
     IEnumerator FindInvetory(){
         while(!GameObject.FindGameObjectWithTag("Player") && !GameObject.FindGameObjectWithTag("Player").GetComponent<PhotonView>().IsMine){

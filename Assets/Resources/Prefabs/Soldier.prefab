@@ -352,7 +352,10 @@ GameObject:
   - component: {fileID: 8365122013251108616}
   - component: {fileID: 2291940920720541037}
   - component: {fileID: 756052432852545110}
+  - component: {fileID: 1832423352981339314}
   - component: {fileID: 8717762005252281733}
+  - component: {fileID: 8417763203565266630}
+  - component: {fileID: 8866465657321124185}
   - component: {fileID: 3123330079750310864}
   - component: {fileID: 2142802736974156291}
   - component: {fileID: 6663201117975485866}
@@ -446,6 +449,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1832423352981339314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334875400098420458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootObject: {fileID: 334875400098420458}
+  healthBarHandler: {fileID: 519849385}
+  MaxHealth: 120
+  isEnemy: 0
 --- !u!114 &8717762005252281733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,6 +491,46 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 384
+--- !u!114 &8417763203565266630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334875400098420458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a247f7e707f8a6498fce19d1ba19a56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupLayer:
+    serializedVersion: 2
+    m_Bits: 16384
+  fireLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  spaceShipLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  pickUpDistance: 2
+  inventory: {fileID: 8866465657321124185}
+--- !u!114 &8866465657321124185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334875400098420458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4328438d4e98e48b3d1a7b8b00b28d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  metal: 0
+  greenGoo: 0
+  alienMeat: 0
+  cookedAlienMeat: 0
+  hasReviveBadge: 0
 --- !u!114 &3123330079750310864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,8 +571,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6609b2bd3dacc8449a4615594518fe2, type: 2}
   - {fileID: 11400000, guid: d7ab4444ed09af64faff96bdbf7451bd, type: 2}
   animator: {fileID: -2848051172062990726}
+  inventory: {fileID: 8866465657321124185}
   playerInput: {fileID: 0}
-  healthHandler: {fileID: 0}
   fireLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -685,15 +744,51 @@ MonoBehaviour:
     m_ActionId: af5459e9-1079-40ca-9f71-bba305ed9045
     m_ActionName: Player/Shoot[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8417763203565266630}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: PickUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 29b9d3d4-9dbd-4816-bd1c-51174b903866
     m_ActionName: Player/PickUp[/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8417763203565266630}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: Cook
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2d8de990-b82a-4220-9d0a-a629d8370a0b
     m_ActionName: Player/Cook[/Keyboard/c]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8417763203565266630}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: Eat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 28840f60-17d7-41c8-ba97-7169f1c54bb1
     m_ActionName: Player/Eat[/Keyboard/x]
   - m_PersistentCalls:
@@ -701,7 +796,19 @@ MonoBehaviour:
     m_ActionId: d1d5ac02-6de6-46aa-b993-9465947fb9be
     m_ActionName: Player/DropItem[/Keyboard/q]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8417763203565266630}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: Revive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d72dd956-53fe-48e8-aeea-d100ef4beb59
     m_ActionName: Player/Revive[/Keyboard/e]
   - m_PersistentCalls:
@@ -732,6 +839,50 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 404869e7-1df2-4e36-94f6-7ed0b38cc292
     m_ActionName: Player/ShipPickUp[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 07bc1ff4-f384-40cb-abe8-5f5392c0cd19
+    m_ActionName: Player/DeleteTurret[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ea2e5572-02c0-4882-926f-6ff7c5d74ee5
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7b59757f-db4a-46e3-833c-2e1843efb424
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ca329318-b638-4b80-9f61-623bfda40e60
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 09c8a48a-9ecc-4d8a-ba49-d05ae7db61e8
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 15dc3589-83b5-4450-a1ec-feff94482c60
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c461155d-eb7c-476b-a6f0-b65ab14ab0f1
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dac08541-47e2-4fbc-804c-dcfe0760f575
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 13bbaa9d-7ef1-4058-928a-5a79d67f5be1
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 65e7863c-808d-4cd3-8be3-f7cf53343906
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d3babd0a-5cae-48b1-906c-b0804f017fda
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

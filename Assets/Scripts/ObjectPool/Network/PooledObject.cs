@@ -18,6 +18,7 @@ public class PooledObject : MonoBehaviourPunCallbacks, IRecycleable
     public PhotonObjectPool ObjectPool { get; set; }
     public Action CustomRecycleFunction { get; set; }
     public List<PooledObjectPhotonView> photonViewObjects;
+    public int photonViewTargetId = -1;
 
     public void Recycle()
     {
@@ -39,11 +40,17 @@ public class PooledObject : MonoBehaviourPunCallbacks, IRecycleable
                 RecycleChildObject();
                 break;
         }
+        photonViewTargetId = -1;
     }
 
     public void UpdateActiveState(bool active)
     {
         photonView.RPC(nameof(UpdateActiveStateRPC), RpcTarget.All, active);
+    }
+
+    public void DeSpawn()
+    {
+        ObjectPool.DeSpawn(photonView.ViewID);
     }
 
     [PunRPC]

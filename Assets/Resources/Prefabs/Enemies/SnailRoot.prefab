@@ -250,7 +250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recyclingBehaviour: 3
   photonViewObjects:
-  - {fileID: 642678397344466168}
+  - {fileID: 8499108048209497745}
+  photonViewTargetId: 0
 --- !u!114 &5267896853407714504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +319,8 @@ GameObject:
   - component: {fileID: 407230730788055436}
   - component: {fileID: 652936647}
   - component: {fileID: 5444124235424776678}
+  - component: {fileID: 7674441214672813119}
+  - component: {fileID: 8390596057044248913}
   - component: {fileID: 407230730788055437}
   - component: {fileID: 1314737261}
   - component: {fileID: 1314737262}
@@ -391,6 +394,41 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 448
+--- !u!114 &7674441214672813119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407230730788055439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b7dbfc37d26e341b3d51b800f32db0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthHandler: {fileID: 0}
+  damage: 1
+  explosionRadius: 3
+  layersToHit:
+    serializedVersion: 2
+    m_Bits: 576
+  explosionObject: {fileID: 1236452947378205838}
+--- !u!114 &8390596057044248913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407230730788055439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootObject: {fileID: 407230730308412197}
+  healthBarHandler: {fileID: 402761397}
+  MaxHealth: 4
+  isEnemy: 1
 --- !u!114 &407230730788055437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,56 +455,8 @@ MonoBehaviour:
   visibleTargets: []
   distanceToTarget: 0
   wayPointSystem: {fileID: 407230730096783429}
-  timeToExplosion: 2
---- !u!114 &1314737261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407230730788055439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5b7dbfc37d26e341b3d51b800f32db0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 10
-  currentHealth: 10
-  healthHandler: {fileID: 1314737262}
-  damage: 5
-  explosionRadius: 5
-  layersToHit:
-    serializedVersion: 2
-    m_Bits: 832
-  explosionObject: {fileID: 1236452947378205838}
---- !u!114 &1314737262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407230730788055439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b3a329ed37782847963bb62a12b8df4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBarHandler: {fileID: 402761397}
-  isEnemy: 1
---- !u!114 &642678397344466168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407230730788055439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf84300c0c682347921ff853d6ab630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootObject: {fileID: 2198279588736655070}
---- !u!114 &8174094902349623044
+  timeToExplosion: 0
+--- !u!114 &5216869225718345402
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5305,7 +5295,7 @@ GameObject:
   - component: {fileID: 407230731976113861}
   - component: {fileID: 407230731976113856}
   - component: {fileID: 407230731976113859}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5386,7 +5376,7 @@ GameObject:
   - component: {fileID: 407230732148822494}
   - component: {fileID: 407230732148822493}
   - component: {fileID: 407230732148822492}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
