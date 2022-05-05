@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float timer;
     private float counter;
+    public int DamageDealer { get; set; }
     public bool IsShot { get; set; }
     public Vector3 Velocity { get; set; }
 

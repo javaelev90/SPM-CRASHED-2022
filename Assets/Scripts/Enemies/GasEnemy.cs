@@ -57,7 +57,7 @@ public class GasEnemy : AIBaseLogic
                 AggroBasedOnAttack();
             }
 
-            if(!IsAggresive && !IsAttacked)
+            if (!IsAggresive && !IsAttacked)
             {
                 MoveToWayPoint();
             }
@@ -106,12 +106,14 @@ public class GasEnemy : AIBaseLogic
     private void MoveToWayPoint()
     {
         timeCounterWaypoint -= Time.deltaTime;
-        if(timeCounterWaypoint <= 0f)
+        if (timeCounterWaypoint <= 0f)
         {
             wayPoint = wayPointSystem.NewRandomPosition;
             timeCounterWaypoint = timeToWayPoint;
         }
-        agent.destination = wayPoint.position;
+
+        if (agent.isOnNavMesh)
+            agent.destination = wayPoint.position;
     }
 
     private void AttackBasedOnSight()
@@ -141,8 +143,12 @@ public class GasEnemy : AIBaseLogic
         {
             agent.isStopped = false;
         }
-        agent.destination = target.position;
-        Rotate();
+
+        if (agent.isOnNavMesh)
+        {
+            agent.destination = target.position;
+            Rotate();
+        }
     }
 
     private void Rotate()
@@ -158,7 +164,7 @@ public class GasEnemy : AIBaseLogic
         if (timeCounterMelee <= 0f)
         {
             if (IsMasterClient)
-                target.GetComponent<HealthHandler>().TakeDamage(poisonDamage);
+                target.GetComponent<HealthHandler>().TakeDamage(hitDamage);
 
             timeCounterMelee = timeToMelee;
         }
@@ -171,6 +177,7 @@ public class GasEnemy : AIBaseLogic
         {
             if (IsMasterClient)
                 target.GetComponent<HealthHandler>().TakeDamage(poisonDamage);
+
             timeCounterGas = timeToGas;
         }
     }

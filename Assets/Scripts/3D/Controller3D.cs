@@ -19,6 +19,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
     [Header("Player")]
     [SerializeField] private float skinWidth = 0.5f;
     [SerializeField] private float groundCheckDistance;
+    private HealthHandler healthHandler;
 
     [Header("Camera settings")]
     [SerializeField] private bool isFPS;
@@ -83,6 +84,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
         mainCam = Camera.main;
         isMine = photonView.IsMine;
         Cursor.lockState = CursorLockMode.Locked;
+        healthHandler = GetComponent<HealthHandler>();
     }
 
     private void OnEnable()
@@ -291,6 +293,15 @@ public class Controller3D : MonoBehaviourPunCallbacks
     public void OnDeviceLost()
     {
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Projectile projectile;
+        if((projectile = other.gameObject.GetComponent<Projectile>()) != null)
+        {
+            healthHandler.TakeDamage(projectile.DamageDealer);
+        }
     }
 
 

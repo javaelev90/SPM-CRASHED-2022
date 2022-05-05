@@ -490,48 +490,6 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 896
---- !u!114 &1143718733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9218574915160184169}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a108dd2012fa1449821929ff03b55db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponRotation: {fileID: 0}
-  muzzlePoint: {fileID: 0}
-  bullet: {fileID: 668565094928829969, guid: 857bb64d64c9b32479e40ac65bca18f3, type: 3}
-  bulletSpeed: 35
-  skinWidth: 0.01
-  groundCheckDistance: 0.1
-  isFPS: 1
-  camPositionFPS: {fileID: 968001777}
-  cameraOffsetTPS: {x: 0, y: 2, z: -6}
-  cameraOffsetFPS: {x: 0, y: 0.5, z: 0.5}
-  smoothFactorQuick: 0.5
-  smoothFactorSlow: 1
-  radius: 1
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 384
-  mouseSensitivity: 10
-  gamepadSensitivity: 80
-  minXrotation: -90
-  maxXrotation: 90
-  stateMachine:
-    currentState: {fileID: 0}
-    queuedState: {fileID: 0}
-  states:
-  - {fileID: 11400000, guid: 47252abbc27c0fa4aa9ca165dfa25a57, type: 2}
-  - {fileID: 11400000, guid: f6609b2bd3dacc8449a4615594518fe2, type: 2}
-  - {fileID: 11400000, guid: d7ab4444ed09af64faff96bdbf7451bd, type: 2}
-  animator: {fileID: 2469390360455845289}
-  inventory: {fileID: 0}
-  playerInput: {fileID: 0}
 --- !u!114 &30021262907302469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,6 +759,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: d3babd0a-5cae-48b1-906c-b0804f017fda
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3252063733072992548}
+        m_TargetAssemblyTypeName: SoldierCharacter, Assembly-CSharp
+        m_MethodName: Punch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dcff7b73-0fa1-48a4-a49e-3a64ad62947c
+    m_ActionName: Player/Punch[/Keyboard/v]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -853,6 +827,12 @@ MonoBehaviour:
     m_Bits: 0
   interactionDistance: 1
   weapon: {fileID: 0}
+  punchRange: 3
+  punchDamage: 1
+  delayBetweenShots: 0.3
+  layersThatShouldBeHit:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &3833389567724244086
 MonoBehaviour:
   m_ObjectHideFlags: 0

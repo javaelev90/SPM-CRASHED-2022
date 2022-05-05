@@ -12,6 +12,10 @@ public class StoneEnemy : AIBaseLogic
     [SerializeField] private float stoppingDistance;
     [SerializeField] private GameObject bullet;
     [SerializeField] private float timeToThrow;
+    [SerializeField] private int stoneDamage;
+    [SerializeField] private float timeToWayPoint;
+    private float timeCounterWaypoint;
+    private Transform wayPoint;
     private float timer;
     private GameObject fleePos;
 
@@ -23,6 +27,7 @@ public class StoneEnemy : AIBaseLogic
         deadZoneRange = viewRadius / 2.01f;
         fleePos = new GameObject();
         fleePos.name = "Fleeposition";
+        wayPoint = wayPointSystem.NewRandomPosition;
     }
 
     protected override void Update()
@@ -57,8 +62,26 @@ public class StoneEnemy : AIBaseLogic
             {
                 FleeToPosition();
             }
+
+            if (!IsAggresive && !IsAttacked)
+            {
+                MoveToWayPoint();
+            }
         }
 
+    }
+
+    private void MoveToWayPoint()
+    {
+        timeCounterWaypoint -= Time.deltaTime;
+        if (timeCounterWaypoint <= 0f)
+        {
+            wayPoint = wayPointSystem.NewRandomPosition;
+            timeCounterWaypoint = timeToWayPoint;
+        }
+
+        if (agent.isOnNavMesh)
+            agent.destination = wayPoint.position;
     }
 
     private void AggroBasedOnAttack()
@@ -135,10 +158,12 @@ public class StoneEnemy : AIBaseLogic
         if (timer <= 0f)
         {
             timer = timeToThrow;
-            GameObject bull = PhotonNetwork.Instantiate("Resources/Prefabs/Bullet", transform.position, Quaternion.identity);
+            GameObject bull = PhotonNetwork.Instantiate("Prefabs/" + bullet.name, transform.position, Quaternion.identity);
             Projectile proj = bull.GetComponent<Projectile>();
+            proj.DamageDealer = stoneDamage;
             proj.Velocity += directionToTarget * 10f;
             proj.IsShot = true;
+            Debug.Log("Shot");
         }
     }
 
@@ -159,8 +184,12 @@ public class StoneEnemy : AIBaseLogic
         {
             agent.isStopped = false;
         }
-        agent.destination = target.position;
-        Rotate();
+
+        if (agent.isOnNavMesh)
+        {
+            agent.destination = target.position;
+            Rotate();
+        }
     }
 
     private void Rotate()
@@ -168,9 +197,6 @@ public class StoneEnemy : AIBaseLogic
         float dot = Vector3.Dot(transform.forward, directionToTarget);
         Quaternion rotateTo = Quaternion.LookRotation(directionToTarget, transform.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, rotationSpeed * Time.deltaTime);
-        //if (dot < 0.6f)
-        //{
-        //}
     }
     private void OnDrawGizmos()
     {
