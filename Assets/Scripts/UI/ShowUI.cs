@@ -16,14 +16,14 @@ public class ShowUI : MonoBehaviour
         if(player.gameObject.tag == "Player")
         {
            uiObject.SetActive(true);
-           Debug.Log("skriver ut ");
-            StartCoroutine("WaitForSec");
         }
         
     }
-    
-    IEnumerator WaitForSec(){
-        yield return new WaitForSeconds(5);
-        Destroy(uiObject);
+    private void OnTriggerExit(Collider player) {
+        if(player.gameObject.tag == "Player")
+        {
+           uiObject.SetActive(false);
+            
+        }
     }
 }
