@@ -6,9 +6,9 @@ using Photon.Pun;
 public class EnemyCharacter : MonoBehaviourPunCallbacks
 {
     [Header("Health")]
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int currentHealth;
-    [SerializeField] private HealthHandlerTest healthHandler;
+    //[SerializeField] private int maxHealth;
+    //[SerializeField] private int currentHealth;
+    [SerializeField] private HealthHandler healthHandler;
 
     [Header("Damage")]
     [SerializeField] private int damage;
@@ -27,8 +27,8 @@ public class EnemyCharacter : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        healthHandler.MaxHealth = maxHealth;
-        healthHandler.CurrentHealth = currentHealth;
+        //healthHandler.MaxHealth = maxHealth;
+        //healthHandler.CurrentHealth = currentHealth;
     }
 
     // Update is called once per frame

@@ -50,11 +50,11 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         }
     }
 
-    public void Spawn(Vector3 position)
+    public void Spawn(Vector3 position, int photonViewTargetId)
     {
         if(pooledObjects.Count > 0)
         {
-            photonView.RPC(nameof(MasterSpawn), RpcTarget.MasterClient, position);
+            photonView.RPC(nameof(MasterSpawn), RpcTarget.MasterClient, position, photonViewTargetId);
         }
     }
 
@@ -64,7 +64,7 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void MasterSpawn(Vector3 position)
+    private void MasterSpawn(Vector3 position, int photonViewTargetId)
     {
         if (PhotonNetwork.IsMasterClient == false)
         {
@@ -74,6 +74,7 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         PooledObject pooledObject = pooledObjects.Dequeue();
         pooledObject.transform.position = position;
         pooledObject.transform.SetParent(transform);
+        pooledObject.photonViewTargetId = photonViewTargetId;
         activeObjects.Add(pooledObject.photonView.ViewID, pooledObject);
         pooledObject.UpdateActiveState(true);
     }

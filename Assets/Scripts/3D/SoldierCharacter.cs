@@ -27,26 +27,4 @@ public class SoldierCharacter : Controller3D
         weapon.Shoot();
     }
 
-    public void CookFood()
-    {
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(Vector3.zero),
-            out RaycastHit hitInfo,
-            interactionDistance,
-            fireLayer))
-        {
-            //Cook
-        }
-    }
-
-    public void ConsumeFood()
-    {
-        if (Input.GetKey(KeyCode.X))
-        {
-            if (inventory.CookedAlienMeat > 0)
-            {
-                inventory.eat();
-                photonView.RPC("AddHealth", RpcTarget.All, 1);
-            }
-        }
-    }
 }
