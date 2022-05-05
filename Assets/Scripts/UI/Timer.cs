@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    private float time = 1f * 60f;
-    private float timer;
-
+    [Header("GUI stuff")]
     [SerializeField]
     private TextMeshProUGUI minutEtt; 
     [SerializeField]
@@ -16,14 +14,15 @@ public class Timer : MonoBehaviour
     private TextMeshProUGUI sekundEtt; 
     [SerializeField]
     private TextMeshProUGUI sekundTwo; 
-
     [SerializeField]
     private TextMeshProUGUI day; 
-
     [SerializeField]
-    private TextMeshProUGUI night; 
+    private TextMeshProUGUI night;
 
+    [Header("Other stuff")]
+    [SerializeField] private LightingManager lightingManager;
 
+    private float timer;
     private float flashTimer = 0;
     private float flashduration = 0.5f; 
 
@@ -33,18 +32,21 @@ public class Timer : MonoBehaviour
         day.gameObject.SetActive(true);
         night.gameObject.SetActive(false);
         reset();
+        timer -= lightingManager.IsNight ? lightingManager.TimeOfDay - lightingManager.DayLength : lightingManager.TimeOfDay;
     }
 
     // Update is called once per frame
     void Update()
-    {   
+    {
         timer -= Time.deltaTime;
         updateTimer(timer);
 
-       if(timer > 0 && timer < 5){
+        if (timer > 0 && timer < 5)
+        {
             Flash3();
         }
-        else if(timer <= 0){
+        else if (timer <= 0)
+        {
             setTextDisplay(true);
             day.gameObject.SetActive(!day.gameObject.activeSelf);
             night.gameObject.SetActive(!night.gameObject.activeSelf);
@@ -64,7 +66,15 @@ public class Timer : MonoBehaviour
     }
 
     private void reset(){
-        timer = time; 
+        if (!lightingManager.IsNight)
+        {
+            timer = lightingManager.DayLength;
+        }
+        else
+        {
+            timer = lightingManager.NightLength;
+        }
+        
     }
     private void Flash3 (){
         flashTimer += Time.deltaTime;

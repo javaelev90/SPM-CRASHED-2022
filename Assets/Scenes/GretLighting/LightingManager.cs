@@ -5,13 +5,36 @@ using UnityEngine;
 [ExecuteAlways]
 public class LightingManager : MonoBehaviour
 {
+    [Header("Lighting stuff")]
     [SerializeField] private Light DirectionalLight;
     [SerializeField] private Light MoonLight;
     [SerializeField] private LightingPreset Preset;
-    [SerializeField, Range(0, 150)] private float TimeOfDay;
 
-    public bool isNight { get; private set; }
+    [Header("Time stuff")]
+    [SerializeField] private float dayLength;
+    [SerializeField] private float nightLength;
+    [SerializeField] private float timeOfDay = 0;
 
+    [Header("Other stuff")]
+    [SerializeField] private NightSpawnersHandler nightSpawnersHandler;
+
+    private float timeOfSunrise;
+    private float totalTimeWholeCycle;
+    private readonly float MAGICAL_SUNRISE_STARTER_NUMBER = 10;
+
+    public bool IsNight { get; private set; }
+
+    public float DayLength { get { return dayLength; } }
+    public float NightLength { get { return nightLength; } }
+
+    public float TimeOfDay { get { return timeOfDay; } }
+
+    private void Start()
+    {
+        timeOfSunrise = dayLength / 2;
+        IsNight = timeOfDay > dayLength;
+        totalTimeWholeCycle = dayLength + nightLength;
+    }
 
     private void Update()
     {
@@ -22,27 +45,32 @@ public class LightingManager : MonoBehaviour
 
         if (Application.isPlaying)
         {
-            TimeOfDay += Time.deltaTime;
-            TimeOfDay %= 150f;
-            UpdateLighting(TimeOfDay / 150f);
-            //MoonLight.intensity = (TimeOfDay / 150f);
-            if (TimeOfDay > 35f && TimeOfDay < 115f)
+            timeOfDay += Time.deltaTime;
+            timeOfDay %= dayLength * 2;
+
+            if (timeOfDay > dayLength && timeOfDay < totalTimeWholeCycle - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER) && !IsNight)
             {
-                isNight = true;
-                
+                IsNight = true;
+                nightSpawnersHandler.StartNightSpawning();
                 //MoonLight.intensity = 0.2f;
                 //MoonLight.gameObject.SetActive(false);
             }
-            else
+            else if (timeOfDay >= totalTimeWholeCycle - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER) && IsNight)
             {
-                isNight = false;
+                IsNight = false;
+                timeOfDay = -(nightLength / MAGICAL_SUNRISE_STARTER_NUMBER);
+                nightSpawnersHandler.StopNightSpawning();
                 //MoonLight.intensity = 3f;
                 //MoonLight.gameObject.SetActive(true);
             }
+
+            UpdateLighting((timeOfDay + timeOfSunrise) / (dayLength * 2));
+            //MoonLight.intensity = (TimeOfDay / 150f);
+            
         }
         else
         {
-            UpdateLighting(TimeOfDay / 150f);
+            UpdateLighting((timeOfDay + timeOfSunrise) / (dayLength * 2));
         }
 
 
