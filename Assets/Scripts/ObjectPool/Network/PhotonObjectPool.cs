@@ -74,6 +74,7 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         PooledObject pooledObject = pooledObjects.Dequeue();
         pooledObject.transform.position = position;
         pooledObject.transform.SetParent(transform);
+        pooledObject.ObjectPool = this;
         pooledObject.photonViewTargetId = photonViewTargetId;
         activeObjects.Add(pooledObject.photonView.ViewID, pooledObject);
         pooledObject.UpdateActiveState(true);
