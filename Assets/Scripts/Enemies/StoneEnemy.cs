@@ -191,7 +191,7 @@ public class StoneEnemy : AIBaseLogic
             agent.isStopped = false;
         }
 
-        if (agent.isOnNavMesh)
+        if (agent.isOnNavMesh && target != null)
         {
             agent.destination = target.position;
             Rotate();

@@ -12,11 +12,14 @@ public class ObjectInstantiater : MonoBehaviourPunCallbacks
     [SerializeField] GameObject metalPrefab;
     [SerializeField] List<Transform> metalPositions;
 
+    [SerializeField] List<PhotonObjectPool> objectPools;
+
     [SerializeField] string prefabPath = "Prefabs/Pickups/";
 
     public void InitializeWorld()
     {
         CreatePickups();
+        InstantiateObjectPools();
     }
 
     public void CreatePickups()
@@ -30,8 +33,16 @@ public class ObjectInstantiater : MonoBehaviourPunCallbacks
         foreach (Transform location in positions)
         {
             float y = Terrain.activeTerrain.SampleHeight(new Vector3(location.position.x, 10f, location.position.z));
-            Vector3 newLocation = new Vector3(location.position.x, y + 0.5f, location.position.z);
+            Vector3 newLocation = new Vector3(location.position.x, y + 1.5f, location.position.z);
             PhotonNetwork.InstantiateRoomObject(prefabPath + prefab.name, newLocation, location.rotation);
+        }
+    }
+
+    private void InstantiateObjectPools()
+    {
+        foreach (PhotonObjectPool pool in objectPools)
+        {
+            PhotonNetwork.InstantiateRoomObject("Prefabs/" + pool.name, transform.position, Quaternion.identity);
         }
     }
 }
