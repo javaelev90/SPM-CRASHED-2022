@@ -22,7 +22,7 @@ public class SlugEnemy : AIBaseLogic
         maxBlowUpRadius = viewRadius / 1.5f;
         wayPoint = wayPointSystem.RandomPosition;
         timeCounterExplosion = timeToExplosion;
-        Debug.Log("root " + root.name);
+        //Debug.Log("root " + root.name);
     }
 
     // Update is called once per frame

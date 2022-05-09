@@ -21,7 +21,7 @@ public class ObjectSpawner : MonoBehaviour
     private float cooldownCounter = 0f;
     [SerializeField] private float yOffset = 1f;
     private int spawnedObjects = 0;
-    private bool spawnerIsTriggered = true;
+    public bool spawnerIsTriggered = true;
     private int photonViewTargetId = -1;
 
     public float TotalSpawnDuration { set { delayBetweenSpawns = value / numberToSpawn; } }

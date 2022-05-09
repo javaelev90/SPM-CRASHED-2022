@@ -410,6 +410,8 @@ MonoBehaviour:
   rootObject: {fileID: 6261632589528798244}
   healthBarHandler: {fileID: 5216314101210147919}
   MaxHealth: 4
+  CurrentHealth: 4
+  isAlive: 1
   isEnemy: 1
 --- !u!114 &590309329708096
 MonoBehaviour:
@@ -638,7 +640,7 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
     ExtrapolateOption: 0
