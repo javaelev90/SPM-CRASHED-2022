@@ -15,6 +15,11 @@ public class SlugEnemy : AIBaseLogic
     private float timeCounterExplosion;
     private Transform wayPoint;
 
+    AudioSource source;
+    public AudioClip walk;
+    public AudioClip explode;
+    public AudioClip attack;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +28,8 @@ public class SlugEnemy : AIBaseLogic
         wayPoint = wayPointSystem.RandomPosition;
         timeCounterExplosion = timeToExplosion;
         Debug.Log("root " + root.name);
+        source = GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
@@ -103,6 +110,7 @@ public class SlugEnemy : AIBaseLogic
         if (eventTarget)
         {
             agent.SetDestination(eventTarget.position);
+            source.Play();
         }
         else
         {
@@ -131,7 +139,7 @@ public class SlugEnemy : AIBaseLogic
 
     private void Move()
     {
-
+        source.Play();
         if (distanceToTarget < maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
         {
             agent.isStopped = true;
@@ -163,6 +171,7 @@ public class SlugEnemy : AIBaseLogic
                 }
             }
             root.DeSpawn();
+            source.PlayOneShot(explode);
             timeCounterExplosion = timeToExplosion;
         }
     }

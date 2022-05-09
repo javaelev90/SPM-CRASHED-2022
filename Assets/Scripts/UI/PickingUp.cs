@@ -13,6 +13,12 @@ public class PickingUp : MonoBehaviourPunCallbacks
     
     [SerializeField] private float pickUpDistance = 3;
     [SerializeField] private Inventory inventory;
+    [SerializeField] public AudioSource source;
+    [SerializeField] public AudioClip Goo;
+    [SerializeField] public AudioClip Metal;
+    [SerializeField] public AudioClip Meat;
+
+
 
     private Transform mainCamera;
     private GameObject otherPlayer;
@@ -21,6 +27,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        source = GetComponent<AudioSource>();
     }
 
     public void PickUp()
@@ -34,16 +41,16 @@ public class PickingUp : MonoBehaviourPunCallbacks
             if (typ == Pickup_Typs.Pickup.Metal)
             {
                 inventory.addMetal(pickUpComponent.amount);
-
                 Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
-
+                source.PlayOneShot(Metal);
             }
             else if (typ == Pickup_Typs.Pickup.GreenGoo)
             {
                 inventory.addGreenGoo(pickUpComponent.amount);
                 Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+                source.PlayOneShot(Goo);
             }
             else if (typ == Pickup_Typs.Pickup.AlienMeat)
             {

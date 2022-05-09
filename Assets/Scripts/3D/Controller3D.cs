@@ -85,6 +85,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
         isMine = photonView.IsMine;
         Cursor.lockState = CursorLockMode.Locked;
         healthHandler = GetComponent<HealthHandler>();
+     
     }
 
     private void OnEnable()
@@ -135,6 +136,8 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
             input = mainCam.transform.rotation * input;
             input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
+            
+     
 
             //Body.Velocity += input;
 
@@ -323,4 +326,5 @@ public class Controller3D : MonoBehaviourPunCallbacks
         if (mainCam)
             Gizmos.DrawWireSphere(mainCam.transform.position, radius);
     }
+
 }
