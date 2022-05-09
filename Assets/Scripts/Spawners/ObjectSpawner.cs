@@ -24,12 +24,15 @@ public class ObjectSpawner : MonoBehaviour
     private bool spawnerIsTriggered = true;
     private int photonViewTargetId = -1;
 
+    public float TotalSpawnDuration { set { delayBetweenSpawns = value / numberToSpawn; } }
+
     private void Start()
     {
         if (initialTarget)
         {
             photonViewTargetId = initialTarget.ViewID;
         }
+        cooldownCounter = delayBetweenSpawns;
     }
 
     private void Update()

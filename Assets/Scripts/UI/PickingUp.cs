@@ -17,10 +17,9 @@ public class PickingUp : MonoBehaviourPunCallbacks
     private Transform mainCamera;
     private GameObject otherPlayer;
     private RaycastHit pickup;
-    private bool isEngineer;
+
     void Start()
     {
-        isEngineer = GetComponent<Engineer>() == null; 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
     }
 
@@ -32,7 +31,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
             Pickup_Typs.Pickup typ = pickUpComponent.getTyp();
             PhotonView pickUpPhotonView = pickup.transform.gameObject.GetComponent<PhotonView>();
 
-            if (typ == Pickup_Typs.Pickup.Metal && isEngineer == true)
+            if (typ == Pickup_Typs.Pickup.Metal)
             {
                 inventory.addMetal(pickUpComponent.amount);
 
@@ -75,7 +74,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     public void Cook()
     {
-        if (PickUpHitCheck(fireLayer) && isEngineer == false)
+        if (PickUpHitCheck(fireLayer))
         {
             inventory.cook();
         }
@@ -108,9 +107,9 @@ public class PickingUp : MonoBehaviourPunCallbacks
     private bool PickUpHitCheck(LayerMask layer)
     {
         return Physics.Raycast(mainCamera.position,
-                mainCamera.TransformDirection(Vector3.forward),
+                mainCamera.forward,
                 out pickup,
                 pickUpDistance,
-                layer);
+                layer, QueryTriggerInteraction.Ignore);
     }
 }

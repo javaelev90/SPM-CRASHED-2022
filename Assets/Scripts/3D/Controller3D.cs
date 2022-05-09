@@ -108,8 +108,6 @@ public class Controller3D : MonoBehaviourPunCallbacks
             stateMachine.UpdateStates();
 
             RoatateCamera();
-
-
         }
     }
 

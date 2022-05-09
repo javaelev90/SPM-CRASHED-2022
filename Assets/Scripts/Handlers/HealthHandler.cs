@@ -62,15 +62,18 @@ public class HealthHandler : MonoBehaviourPunCallbacks
             {
                 photonView.RPC(nameof(SpawnReviveBadgeRPC), RpcTarget.All);
             }
-            CurrentHealth = 0;
-            transform.root.gameObject.SetActive(false);
+            if (photonView.IsMine)
+            {
+                CurrentHealth = 0;
+                transform.root.gameObject.SetActive(false);
+            }
         }
     }
 
     [PunRPC]
     private void SpawnReviveBadgeRPC()
     {
-        PhotonNetwork.InstantiateRoomObject("Prefabs/Pickups/ReviveBadge", transform.position, Quaternion.identity, 0, new object[] { rootObject.GetComponent<PhotonView>().ViewID });
+        PhotonNetwork.InstantiateRoomObject("Prefabs/Pickups/ReviveBadge", transform.position, Quaternion.identity, 0, new object[] { (rootObject != null ? rootObject.GetComponent<PhotonView>().ViewID : photonView.ViewID) });
     }
 
     public void Revive(Vector3 revivePosition)
