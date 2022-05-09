@@ -470,7 +470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootObject: {fileID: 5125041606170365157}
   healthBarHandler: {fileID: 810019847775400831}
-  MaxHealth: 15
+  MaxHealth: 500
   isEnemy: 0
 --- !u!114 &8720005142403483374
 MonoBehaviour:
@@ -797,8 +797,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1484468382420821516}
         m_TargetAssemblyTypeName: Engineer, Assembly-CSharp
-        m_MethodName: TurretHandling
-        m_Mode: 1
+        m_MethodName: OnPlaceTurret
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

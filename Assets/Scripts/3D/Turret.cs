@@ -17,8 +17,8 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private PhotonView bullet;
     [SerializeField] private float fireTimer = 1f;
     [SerializeField] private int turretDamage;
-    [SerializeField] private Transform pivot;
     private string pathBullet = "Prefabs/Bullet";
+    private GameObject emptyTarget;
     public bool IsPlaced { get; set; }
     private float counter;
     private bool isMine;
@@ -28,6 +28,8 @@ public class Turret : MonoBehaviourPunCallbacks
     {
         counter = fireTimer;
         isMine = photonView.IsMine;
+        emptyTarget = new GameObject();
+        emptyTarget.transform.position = transform.forward * 3f;
     }
 
     private void FindTargets()
@@ -47,9 +49,14 @@ public class Turret : MonoBehaviourPunCallbacks
                 }
             }
 
-            Vector3 direction = currentTarget.position - transform.position;
+            Vector3 direction = (currentTarget.position - transform.position).normalized;
             Quaternion rotateTo = Quaternion.LookRotation(direction, turretBody.transform.up);
-            turretBody.transform.rotation = Quaternion.Slerp(transform.rotation,  rotateTo, 1f);
+            turretBody.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
+        }
+
+        if(colliders.Length == 0)
+        {
+            currentTarget = emptyTarget.transform;
         }
     }
 
@@ -57,38 +64,38 @@ public class Turret : MonoBehaviourPunCallbacks
     void Update()
     {
 
-        if (IsPlaced)
+        FindTargets();
+
+        if (currentTarget.position != emptyTarget.transform.position)
         {
+            //if (Vector3.Distance(currentTarget.transform.position, transform.position) > radius)
+            //{
+            //    currentTarget = transform;
+            //}
 
-            FindTargets();
-
-            if (currentTarget != null)
+            counter -= Time.deltaTime;
+            if (counter <= 0f)
             {
-
-                //if (Vector3.Distance(currentTarget.transform.position, transform.position) > radius)
-                //{
-                //    currentTarget = transform;
-                //}
-
-                counter -= Time.deltaTime;
-                if (counter <= 0f)
-                {
-                    GameObject bullet = PhotonNetwork.Instantiate(pathBullet, muzzlePoint.transform.position, turretBody.transform.rotation);
-                    Projectile projectile = bullet.GetComponent<Projectile>();
-                    projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
-                    projectile.IsShot = true;
-                    counter = fireTimer;
-                }
+                GameObject bullet = PhotonNetwork.Instantiate(pathBullet, muzzlePoint.transform.position, turretBody.transform.rotation);
+                Projectile projectile = bullet.GetComponent<Projectile>();
+                projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
+                projectile.DamageDealer = turretDamage;
+                projectile.IsShot = true;
+                counter = fireTimer;
+                //Debug.Log("Is shooting");
             }
-            else
-            {
-                //turretBody.transform.LookAt(Vector3.forward, Vector3.up);
-            }
-
-
-
-            Debug.DrawRay(muzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
         }
+        else
+        {
+            //turretBody.transform.LookAt(Vector3.forward, Vector3.up);
+        }
+
+
+
+        Debug.DrawRay(muzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
+        //if (IsPlaced)
+        //{
+        //}
 
     }
 

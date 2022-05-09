@@ -51,6 +51,8 @@ public class Engineer : Controller3D
     protected override void Awake()
     {
         base.Awake();
+
+
     }
 
     // Update is called once per frame
@@ -60,7 +62,7 @@ public class Engineer : Controller3D
         Cooldown();
         targetTime -= Time.deltaTime;
         PickUpShipPart();
-        TurretHandling();
+        //TurretHandling();
         //Debug.Log(targetTime);
     }
 
@@ -95,6 +97,20 @@ public class Engineer : Controller3D
         }
 
     }
+
+    public void OnPlaceTurret(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            Debug.Log("show outline of turret where to place");
+        }
+
+        if (ctx.canceled)
+        {
+            Debug.Log("released button should result in placing turret");
+        }
+    }
+ 
 
     public void TurretHandling()
     {
@@ -145,6 +161,7 @@ public class Engineer : Controller3D
                     turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
                     if (hit.collider != null && hit.distance < 3f)
                     {
+                        Debug.Log("turret should be placed");
                         turretObject.transform.position = hit.transform.position;
                         turretObject.GetComponent<Turret>().IsPlaced = true;
                         turretCount++;
