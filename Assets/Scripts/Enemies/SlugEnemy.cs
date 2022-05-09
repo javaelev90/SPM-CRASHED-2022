@@ -139,7 +139,7 @@ public class SlugEnemy : AIBaseLogic
 
     private void Move()
     {
-        source.Play();
+        
         if (distanceToTarget < maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
         {
             agent.isStopped = true;
@@ -148,6 +148,7 @@ public class SlugEnemy : AIBaseLogic
         else
         {
             agent.isStopped = false;
+            source.Play();
         }
 
         if (agent.isOnNavMesh && target != null)
