@@ -20,6 +20,9 @@ public class Engineer : Controller3D
     private bool canPutDownTurret;
     //private string pathTurret = "Resources/Prefabs/TurretAssembly";
     [SerializeField] private GameObject turretPrefab;
+    [SerializeField] private GameObject greenGooPrefab;
+    [SerializeField] private GameObject metalPrefab;
+    [SerializeField] public LayerMask turretLayer;
 
     [Header("Carry Ship Part")]
     /// <summary>
@@ -29,6 +32,15 @@ public class Engineer : Controller3D
     [SerializeField] private Transform player;
     private GameObject[] shipPart;
     private float checkRadius = 5f;
+    RaycastHit hit;
+
+    [Header("Stun")]
+    [SerializeField] Transform muzzlePosition;
+    [SerializeField] float weaponRange = 15f;
+    [SerializeField] float delayBetweenShots = 0.5f;
+    [SerializeField] public LayerMask stunLayer;
+    private float shotCooldown = 0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,14 +57,66 @@ public class Engineer : Controller3D
     protected override void Update()
     {
         base.Update();
+        Cooldown();
         targetTime -= Time.deltaTime;
         PickUpShipPart();
+        TurretHandling();
         //Debug.Log(targetTime);
+    }
+
+    private void Cooldown()
+    {
+        if (OnCoolDown() == true)
+        {
+            shotCooldown -= Time.deltaTime;
+        }
+    }
+
+    private bool OnCoolDown()
+    {
+        return shotCooldown >= 0;
+    }
+
+    public void StunEnemy()
+    {
+        if (OnCoolDown() == false)
+        {
+            if (Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out hit, weaponRange, stunLayer))
+            {
+                AIBaseLogic aIBaseLogic = hit.transform.GetComponent<AIBaseLogic>();
+                if (aIBaseLogic)
+                {
+                    Debug.Log("Enemy stunned");
+                    aIBaseLogic.StunnedBy(transform);
+                }
+            }
+            // Add cooldown time
+            shotCooldown = delayBetweenShots;
+        }
+
     }
 
     public void TurretHandling()
     {
-        Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out RaycastHit hit, obstacleLayer);
+        Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out RaycastHit hit, turretLayer);
+
+        if (playerActions.Player.DeleteTurret.IsPressed())
+        {
+            Transform greenGooDropPos = turretPrefab.transform.Find("DropMetal");
+            Transform metalDropPos = turretPrefab.transform.Find("DropGoo");
+
+            if (hit.collider.gameObject.tag == "Turret")
+            {
+                GameObject greenGooDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + greenGooPrefab.name, greenGooDropPos.transform.position, Quaternion.identity);
+                greenGooDrop.name = "Green Goo";
+                GameObject metalDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + metalPrefab.name, metalDropPos.transform.position, Quaternion.identity);
+                metalDrop.name = "Metal";
+                Debug.Log("Hit that lil turret bitch");
+
+                Destroy(hit.collider.gameObject);
+            }
+        }
+
 
         if (turretCount < maxTurretToSpawn && playerActions.Player.PlaceTurret.IsPressed()) //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
         {
@@ -74,13 +138,18 @@ public class Engineer : Controller3D
                 canPutDownTurret = true;
                 turretObject = PhotonNetwork.Instantiate("Prefabs/" + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
 
+
+
                 if (canPutDownTurret && turretObject != null && playerActions.Player.PlaceTurret.IsPressed())//Input.GetMouseButtonUp(1))
                 {
                     turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
-                    turretObject.transform.position = turretPos.position;
-                    turretObject.GetComponent<Turret>().IsPlaced = true;
-                    turretCount++;
-                    canPutDownTurret = false;
+                    if (hit.collider != null && hit.distance < 3f)
+                    {
+                        turretObject.transform.position = hit.transform.position;
+                        turretObject.GetComponent<Turret>().IsPlaced = true;
+                        turretCount++;
+                        canPutDownTurret = false;
+                    }
                     //inventory.removeMetalAndGreenGoo(metalCostTurret,gooCostTurret);
 
                 }
@@ -93,20 +162,22 @@ public class Engineer : Controller3D
 
     public void PickUpShipPart()
     {
-        if(player != null)
+        if (player != null)
         {
             Collider[] colliderHits = Physics.OverlapSphere(transform.position, checkRadius);
-            Debug.Log(colliderHits);
+            //Debug.Log(colliderHits);
 
             foreach (Collider col in colliderHits)
             {
                 if (col.tag == ("ShipPart") && playerActions.Player.ShipPickUp.IsPressed())
                 {
-                    destination = player.transform.Find("CarryPos");
-                    shipPart = GameObject.FindGameObjectsWithTag("ShipPart");
+                    //destination = player.transform.Find("CarryPos");
+                    //shipPart = GameObject.FindGameObjectsWithTag("ShipPart");
                     //GetComponent<Rigidbody>().useGravity = false;
-                    col.transform.position = destination.position;
-                    col.transform.parent = GameObject.Find("CarryPos").transform;
+                    //col.transform.position = destination.position;
+                    //col.transform.parent = GameObject.Find("CarryPos").transform;
+                    col.GetComponent<EventStarter>().StartEvent();
+
                 }
                 if (playerActions.Player.DropShitPart.IsPressed())
                 {
@@ -119,7 +190,7 @@ public class Engineer : Controller3D
                 }
             }
         }
-        
+
     }
 
     IEnumerator Wait(float sec)
@@ -135,5 +206,6 @@ public class Engineer : Controller3D
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, checkRadius);
+        //Gizmos.DrawRay(transform.position, hit.transform.position);
     }
 }

@@ -15,11 +15,25 @@ public class ObjectSpawner : MonoBehaviour
     [Range(0, 60)] [SerializeField] private float spawnRadius = 1f;
     [Tooltip("If checked objects will be spawned in radius, otherwise they will be spawned on position.")]
     [SerializeField] private bool spawnWithinRadius = true;
+    [Header("Initial Target")]
+    [SerializeField] PhotonView initialTarget;
 
     private float cooldownCounter = 0f;
-    private float yOffset = 1f;
+    [SerializeField] private float yOffset = 1f;
     private int spawnedObjects = 0;
     private bool spawnerIsTriggered = true;
+    private int photonViewTargetId = -1;
+
+    public float TotalSpawnDuration { set { delayBetweenSpawns = value / numberToSpawn; } }
+
+    private void Start()
+    {
+        if (initialTarget)
+        {
+            photonViewTargetId = initialTarget.ViewID;
+        }
+        cooldownCounter = delayBetweenSpawns;
+    }
 
     private void Update()
     {
@@ -57,6 +71,10 @@ public class ObjectSpawner : MonoBehaviour
             cooldownCounter = 0;
             spawnedObjects++;
         }
+        if (spawnedObjects == numberToSpawn)
+        {
+            ResetSpawner();
+        }
     }
 
     private void SpawnMultipleObjects(int numberToSpawn)
@@ -78,7 +96,7 @@ public class ObjectSpawner : MonoBehaviour
         Vector3 xzPosition = Random.insideUnitCircle * spawnRadius;
         float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x + xzPosition.x, 0f, transform.position.z + xzPosition.z));
         Vector3 spawnPosition = new Vector3(transform.position.x + xzPosition.x, y + yOffset, transform.position.z + xzPosition.z);
-        objectPool.Spawn(spawnPosition);
+        objectPool.Spawn(spawnPosition, photonViewTargetId);
     }
 
     private void SpawnObjectsOnPosition()
@@ -87,7 +105,7 @@ public class ObjectSpawner : MonoBehaviour
 
         float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x, 0f, transform.position.z));
         Vector3 spawnPosition = new Vector3(transform.position.x, y + yOffset, transform.position.z);
-        objectPool.Spawn(spawnPosition);
+        objectPool.Spawn(spawnPosition, photonViewTargetId);
     }
 
     private void OnDrawGizmos()

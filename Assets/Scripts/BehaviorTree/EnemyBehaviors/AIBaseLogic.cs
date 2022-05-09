@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class AIBaseLogic : MonoBehaviour
+public class AIBaseLogic : MonoBehaviourPunCallbacks
 {
     [Header("Vision parameters")]
     [SerializeField] protected float viewRadius;
@@ -11,25 +12,71 @@ public class AIBaseLogic : MonoBehaviour
     [SerializeField] protected float viewAngle;
     [SerializeField] private float delayToNewTarget = 1f;
     [SerializeField] private LayerMask obstacleMask;
-    [SerializeField] private LayerMask targetMask;
+    [SerializeField] protected LayerMask targetMask;
+    [SerializeField] protected PooledObject root;
     protected List<Transform> visibleTargets = new List<Transform>();
+    protected Transform target;
+    protected Transform eventTarget;
     protected float distanceToTarget;
     protected Vector3 directionToTarget;
 
     [Header("Navigation")]
-    [SerializeField] private WayPointSystem wayPointSystem;
+    [SerializeField] protected WayPointSystem wayPointSystem;
     protected NavMeshAgent agent;
-    [SerializeField] private float timeToAggro = 1f;
 
+    [Header("Aggro parameters")]
+    [SerializeField] protected float timeToAggro = 1f;
+    [SerializeField] protected float timeToCoolWhenAttacked;
+    protected float timeCounterAggro;
+    protected float timeCounterAttacked;
+    public bool IsAttacked { get; set; }
+    public bool IsStunned { get; set; }
+
+    [Header("Stun parameters")]
+    [SerializeField] protected float timeStunned;
+    protected float timeStunnedCounter;
+
+    protected bool IsMasterClient { get; set; }
+    private Coroutine findTargets;
     public float TimeToAggro
     { get { return timeToAggro; } }
-    public bool IsWithinRange { get; set; }
+    public bool IsWithinSight { get; set; }
     public bool IsAggresive { get; set; }
 
-    private void Awake()
+    private void OnEnable()
     {
-        StartCoroutine("FindTargetsWithDelay", delayToNewTarget);
+        findTargets = StartCoroutine("FindTargetsWithDelay", delayToNewTarget);
         agent = GetComponent<NavMeshAgent>();
+        IsMasterClient = PhotonNetwork.IsMasterClient;
+        eventTarget = PhotonView.Find(root.photonViewTargetId)?.transform;
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(findTargets);
+    }
+
+    protected virtual void Update()
+    {
+
+    }
+
+    public void StunnedBy(Transform target)
+    {
+        this.target = target;
+        IsStunned = true;
+        timeStunnedCounter = timeStunned;
+        directionToTarget = (target.position - transform.position).normalized;
+        distanceToTarget = Vector3.Distance(transform.position, target.position);
+    }
+
+    public void FindAttackingTarget(Transform target)
+    {
+        this.target = target;
+        IsAttacked = true;
+        timeCounterAttacked = timeToCoolWhenAttacked;
+        directionToTarget = (target.position - transform.position).normalized;
+        distanceToTarget = Vector3.Distance(transform.position, target.position);
     }
 
     private IEnumerator FindTargetsWithDelay(float delay)
@@ -43,28 +90,39 @@ public class AIBaseLogic : MonoBehaviour
 
     private void FindVisibleTargets()
     {
-        visibleTargets.Clear();
+
         Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-        IsWithinRange = targetInViewRadius.Length > 0;
+        IsWithinSight = targetInViewRadius.Length > 0;
 
         for (int i = 0; i < targetInViewRadius.Length; i++)
         {
-            Transform target = targetInViewRadius[i].transform;
-            directionToTarget = (target.position - transform.position).normalized;
+            Transform tempTarget = targetInViewRadius[i].transform;
+            directionToTarget = (tempTarget.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, directionToTarget) < viewAngle / 2)
             {
-                distanceToTarget = Vector3.Distance(transform.position, target.position);
+                distanceToTarget = Vector3.Distance(transform.position, tempTarget.position);
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstacleMask))
                 {
-                    visibleTargets.Add(target);
+                    visibleTargets.Add(tempTarget);
+                    target = tempTarget;
                 }
             }
         }
 
-        //if(targetInViewRadius.Length == 0)
-        //{
-        //    visibleTargets.Clear();
-        //}
+        if (targetInViewRadius.Length == 0)
+        {
+            visibleTargets.Clear();
+        }
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Projectile projectile;
+        if((projectile = other.transform.GetComponent<Projectile>()) != null)
+        {
+            GetComponent<HealthHandler>().TakeDamage(projectile.DamageDealer);
+        }
     }
 
     public Vector3 DirectionFromAngle(float angleInDegrees, bool angleIsGlobal)

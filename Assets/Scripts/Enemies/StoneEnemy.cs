@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,10 @@ public class StoneEnemy : AIBaseLogic
     [SerializeField] private float stoppingDistance;
     [SerializeField] private GameObject bullet;
     [SerializeField] private float timeToThrow;
+    [SerializeField] private int stoneDamage;
+    [SerializeField] private float timeToWayPoint;
+    private float timeCounterWaypoint;
+    private Transform wayPoint;
     private float timer;
     private GameObject fleePos;
 
@@ -21,36 +26,136 @@ public class StoneEnemy : AIBaseLogic
         maxThrowRange = viewRadius / 1.5f;
         deadZoneRange = viewRadius / 2.01f;
         fleePos = new GameObject();
+        fleePos.name = "Fleeposition";
+        wayPoint = wayPointSystem.NewRandomPosition;
     }
 
-    private void Update()
+    protected override void Update()
     {
-        // om spelare syns ska den räkna ut distansen och agera därefter
-        if (IsWithinRange)
+        if (IsStunned)
         {
-            float distance = DistanceToTarget(visibleTargets[0].position);
-
-            if (distance < deadZoneRange)
+            agent.isStopped = true;
+            timeStunnedCounter -= Time.deltaTime;
+            if (timeStunnedCounter <= 0f)
             {
-                fleePos.transform.position = transform.position + -1 * (directionToTarget * viewRadius);
+                IsAttacked = true;
+                timeStunnedCounter = timeStunned;
+                IsStunned = false;
+                isFleeing = false;
+                agent.isStopped = false;
+            }
+        }
+        else
+        {
+            if (!IsAttacked)
+            {
+                AggroBasedOnSight();
+                AttackBasedOnSight();
+            }
+
+            if (IsAttacked)
+            {
+                AggroBasedOnAttack();
+            }
+
+            if (isFleeing)
+            {
+                FleeToPosition();
+            }
+
+            if (!IsAggresive && !IsAttacked)
+            {
+                MoveToWayPoint();
+            }
+        }
+
+    }
+
+    private void MoveToWayPoint()
+    {
+        if (eventTarget)
+        {
+            agent.SetDestination(eventTarget.position);
+        }
+        else
+        {
+            timeCounterWaypoint -= Time.deltaTime;
+            if (timeCounterWaypoint <= 0f)
+            {
+                wayPoint = wayPointSystem.NewRandomPosition;
+                timeCounterWaypoint = timeToWayPoint;
+            }
+
+            if (agent.isOnNavMesh)
+                agent.destination = wayPoint.position;
+        }
+    }
+
+    private void AggroBasedOnAttack()
+    {
+        if (IsAttacked)
+        {
+            timeCounterAttacked -= Time.deltaTime;
+            if (timeCounterAttacked <= 0f)
+            {
+                IsAttacked = false;
+            }
+
+            if (distanceToTarget < deadZoneRange)
+            {
+                fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
                 isFleeing = true;
                 agent.isStopped = false;
             }
 
-            if (!isFleeing)
+            Move();
+        }
+    }
+
+    private void AggroBasedOnSight()
+    {
+        if (IsWithinSight)
+        {
+            timeCounterAggro -= Time.deltaTime;
+
+            if (timeCounterAggro <= 0f)
             {
-                Move(distance);
+                IsAggresive = true;
+                timeCounterAggro = timeToAggro;
+            }
+        }
+        else if (!IsWithinSight && IsAggresive)
+        {
+            timeCounterAggro -= Time.deltaTime;
+
+            if (timeCounterAggro <= 0f)
+            {
+                IsAggresive = false;
+                timeCounterAggro = timeToAggro;
+            }
+        }
+    }
+
+    private void AttackBasedOnSight()
+    {
+        if (IsWithinSight)
+        {
+            if (distanceToTarget < deadZoneRange)
+            {
+                fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
+                isFleeing = true;
+                agent.isStopped = false;
+                IsAggresive = false;
+            }
+
+            if (IsAggresive)
+            {
+                Move();
             }
         }
         else
         {
             isFleeing = false;
-            agent.isStopped = false;
-        }
-
-        if (isFleeing)
-        {
-            FleeToPosition();
         }
     }
 
@@ -60,8 +165,9 @@ public class StoneEnemy : AIBaseLogic
         if (timer <= 0f)
         {
             timer = timeToThrow;
-            GameObject bull = Instantiate(bullet, transform.position, Quaternion.identity);
+            GameObject bull = PhotonNetwork.Instantiate("Prefabs/" + bullet.name, transform.position, Quaternion.identity);
             Projectile proj = bull.GetComponent<Projectile>();
+            proj.DamageDealer = stoneDamage;
             proj.Velocity += directionToTarget * 10f;
             proj.IsShot = true;
         }
@@ -70,40 +176,34 @@ public class StoneEnemy : AIBaseLogic
     private void FleeToPosition()
     {
         agent.destination = fleePos.transform.position;
-        Debug.Log("Agents remaining distance " + agent.remainingDistance);
-        if (agent.remainingDistance < 0.05f)
-        {
-            Debug.Log("Should stop fleeing and stuff");
-        }
     }
 
-    private float DistanceToTarget(Vector3 position)
+    private void Move()
     {
-        return Vector3.Distance(transform.position, position);
-    }
-
-
-    private void Move(float distance)
-    {
-        if (distance < maxThrowRange && minThrowRange <= distance)
+        if (distanceToTarget < maxThrowRange && minThrowRange < distanceToTarget)
         {
+            isFleeing = false;
             agent.isStopped = true;
             Throw();
         }
-        agent.destination = visibleTargets[0].position;
-        Rotate();
+        else
+        {
+            agent.isStopped = false;
+        }
+
+        if (agent.isOnNavMesh && target != null)
+        {
+            agent.destination = target.position;
+            Rotate();
+        }
     }
 
     private void Rotate()
     {
         float dot = Vector3.Dot(transform.forward, directionToTarget);
-        if (dot < 0.6f)
-        {
-            Quaternion rotateTo = Quaternion.LookRotation(directionToTarget, transform.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, rotationSpeed * Time.deltaTime);
-        }
+        Quaternion rotateTo = Quaternion.LookRotation(directionToTarget, transform.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, rotationSpeed * Time.deltaTime);
     }
-
     private void OnDrawGizmos()
     {
         Debug.DrawLine(transform.position, transform.position + transform.forward * 5f, Color.blue);
@@ -119,10 +219,4 @@ public class StoneEnemy : AIBaseLogic
         Debug.DrawLine(transform.position, -(directionToTarget * viewRadius - transform.position), Color.cyan);
     }
 
-    void OnGUI()
-    {
-        float dot = Vector3.Dot(transform.forward, directionToTarget);
-
-        GUI.Label(new Rect(10, 10, 100, 20), "Dot: " + dot);
-    }
 }

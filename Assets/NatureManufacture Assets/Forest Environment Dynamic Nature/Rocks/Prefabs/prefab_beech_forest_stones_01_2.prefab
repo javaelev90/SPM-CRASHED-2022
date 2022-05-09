@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1236898795652084773}
   - component: {fileID: 1236898795649184777}
   - component: {fileID: 1236898795650184905}
-  m_Layer: 0
+  - component: {fileID: 8481410846509949369}
+  m_Layer: 7
   m_Name: beech_forest_stones_01_2_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,6 +55,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -65,6 +68,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -77,6 +81,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8481410846509949369
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236898795652179973}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300004, guid: 55b6e49353c3d6a448dbaaa14e65a89a, type: 3}
 --- !u!1 &1236898795652179977
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +108,7 @@ GameObject:
   - component: {fileID: 1236898795649184781}
   - component: {fileID: 1236898795650184909}
   - component: {fileID: 2306656668094821627}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: beech_forest_stones_01_2_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,6 +151,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -143,6 +164,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -155,6 +177,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &2306656668094821627
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -165,9 +188,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 55b6e49353c3d6a448dbaaa14e65a89a, type: 3}
 --- !u!1 &1236898795652179979
 GameObject:
@@ -180,7 +203,8 @@ GameObject:
   - component: {fileID: 1236898795652084779}
   - component: {fileID: 1236898795649184783}
   - component: {fileID: 1236898795650184911}
-  m_Layer: 0
+  - component: {fileID: 251588217280343574}
+  m_Layer: 7
   m_Name: beech_forest_stones_01_2_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,6 +247,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -234,6 +260,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -246,6 +273,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &251588217280343574
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236898795652179979}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: 55b6e49353c3d6a448dbaaa14e65a89a, type: 3}
 --- !u!1 &1236898795652179981
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,7 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1236898795652084781}
   - component: {fileID: 1236898795632828557}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: prefab_beech_forest_stones_01_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

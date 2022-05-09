@@ -6,10 +6,17 @@ using Photon.Pun;
 [RequireComponent(typeof(Weapon))]
 public class SoldierCharacter : Controller3D
 {
-    [SerializeField] HealthHandler healthHandler;
-    [SerializeField] LayerMask fireLayer;
-    [SerializeField] float interactionDistance = 1f;
-    [SerializeField] Weapon weapon;
+    [SerializeField] private LayerMask fireLayer;
+    [SerializeField] private float interactionDistance = 1f;
+    [SerializeField] private Weapon weapon;
+
+    [Header("Punch settings")]
+    [SerializeField] float punchRange = 2f;
+    [SerializeField] int punchDamage = 1;
+    [SerializeField] float delayBetweenShots = 0.3f;
+    [SerializeField] LayerMask layersThatShouldBeHit;
+
+    private float shotCooldown = 0f;
 
     protected override void Awake()
     {
@@ -21,6 +28,7 @@ public class SoldierCharacter : Controller3D
     {
         base.Update();
         WeaponRotation();
+        Cooldown();
     }
 
     public void Shoot()
@@ -28,26 +36,44 @@ public class SoldierCharacter : Controller3D
         weapon.Shoot();
     }
 
-    public void CookFood()
+    private void Cooldown()
     {
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(Vector3.zero),
-            out RaycastHit hitInfo,
-            interactionDistance,
-            fireLayer))
+        if (OnCoolDown() == true)
         {
-            //Cook
+            shotCooldown -= Time.deltaTime;
         }
     }
 
-    public void ConsumeFood()
+    private bool OnCoolDown()
     {
-        //if (Input.GetKey(KeyCode.X))
-        //{
-        //    if (inventory.CookedAlienMeat > 0)
-        //    {
-        //        inventory.eat();
-        //        photonView.RPC("AddHealth", RpcTarget.All, 1);
-        //    }
-        //}
+        return shotCooldown >= 0;
     }
+
+    public void Punch()
+    {
+        if (OnCoolDown() == false)
+        {
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,
+                out RaycastHit hitInfo, punchRange, layersThatShouldBeHit))
+            {
+                HealthHandler healthHandler = hitInfo.transform.GetComponent<HealthHandler>();
+                Debug.Log("Hit the enemy?");
+                if (healthHandler)
+                {
+                    Debug.Log("Hit the enemy.");
+                    healthHandler.TakeDamage(punchDamage);
+                }
+
+                AIBaseLogic ai = hitInfo.transform.GetComponent<AIBaseLogic>();
+                if (ai)
+                {
+                    Debug.Log(ai.transform.name);
+                    ai.FindAttackingTarget(transform);
+                }
+            }
+            // Add cooldown time
+            shotCooldown = delayBetweenShots;
+        }
+    }
+
 }
