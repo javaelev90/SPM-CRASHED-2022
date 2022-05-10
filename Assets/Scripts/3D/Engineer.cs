@@ -27,6 +27,7 @@ public class Engineer : Controller3D
     GameObject outlinedTurret;
     bool isPressed = false;
     bool isUsingTurret = false;
+    Turret turretObj;
 
     [Header("Carry Ship Part")]
     /// <summary>
@@ -93,7 +94,7 @@ public class Engineer : Controller3D
 
     public void StunEnemy()
     {
-        if (OnCoolDown() == false)
+        if (OnCoolDown() == false && isUsingTurret == false)
         {
             if (Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out hit, weaponRange, stunLayer))
             {
@@ -123,7 +124,7 @@ public class Engineer : Controller3D
         //RaycastHit hitInfo;
         if (Physics.Raycast(turretPos.transform.position, Vector3.down, out hit, 3f, obstacleLayer))
         {
-            if (canPutDownTurret && outlinedTurret != null) //Input.GetMouseButton(1)
+            if (isUsingTurret == false && canPutDownTurret && outlinedTurret != null) //Input.GetMouseButton(1)
             {
                 //turretPos.position = hit.transform.position;
                 Vector3 targetLocation = hit.point;
@@ -137,7 +138,7 @@ public class Engineer : Controller3D
     public void OnPlaceTurret(InputAction.CallbackContext ctx)
     {
         GameObject turretObject;
-        if (turretCount < maxTurretToSpawn && targetTime < 0.0f)
+        if (turretCount < maxTurretToSpawn && targetTime < 0.0f && isUsingTurret == false)
         {
             if (ctx.started)
             {
@@ -184,7 +185,7 @@ public class Engineer : Controller3D
 
     public void OnTurretDestroy()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret") && playerActions.Player.DeleteTurret.IsPressed())
+        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret") && playerActions.Player.DeleteTurret.IsPressed())
         {
             Debug.Log("Imagine items get dropped here");
             turretCount--;
@@ -221,7 +222,18 @@ public class Engineer : Controller3D
             Debug.Log("Imagine you are using the turret");
             isUsingTurret = true;
             ChangeControlls.ControlType = 2;
-            
+
+            // Put Engineer behind the turret that was hit
+            foreach (Transform child in hit.transform)
+            {
+                if (child.name == "UsePosition")
+                {
+                    transform.position = child.transform.position;
+                }
+            }
+
+
+
             //Debug.Log("Yes" + isUsingTurret);
         }
         else if (isUsingTurret == true && playerActions.Player.UseTurret.IsPressed())

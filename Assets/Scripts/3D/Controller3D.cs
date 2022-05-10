@@ -119,7 +119,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
         /*
         if (isMine)
         {
-            //InputHandling();
+            InputHandling();
             PlayerRotation();
             
             stateMachine.UpdateStates();

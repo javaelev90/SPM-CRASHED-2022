@@ -6,7 +6,7 @@ using Photon.Pun;
 public class Turret : MonoBehaviourPunCallbacks
 {
     [Header("Turret Properties")]
-    [SerializeField] private GameObject muzzlePoint;
+    [SerializeField] private GameObject turretMuzzlePoint;
     [SerializeField] private GameObject turretBody;
     [SerializeField] private Transform currentTarget;
     [SerializeField] private Transform newTarget;
@@ -19,6 +19,7 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private int turretDamage;
     private string pathBullet = "Prefabs/Bullet";
     private GameObject emptyTarget;
+    [SerializeField] public Transform useTurretPosition;
     public bool IsPlaced { get; set; }
     private float counter;
     private bool isMine;
@@ -90,7 +91,7 @@ public class Turret : MonoBehaviourPunCallbacks
             counter -= Time.deltaTime;
             if (counter <= 0f)
             {
-                GameObject bullet = PhotonNetwork.Instantiate(pathBullet, muzzlePoint.transform.position, turretBody.transform.rotation);
+                GameObject bullet = PhotonNetwork.Instantiate(pathBullet, turretMuzzlePoint.transform.position, turretBody.transform.rotation);
                 Projectile projectile = bullet.GetComponent<Projectile>();
                 projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
                 projectile.DamageDealer = turretDamage;
@@ -106,7 +107,7 @@ public class Turret : MonoBehaviourPunCallbacks
 
 
 
-        Debug.DrawRay(muzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
+        Debug.DrawRay(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
         //if (IsPlaced)
         //{
         //}
