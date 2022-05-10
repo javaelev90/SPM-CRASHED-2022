@@ -946,6 +946,10 @@ MonoBehaviour:
   layersThatShouldBeHit:
     serializedVersion: 2
     m_Bits: 512
+  shot:
+  - {fileID: 8300000, guid: 970f18261fe127b4c95751e7a978b58f, type: 3}
+  - {fileID: 8300000, guid: 86a8916b3d1695f439a9f00483aa3db5, type: 3}
+  - {fileID: 8300000, guid: 67bda2bc8910c84429f732d8899ed0e7, type: 3}
 --- !u!114 &616013412962292102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,6 +1262,7 @@ MonoBehaviour:
   animator: {fileID: 2469390360455845289}
   inventory: {fileID: 3833389567724244086}
   playerInput: {fileID: 616013412962292102}
+  clip: {fileID: 8300000, guid: e7383899d40cf4c4f9eaedab6b73c84d, type: 3}
   fireLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -1302,6 +1307,7 @@ MonoBehaviour:
   healthBarHandler: {fileID: 1481064406722431611}
   MaxHealth: 15
   isEnemy: 0
+  hit: {fileID: 8300000, guid: 052fb3581f4bd374593eea9794280424, type: 3}
 --- !u!114 &5138013647428038622
 MonoBehaviour:
   m_ObjectHideFlags: 0

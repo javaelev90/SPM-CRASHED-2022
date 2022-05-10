@@ -13,6 +13,8 @@ public class Ship : MonoBehaviour
     private int nextUpgrade;
     public bool allShipPartsCollected = false;
     public List<ShipUpgradeCost> shipUpgradeCost;
+    AudioSource source;
+    public AudioClip connect;
 
     [Serializable]
     public class ShipUpgradeCost
@@ -27,6 +29,8 @@ public class Ship : MonoBehaviour
         nextUpgrade = 0;
         StartCoroutine(Wait(5));
         //Wait(5);
+        source = GetComponent<AudioSource>();
+
     }
 
     IEnumerator Wait(float sec)
@@ -76,6 +80,7 @@ public class Ship : MonoBehaviour
         if (shipUpgradeCost[nextUpgrade].partAvalibul)
         {
             nextUpgrade++;
+            source.PlayOneShot(connect);
             OpenUpgradePanel();
             allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
             return true;

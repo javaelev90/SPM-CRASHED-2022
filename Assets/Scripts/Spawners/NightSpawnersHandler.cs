@@ -6,6 +6,8 @@ public class NightSpawnersHandler : MonoBehaviour
 {
     [Header("Spawners")]
     [SerializeField] private ObjectSpawner[] spawners;
+    AudioSource source;
+    public AudioClip clip;
 
     // Start is called before the first frame update
     public void SetupSpawners(float spawnDuration)
@@ -17,6 +19,11 @@ public class NightSpawnersHandler : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        source = GetComponent<AudioSource>();
+    }
+
     public void StartNightSpawning()
     {
         int numberOfSpawnsStarted = 0;
@@ -24,6 +31,7 @@ public class NightSpawnersHandler : MonoBehaviour
         {
             numberOfSpawnsStarted++;
             spawner.TriggerSpawner();
+            source.PlayOneShot(clip);
         }
     }
 

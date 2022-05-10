@@ -13,6 +13,8 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     [SerializeField] private int MaxHealth;
     private int CurrentHealth;
     [SerializeField] private bool isEnemy;
+    AudioSource source;
+    public AudioClip hit;
     public bool IsAlive { get; internal set; }
 
     public void TakeDamage(int amount)
@@ -26,6 +28,8 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     void Start()
     {
         ResetHealth();
+        source = GetComponent<AudioSource>();
+
     }
 
     private void ResetHealth()
@@ -41,6 +45,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         {
             CurrentHealth -= amount;
             healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+            source.PlayOneShot(hit);
 
             if (CurrentHealth <= 0)
             {
