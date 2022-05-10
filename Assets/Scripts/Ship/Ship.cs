@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EventCallbacksSystem;
 using System.Linq;
 
 public class Ship : MonoBehaviour
@@ -13,6 +14,7 @@ public class Ship : MonoBehaviour
     private int nextUpgrade;
     public bool allShipPartsCollected = false;
     public List<ShipUpgradeCost> shipUpgradeCost;
+    public float minTimeUntilDaw = 120f;
 
     [Serializable]
     public class ShipUpgradeCost
@@ -69,7 +71,10 @@ public class Ship : MonoBehaviour
                 break;
             }
         }
+        EventSystem.Instance.FireEvent(new ShipPartEvent(minTimeUntilDaw));
     }
+
+    
 
     public bool UppgradeShip()
     {
