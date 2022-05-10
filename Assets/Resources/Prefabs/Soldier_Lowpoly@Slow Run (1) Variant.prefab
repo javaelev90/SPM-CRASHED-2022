@@ -781,6 +781,27 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &-434799349503424585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9218574915160184169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: isRunning
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!114 &1143718730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,6 +822,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: -706383240651474259}
+  - {fileID: -434799349503424585}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1202,7 +1224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootObject: {fileID: 9218574915160184169}
+  rootObject: {fileID: 0}
   healthBarHandler: {fileID: 1481064406722431611}
   MaxHealth: 15
   CurrentHealth: 15
@@ -1222,7 +1244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 132096
   fireLayer:
     serializedVersion: 2
     m_Bits: 0

@@ -41,7 +41,6 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             case RecyclingBehavior.Nothing:
                 break;
             case RecyclingBehavior.Transform:
-                //RecycleTransform();
                 ResetGameObjectComponents(ObjectPool.pooledObjectPrefab.transform, transform);
                 break;
             case RecyclingBehavior.Custom:
@@ -49,7 +48,6 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 ResetGameObjectComponents(ObjectPool.pooledObjectPrefab.transform, transform);
                 break;
             case RecyclingBehavior.CustomAndTransform:
-                //RecycleTransform();
                 ResetGameObjectComponents(ObjectPool.pooledObjectPrefab.transform, transform);
                 RecycleCustom();
                 break;

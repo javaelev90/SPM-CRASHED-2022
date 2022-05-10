@@ -10,7 +10,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [SerializeField] private LayerMask fireLayer;
     [SerializeField] private LayerMask spaceShipLayer;
 
-    
     [SerializeField] private float pickUpDistance = 3;
     [SerializeField] private Inventory inventory;
 

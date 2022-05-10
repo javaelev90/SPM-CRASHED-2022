@@ -17,15 +17,13 @@ public class HealthHandler : MonoBehaviourPunCallbacks
 
     public void TakeDamage(int amount)
     {
-        if (isEnemy)
-            photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);
-        else
-            TakeDamageRPC(amount);
+        photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);     
     }
 
-    void Start()
+    public override void OnEnable()
     {
-        ResetHealth();
+        base.OnEnable();
+        //ResetHealth();
     }
 
     private void ResetHealth()
@@ -37,43 +35,49 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     [PunRPC]
     private void TakeDamageRPC(int amount)
     {
-        if (isAlive)
+        if (isAlive == true)
         {
-            CurrentHealth -= amount;
-            healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
-
-            if (CurrentHealth <= 0)
+            if (isEnemy == true)
             {
-                isAlive = false;
-                Die();
+                UpdateHealth(amount);
             }
+            else if (isEnemy == false && photonView.IsMine)
+            {
+                UpdateHealth(amount);
+            }
+        }
+    }
+
+    private void UpdateHealth(int amount)
+    {
+        CurrentHealth -= amount;
+        healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+
+        if (CurrentHealth <= 0)
+        {
+            isAlive = false;
+            Die();
         }
     }
 
     public void Die()
     {
-        if (isEnemy)
+        if (isEnemy == true)
         {
             rootObject.DeSpawn();
         }
         else
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                //photonView.RPC(nameof(SpawnReviveBadgeRPC), RpcTarget.All);
-            }
-            if (photonView.IsMine)
-            {
-                CurrentHealth = 0;
-                transform.root.gameObject.SetActive(false);
-            }
+            photonView.RPC(nameof(SpawnReviveBadgeRPC), RpcTarget.MasterClient);
+            CurrentHealth = 0;
+            transform.root.gameObject.SetActive(false);
         }
     }
 
     [PunRPC]
     private void SpawnReviveBadgeRPC()
     {
-        //PhotonNetwork.InstantiateRoomObject("Prefabs/Pickups/ReviveBadge", transform.position, Quaternion.identity, 0, new object[] { (rootObject != null ? rootObject.GetComponent<PhotonView>().ViewID : photonView.ViewID) });
+        PhotonNetwork.InstantiateRoomObject("Prefabs/Pickups/ReviveBadge", transform.position, Quaternion.identity, 0, new object[] { (rootObject != null ? rootObject.GetComponent<PhotonView>().ViewID : photonView.ViewID) });
     }
 
     public void Revive(Vector3 revivePosition)
@@ -84,11 +88,9 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ReviveRPC(Vector3 revivePosition)
     {
-        Debug.Log("Trying to revive");
         transform.root.gameObject.SetActive(true);
         ResetHealth();
         transform.position = revivePosition;
-
     }
 
     [PunRPC]
@@ -102,6 +104,5 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         {
             CurrentHealth += amount;
         }
-
     }
 }

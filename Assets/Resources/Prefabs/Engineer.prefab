@@ -468,10 +468,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootObject: {fileID: 5125041606170365157}
+  rootObject: {fileID: 0}
   healthBarHandler: {fileID: 810019847775400831}
-  MaxHealth: 500
-  CurrentHealth: 500
+  MaxHealth: 15
+  CurrentHealth: 15
   isAlive: 1
   isEnemy: 0
 --- !u!114 &8720005142403483374
@@ -488,7 +488,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupLayer:
     serializedVersion: 2
-    m_Bits: 19456
+    m_Bits: 150528
   fireLayer:
     serializedVersion: 2
     m_Bits: 0
