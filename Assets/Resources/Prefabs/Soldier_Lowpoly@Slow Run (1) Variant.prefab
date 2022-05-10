@@ -1030,7 +1030,19 @@ MonoBehaviour:
     m_ActionId: 28840f60-17d7-41c8-ba97-7169f1c54bb1
     m_ActionName: Player/Eat[/Keyboard/x]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7178814830326724090}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: DropItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d1d5ac02-6de6-46aa-b993-9465947fb9be
     m_ActionName: Player/DropItem[/Keyboard/q]
   - m_PersistentCalls:
@@ -1137,6 +1149,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: dcff7b73-0fa1-48a4-a49e-3a64ad62947c
     m_ActionName: Player/Punch[/Keyboard/v]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8154bfa0-629d-4eb5-b02a-c2bc2c0b3bd4
+    m_ActionName: Player/UseTurret[/XInputControllerWindows/leftTrigger,/Keyboard/t]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1253,3 +1269,4 @@ MonoBehaviour:
     m_Bits: 256
   pickUpDistance: 3
   inventory: {fileID: 3833389567724244086}
+  inventorySystem: {fileID: 11400000, guid: 2c55d78c344521e41b5c4732242259f0, type: 2}
