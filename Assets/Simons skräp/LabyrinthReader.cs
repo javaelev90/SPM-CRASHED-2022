@@ -7,8 +7,8 @@ public class LabyrinthReader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CombineMeshes();
-        //GenerateCubePosition2DArray();
+        //CombineMeshes();
+        GenerateCubePosition2DArray();
     }
 
     public float[,] GenerateCubePosition2DArray()
