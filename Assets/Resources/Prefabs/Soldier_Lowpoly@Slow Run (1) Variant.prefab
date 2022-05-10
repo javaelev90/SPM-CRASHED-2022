@@ -865,7 +865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzlePosition: {fileID: 6522658275698048355, guid: e3583a0419e68ed4f925ac2059a80dc9, type: 3}
-  weaponRange: 15
+  weaponRange: 30
   weaponDamage: 1
   delayBetweenShots: 0.5
   automaticWeapon: 0
@@ -1240,12 +1240,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootObject: {fileID: 0}
   healthBarHandler: {fileID: 1481064406722431611}
+  rootObject: {fileID: 0}
   MaxHealth: 15
   CurrentHealth: 15
   isAlive: 1
   isEnemy: 0
+  dropsMeat: 0
+  dropOffsetY: 1
 --- !u!114 &7178814830326724090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1260,7 +1262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupLayer:
     serializedVersion: 2
-    m_Bits: 132096
+    m_Bits: 136192
   fireLayer:
     serializedVersion: 2
     m_Bits: 0

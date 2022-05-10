@@ -6003,12 +6003,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootObject: {fileID: 3536792488537908558}
   healthBarHandler: {fileID: 3536792488389128152}
+  rootObject: {fileID: 3536792488537908558}
   MaxHealth: 5
   CurrentHealth: 5
   isAlive: 1
   isEnemy: 1
+  dropsMeat: 0
+  dropOffsetY: 1
 --- !u!114 &4455291304399106652
 MonoBehaviour:
   m_ObjectHideFlags: 0

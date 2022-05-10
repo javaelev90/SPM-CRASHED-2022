@@ -6,14 +6,17 @@ using Photon.Pun;
 public class HealthHandler : MonoBehaviourPunCallbacks
 {
     [Header("Required components")]
-    [SerializeField] private PooledObject rootObject;
     [SerializeField] private HealthBarHandler healthBarHandler;
+    [Header("If part of pooled object")]
+    [SerializeField] private PooledObject rootObject;
 
     [Header("Health")] // Keep these public to enable pooled object recycle functionality
     public int MaxHealth;
     public int CurrentHealth;
     public bool isAlive = true;
     [SerializeField] private bool isEnemy;
+    [SerializeField] private bool dropsMeat;
+    [SerializeField] private float dropOffsetY = 1f;
 
     public void TakeDamage(int amount)
     {
@@ -64,6 +67,10 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     {
         if (isEnemy == true)
         {
+            if (dropsMeat == true)
+            {
+                photonView.RPC(nameof(SpawnRawMeatRPC), RpcTarget.MasterClient);
+            }
             rootObject.DeSpawn();
         }
         else
@@ -75,9 +82,21 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
+    private void SpawnRawMeatRPC()
+    {
+        InstantiateRoomObject("Prefabs/Pickups/Alien Meat", null);
+    }
+
+    [PunRPC]
     private void SpawnReviveBadgeRPC()
     {
-        PhotonNetwork.InstantiateRoomObject("Prefabs/Pickups/ReviveBadge", transform.position, Quaternion.identity, 0, new object[] { (rootObject != null ? rootObject.GetComponent<PhotonView>().ViewID : photonView.ViewID) });
+        InstantiateRoomObject("Prefabs/Pickups/ReviveBadge", new object[] { (rootObject != null ? rootObject.GetComponent<PhotonView>().ViewID : photonView.ViewID) });
+    }
+
+    private void InstantiateRoomObject(string prefabPath, object[] parameters)
+    {
+        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + dropOffsetY, transform.position.z);
+        PhotonNetwork.InstantiateRoomObject(prefabPath, spawnPosition, Quaternion.identity, 0, parameters);
     }
 
     public void Revive(Vector3 revivePosition)
