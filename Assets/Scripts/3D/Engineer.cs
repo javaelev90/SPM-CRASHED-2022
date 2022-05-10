@@ -23,6 +23,9 @@ public class Engineer : Controller3D
     [SerializeField] private GameObject greenGooPrefab;
     [SerializeField] private GameObject metalPrefab;
     [SerializeField] public LayerMask turretLayer;
+    [SerializeField] private GameObject outlinedTurretPrefab;
+    bool isPressed = false;
+
 
     [Header("Carry Ship Part")]
     /// <summary>
@@ -47,10 +50,13 @@ public class Engineer : Controller3D
     {
         StartCoroutine(Wait(5));
         //playerActions = new PlayerInputActions();
+
     }
     protected override void Awake()
     {
         base.Awake();
+
+
     }
 
     // Update is called once per frame
@@ -60,7 +66,13 @@ public class Engineer : Controller3D
         Cooldown();
         targetTime -= Time.deltaTime;
         PickUpShipPart();
-        TurretHandling();
+        if (isPressed)
+        {
+            OnPlacementStarted();
+        }
+        //playerActions.Player.PlaceTurret.started += ctx => OnPlacementStarted();
+        //playerActions.Player.PlaceTurret.canceled +=
+        //TurretHandling();
         //Debug.Log(targetTime);
     }
 
@@ -95,6 +107,78 @@ public class Engineer : Controller3D
         }
 
     }
+    GameObject outlinedTurret;
+
+    public void OnPlacementStarted()
+    {
+        Debug.Log("show outline of turret where to place");
+
+        canPutDownTurret = true;
+        //Vector3 targetLocation;
+
+        //Physics.Raycast(turretPos.transform.position, Vector3.down, out hit, 3f, obstacleLayer);
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        //RaycastHit hitInfo;
+        if (Physics.Raycast(turretPos.transform.position, Vector3.down, out hit, 3f, obstacleLayer))
+        {
+            if (canPutDownTurret && outlinedTurret != null) //Input.GetMouseButton(1)
+            {
+                //turretPos.position = hit.transform.position;
+                Vector3 targetLocation = hit.point;
+                outlinedTurret.transform.position = targetLocation;
+                //outlinedTurret.transform.position = hit.point;//turretPos.position;
+                outlinedTurret.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);//(outlinedTurret.transform.up, Vector3.up) * outlinedTurret.transform.rotation;
+            }
+        }
+    }
+
+    public void OnPlaceTurret(InputAction.CallbackContext ctx)
+    {
+        GameObject turretObject;
+        if (turretCount < maxTurretToSpawn)
+        {
+            if (ctx.started)
+            {
+                outlinedTurret = PhotonNetwork.Instantiate("Prefabs/" + outlinedTurretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
+
+                isPressed = true;
+            }
+
+            if (ctx.canceled)
+            {
+                Debug.Log("released button should result in placing turret");
+                if (targetTime < 0.0f && canPutDownTurret) //&& playerActions.Player.PlaceTurret.IsPressed() //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
+                {
+                    turretObject = PhotonNetwork.Instantiate("Prefabs/" + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
+
+                    if (turretObject != null) //&& playerActions.Player.PlaceTurret.IsPressed() //Input.GetMouseButtonUp(1))
+                    {
+                        turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
+                        //if (hit.collider != null && hit.distance < 3f)
+                        //{
+                        Debug.Log("turret should be placed");
+                        turretObject.transform.position = turretPos.transform.position;
+                        turretObject.GetComponent<Turret>().IsPlaced = true;
+                        turretCount++;
+                        canPutDownTurret = false;
+                        //}
+                        //inventory.removeMetalAndGreenGoo(metalCostTurret,gooCostTurret);
+                    }
+
+                    // Ta bort outline objectet
+                    isPressed = false;
+                    Destroy(outlinedTurret);
+
+                    // Reset targetTime
+                    targetTime = 1f;
+
+                }
+            }
+        }
+
+    }
+
 
     public void TurretHandling()
     {
@@ -116,48 +200,6 @@ public class Engineer : Controller3D
                 Destroy(hit.collider.gameObject);
             }
         }
-
-
-        if (turretCount < maxTurretToSpawn && playerActions.Player.PlaceTurret.IsPressed()) //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
-        {
-            GameObject turretObject;
-
-
-            /*
-            if (canPutDownTurret && turretObject != null && playerActions.Player.PlaceTurret.IsPressed()) //Input.GetMouseButton(1)
-            {
-                turretObject.transform.position = turretPos.position;
-                turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
-            }
-            */
-
-
-            if (targetTime < 0.0f)
-            {
-
-                canPutDownTurret = true;
-                turretObject = PhotonNetwork.Instantiate("Prefabs/" + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
-
-
-
-                if (canPutDownTurret && turretObject != null && playerActions.Player.PlaceTurret.IsPressed())//Input.GetMouseButtonUp(1))
-                {
-                    turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
-                    if (hit.collider != null && hit.distance < 3f)
-                    {
-                        turretObject.transform.position = hit.transform.position;
-                        turretObject.GetComponent<Turret>().IsPlaced = true;
-                        turretCount++;
-                        canPutDownTurret = false;
-                    }
-                    //inventory.removeMetalAndGreenGoo(metalCostTurret,gooCostTurret);
-
-                }
-
-                targetTime = 1f;
-            }
-        }
-
     }
 
     public void PickUpShipPart()

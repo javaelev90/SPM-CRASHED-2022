@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2520650330550881837}
-  m_Layer: 6
+  m_Layer: 16
   m_Name: TurretPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505469119939958381}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.66, z: 1.77}
+  m_LocalPosition: {x: 0, y: -1, z: 2.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5125041606170365177}
@@ -470,7 +470,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootObject: {fileID: 5125041606170365157}
   healthBarHandler: {fileID: 810019847775400831}
-  MaxHealth: 15
+  MaxHealth: 500
+  CurrentHealth: 500
+  isAlive: 1
   isEnemy: 0
 --- !u!114 &8720005142403483374
 MonoBehaviour:
@@ -573,7 +575,7 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 384
-  mouseSensitivity: 10
+  mouseSensitivity: 5
   gamepadSensitivity: 80
   minXrotation: -90
   maxXrotation: 90
@@ -599,7 +601,8 @@ MonoBehaviour:
   metalPrefab: {fileID: 5648485573748196395, guid: 8d9299097781d6a4cbbca1a773979f70, type: 3}
   turretLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 65536
+  outlinedTurretPrefab: {fileID: 8025784739738023711, guid: 84205b8d5a2c8a644a97fa040e65db20, type: 3}
   destination: {fileID: 431206142263564548}
   player: {fileID: 5125041606170365177}
   muzzlePosition: {fileID: 1099855166}
@@ -797,8 +800,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1484468382420821516}
         m_TargetAssemblyTypeName: Engineer, Assembly-CSharp
-        m_MethodName: TurretHandling
-        m_Mode: 1
+        m_MethodName: OnPlaceTurret
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

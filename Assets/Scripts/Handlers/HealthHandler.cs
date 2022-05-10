@@ -9,11 +9,11 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     [SerializeField] private PooledObject rootObject;
     [SerializeField] private HealthBarHandler healthBarHandler;
 
-    [Header("Health")]
-    [SerializeField] private int MaxHealth;
-    private int CurrentHealth;
+    [Header("Health")] // Keep these public to enable pooled object recycle functionality
+    public int MaxHealth;
+    public int CurrentHealth;
+    public bool isAlive = true;
     [SerializeField] private bool isEnemy;
-    public bool IsAlive { get; internal set; }
 
     public void TakeDamage(int amount)
     {
@@ -31,20 +31,20 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     private void ResetHealth()
     {
         CurrentHealth = MaxHealth;
-        IsAlive = true;
+        isAlive = true;
     }
 
     [PunRPC]
     private void TakeDamageRPC(int amount)
     {
-        if (IsAlive)
+        if (isAlive)
         {
             CurrentHealth -= amount;
             healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
 
             if (CurrentHealth <= 0)
             {
-                IsAlive = false;
+                isAlive = false;
                 Die();
             }
         }
@@ -73,7 +73,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SpawnReviveBadgeRPC()
     {
-        PhotonNetwork.InstantiateRoomObject("Prefabs/Pickups/ReviveBadge", transform.position, Quaternion.identity, 0, new object[] { (rootObject != null ? rootObject.GetComponent<PhotonView>().ViewID : photonView.ViewID) });
+        //PhotonNetwork.InstantiateRoomObject("Prefabs/Pickups/ReviveBadge", transform.position, Quaternion.identity, 0, new object[] { (rootObject != null ? rootObject.GetComponent<PhotonView>().ViewID : photonView.ViewID) });
     }
 
     public void Revive(Vector3 revivePosition)
