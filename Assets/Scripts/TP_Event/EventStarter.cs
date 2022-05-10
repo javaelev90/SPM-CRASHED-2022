@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EventCallbacksSystem;
 
 public class EventStarter : MonoBehaviour
 {
@@ -10,6 +9,8 @@ public class EventStarter : MonoBehaviour
     public GameObject dome;
     public TeleportToShip teleportToShip;
     public Ship ship;
+    public Timer timeDisplay;
+    public LightingManager light;
     public List<ObjectSpawner> eventSpawners;
     
     
@@ -29,8 +30,8 @@ public class EventStarter : MonoBehaviour
 
     public void StartEvent()
     {
-
-        EventSystem.Instance.FireEvent(new EventEvent(true)); 
+        timeDisplay.DisplayingTime(false);
+        light.SetCycleOngoing(false);
         dome.SetActive(true);
 
         foreach (ObjectSpawner objectSpawner in eventSpawners)
@@ -44,7 +45,9 @@ public class EventStarter : MonoBehaviour
     private IEnumerator TeleportIn(float eventTime)
     {
         yield return new WaitForSeconds(eventTime);
-        EventSystem.Instance.FireEvent(new EventEvent(false));
+        timeDisplay.DisplayingTime(true);
+        light.SetCycleOngoing(true);
+        light.SetMinTimeUntilDawn(minTimeLeftAfter);
         teleportToShip.TP();
         ship.newPartObtained();
         Destroy(gameObject);

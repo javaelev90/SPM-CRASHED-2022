@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EventCallbacksSystem;
 
 [ExecuteAlways]
 public class LightingManager : MonoBehaviour
@@ -34,8 +33,6 @@ public class LightingManager : MonoBehaviour
 
     private void Start()
     {
-        EventSystem.Instance.RegisterListener<EventEvent>(SetCycleOngoing);
-        EventSystem.Instance.RegisterListener<ShipPartEvent>(SetMinTimeUntilDawn);
         timeOfSunrise = dayLength / 2;
         IsNight = timeOfDay > dayLength;
         totalTimeWholeCycle = dayLength + nightLength;
@@ -45,7 +42,7 @@ public class LightingManager : MonoBehaviour
 
     private void Update()
     {
-        if (!cycleOngoing)
+        if (cycleOngoing)
         {
             return;
         }
@@ -127,17 +124,17 @@ public class LightingManager : MonoBehaviour
 
     }
 
-    public void SetCycleOngoing(EventEvent eventEvent)
+    public void SetCycleOngoing(bool isOngoing)
     {
-        cycleOngoing = eventEvent.Start;
+        cycleOngoing = isOngoing;
     }
 
-    public void SetMinTimeUntilDawn(ShipPartEvent shipPartEvent)
+    public void SetMinTimeUntilDawn(float seconds)
     {
 
-        if (timeOfDay < dayLength - shipPartEvent.TimeUntilDawn)
+        if (timeOfDay < dayLength - seconds)
         {
-            timeOfDay = dayLength - shipPartEvent.TimeUntilDawn;
+            timeOfDay = dayLength - seconds;
         }
     }
 }
