@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using EventCallbacksSystem;
 
 public class Turret : MonoBehaviourPunCallbacks
 {
@@ -17,6 +18,8 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private PhotonView bullet;
     [SerializeField] private float fireTimer = 1f;
     [SerializeField] private int turretDamage;
+    [SerializeField] private int turretDamageIncreaseAtUpgrade;
+    [SerializeField] private int turretHealthIncreaseAtUpgrade;
     private string pathBullet = "Prefabs/Bullet";
     private GameObject emptyTarget;
     [SerializeField] public Transform useTurretPosition;
@@ -31,7 +34,20 @@ public class Turret : MonoBehaviourPunCallbacks
         isMine = photonView.IsMine;
         emptyTarget = new GameObject();
         emptyTarget.transform.position = transform.forward * 3f;
+        EventSystem.Instance.RegisterListener<TurretDamageUpgradeEvent>(DamageUpgrade);
+        EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(HealthUpgrade);
     }
+
+    public void DamageUpgrade(TurretDamageUpgradeEvent turretDamageUpgrade)
+    {
+        turretDamage += turretDamageIncreaseAtUpgrade;
+    }
+
+    public void HealthUpgrade(TurretHealthUpgradeEvent turretDamageUpgrade)
+    {
+        //... += turretHealthIncreaseAtUpgrade;
+    }
+
 
     private void FindTargets()
     {
