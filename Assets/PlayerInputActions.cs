@@ -152,6 +152,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseTurret"",
+                    ""type"": ""Button"",
+                    ""id"": ""8154bfa0-629d-4eb5-b02a-c2bc2c0b3bd4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -548,6 +557,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8b4bb53-0364-4913-a425-5ad50020c792"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""UseTurret"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f628ae5-7ee0-440c-afc5-976604e4eb35"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""UseTurret"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -973,6 +1004,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_PlaceTurret = m_Player.FindAction("PlaceTurret", throwIfNotFound: true);
         m_Player_ShipPickUp = m_Player.FindAction("ShipPickUp", throwIfNotFound: true);
         m_Player_DeleteTurret = m_Player.FindAction("DeleteTurret", throwIfNotFound: true);
+        m_Player_UseTurret = m_Player.FindAction("UseTurret", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1058,6 +1090,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PlaceTurret;
     private readonly InputAction m_Player_ShipPickUp;
     private readonly InputAction m_Player_DeleteTurret;
+    private readonly InputAction m_Player_UseTurret;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1076,6 +1109,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @PlaceTurret => m_Wrapper.m_Player_PlaceTurret;
         public InputAction @ShipPickUp => m_Wrapper.m_Player_ShipPickUp;
         public InputAction @DeleteTurret => m_Wrapper.m_Player_DeleteTurret;
+        public InputAction @UseTurret => m_Wrapper.m_Player_UseTurret;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1127,6 +1161,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @DeleteTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeleteTurret;
                 @DeleteTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeleteTurret;
                 @DeleteTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeleteTurret;
+                @UseTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
+                @UseTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
+                @UseTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1173,6 +1210,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @DeleteTurret.started += instance.OnDeleteTurret;
                 @DeleteTurret.performed += instance.OnDeleteTurret;
                 @DeleteTurret.canceled += instance.OnDeleteTurret;
+                @UseTurret.started += instance.OnUseTurret;
+                @UseTurret.performed += instance.OnUseTurret;
+                @UseTurret.canceled += instance.OnUseTurret;
             }
         }
     }
@@ -1316,6 +1356,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnPlaceTurret(InputAction.CallbackContext context);
         void OnShipPickUp(InputAction.CallbackContext context);
         void OnDeleteTurret(InputAction.CallbackContext context);
+        void OnUseTurret(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

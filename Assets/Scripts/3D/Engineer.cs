@@ -24,8 +24,10 @@ public class Engineer : Controller3D
     [SerializeField] private GameObject metalPrefab;
     [SerializeField] public LayerMask turretLayer;
     [SerializeField] private GameObject outlinedTurretPrefab;
+    GameObject outlinedTurret;
     bool isPressed = false;
-
+    bool isUsingTurret = false;
+    Turret turretObj;
 
     [Header("Carry Ship Part")]
     /// <summary>
@@ -66,6 +68,7 @@ public class Engineer : Controller3D
         Cooldown();
         targetTime -= Time.deltaTime;
         PickUpShipPart();
+        //OnTurretUse();
         if (isPressed)
         {
             OnPlacementStarted();
@@ -91,7 +94,7 @@ public class Engineer : Controller3D
 
     public void StunEnemy()
     {
-        if (OnCoolDown() == false)
+        if (OnCoolDown() == false && isUsingTurret == false)
         {
             if (Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out hit, weaponRange, stunLayer))
             {
@@ -107,7 +110,6 @@ public class Engineer : Controller3D
         }
 
     }
-    GameObject outlinedTurret;
 
     public void OnPlacementStarted()
     {
@@ -122,13 +124,13 @@ public class Engineer : Controller3D
         //RaycastHit hitInfo;
         if (Physics.Raycast(turretPos.transform.position, Vector3.down, out hit, 3f, obstacleLayer))
         {
-            if (canPutDownTurret && outlinedTurret != null) //Input.GetMouseButton(1)
+            if (isUsingTurret == false && canPutDownTurret && outlinedTurret != null) //Input.GetMouseButton(1)
             {
                 //turretPos.position = hit.transform.position;
                 Vector3 targetLocation = hit.point;
-                outlinedTurret.transform.position = targetLocation;
+                //outlinedTurret.transform.position = targetLocation;
                 //outlinedTurret.transform.position = hit.point;//turretPos.position;
-                outlinedTurret.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);//(outlinedTurret.transform.up, Vector3.up) * outlinedTurret.transform.rotation;
+                outlinedTurret.transform.SetPositionAndRotation(targetLocation, Quaternion.FromToRotation(Vector3.up, hit.normal));//(outlinedTurret.transform.up, Vector3.up) * outlinedTurret.transform.rotation;
             }
         }
     }
@@ -136,10 +138,11 @@ public class Engineer : Controller3D
     public void OnPlaceTurret(InputAction.CallbackContext ctx)
     {
         GameObject turretObject;
-        if (turretCount < maxTurretToSpawn)
+        if (turretCount < maxTurretToSpawn && targetTime < 0.0f && isUsingTurret == false)
         {
             if (ctx.started)
             {
+                Debug.Log("Holding button should show turret outline");
                 outlinedTurret = PhotonNetwork.Instantiate("Prefabs/" + outlinedTurretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
 
                 isPressed = true;
@@ -148,7 +151,7 @@ public class Engineer : Controller3D
             if (ctx.canceled)
             {
                 Debug.Log("released button should result in placing turret");
-                if (targetTime < 0.0f && canPutDownTurret) //&& playerActions.Player.PlaceTurret.IsPressed() //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
+                if (canPutDownTurret) //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
                 {
                     turretObject = PhotonNetwork.Instantiate("Prefabs/" + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
 
@@ -180,26 +183,67 @@ public class Engineer : Controller3D
     }
 
 
-    public void TurretHandling()
+    public void OnTurretDestroy()
     {
-        Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out RaycastHit hit, turretLayer);
+        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret") && playerActions.Player.DeleteTurret.IsPressed())
+        {
+            Debug.Log("Imagine items get dropped here");
+            turretCount--;
+            Destroy(hit.collider.gameObject);
+        }
+
+        /*
+        Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out hit, 10f, turretLayer);
 
         if (playerActions.Player.DeleteTurret.IsPressed())
         {
-            Transform greenGooDropPos = turretPrefab.transform.Find("DropMetal");
-            Transform metalDropPos = turretPrefab.transform.Find("DropGoo");
+            //Transform greenGooDropPos = turretPrefab.transform.Find("DropMetal");
+            //Transform metalDropPos = turretPrefab.transform.Find("DropGoo");
 
-            if (hit.collider.gameObject.tag == "Turret")
+            if (hit.collider.gameObject.CompareTag("Turret"))
             {
-                GameObject greenGooDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + greenGooPrefab.name, greenGooDropPos.transform.position, Quaternion.identity);
-                greenGooDrop.name = "Green Goo";
-                GameObject metalDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + metalPrefab.name, metalDropPos.transform.position, Quaternion.identity);
-                metalDrop.name = "Metal";
-                Debug.Log("Hit that lil turret bitch");
+                //GameObject greenGooDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + greenGooPrefab.name, greenGooDropPos.transform.position, Quaternion.identity);
+                //greenGooDrop.name = "Green Goo";
+                //GameObject metalDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + metalPrefab.name, metalDropPos.transform.position, Quaternion.identity);
+                //metalDrop.name = "Metal";
+                Debug.Log("Destroy that lil turret bitch");
 
                 Destroy(hit.collider.gameObject);
             }
         }
+        */
+    }
+
+
+    public void OnTurretUse()
+    {
+        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret") && playerActions.Player.UseTurret.IsPressed())
+        {
+            Debug.Log("Imagine you are using the turret");
+            isUsingTurret = true;
+            ChangeControlls.ControlType = 2;
+
+            // Put Engineer behind the turret that was hit
+            foreach (Transform child in hit.transform)
+            {
+                if (child.name == "UsePosition")
+                {
+                    transform.position = child.transform.position;
+                }
+            }
+
+
+
+            //Debug.Log("Yes" + isUsingTurret);
+        }
+        else if (isUsingTurret == true && playerActions.Player.UseTurret.IsPressed())
+        {
+            Debug.Log("You are no longer using turret");
+            isUsingTurret = false;
+            ChangeControlls.ControlType = 1;
+            //Debug.Log("No" + isUsingTurret);
+        }
+        
     }
 
     public void PickUpShipPart()
@@ -211,7 +255,7 @@ public class Engineer : Controller3D
 
             foreach (Collider col in colliderHits)
             {
-                if (col.tag == ("ShipPart") && playerActions.Player.ShipPickUp.IsPressed())
+                if (col.CompareTag(("ShipPart")) && playerActions.Player.ShipPickUp.IsPressed())
                 {
                     //destination = player.transform.Find("CarryPos");
                     //shipPart = GameObject.FindGameObjectsWithTag("ShipPart");
