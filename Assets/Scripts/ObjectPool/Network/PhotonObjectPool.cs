@@ -31,8 +31,8 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
                     pooledObjectPrefab.transform.position,
                     Quaternion.identity
                 );
-            pooledObject.ObjectPool = this;
-            pooledObject.UpdateActiveState(false);
+            //pooledObject.ObjectPool = this;
+            //pooledObject.UpdateActiveState(false);
             pooledObjects.Enqueue(pooledObject);
         }
     }

@@ -60,7 +60,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                photonView.RPC(nameof(SpawnReviveBadgeRPC), RpcTarget.All);
+                //photonView.RPC(nameof(SpawnReviveBadgeRPC), RpcTarget.All);
             }
             if (photonView.IsMine)
             {

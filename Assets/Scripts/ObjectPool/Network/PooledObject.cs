@@ -134,5 +134,7 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         ObjectPool = PhotonView.Find((int)info.photonView.InstantiationData[0]).gameObject.GetComponent<PhotonObjectPool>();
+        transform.SetParent(ObjectPool.transform);
+        gameObject.SetActive(false);
     }
 }
