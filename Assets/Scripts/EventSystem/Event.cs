@@ -37,4 +37,34 @@ namespace EventCallbacksSystem
     {
     }
 
+    public class EventEvent : Event
+    {
+        public bool Start { get; set; }
+
+        public EventEvent(bool start)
+        {
+            Start = start;
+        }
+    }
+
+    public class ShipPartEvent : Event
+    {
+        public float TimeUntilDawn { get; set; }
+
+        public ShipPartEvent(float timeUntilDawn)
+        {
+            TimeUntilDawn = timeUntilDawn;
+        }
+    }
+
+    public class PlayerHealthUpgradeEvent : Event{}
+
+    public class GunDamageUpgradeEvent : Event { }
+
+    public class GunReloadUpgradeEvent : Event { }
+
+    public class TurretHealthUpgradeEvent : Event { }
+
+    public class TurretDamageUpgradeEvent : Event { }
+
 }
