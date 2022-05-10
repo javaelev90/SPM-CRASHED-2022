@@ -21,6 +21,7 @@ public class LightingManager : MonoBehaviour
     private float timeOfSunrise;
     private float totalTimeWholeCycle;
     private readonly float MAGICAL_SUNRISE_STARTER_NUMBER = 10;
+    private bool cycleOngoing;
 
     public bool IsNight { get; private set; }
 
@@ -29,16 +30,23 @@ public class LightingManager : MonoBehaviour
 
     public float TimeUntilCycle { get { return timeOfDay < dayLength && timeOfDay > 0 ? dayLength - timeOfDay : timeOfDay < 0 ? -timeOfDay : nightLength - timeOfDay + dayLength; } } // Math magic to return the correct number for timer
 
+
     private void Start()
     {
         timeOfSunrise = dayLength / 2;
         IsNight = timeOfDay > dayLength;
         totalTimeWholeCycle = dayLength + nightLength;
         nightSpawnersHandler.SetupSpawners(nightLength - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER));
+        cycleOngoing = false;
     }
 
     private void Update()
     {
+        if (cycleOngoing)
+        {
+            return;
+        }
+
         if (Preset == null)
         {
             return;
@@ -73,8 +81,6 @@ public class LightingManager : MonoBehaviour
         {
             UpdateLighting((timeOfDay + timeOfSunrise) / (dayLength * 2));
         }
-
-
     }
 
     private void UpdateLighting(float timePercent)
@@ -88,11 +94,7 @@ public class LightingManager : MonoBehaviour
         {
             //DirectionalLight.color = Preset.DirectionalColor.Evaluate(timePercent);
             DirectionalLight.transform.localRotation = Quaternion.Euler(new Vector3((timePercent * 360f) - 90f, -170, 0));
-        }
-
-    
-     
-       
+        }   
     }
 
 
@@ -119,6 +121,20 @@ public class LightingManager : MonoBehaviour
                 }
             }
         }
+
     }
 
+    public void SetCycleOngoing(bool isOngoing)
+    {
+        cycleOngoing = isOngoing;
+    }
+
+    public void SetMinTimeUntilDawn(float seconds)
+    {
+
+        if (timeOfDay < dayLength - seconds)
+        {
+            timeOfDay = dayLength - seconds;
+        }
+    }
 }

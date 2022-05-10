@@ -105,4 +105,13 @@ public class Timer : MonoBehaviour
         day.gameObject.SetActive(!day.gameObject.activeSelf);
         night.gameObject.SetActive(!night.gameObject.activeSelf);
     }
+
+    public void DisplayingTime(bool displayOn)
+    {
+        minutEtt.enabled = displayOn;
+        minutTwo.enabled = displayOn;
+        separate.enabled = displayOn;
+        sekundEtt.enabled = displayOn;
+        sekundTwo.enabled = displayOn;
+    }
 }
