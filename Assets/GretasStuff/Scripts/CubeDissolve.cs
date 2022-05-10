@@ -9,7 +9,7 @@ public class CubeDissolve : MonoBehaviour
     public float maxHealth;
 
 
-    /*void Start()
+    void Start()
     {
         dissolveMat.SetFloat("DISSOLVEVALUE", health / maxHealth);
     }
@@ -20,5 +20,6 @@ public class CubeDissolve : MonoBehaviour
             dissolveMat.SetFloat("DISSOLVEVALUE", health / maxHealth);
     }
 
-    */
+
+   
 }
