@@ -49,15 +49,29 @@ public class Turret : MonoBehaviourPunCallbacks
                 }
             }
 
+
             Vector3 direction = (currentTarget.position - transform.position).normalized;
             Quaternion rotateTo = Quaternion.LookRotation(direction, turretBody.transform.up);
             turretBody.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
+
+            // Clamp rotation so it doesn't go all over the place and end up uppside down
+            rotateTo.x = ClampAngle(rotateTo.x, -90f, 90f);
+            rotateTo.z = ClampAngle(rotateTo.z, -90f, 90f);
+
         }
 
-        if(colliders.Length == 0)
+        if (colliders.Length == 0)
         {
             currentTarget = emptyTarget.transform;
         }
+    }
+
+    float ClampAngle(float angle, float from, float to)
+    {
+        // accepts e.g. -80, 80
+        if (angle < 0f) angle = 360 + angle;
+        if (angle > 180f) return Mathf.Max(angle, 360 + from);
+        return Mathf.Min(angle, to);
     }
 
     // Update is called once per frame
