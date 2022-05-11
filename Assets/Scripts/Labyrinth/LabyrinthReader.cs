@@ -8,10 +8,10 @@ public class LabyrinthReader : MonoBehaviour
     void Start()
     {
         //CombineMeshes();
-        GenerateCubePosition2DArray();
+        //GenerateCubePosition2DArray();
     }
 
-    public float[,] GenerateCubePosition2DArray()
+    public float[,] GenerateCubePosition2DArray(int chunkSize)
     {
         Transform[] cubePositions = GetComponentsInChildren<Transform>();
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class World : MonoBehaviour
 {
     // 29 bred
-    //31 lång
+    //31 l?ng
 
 
     [Header("World")]
@@ -27,7 +27,7 @@ public class World : MonoBehaviour
 
     private void Start()
     {
-        map = labyrinthReader.GenerateCubePosition2DArray();
+        map = labyrinthReader.GenerateCubePosition2DArray(chunkSize); ;
         GenerateWorld();
     }
 
