@@ -93,16 +93,19 @@ public class InventorySystem : ScriptableObject
         if (Directory.Exists("Assets/Resources/Prefabs/Pickups"))
         {
             Debug.Log("Folder exists");
-            Item[] items = Resources.FindObjectsOfTypeAll<Item>();
-            if (items != null)
+            //Item[] items = Resources.FindObjectsOfTypeAll<Item>();
+            System.Object[] os = Resources.LoadAll("Prefabs/Pickups", typeof(Item));
+            
+            if (os.Length > 0)
             {
-                Debug.Log("Number of items: " + items.Length);
-
-                foreach (Item i in items)
+                Debug.Log("Number of items: " + os.Length);
+                
+                foreach (System.Object i in os)
                 {
-                    if (!prefabs.ContainsKey(i.GetType()))
+                    Item item = (Item)i;
+                    if (!prefabs.ContainsKey(item.GetType()))
                     {
-                        prefabs.Add(i.GetType(), i.ItemPrefab);
+                        prefabs.Add(item.GetType(), item.ItemPrefab);
                     }
                 }
 

@@ -12,6 +12,8 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     [SerializeField] private float pickUpDistance = 3;
     [SerializeField] private Inventory inventory;
+    [SerializeField] private InventorySystem inventorySystem;
+    [SerializeField] private Transform dropTransform;
 
     private Transform mainCamera;
     private GameObject otherPlayer;
@@ -20,6 +22,11 @@ public class PickingUp : MonoBehaviourPunCallbacks
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        inventorySystem.LoadPrefabs();
+        Debug.Log("Available amount AlienMeat: " + inventorySystem.AvailableAmount<AlienMeat>());
+        Debug.Log("Available amount GreenGoo: " + inventorySystem.AvailableAmount<GreenGoo>());
+        Debug.Log("Available amount Metal: " + inventorySystem.AvailableAmount<Metal>());
+        Debug.Log("Available amount ReviveBadge: " + inventorySystem.AvailableAmount<ReviveBadge>());
     }
 
     public void PickUp()
@@ -98,7 +105,8 @@ public class PickingUp : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-
+            GameObject go = inventorySystem.ItemPrefab<GreenGoo>();
+            PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, transform.position, Quaternion.identity);
         }
     }
 

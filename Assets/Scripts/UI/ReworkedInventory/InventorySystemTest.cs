@@ -10,12 +10,10 @@ public class InventorySystemTest : MonoBehaviour
     [ContextMenu("Testing inventory")]
     public void TestingInventory()
     {
-        inventory.Add<AlienMeat>(5);
-        inventory.Add<Metal>(19);
-
-        Debug.Log(inventory.AvailableAmount<AlienMeat>());
-        Debug.Log(inventory.AvailableAmount<Metal>());
-
+        Debug.Log("Available amount AlienMeat: " + inventory.AvailableAmount<AlienMeat>());
+        Debug.Log("Available amount GreenGoo: " + inventory.AvailableAmount<GreenGoo>());
+        Debug.Log("Available amount Metal: "  + inventory.AvailableAmount<Metal>());
+        Debug.Log("Available amount ReviveBadge: " + inventory.AvailableAmount<ReviveBadge>());
     }
 
 
