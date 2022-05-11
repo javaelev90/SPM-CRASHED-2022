@@ -5,7 +5,7 @@ using UnityEngine;
 public class TestingDissolveShader : MonoBehaviour
 {
 
-   /* public Material dissolveMat;
+    public Material dissolveMat;
     public float health;
     public float maxHealth;
 
@@ -20,7 +20,7 @@ public class TestingDissolveShader : MonoBehaviour
             health -= 0.1f;
             dissolveMat.SetFloat("DISSOLVEVALUE", health / maxHealth);
     }
-   */
+   
  
 }
 
