@@ -102,6 +102,23 @@ public class Controller3D : MonoBehaviourPunCallbacks
     {
         if (isMine)
         {
+            switch (ChangeControlls.ControlType)
+            {
+                case 1:
+                    InputHandling();
+                    PlayerRotation();
+                    stateMachine.UpdateStates();
+                    RoatateCamera();
+                    break;
+                case 2:
+                    RoatateCamera();
+                    break;
+            }
+        }
+        
+        /*
+        if (isMine)
+        {
             InputHandling();
             PlayerRotation();
             
@@ -109,6 +126,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
             RoatateCamera();
         }
+        */
     }
 
     public void Jump()

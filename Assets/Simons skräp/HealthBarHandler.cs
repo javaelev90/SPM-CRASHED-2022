@@ -7,6 +7,8 @@ public class HealthBarHandler : MonoBehaviour
 
     public void SetHealthBarValue(float value)
     {
+        if (healthBarImage == null) AssignHealthBarImage();
+
         healthBarImage.fillAmount = value;
         
         if (value < 0.2f)
@@ -23,10 +25,15 @@ public class HealthBarHandler : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void AssignHealthBarImage()
     {
         healthBarImage = GetComponent<Image>();
+    }
+
+    // Start is called before the first frame update
+    void OnEnable()
+    {
+        AssignHealthBarImage();
         SetHealthBarValue(1f);
     }
 }

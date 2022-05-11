@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EventCallbacksSystem;
 
 [ExecuteAlways]
 public class LightingManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class LightingManager : MonoBehaviour
     private float timeOfSunrise;
     private float totalTimeWholeCycle;
     private readonly float MAGICAL_SUNRISE_STARTER_NUMBER = 10;
+    private bool cycleOngoing;
 
     public bool IsNight { get; private set; }
 
@@ -29,16 +31,25 @@ public class LightingManager : MonoBehaviour
 
     public float TimeUntilCycle { get { return timeOfDay < dayLength && timeOfDay > 0 ? dayLength - timeOfDay : timeOfDay < 0 ? -timeOfDay : nightLength - timeOfDay + dayLength; } } // Math magic to return the correct number for timer
 
+
     private void Start()
     {
+        EventSystem.Instance.RegisterListener<EventEvent>(SetCycleOngoing);
+        EventSystem.Instance.RegisterListener<ShipPartEvent>(SetMinTimeUntilDawn);
         timeOfSunrise = dayLength / 2;
         IsNight = timeOfDay > dayLength;
         totalTimeWholeCycle = dayLength + nightLength;
         nightSpawnersHandler.SetupSpawners(nightLength - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER));
+        cycleOngoing = false;
     }
 
     private void Update()
     {
+        if (!cycleOngoing)
+        {
+            return;
+        }
+
         if (Preset == null)
         {
             return;
@@ -112,6 +123,20 @@ public class LightingManager : MonoBehaviour
                 }
             }
         }
+
     }
 
+    public void SetCycleOngoing(EventEvent eventEvent)
+    {
+        cycleOngoing = eventEvent.Start;
+    }
+
+    public void SetMinTimeUntilDawn(ShipPartEvent shipPartEvent)
+    {
+
+        if (timeOfDay < dayLength - shipPartEvent.TimeUntilDawn)
+        {
+            timeOfDay = dayLength - shipPartEvent.TimeUntilDawn;
+        }
+    }
 }

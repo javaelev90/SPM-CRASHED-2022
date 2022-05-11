@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2520650330550881837}
-  m_Layer: 6
+  m_Layer: 16
   m_Name: TurretPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505469119939958381}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.66, z: 1.77}
+  m_LocalPosition: {x: 0, y: -1, z: 2.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5125041606170365177}
@@ -311,13 +311,13 @@ GameObject:
   - component: {fileID: 5125041606170365158}
   - component: {fileID: 2813428470660306397}
   - component: {fileID: 4469745541425131366}
-  - component: {fileID: 6298950803575883625}
   - component: {fileID: 8720005142403483374}
   - component: {fileID: 2433093780270635284}
   - component: {fileID: 3595819507681349455}
   - component: {fileID: 1484468382420821516}
   - component: {fileID: 5344456586567406286}
   - component: {fileID: -4059197858113975227}
+  - component: {fileID: 6100198665861484934}
   m_Layer: 6
   m_Name: Engineer
   m_TagString: Player
@@ -455,23 +455,7 @@ MonoBehaviour:
   kineticFrictionCoefficient: 0.3
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 384
---- !u!114 &6298950803575883625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5125041606170365157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootObject: {fileID: 5125041606170365157}
-  healthBarHandler: {fileID: 810019847775400831}
-  MaxHealth: 15
-  isEnemy: 0
+    m_Bits: 33152
 --- !u!114 &8720005142403483374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,7 +470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupLayer:
     serializedVersion: 2
-    m_Bits: 19456
+    m_Bits: 150528
   fireLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -572,8 +556,8 @@ MonoBehaviour:
   radius: 1
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 384
-  mouseSensitivity: 10
+    m_Bits: 33152
+  mouseSensitivity: 5
   gamepadSensitivity: 80
   minXrotation: -90
   maxXrotation: 90
@@ -599,7 +583,8 @@ MonoBehaviour:
   metalPrefab: {fileID: 5648485573748196395, guid: 8d9299097781d6a4cbbca1a773979f70, type: 3}
   turretLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 65536
+  outlinedTurretPrefab: {fileID: 8025784739738023711, guid: 84205b8d5a2c8a644a97fa040e65db20, type: 3}
   destination: {fileID: 431206142263564548}
   player: {fileID: 5125041606170365177}
   muzzlePosition: {fileID: 1099855166}
@@ -797,8 +782,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1484468382420821516}
         m_TargetAssemblyTypeName: Engineer, Assembly-CSharp
-        m_MethodName: TurretHandling
-        m_Mode: 1
+        m_MethodName: OnPlaceTurret
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -826,7 +811,19 @@ MonoBehaviour:
     m_ActionId: 404869e7-1df2-4e36-94f6-7ed0b38cc292
     m_ActionName: Player/ShipPickUp[/XInputControllerWindows/buttonWest,/XInputControllerWindows1/buttonWest,/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1484468382420821516}
+        m_TargetAssemblyTypeName: Engineer, Assembly-CSharp
+        m_MethodName: OnTurretDestroy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 07bc1ff4-f384-40cb-abe8-5f5392c0cd19
     m_ActionName: Player/DeleteTurret[/Keyboard/p]
   - m_PersistentCalls:
@@ -873,6 +870,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: dcff7b73-0fa1-48a4-a49e-3a64ad62947c
     m_ActionName: Player/Punch[/Keyboard/v]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1484468382420821516}
+        m_TargetAssemblyTypeName: Engineer, Assembly-CSharp
+        m_MethodName: OnTurretUse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8154bfa0-629d-4eb5-b02a-c2bc2c0b3bd4
+    m_ActionName: Player/UseTurret[/Keyboard/t]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -897,6 +910,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6100198665861484934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5125041606170365157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a85b6f203468fee49b5a7dce2f5d5802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarHandler: {fileID: 810019847775400831}
+  itemDropPrefab: {fileID: 4836580809429015468, guid: f39236fffe98f4742b352f1e1ac28581, type: 3}
+  dropOffsetY: 1
+  MaxHealth: 15
+  CurrentHealth: 15
+  isAlive: 1
 --- !u!1 &5882971585194565831
 GameObject:
   m_ObjectHideFlags: 0

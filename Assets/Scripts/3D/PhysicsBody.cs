@@ -48,7 +48,7 @@ public class PhysicsBody : MonoBehaviourPunCallbacks
         //groundCheckDistance = 10 * skinWidth;
         capsuleCollider = GetComponent<CapsuleCollider>();
         isMine = photonView.IsMine;
-        Debug.Log(1);
+        //Debug.Log(1);
         if (saveAsTextFile)
         {
             PhysicsVariabelsHandeler.SavePhysics(variablesSetting, skinWidth, groundCheckDistance, mass, gravity,
