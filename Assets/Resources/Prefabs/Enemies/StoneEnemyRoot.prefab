@@ -867,10 +867,10 @@ GameObject:
   - component: {fileID: 5495731618562740638}
   - component: {fileID: 5495731618562740634}
   - component: {fileID: 5495731618562740635}
-  - component: {fileID: 5495731618562740636}
   - component: {fileID: 5495731618562740615}
   - component: {fileID: 6410203659263109712}
   - component: {fileID: 5805036622619029246}
+  - component: {fileID: 3832143261542263938}
   m_Layer: 9
   m_Name: StoneEnemyPrefab
   m_TagString: Untagged
@@ -1015,24 +1015,6 @@ MonoBehaviour:
   walk: {fileID: 8300000, guid: cfbe109ff897e8845b183d89a6bf9c5a, type: 3}
   angry: {fileID: 0}
   attack: {fileID: 8300000, guid: b604b4d8329994741b72d1701a18a8ce, type: 3}
---- !u!114 &5495731618562740636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5495731618562740639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBarHandler: {fileID: 4946720192807495970}
-  itemDropPrefab: {fileID: 0}
-  dropOffsetY: 1
-  MaxHealth: 15
-  CurrentHealth: 15
-  isAlive: 1
 --- !u!195 &5495731618562740615
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1184,6 +1166,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3832143261542263938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5495731618562740639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8fc6a6e62782094897def37bf9afe19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarHandler: {fileID: 4946720192807495970}
+  hit: {fileID: 0}
+  itemDropPrefab: {fileID: 0}
+  dropOffsetY: 1
+  MaxHealth: 15
+  CurrentHealth: 15
+  isAlive: 1
+  rootObject: {fileID: 4946720192697130266}
 --- !u!1 &5728767323485074116
 GameObject:
   m_ObjectHideFlags: 0

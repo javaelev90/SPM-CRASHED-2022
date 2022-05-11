@@ -298,6 +298,7 @@ GameObject:
   - component: {fileID: 9059524882281108184}
   - component: {fileID: 5603274226023981931}
   - component: {fileID: 4332708826218193301}
+  - component: {fileID: 5748228317118618098}
   m_Layer: 9
   m_Name: SlugPrefab
   m_TagString: Enemy
@@ -571,6 +572,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5748228317118618098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5603274226023981941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8fc6a6e62782094897def37bf9afe19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarHandler: {fileID: 5216314101210147919}
+  hit: {fileID: 0}
+  itemDropPrefab: {fileID: 5771315748241732598, guid: 932af93578deccb4392c0c68f5c8ca0e, type: 3}
+  dropOffsetY: 1
+  MaxHealth: 4
+  CurrentHealth: 4
+  isAlive: 1
+  rootObject: {fileID: 6261632589528798244}
 --- !u!1 &5603274226446826173
 GameObject:
   m_ObjectHideFlags: 0
