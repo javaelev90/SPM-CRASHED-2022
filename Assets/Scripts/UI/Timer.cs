@@ -68,7 +68,7 @@ public class Timer : MonoBehaviour
         sekundTwo.text = currentTime[3].ToString();
     }
 
-    private void Flash33 (){
+    /*private void Flash3 (){
         flashTimer += Time.deltaTime;
         if(flashTimer > flashduration){
             setTextDisplay(!minutEtt.enabled);
@@ -77,7 +77,7 @@ public class Timer : MonoBehaviour
         setTextDisplay(true);
         day.gameObject.SetActive(!day.gameObject.activeSelf);
         night.gameObject.SetActive(!night.gameObject.activeSelf);
-    }
+    }*/
 
     private void setTextDisplay(bool enabled){
         minutEtt.enabled = enabled;
