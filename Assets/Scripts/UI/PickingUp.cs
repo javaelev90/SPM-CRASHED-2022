@@ -14,6 +14,9 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [SerializeField] private Inventory inventory;
     [SerializeField] private InventorySystem inventorySystem;
     [SerializeField] private Transform dropTransform;
+    [SerializeField] private float timeToDrop = 0.5f;
+    private float timeToDropCounter;
+    private bool canDrop;
 
     private Transform mainCamera;
     private GameObject otherPlayer;
@@ -27,6 +30,19 @@ public class PickingUp : MonoBehaviourPunCallbacks
         Debug.Log("Available amount GreenGoo: " + inventorySystem.AvailableAmount<GreenGoo>());
         Debug.Log("Available amount Metal: " + inventorySystem.AvailableAmount<Metal>());
         Debug.Log("Available amount ReviveBadge: " + inventorySystem.AvailableAmount<ReviveBadge>());
+    }
+
+    private void Update()
+    {
+        if (!canDrop)
+        {
+            timeToDropCounter += Time.deltaTime;
+            if (timeToDropCounter >= timeToDrop)
+            {
+                canDrop = true;
+                timeToDropCounter = 0f;
+            }
+        }
     }
 
     public void PickUp()
@@ -65,7 +81,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
             }
         }
     }
-    
+
     public void Revive()
     {
         if (PickUpHitCheck(spaceShipLayer))
@@ -97,7 +113,10 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     public void DropItem()
     {
-        photonView.RPC(nameof(DropItemRPC), RpcTarget.MasterClient);
+        if (canDrop)
+            photonView.RPC(nameof(DropItemRPC), RpcTarget.MasterClient);
+
+        canDrop = false;
     }
 
     [PunRPC]
@@ -106,7 +125,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             GameObject go = inventorySystem.ItemPrefab<GreenGoo>();
-            PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, transform.position, Quaternion.identity);
+            PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
         }
     }
 
