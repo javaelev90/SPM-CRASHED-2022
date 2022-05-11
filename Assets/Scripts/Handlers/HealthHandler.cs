@@ -7,113 +7,40 @@ public class HealthHandler : MonoBehaviourPunCallbacks
 {
     [Header("Required components")]
     [SerializeField] private HealthBarHandler healthBarHandler;
-    [Header("If part of pooled object")]
-    [SerializeField] private PooledObject rootObject;
+
+    [Header("Item drop")]
+    [SerializeField] protected GameObject itemDropPrefab;
+    [SerializeField] private float dropOffsetY = 1f;
 
     [Header("Health")] // Keep these public to enable pooled object recycle functionality
     public int MaxHealth;
     public int CurrentHealth;
     public bool isAlive = true;
-    [SerializeField] private bool isEnemy;
-    [SerializeField] private bool dropsMeat;
-    [SerializeField] private float dropOffsetY = 1f;
 
-    public void TakeDamage(int amount)
-    {
-        photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);     
-    }
+    public virtual void TakeDamage(int amount) {}
+    public virtual void Die() {}
+    public virtual void DropItem() {}
 
     public override void OnEnable()
     {
         base.OnEnable();
-        //ResetHealth();
+        ResetHealth();
     }
 
-    private void ResetHealth()
+    protected void ResetHealth()
     {
         CurrentHealth = MaxHealth;
         isAlive = true;
+        UpdateHealthBar();
+    }
+
+    public void AddHealth(int amount)
+    {
+        photonView.RPC(nameof(AddHealthRPC), RpcTarget.All, amount);
     }
 
     [PunRPC]
-    private void TakeDamageRPC(int amount)
-    {
-        if (isAlive == true)
-        {
-            if (isEnemy == true)
-            {
-                UpdateHealth(amount);
-            }
-            else if (isEnemy == false && photonView.IsMine)
-            {
-                UpdateHealth(amount);
-            }
-        }
-    }
-
-    private void UpdateHealth(int amount)
-    {
-        CurrentHealth -= amount;
-        healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
-
-        if (CurrentHealth <= 0)
-        {
-            isAlive = false;
-            Die();
-        }
-    }
-
-    public void Die()
-    {
-        if (isEnemy == true)
-        {
-            if (dropsMeat == true)
-            {
-                photonView.RPC(nameof(SpawnRawMeatRPC), RpcTarget.MasterClient);
-            }
-            rootObject.DeSpawn();
-        }
-        else
-        {
-            photonView.RPC(nameof(SpawnReviveBadgeRPC), RpcTarget.MasterClient);
-            CurrentHealth = 0;
-            transform.root.gameObject.SetActive(false);
-        }
-    }
-
-    [PunRPC]
-    private void SpawnRawMeatRPC()
-    {
-        InstantiateRoomObject("Prefabs/Pickups/Alien Meat", null);
-    }
-
-    [PunRPC]
-    private void SpawnReviveBadgeRPC()
-    {
-        InstantiateRoomObject("Prefabs/Pickups/ReviveBadge", new object[] { (rootObject != null ? rootObject.GetComponent<PhotonView>().ViewID : photonView.ViewID) });
-    }
-
-    private void InstantiateRoomObject(string prefabPath, object[] parameters)
-    {
-        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + dropOffsetY, transform.position.z);
-        PhotonNetwork.InstantiateRoomObject(prefabPath, spawnPosition, Quaternion.identity, 0, parameters);
-    }
-
-    public void Revive(Vector3 revivePosition)
-    {
-        photonView.RPC(nameof(ReviveRPC), RpcTarget.All, revivePosition);
-    }
-
-    [PunRPC]
-    private void ReviveRPC(Vector3 revivePosition)
-    {
-        transform.root.gameObject.SetActive(true);
-        ResetHealth();
-        transform.position = revivePosition;
-    }
-
-    [PunRPC]
-    private void AddHealth(int amount)
+    private void AddHealthRPC(int amount)
     {
         if (CurrentHealth + amount > MaxHealth)
         {
@@ -123,5 +50,28 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         {
             CurrentHealth += amount;
         }
+    }
+
+    public void RemoveHealth(int amount)
+    {
+        CurrentHealth -= amount;
+        UpdateHealthBar();
+
+        if (CurrentHealth <= 0)
+        {
+            isAlive = false;
+            Die();
+        }
+    }
+
+    private void UpdateHealthBar()
+    {
+        healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+    }
+
+    protected void InstantiateRoomObject(object[] parameters)
+    {
+        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + dropOffsetY, transform.position.z);
+        PhotonNetwork.InstantiateRoomObject("Prefabs/Pickups/" + itemDropPrefab.name, spawnPosition, Quaternion.identity, 0, parameters);
     }
 }

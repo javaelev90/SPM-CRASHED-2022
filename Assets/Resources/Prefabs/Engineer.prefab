@@ -311,13 +311,13 @@ GameObject:
   - component: {fileID: 5125041606170365158}
   - component: {fileID: 2813428470660306397}
   - component: {fileID: 4469745541425131366}
-  - component: {fileID: 6298950803575883625}
   - component: {fileID: 8720005142403483374}
   - component: {fileID: 2433093780270635284}
   - component: {fileID: 3595819507681349455}
   - component: {fileID: 1484468382420821516}
   - component: {fileID: 5344456586567406286}
   - component: {fileID: -4059197858113975227}
+  - component: {fileID: 6100198665861484934}
   m_Layer: 6
   m_Name: Engineer
   m_TagString: Player
@@ -456,26 +456,6 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 33152
---- !u!114 &6298950803575883625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5125041606170365157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBarHandler: {fileID: 810019847775400831}
-  rootObject: {fileID: 0}
-  MaxHealth: 15
-  CurrentHealth: 15
-  isAlive: 1
-  isEnemy: 0
-  dropsMeat: 0
-  dropOffsetY: 1
 --- !u!114 &8720005142403483374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -930,6 +910,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6100198665861484934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5125041606170365157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a85b6f203468fee49b5a7dce2f5d5802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarHandler: {fileID: 810019847775400831}
+  itemDropPrefab: {fileID: 4836580809429015468, guid: f39236fffe98f4742b352f1e1ac28581, type: 3}
+  dropOffsetY: 1
+  MaxHealth: 15
+  CurrentHealth: 15
+  isAlive: 1
 --- !u!1 &5882971585194565831
 GameObject:
   m_ObjectHideFlags: 0

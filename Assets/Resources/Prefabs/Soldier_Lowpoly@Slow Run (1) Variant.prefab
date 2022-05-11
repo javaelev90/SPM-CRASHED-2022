@@ -1228,7 +1228,7 @@ MonoBehaviour:
   alienMeat: 0
   cookedAlienMeat: 0
   hasReviveBadge: 0
---- !u!114 &4473422644530472061
+--- !u!114 &5992165877706448252
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1237,17 +1237,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 9218574915160184169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
+  m_Script: {fileID: 11500000, guid: a85b6f203468fee49b5a7dce2f5d5802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarHandler: {fileID: 1481064406722431611}
-  rootObject: {fileID: 0}
+  itemDropPrefab: {fileID: 4836580809429015468, guid: f39236fffe98f4742b352f1e1ac28581, type: 3}
+  dropOffsetY: 1
   MaxHealth: 15
   CurrentHealth: 15
   isAlive: 1
-  isEnemy: 0
-  dropsMeat: 0
-  dropOffsetY: 1
 --- !u!114 &7178814830326724090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1271,4 +1269,3 @@ MonoBehaviour:
     m_Bits: 256
   pickUpDistance: 3
   inventory: {fileID: 3833389567724244086}
-  inventorySystem: {fileID: 11400000, guid: 2c55d78c344521e41b5c4732242259f0, type: 2}
