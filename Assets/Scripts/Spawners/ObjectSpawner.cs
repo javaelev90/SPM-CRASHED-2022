@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
+using UnityEngine.Audio;
 
 public class ObjectSpawner : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] private bool spawnWithinRadius = true;
     [Header("Initial Target")]
     [SerializeField] PhotonView initialTarget;
+
 
     private float cooldownCounter = 0f;
     [SerializeField] private float yOffset = 1f;
@@ -40,8 +42,11 @@ public class ObjectSpawner : MonoBehaviour
         if (PhotonNetwork.IsMasterClient && spawnerIsTriggered)
         {
             SpawnObjects();
+            
         }
     }
+
+    
 
     public void ResetSpawner()
     {

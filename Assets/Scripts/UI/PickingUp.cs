@@ -57,6 +57,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 inventory.addAlienMeat(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+                 source.PlayOneShot(Meat);
             }
             else if (typ == Pickup_Typs.Pickup.Revive)
             {

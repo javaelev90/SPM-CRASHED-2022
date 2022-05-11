@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using EventCallbacksSystem;
 
 public class Dialogue : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Dialogue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      // EventSystem.Instance.RegisterListener<EventEvent>();
         if (isFirst)
         {
             textComponent.text = string.Empty;
@@ -25,15 +27,14 @@ public class Dialogue : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    
+  void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (isTyping)
-            {
-                isDone = true;
-            }
-        }
+        
+           // if(isTyping){  
+             //   isDone = true;
+            //}
+        
     }
     void beginDialogue()
     {

@@ -18,7 +18,7 @@ public class Weapon : MonoBehaviour
 
     private float shotCooldown = 0f;
 
-    AudioSource source;
+    [SerializeField] private AudioSource sourceOne;
     public AudioClip[] shot;
 
     void Update()
@@ -28,7 +28,7 @@ public class Weapon : MonoBehaviour
 
     void Start()
     {
-        source = GetComponent<AudioSource>();
+        sourceOne = GetComponent<AudioSource>();
      
     }
 
@@ -58,7 +58,7 @@ public class Weapon : MonoBehaviour
                 {
                     Debug.Log("Hit the enemy.");
                     AudioClip clip = GetAudioClip();
-                    source.PlayOneShot(clip);
+                    sourceOne.PlayOneShot(clip);
                     healthHandler.TakeDamage(weaponDamage);
                 }
 
