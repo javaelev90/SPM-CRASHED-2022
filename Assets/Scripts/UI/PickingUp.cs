@@ -10,7 +10,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [SerializeField] private LayerMask fireLayer;
     [SerializeField] private LayerMask spaceShipLayer;
 
-    
     [SerializeField] private float pickUpDistance = 3;
     [SerializeField] private Inventory inventory;
 
@@ -35,20 +34,20 @@ public class PickingUp : MonoBehaviourPunCallbacks
             {
                 inventory.addMetal(pickUpComponent.amount);
 
-                Destroy(pickup.transform.gameObject);
+                //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
 
             }
             else if (typ == Pickup_Typs.Pickup.GreenGoo)
             {
                 inventory.addGreenGoo(pickUpComponent.amount);
-                Destroy(pickup.transform.gameObject);
+                //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
             }
             else if (typ == Pickup_Typs.Pickup.AlienMeat)
             {
                 inventory.addAlienMeat(pickUpComponent.amount);
-                Destroy(pickup.transform.gameObject);
+                //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
             }
             else if (typ == Pickup_Typs.Pickup.Revive)
