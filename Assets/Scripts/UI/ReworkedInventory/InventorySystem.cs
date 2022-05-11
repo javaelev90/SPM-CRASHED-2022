@@ -89,11 +89,6 @@ public class InventorySystem : ScriptableObject
         return new GameObject("EmptyObject");
     }
 
-    // upgrade ability
-    // add attribute
-    // update attribute
-
-
     [ContextMenu("LoadPrefabsToInventory")]
     public void LoadPrefabs()
     {
