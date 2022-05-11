@@ -596,7 +596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recyclingBehaviour: 3
   photonViewObjects:
-  - {fileID: 5495731618562740633}
+  - {fileID: 0}
   photonViewTargetId: -1
 --- !u!114 &4946720192697130267
 MonoBehaviour:
@@ -637,7 +637,7 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
     ExtrapolateOption: 0
@@ -868,9 +868,9 @@ GameObject:
   - component: {fileID: 5495731618562740634}
   - component: {fileID: 5495731618562740635}
   - component: {fileID: 5495731618562740636}
-  - component: {fileID: 5495731618562740633}
   - component: {fileID: 5495731618562740615}
   - component: {fileID: 6410203659263109712}
+  - component: {fileID: 7523679755571015134}
   m_Layer: 9
   m_Name: StoneEnemyPrefab
   m_TagString: Untagged
@@ -1024,23 +1024,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootObject: {fileID: 4946720192697130266}
   healthBarHandler: {fileID: 4946720192807495970}
+  itemDropPrefab: {fileID: 0}
+  dropOffsetY: 1
   MaxHealth: 15
-  isEnemy: 1
---- !u!114 &5495731618562740633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5495731618562740639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf84300c0c682347921ff853d6ab630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootObject: {fileID: 4946720192697130266}
+  CurrentHealth: 15
+  isAlive: 1
 --- !u!195 &5495731618562740615
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1096,6 +1085,25 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &7523679755571015134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5495731618562740639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8fc6a6e62782094897def37bf9afe19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarHandler: {fileID: 4946720192807495970}
+  itemDropPrefab: {fileID: 0}
+  dropOffsetY: 1
+  MaxHealth: 15
+  CurrentHealth: 15
+  isAlive: 1
+  rootObject: {fileID: 4946720192697130266}
 --- !u!1 &5728767323485074116
 GameObject:
   m_ObjectHideFlags: 0

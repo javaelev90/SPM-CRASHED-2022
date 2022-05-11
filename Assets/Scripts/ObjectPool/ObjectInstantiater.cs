@@ -5,6 +5,8 @@ using Photon.Pun;
 
 public class ObjectInstantiater : MonoBehaviourPunCallbacks
 {
+    [Tooltip("How far above the terrain the resources should be instantiated.")]
+    [SerializeField] private float yOffset = 1f;
     [Header("Green Goo")]
     [SerializeField] GameObject greenGooPrefab;
     [SerializeField] List<Transform> greenGooPositions;
@@ -33,7 +35,7 @@ public class ObjectInstantiater : MonoBehaviourPunCallbacks
         foreach (Transform location in positions)
         {
             float y = Terrain.activeTerrain.SampleHeight(new Vector3(location.position.x, 10f, location.position.z));
-            Vector3 newLocation = new Vector3(location.position.x, y + 1.5f, location.position.z);
+            Vector3 newLocation = new Vector3(location.position.x, y + yOffset, location.position.z);
             PhotonNetwork.InstantiateRoomObject(prefabPath + prefab.name, newLocation, location.rotation);
         }
     }

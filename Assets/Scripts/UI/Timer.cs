@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using System.Collections;
+using EventCallbacksSystem;
 
 public class Timer : MonoBehaviour
 {
@@ -31,7 +32,9 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(!lightingManager.IsNight)
+        EventSystem.Instance.RegisterListener<EventEvent>(DisplayingTime);
+
+        if (!lightingManager.IsNight)
         {
             day.gameObject.SetActive(true);
             night.gameObject.SetActive(false);
@@ -104,5 +107,14 @@ public class Timer : MonoBehaviour
         setTextDisplay(true);
         day.gameObject.SetActive(!day.gameObject.activeSelf);
         night.gameObject.SetActive(!night.gameObject.activeSelf);
+    }
+
+    public void DisplayingTime(EventEvent eventEvent)
+    {
+        minutEtt.enabled = !eventEvent.Start;
+        minutTwo.enabled = !eventEvent.Start;
+        separate.enabled = !eventEvent.Start;
+        sekundEtt.enabled = !eventEvent.Start;
+        sekundTwo.enabled = !eventEvent.Start;
     }
 }
