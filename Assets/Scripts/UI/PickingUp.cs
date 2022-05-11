@@ -25,6 +25,10 @@ public class PickingUp : MonoBehaviourPunCallbacks
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        if (photonView.IsMine)
+        {
+            GameObject.FindGameObjectWithTag("InventoryHandler").GetComponent<Handler>().inventory = inventory;
+        }
         inventorySystem.LoadPrefabs();
         Debug.Log("Available amount AlienMeat: " + inventorySystem.Amount<AlienMeat>());
         Debug.Log("Available amount GreenGoo: " + inventorySystem.Amount<GreenGoo>());

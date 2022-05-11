@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class ShowUI : MonoBehaviour
 {
     public GameObject uiObject;
     [SerializeField] private bool canSoldierPickup;
     [SerializeField] private bool canEngineerPickup;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -15,17 +15,28 @@ public class ShowUI : MonoBehaviour
         uiObject.SetActive(false);
     }
 
-    void OnTriggerEnter(Collider player){
-        if((canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>()) || (canEngineerPickup && player.gameObject.GetComponent<Engineer>()))
+    void OnTriggerEnter(Collider player)
+    {
+        if (player.CompareTag("Player"))
         {
-           uiObject.SetActive(true);
+            bool isLocalPlayer = player.gameObject.GetComponent<PhotonView>().IsMine;
+            if (isLocalPlayer && (canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>()) || (canEngineerPickup && player.gameObject.GetComponent<Engineer>()))
+            {
+                uiObject.SetActive(true);
+            }
         }
+        
     }
 
-    private void OnTriggerExit(Collider player) {
-        if(uiObject.activeSelf)
+    void OnTriggerExit(Collider player)
+    {
+        if (player.CompareTag("Player"))
         {
-           uiObject.SetActive(false);
+            bool isLocalPlayer = player.gameObject.GetComponent<PhotonView>().IsMine;
+            if (isLocalPlayer && uiObject.activeSelf)
+            {
+                uiObject.SetActive(false);
+            }
         }
     }
 }
