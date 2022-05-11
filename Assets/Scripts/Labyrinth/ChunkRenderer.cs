@@ -32,7 +32,6 @@ public class ChunkRenderer : MonoBehaviour
 
     public void InitializeChunk(ChunkData data)
     {
-        AssignComponents();
         this.ChunkData = data;
     }
 

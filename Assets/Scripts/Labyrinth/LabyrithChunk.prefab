@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6442193016706153053}
   - component: {fileID: 5550028072651098009}
   - component: {fileID: 1186656295744310940}
-  m_Layer: 0
+  - component: {fileID: 3318894459488365060}
+  m_Layer: 7
   m_Name: LabyrithChunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,3 +114,19 @@ MonoBehaviour:
   meshCollider: {fileID: 0}
   mesh: {fileID: 0}
   showGizmo: 0
+--- !u!208 &3318894459488365060
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2799024769306346465}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
