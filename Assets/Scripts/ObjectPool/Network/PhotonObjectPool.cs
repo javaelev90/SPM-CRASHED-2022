@@ -31,15 +31,15 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
                     pooledObjectPrefab.transform.position,
                     Quaternion.identity
                 );
-            pooledObject.ObjectPool = this;
-            pooledObject.UpdateActiveState(false);
+            //pooledObject.ObjectPool = this;
+            //pooledObject.UpdateActiveState(false);
             pooledObjects.Enqueue(pooledObject);
         }
     }
 
     private PooledObject Instantiate(Vector3 position, Quaternion rotation)
     {
-        return PhotonNetwork.Instantiate("Prefabs/Enemies/"+pooledObjectPrefab.name, position, rotation).GetComponent<PooledObject>();
+        return PhotonNetwork.Instantiate("Prefabs/Enemies/"+pooledObjectPrefab.name, position, rotation, 0, new object[] { photonView.ViewID }).GetComponent<PooledObject>();
     }
 
     public void DeSpawnPool()

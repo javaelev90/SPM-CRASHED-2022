@@ -294,9 +294,7 @@ GameObject:
   - component: {fileID: 5216314100708495165}
   - component: {fileID: 5603274226023981930}
   - component: {fileID: 281888583855016732}
-  - component: {fileID: 4329490454360236971}
   - component: {fileID: 590309329708096}
-  - component: {fileID: 4438006839284368491}
   - component: {fileID: 9059524882281108184}
   - component: {fileID: 5603274226023981931}
   - component: {fileID: 4332708826218193301}
@@ -399,23 +397,6 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 448
---- !u!114 &4329490454360236971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5603274226023981941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootObject: {fileID: 6261632589528798244}
-  healthBarHandler: {fileID: 5216314101210147919}
-  MaxHealth: 4
-  isEnemy: 1
-  hit: {fileID: 0}
 --- !u!114 &590309329708096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,19 +420,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &4438006839284368491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5603274226023981941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf84300c0c682347921ff853d6ab630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootObject: {fileID: 6261632589528798244}
 --- !u!114 &9059524882281108184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,7 +666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recyclingBehaviour: 3
   photonViewObjects:
-  - {fileID: 4438006839284368491}
+  - {fileID: 0}
   photonViewTargetId: 0
 --- !u!114 &107882219648812594
 MonoBehaviour:
@@ -739,7 +707,7 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
     ExtrapolateOption: 0

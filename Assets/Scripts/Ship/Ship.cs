@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EventCallbacksSystem;
 using System.Linq;
 
 public class Ship : MonoBehaviour
@@ -15,6 +16,7 @@ public class Ship : MonoBehaviour
     public List<ShipUpgradeCost> shipUpgradeCost;
     AudioSource source;
     public AudioClip connect;
+    public float minTimeUntilDaw = 120f;
 
     [Serializable]
     public class ShipUpgradeCost
@@ -73,7 +75,10 @@ public class Ship : MonoBehaviour
                 break;
             }
         }
+        EventSystem.Instance.FireEvent(new ShipPartEvent(minTimeUntilDaw));
     }
+
+    
 
     public bool UppgradeShip()
     {

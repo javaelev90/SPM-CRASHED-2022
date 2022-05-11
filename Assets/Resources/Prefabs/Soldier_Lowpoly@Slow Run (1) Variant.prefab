@@ -877,6 +877,27 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &-434799349503424585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9218574915160184169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: isRunning
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!114 &1143718730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -897,6 +918,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: -706383240651474259}
+  - {fileID: -434799349503424585}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -939,7 +961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzlePosition: {fileID: 6522658275698048355, guid: e3583a0419e68ed4f925ac2059a80dc9, type: 3}
-  weaponRange: 15
+  weaponRange: 30
   weaponDamage: 1
   delayBetweenShots: 0.5
   automaticWeapon: 0
@@ -1108,7 +1130,19 @@ MonoBehaviour:
     m_ActionId: 28840f60-17d7-41c8-ba97-7169f1c54bb1
     m_ActionName: Player/Eat[/Keyboard/x]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7178814830326724090}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: DropItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d1d5ac02-6de6-46aa-b993-9465947fb9be
     m_ActionName: Player/DropItem[/Keyboard/q]
   - m_PersistentCalls:
@@ -1215,6 +1249,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: dcff7b73-0fa1-48a4-a49e-3a64ad62947c
     m_ActionName: Player/Punch[/Keyboard/v]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8154bfa0-629d-4eb5-b02a-c2bc2c0b3bd4
+    m_ActionName: Player/UseTurret[/XInputControllerWindows/leftTrigger,/Keyboard/t]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1291,7 +1329,7 @@ MonoBehaviour:
   alienMeat: 0
   cookedAlienMeat: 0
   hasReviveBadge: 0
---- !u!114 &4473422644530472061
+--- !u!114 &5992165877706448252
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1300,12 +1338,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 9218574915160184169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
+  m_Script: {fileID: 11500000, guid: a85b6f203468fee49b5a7dce2f5d5802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootObject: {fileID: 9218574915160184169}
   healthBarHandler: {fileID: 1481064406722431611}
+  itemDropPrefab: {fileID: 4836580809429015468, guid: f39236fffe98f4742b352f1e1ac28581, type: 3}
+  dropOffsetY: 1
   MaxHealth: 15
+    CurrentHealth: 15
+  isAlive: 1
   isEnemy: 0
   hit: {fileID: 8300000, guid: 052fb3581f4bd374593eea9794280424, type: 3}
 --- !u!114 &5138013647428038622
@@ -1339,7 +1380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 136192
   fireLayer:
     serializedVersion: 2
     m_Bits: 0
