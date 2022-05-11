@@ -26,10 +26,10 @@ public class PickingUp : MonoBehaviourPunCallbacks
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
         inventorySystem.LoadPrefabs();
-        Debug.Log("Available amount AlienMeat: " + inventorySystem.AvailableAmount<AlienMeat>());
-        Debug.Log("Available amount GreenGoo: " + inventorySystem.AvailableAmount<GreenGoo>());
-        Debug.Log("Available amount Metal: " + inventorySystem.AvailableAmount<Metal>());
-        Debug.Log("Available amount ReviveBadge: " + inventorySystem.AvailableAmount<ReviveBadge>());
+        Debug.Log("Available amount AlienMeat: " + inventorySystem.Amount<AlienMeat>());
+        Debug.Log("Available amount GreenGoo: " + inventorySystem.Amount<GreenGoo>());
+        Debug.Log("Available amount Metal: " + inventorySystem.Amount<Metal>());
+        Debug.Log("Available amount ReviveBadge: " + inventorySystem.Amount<ReviveBadge>());
     }
 
     private void Update()
