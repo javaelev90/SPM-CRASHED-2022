@@ -11,26 +11,52 @@ public class LabyrinthReader : MonoBehaviour
         //GenerateCubePosition2DArray();
     }
 
-    public float[,] GenerateCubePosition2DArray(int chunkSize)
+    public int[,] GenerateCubePosition2DArray(int chunkSize)
     {
         Transform[] cubePositions = GetComponentsInChildren<Transform>();
 
         Debug.Log(cubePositions.Length);
 
-        float[,] positions = new float[cubePositions.Length, 2];
+        int[,] positions;
 
-        for(int i = 0; i < cubePositions.Length; i++)
+        float maxX = float.MinValue;
+        float maxY = float.MinValue;
+        float minX = float.MaxValue;
+        float minY = float.MaxValue;
+        float scale = 3;
+        bool haveScale = false;
+
+        foreach(Transform cube in cubePositions)
         {
-            positions[i, 0] = cubePositions[i].position.x;
-            positions[i, 1] = cubePositions[i].position.z;
+            if (cube.position.x < minX)
+                minX = cube.position.x;
+            if (cube.position.x > maxX)
+                maxX = cube.position.x;
+            if (cube.position.z < minY)
+                minY = cube.position.z;
+            if (cube.position.z > maxY)
+                maxY = cube.position.z;
+            if (!haveScale)
+            {
+                haveScale = !haveScale;
+                //scale = cube.localScale.x;
+            }
         }
+        Debug.Log(scale);
+        int x = Mathf.FloorToInt((maxX - minX) / scale);
+        int y = Mathf.FloorToInt((maxY - minY) / scale);
+        x += chunkSize;
+        y += chunkSize;
 
-        for (int i = 0; i < positions.GetLength(0); i++)
+        positions = new int[x, y];
+
+        foreach (Transform cube in cubePositions) 
         {
-            Debug.Log(positions[i, 0] + ", " + positions[i, 1]);
+            //Debug.Log(positions.GetLength(0) + ", " + Mathf.FloorToInt((cube.position.x - minX) / scale) + ", " + positions.GetLength(1) + ", " + Mathf.FloorToInt((cube.position.z - minY) / scale));
+            positions[Mathf.FloorToInt((cube.position.x - minX) / scale), Mathf.FloorToInt((cube.position.z - minY) / scale)] = 1;
         }
-
-        Debug.Log(positions.GetLength(0));
+        //foreach (int i in positions)
+            //Debug.Log(i);
 
         return positions;
     }
