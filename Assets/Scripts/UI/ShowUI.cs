@@ -20,7 +20,7 @@ public class ShowUI : MonoBehaviour
         if (player.CompareTag("Player"))
         {
             bool isLocalPlayer = player.gameObject.GetComponent<PhotonView>().IsMine;
-            if (isLocalPlayer && (canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>()) || (canEngineerPickup && player.gameObject.GetComponent<Engineer>()))
+            if (isLocalPlayer && ((canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>()) || (canEngineerPickup && player.gameObject.GetComponent<Engineer>())))
             {
                 uiObject.SetActive(true);
             }
