@@ -22,10 +22,13 @@ public class Ship : MonoBehaviour
         public int metalCost;
         public int gooCost;
         public bool partAvalibul = false;
+        public GameObject partMissing;
+        public GameObject partAttached;
     }
 
     void Start()
     {
+        EventSystem.Instance.RegisterListener<AttachPartEvent>(newPartObtained);
         nextUpgrade = 0;
         StartCoroutine(Wait(5));
         //Wait(5);
@@ -61,13 +64,15 @@ public class Ship : MonoBehaviour
 
     }
 
-    public void newPartObtained()
+    public void newPartObtained(AttachPartEvent attachPartEvent)
     {
         foreach (ShipUpgradeCost shipUpgradeCost in shipUpgradeCost)
         {
             if (!shipUpgradeCost.partAvalibul)
             {
                 shipUpgradeCost.partAvalibul = true;
+                shipUpgradeCost.partMissing = attachPartEvent.MissingPart;
+                shipUpgradeCost.partAttached = attachPartEvent.AttachedPart;
                 break;
             }
         }
@@ -80,7 +85,9 @@ public class Ship : MonoBehaviour
     {
         if (shipUpgradeCost[nextUpgrade].partAvalibul)
         {
-            nextUpgrade++;
+            shipUpgradeCost[nextUpgrade].partMissing.SetActive(false);
+            shipUpgradeCost[nextUpgrade].partAttached.SetActive(true);
+            nextUpgrade++;           
             OpenUpgradePanel();
             allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
             return true;

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using EventCallbacksSystem;
 
 public class ShipHealth : HealthHandler
 {
@@ -20,5 +22,10 @@ public class ShipHealth : HealthHandler
                 RemoveHealth(amount);
             }
         }
+    }
+
+    public override void Die()
+    {
+        EventSystem.Instance.FireEvent(new GameOverEvent("Ship has been destroyed"));
     }
 }
