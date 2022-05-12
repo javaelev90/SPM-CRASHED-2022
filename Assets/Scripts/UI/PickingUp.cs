@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using EventCallbacksSystem;
 
 public class PickingUp : MonoBehaviourPunCallbacks
 {
@@ -21,6 +22,17 @@ public class PickingUp : MonoBehaviourPunCallbacks
     private Transform mainCamera;
     private GameObject otherPlayer;
     private RaycastHit pickup;
+    private Pickup_Typs.Pickup itemTypeToDrop;
+
+    private void OnEnable()
+    {
+        EventSystem.Instance.RegisterListener<TypeToInventoryEvent>(ItemTypeToDrop);
+    }
+
+    private void OnDisable()
+    {
+        EventSystem.Instance.UnregisterListener<TypeToInventoryEvent>(ItemTypeToDrop);
+    }
 
     void Start()
     {
@@ -30,10 +42,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
             GameObject.FindGameObjectWithTag("InventoryHandler").GetComponent<Handler>().inventory = inventory;
         }
         inventorySystem.LoadPrefabs();
-        Debug.Log("Available amount AlienMeat: " + inventorySystem.Amount<AlienMeat>());
-        Debug.Log("Available amount GreenGoo: " + inventorySystem.Amount<GreenGoo>());
-        Debug.Log("Available amount Metal: " + inventorySystem.Amount<Metal>());
-        Debug.Log("Available amount ReviveBadge: " + inventorySystem.Amount<ReviveBadge>());
+
     }
 
     private void Update()
@@ -49,9 +58,14 @@ public class PickingUp : MonoBehaviourPunCallbacks
         }
     }
 
+    public void ItemTypeToDrop(TypeToInventoryEvent e)
+    {
+        itemTypeToDrop = e.Type;
+    }
+
     public void PickUp()
     {
-        if (PickUpHitCheck(pickupLayer))
+        if (PickUpHitCheck(pickupLayer) && photonView.IsMine)
         {
             Pickup pickUpComponent = pickup.transform.gameObject.GetComponent<Pickup>();
             Pickup_Typs.Pickup typ = pickUpComponent.getTyp();
@@ -60,7 +74,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
             if (typ == Pickup_Typs.Pickup.Metal)
             {
                 inventory.addMetal(pickUpComponent.amount);
-
+                inventorySystem.Add<Metal>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
 
@@ -68,12 +82,14 @@ public class PickingUp : MonoBehaviourPunCallbacks
             else if (typ == Pickup_Typs.Pickup.GreenGoo)
             {
                 inventory.addGreenGoo(pickUpComponent.amount);
+                inventorySystem.Add<GreenGoo>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
             }
             else if (typ == Pickup_Typs.Pickup.AlienMeat)
             {
                 inventory.addAlienMeat(pickUpComponent.amount);
+                inventorySystem.Add<AlienMeat>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
             }
@@ -126,10 +142,31 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [PunRPC]
     private void DropItemRPC()
     {
+
         if (PhotonNetwork.IsMasterClient)
         {
-            GameObject go = inventorySystem.ItemPrefab<GreenGoo>();
-            PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
+
+            GameObject go;
+            switch (itemTypeToDrop)
+            {
+                case Pickup_Typs.Pickup.CookedAlienMeat:
+                    if (inventorySystem.Amount<CookedAlienMeat>() > 0)
+                    {
+                        go = inventorySystem.ItemPrefab<CookedAlienMeat>();
+                        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
+                        inventorySystem.Remove<AlienMeat>();
+                    }
+                    break;
+                case Pickup_Typs.Pickup.GreenGoo:
+                    if (inventorySystem.Amount<GreenGoo>() > 0)
+                    {
+                        go = inventorySystem.ItemPrefab<GreenGoo>();
+                        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
+                        inventorySystem.Remove<GreenGoo>();
+                    }
+                    break;
+            }
+
         }
     }
 

@@ -11,6 +11,7 @@ public class Pickup_Typs : MonoBehaviour
         AlienMeat,
         CookedAlienMeat,
         Revive,
-        Fire
+        Fire,
+        None
     } 
 }
