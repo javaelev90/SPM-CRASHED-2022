@@ -42,10 +42,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
             GameObject.FindGameObjectWithTag("InventoryHandler").GetComponent<Handler>().inventory = inventory;
         }
         inventorySystem.LoadPrefabs();
-        Debug.Log("Available amount AlienMeat: " + inventorySystem.Amount<AlienMeat>());
-        Debug.Log("Available amount GreenGoo: " + inventorySystem.Amount<GreenGoo>());
-        Debug.Log("Available amount Metal: " + inventorySystem.Amount<Metal>());
-        Debug.Log("Available amount ReviveBadge: " + inventorySystem.Amount<ReviveBadge>());
+
     }
 
     private void Update()
@@ -68,7 +65,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     public void PickUp()
     {
-        if (PickUpHitCheck(pickupLayer))
+        if (PickUpHitCheck(pickupLayer) && photonView.IsMine)
         {
             Pickup pickUpComponent = pickup.transform.gameObject.GetComponent<Pickup>();
             Pickup_Typs.Pickup typ = pickUpComponent.getTyp();
