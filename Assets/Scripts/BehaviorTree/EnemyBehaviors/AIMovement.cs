@@ -127,7 +127,7 @@ public class AIMovement : MonoBehaviour
     {
         if (visibleTargets.Count == 0 && wayPointSystem != null)
         {
-            directionToTarget = (wayPointSystem.RandomPosition.position - transform.position).normalized;
+            directionToTarget = (wayPointSystem.NextPosition - transform.position).normalized;
         }
 
         Quaternion rotateTo = Quaternion.LookRotation(directionToTarget, Vector3.up);

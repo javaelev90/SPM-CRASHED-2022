@@ -15,7 +15,7 @@ public class StoneEnemy : AIBaseLogic
     [SerializeField] private int stoneDamage;
     [SerializeField] private float timeToWayPoint;
     private float timeCounterWaypoint;
-    private Transform wayPoint;
+    private Vector3 wayPoint;
     private float timer;
     private GameObject fleePos;
 
@@ -32,9 +32,8 @@ public class StoneEnemy : AIBaseLogic
         deadZoneRange = viewRadius / 2.01f;
         fleePos = new GameObject();
         fleePos.name = "Fleeposition";
-        wayPoint = wayPointSystem.NewRandomPosition;
+        wayPoint = wayPointSystem.GetNewPosition;
         source = GetComponent<AudioSource>();
-
     }
 
     protected override void Update()
@@ -89,12 +88,12 @@ public class StoneEnemy : AIBaseLogic
             timeCounterWaypoint -= Time.deltaTime;
             if (timeCounterWaypoint <= 0f)
             {
-                wayPoint = wayPointSystem.NewRandomPosition;
+                wayPoint = wayPointSystem.GetNewPosition;
                 timeCounterWaypoint = timeToWayPoint;
             }
 
             if (agent.isOnNavMesh)
-                agent.destination = wayPoint.position;
+                agent.destination = wayPoint;
         }
     }
 

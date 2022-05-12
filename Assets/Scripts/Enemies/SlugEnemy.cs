@@ -13,7 +13,7 @@ public class SlugEnemy : AIBaseLogic
 
     private float timeCounterWaypoint;
     private float timeCounterExplosion;
-    private Transform wayPoint;
+    private Vector3 wayPoint;
 
     AudioSource source;
     public AudioClip walk;
@@ -25,7 +25,7 @@ public class SlugEnemy : AIBaseLogic
     {
         minBlowUpRadius = viewRadius / 4f;
         maxBlowUpRadius = viewRadius / 1.5f;
-        wayPoint = wayPointSystem.RandomPosition;
+        wayPoint = wayPointSystem.GetNewPosition;
         timeCounterExplosion = timeToExplosion;
         Debug.Log("root " + root.name);
         source = GetComponent<AudioSource>();
@@ -117,12 +117,12 @@ public class SlugEnemy : AIBaseLogic
             timeCounterWaypoint -= Time.deltaTime;
             if (timeCounterWaypoint <= 0f)
             {
-                wayPoint = wayPointSystem.NewRandomPosition;
+                wayPoint = wayPointSystem.GetNewPosition;
                 timeCounterWaypoint = timeToWayPoint;
             }
 
             if (agent.isOnNavMesh)
-                agent.destination = wayPoint.position;
+                agent.destination = wayPoint;
         }
     }
 

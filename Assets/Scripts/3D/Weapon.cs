@@ -17,6 +17,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] LayerMask layersThatShouldBeHit;
 
     private float shotCooldown = 0f;
+    public bool IsShooting { get; set; }
 
     [SerializeField] private AudioSource sourceOne;
     public AudioClip[] shot;
@@ -24,6 +25,7 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         Cooldown();
+        Shoot();
     }
 
     void Start()
@@ -47,7 +49,7 @@ public class Weapon : MonoBehaviour
 
     public void Shoot()
     {
-        if(OnCoolDown() == false)
+        if(OnCoolDown() == false && IsShooting == true)
         {
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,
                 out RaycastHit hitInfo, weaponRange, layersThatShouldBeHit))

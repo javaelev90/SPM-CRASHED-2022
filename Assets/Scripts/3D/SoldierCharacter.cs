@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Weapon))]
 public class SoldierCharacter : Controller3D
@@ -31,9 +32,17 @@ public class SoldierCharacter : Controller3D
         Cooldown();
     }
 
-    public void Shoot()
+    public void Shoot(InputAction.CallbackContext context)
     {
-        weapon.Shoot();
+        if (context.started)
+        {
+            weapon.IsShooting = true;
+        }
+        else if (context.canceled)
+        {
+            weapon.IsShooting = false;
+        }
+
     }
 
     private void Cooldown()

@@ -22,7 +22,7 @@ public class LightingManager : MonoBehaviour
     private float timeOfSunrise;
     private float totalTimeWholeCycle;
     private readonly float MAGICAL_SUNRISE_STARTER_NUMBER = 10;
-    private bool cycleOngoing;
+    private bool cycleOngoing = true;
 
     public bool IsNight { get; private set; }
 
@@ -40,7 +40,7 @@ public class LightingManager : MonoBehaviour
         IsNight = timeOfDay > dayLength;
         totalTimeWholeCycle = dayLength + nightLength;
         nightSpawnersHandler.SetupSpawners(nightLength - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER));
-        cycleOngoing = false;
+        cycleOngoing = true;
     }
 
     private void Update()

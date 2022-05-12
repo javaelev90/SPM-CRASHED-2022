@@ -16,7 +16,7 @@ public class GasEnemy : AIBaseLogic
     private float timeCounterWaypoint;
     private float timeCounterGas;
     private float timeCounterMelee;
-    private Transform wayPoint;
+    private Vector3 wayPoint;
 
     AudioSource source;
     public AudioClip walk;
@@ -31,7 +31,7 @@ public class GasEnemy : AIBaseLogic
         timeCounterGas = timeToGas;
         timeCounterMelee = timeToMelee;
         timeCounterWaypoint = timeToWayPoint;
-        wayPoint = wayPointSystem.RandomPosition;
+        wayPoint = wayPointSystem.GetNewPosition;
         source = GetComponent<AudioSource>();
 
     }
@@ -132,7 +132,7 @@ public class GasEnemy : AIBaseLogic
             }
 
             if (agent.isOnNavMesh)
-                agent.destination = wayPoint.position;
+                agent.destination = wayPoint;
         }
     }
 

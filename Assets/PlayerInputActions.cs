@@ -410,7 +410,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""a920ff03-b139-4601-8fbf-142d15dfee1c"",
                     ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""DropItem"",
@@ -674,6 +674,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""d3babd0a-5cae-48b1-906c-b0804f017fda"",
                     ""expectedControlType"": ""Quaternion"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num1"",
+                    ""type"": ""Button"",
+                    ""id"": ""07a6c378-410b-4abb-b71b-e864e344fbf1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num2"",
+                    ""type"": ""Button"",
+                    ""id"": ""f4e8b4b8-2d86-45cd-98bf-a8bfb5f02e22"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -954,6 +972,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dbb6d490-3120-4516-910d-deb716950e69"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Num1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e1c14718-7b2d-4076-a3b6-81f209b2f09b"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Num2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1017,6 +1057,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        m_UI_Num1 = m_UI.FindAction("Num1", throwIfNotFound: true);
+        m_UI_Num2 = m_UI.FindAction("Num2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1231,6 +1273,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
+    private readonly InputAction m_UI_Num1;
+    private readonly InputAction m_UI_Num2;
     public struct UIActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1245,6 +1289,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+        public InputAction @Num1 => m_Wrapper.m_UI_Num1;
+        public InputAction @Num2 => m_Wrapper.m_UI_Num2;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1284,6 +1330,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
+                @Num1.started -= m_Wrapper.m_UIActionsCallbackInterface.OnNum1;
+                @Num1.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnNum1;
+                @Num1.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnNum1;
+                @Num2.started -= m_Wrapper.m_UIActionsCallbackInterface.OnNum2;
+                @Num2.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnNum2;
+                @Num2.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnNum2;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -1318,6 +1370,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+                @Num1.started += instance.OnNum1;
+                @Num1.performed += instance.OnNum1;
+                @Num1.canceled += instance.OnNum1;
+                @Num2.started += instance.OnNum2;
+                @Num2.performed += instance.OnNum2;
+                @Num2.canceled += instance.OnNum2;
             }
         }
     }
@@ -1370,5 +1428,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        void OnNum1(InputAction.CallbackContext context);
+        void OnNum2(InputAction.CallbackContext context);
     }
 }

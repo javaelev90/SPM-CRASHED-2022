@@ -19,9 +19,13 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public PhotonObjectPool ObjectPool { get; set; }
     public Action CustomRecycleFunction { get; set; }
     public List<PooledObjectPhotonView> photonViewObjects;
+    public Action<object[]> CustomInitializeFunction;
     public int photonViewTargetId = -1;
 
-    
+    public void Initialize(object[] parameters)
+    {
+        CustomInitializeFunction?.Invoke(parameters);
+    }
 
     public void DeSpawn()
     {
