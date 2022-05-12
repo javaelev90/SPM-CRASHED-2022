@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
 namespace EventCallbacksSystem
 {
     public abstract class Event
@@ -68,6 +69,28 @@ namespace EventCallbacksSystem
 
     public class TurretDamageUpgradeEvent : Event { }
 
+    public class GameOverEvent : Event
+    {
+        public string Reason { get; set; }
+
+        public GameOverEvent(string reason)
+        {
+            Reason = reason;
+        }
+    }
+
+    public class AttachPartEvent : Event
+    {
+        public GameObject AttachedPart { get; set; }
+        public GameObject MissingPart { get; set; }
+
+        public AttachPartEvent(GameObject attachedPart, GameObject missingPart)
+        {
+            AttachedPart = attachedPart;
+            MissingPart = missingPart;
+        }
+    }
+
 
     public class TypeToInventoryEvent : Event
     {
@@ -94,4 +117,5 @@ namespace EventCallbacksSystem
 
         public UpdateUIAmountsEvent() { }
     }
+
 }
