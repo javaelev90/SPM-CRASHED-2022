@@ -45,6 +45,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
 
     private void OnEnable()
     {
+        root.CustomInitializeFunction = Initialize;
         findTargets = StartCoroutine("FindTargetsWithDelay", delayToNewTarget);
         agent = GetComponent<NavMeshAgent>();
         IsMasterClient = PhotonNetwork.IsMasterClient;
@@ -133,4 +134,22 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0f, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 
+    public void Initialize(object[] parameters)
+    {
+        if (parameters.Length > 0)
+        {
+            float spreadRadius = (float)parameters[0];
+            wayPointSystem.spreadRadius = spreadRadius;
+        }
+        if (parameters.Length > 1)
+        {
+            List<Vector3> wayPointPositions = new List<Vector3>();
+            object[] parameterList = (object[])parameters[1];
+            for (int index = 0; index < parameterList.Length; index++)
+            {
+                wayPointPositions.Add((Vector3)parameterList[index]);
+            }
+            wayPointSystem.AssignWayPoints(wayPointPositions);
+        }
+    }
 }
