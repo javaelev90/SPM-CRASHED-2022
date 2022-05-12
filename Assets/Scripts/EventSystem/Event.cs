@@ -1,5 +1,6 @@
 using UnityEngine;
-
+using System.Collections;
+using System.Collections.Generic;
 namespace EventCallbacksSystem
 {
     public abstract class Event
@@ -31,8 +32,8 @@ namespace EventCallbacksSystem
         {
             IsNameLongEnough = isNameLongEnough;
         }
-    }    
-    
+    }
+
     public class LeaveLobbyEvent : Event
     {
     }
@@ -67,4 +68,30 @@ namespace EventCallbacksSystem
 
     public class TurretDamageUpgradeEvent : Event { }
 
+
+    public class TypeToInventoryEvent : Event
+    {
+        private Pickup_Typs.Pickup type;
+        public Pickup_Typs.Pickup Type { get { return type; } }
+
+        public TypeToInventoryEvent(Pickup_Typs.Pickup type)
+        {
+            this.type = type;
+        }
+    }
+
+    public class UpdateUIAmountsEvent : Event
+    {
+        private Dictionary<System.Type, int> amounts;
+        private int amount;
+        private Pickup_Typs.Pickup type;
+        public Dictionary<System.Type, int> Amounts { get { return amounts; } set { amounts = value; } }
+
+        public UpdateUIAmountsEvent(Dictionary<System.Type, int> amounts)
+        {
+            this.amounts = amounts;
+        }
+
+        public UpdateUIAmountsEvent() { }
+    }
 }

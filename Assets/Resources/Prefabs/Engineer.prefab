@@ -479,8 +479,9 @@ MonoBehaviour:
     m_Bits: 256
   pickUpDistance: 3
   inventory: {fileID: 2433093780270635284}
-  inventorySystem: {fileID: 0}
+  inventorySystem: {fileID: 11400000, guid: 2c55d78c344521e41b5c4732242259f0, type: 2}
   dropTransform: {fileID: 0}
+  timeToDrop: 0.5
 --- !u!114 &2433093780270635284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -888,6 +889,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8154bfa0-629d-4eb5-b02a-c2bc2c0b3bd4
     m_ActionName: Player/UseTurret[/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b7a26e25-a584-4b61-9b9a-e09b6e526e70
+    m_ActionName: Player/Num1[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 52b60ef3-0c7c-4a42-acbf-d725d31dedd9
+    m_ActionName: Player/Num2[/Keyboard/2]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

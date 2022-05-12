@@ -15,9 +15,16 @@ public class Weapon : MonoBehaviour
     [Tooltip("If gun will shoot continuously when shoot button is pressed vs one shot per click.")]
     [SerializeField] public bool automaticWeapon = false;
     [SerializeField] LayerMask layersThatShouldBeHit;
+    [SerializeField] private int maxAmmo;
+    [SerializeField] private int currentAmmo;
 
     private float shotCooldown = 0f;
     public bool IsShooting { get; set; }
+
+    private void Start()
+    {
+        
+    }
 
     void Update()
     {
