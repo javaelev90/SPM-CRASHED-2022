@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlockDataManager : MonoBehaviour
 {
-    public static float textureOffset = 0.002f;
+    public static float textureOffset = 0.00f;
     public static float tileSizeX, tileSizeY;
     public static Dictionary<BlockType, TextureData> blockTextureDataDictionary = new Dictionary<BlockType, TextureData>();
     public BlockDataSO textureData;
