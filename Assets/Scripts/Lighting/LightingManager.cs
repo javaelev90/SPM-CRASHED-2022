@@ -22,7 +22,7 @@ public class LightingManager : MonoBehaviour
     private float timeOfSunrise;
     private float totalTimeWholeCycle;
     private readonly float MAGICAL_SUNRISE_STARTER_NUMBER = 10;
-    private bool cycleOngoing;
+    private bool cycleOngoing = true;
 
     public bool IsNight { get; private set; }
 
@@ -40,7 +40,7 @@ public class LightingManager : MonoBehaviour
         IsNight = timeOfDay > dayLength;
         totalTimeWholeCycle = dayLength + nightLength;
         nightSpawnersHandler.SetupSpawners(nightLength - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER));
-        cycleOngoing = false;
+        cycleOngoing = true;
     }
 
     private void Update()
@@ -97,9 +97,8 @@ public class LightingManager : MonoBehaviour
         {
             //DirectionalLight.color = Preset.DirectionalColor.Evaluate(timePercent);
             DirectionalLight.transform.localRotation = Quaternion.Euler(new Vector3((timePercent * 360f) - 90f, -170, 0));
-        }   
+        }
     }
-
 
     private void OnValidate()
     {
