@@ -23,6 +23,8 @@ public class PickingUp : MonoBehaviourPunCallbacks
     private GameObject otherPlayer;
     private RaycastHit pickup;
 
+    public DialoguePickups dialog;
+
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;

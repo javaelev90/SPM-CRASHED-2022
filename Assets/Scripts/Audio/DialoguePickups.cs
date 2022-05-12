@@ -11,22 +11,29 @@ public class DialoguePickups : MonoBehaviour
     public TextMeshProUGUI textComponent;
     public DialoguePickups players;
     public bool isFirst;
-    private bool isDone;
+    private bool isDone = false;
     private bool isTyping;
-    // Start is called before the first frame update
- 
-    private void OnTriggerEnter(Collider other) {
-        if (isFirst && other.CompareTag("Player"))
-        {
-            Debug.Log("hej");
+
+    private static bool doneType = false;
+  
+
+   /* private void OnTriggerEnter(Collider other) {
+        if (isFirst && other.CompareTag("Player") && doneType)
+        {   
+            doneType = true;
+            Debug.Log("avslut");
+            textComponent.text = string.Empty;
             beginDialogue();
+            
         }
-    }
+         Debug.Log("avslut");
+    }*/
    public void beginDialogue()
     {
+       
         index = 0;
-        textComponent.text = string.Empty;
         StartCoroutine(Type());
+        
     }
 
     IEnumerator Type()
@@ -64,6 +71,7 @@ public class DialoguePickups : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
+            textComponent.enabled = false;
         }
     }
 }

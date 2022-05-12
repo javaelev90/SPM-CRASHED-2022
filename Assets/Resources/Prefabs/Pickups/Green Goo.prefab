@@ -343,6 +343,7 @@ GameObject:
   - component: {fileID: 4212936442790702085}
   - component: {fileID: 6879163325106232804}
   - component: {fileID: 5473246519387904737}
+  - component: {fileID: 5035904410362736748}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -405,12 +406,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8abac46d3108df4fb19ed73f983c84e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiObject: {fileID: 451615595168668393}
   canSoldierPickup: 1
   canEngineerPickup: 1
   dialogs:
   - {fileID: 3841394467579001525}
   - {fileID: 1980443996925738998}
+--- !u!114 &5035904410362736748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4612918486299786566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae44c9e38f3768a4da25af8aa36506ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiObject: {fileID: 5761930508130197477}
+  canSoldierPickup: 0
+  canEngineerPickup: 0
 --- !u!1 &5563257113643808014
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,7 +900,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'hej svej '
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -6,34 +6,28 @@ using EventCallbacksSystem;
 
 public class ShowUI : MonoBehaviour
 {
-    public GameObject uiObject;
+  
     [SerializeField] private bool canSoldierPickup;
     [SerializeField] private bool canEngineerPickup;
 
     [SerializeField] DialoguePickups[] dialogs;
+
+     private static bool done = true;
     
 
     // Start is called before the first frame update
-    void Start()
-    {
-        uiObject.SetActive(false);
-    }
-
+ 
     void OnTriggerEnter(Collider player){
-        if((canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>()) || (canEngineerPickup && player.gameObject.GetComponent<Engineer>()))
-        {
-           uiObject.SetActive(true);
+        if(( done && canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>()) || (canEngineerPickup && player.gameObject.GetComponent<Engineer>()))
+        {  
+           
+            done = false; 
+            
            foreach(DialoguePickups dialogue in dialogs)
            {
                 dialogue.beginDialogue();
            }
         }
-    }
 
-    private void OnTriggerExit(Collider player) {
-        if(uiObject.activeSelf)
-        {
-           uiObject.SetActive(false);
-        }
     }
 }

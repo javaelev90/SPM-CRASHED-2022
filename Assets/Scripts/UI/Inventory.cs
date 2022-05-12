@@ -14,6 +14,8 @@ public class Inventory : MonoBehaviour
     public int GreenGoo => greenGoo;
     public int AlienMeat => alienMeat;
     public int CookedAlienMeat => cookedAlienMeat;
+
+
     public bool HasReviveBadge
     {
         get { return hasReviveBadge; }
