@@ -16,9 +16,14 @@ public class ChunkRenderer : MonoBehaviour
 
     public ChunkData ChunkData { get; private set; }
 
- 
 
+    [ContextMenu("Generate New World")]
     private void Awake()
+    {
+        AssignComponents();
+    }
+
+    public void AssignComponents()
     {
         meshFilter = GetComponent<MeshFilter>();
         meshCollider = GetComponent<MeshCollider>();

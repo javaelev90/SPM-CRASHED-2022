@@ -13,16 +13,16 @@ public class SlugEnemy : AIBaseLogic
 
     private float timeCounterWaypoint;
     private float timeCounterExplosion;
-    private Transform wayPoint;
+    private Vector3 wayPoint;
 
     // Start is called before the first frame update
     void Start()
     {
         minBlowUpRadius = viewRadius / 4f;
         maxBlowUpRadius = viewRadius / 1.5f;
-        wayPoint = wayPointSystem.RandomPosition;
+        wayPoint = wayPointSystem.GetNewPosition;
         timeCounterExplosion = timeToExplosion;
-        Debug.Log("root " + root.name);
+        //Debug.Log("root " + root.name);
     }
 
     // Update is called once per frame
@@ -109,12 +109,12 @@ public class SlugEnemy : AIBaseLogic
             timeCounterWaypoint -= Time.deltaTime;
             if (timeCounterWaypoint <= 0f)
             {
-                wayPoint = wayPointSystem.NewRandomPosition;
+                wayPoint = wayPointSystem.GetNewPosition;
                 timeCounterWaypoint = timeToWayPoint;
             }
 
             if (agent.isOnNavMesh)
-                agent.destination = wayPoint.position;
+                agent.destination = wayPoint;
         }
     }
 

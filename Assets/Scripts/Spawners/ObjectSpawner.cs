@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class ObjectSpawner : MonoBehaviour
 {
@@ -18,10 +19,14 @@ public class ObjectSpawner : MonoBehaviour
     [Header("Initial Target")]
     [SerializeField] PhotonView initialTarget;
 
+    [Header("Custom waypoint settings")]
+    [SerializeField] List<Transform> wayPoints;
+    [SerializeField] float wayPointSpawnRadius = 4f;
+
     private float cooldownCounter = 0f;
     [SerializeField] private float yOffset = 1f;
     private int spawnedObjects = 0;
-    private bool spawnerIsTriggered = true;
+    public bool spawnerIsTriggered = true;
     private int photonViewTargetId = -1;
 
     public float TotalSpawnDuration { set { delayBetweenSpawns = value / numberToSpawn; } }
@@ -96,7 +101,16 @@ public class ObjectSpawner : MonoBehaviour
         Vector3 xzPosition = Random.insideUnitCircle * spawnRadius;
         float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x + xzPosition.x, 0f, transform.position.z + xzPosition.z));
         Vector3 spawnPosition = new Vector3(transform.position.x + xzPosition.x, y + yOffset, transform.position.z + xzPosition.z);
-        objectPool.Spawn(spawnPosition, photonViewTargetId);
+
+        if (wayPoints.Count > 0)
+        {
+            objectPool.SpawnWithParameters(spawnPosition, transform.rotation, photonViewTargetId, new object[] { wayPointSpawnRadius, GetWayPointPositions().ToArray() });
+
+        }
+        else
+        {
+            objectPool.Spawn(spawnPosition, transform.rotation, photonViewTargetId);
+        }
     }
 
     private void SpawnObjectsOnPosition()
@@ -105,7 +119,26 @@ public class ObjectSpawner : MonoBehaviour
 
         float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x, 0f, transform.position.z));
         Vector3 spawnPosition = new Vector3(transform.position.x, y + yOffset, transform.position.z);
-        objectPool.Spawn(spawnPosition, photonViewTargetId);
+
+        if(wayPoints.Count > 0)
+        {
+            objectPool.SpawnWithParameters(spawnPosition, transform.rotation, photonViewTargetId, new object[] { wayPointSpawnRadius, GetWayPointPositions().ToArray() });
+
+        }
+        else
+        {
+            objectPool.Spawn(spawnPosition, transform.rotation, photonViewTargetId);
+        }
+    }
+
+    private List<object> GetWayPointPositions()
+    {
+        List<object> wayPointPositions = new List<object>();
+        foreach (Transform wayPoint in wayPoints)
+        {
+            wayPointPositions.Add(wayPoint.position);
+        }
+        return wayPointPositions;
     }
 
     private void OnDrawGizmos()

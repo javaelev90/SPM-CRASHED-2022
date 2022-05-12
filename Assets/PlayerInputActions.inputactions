@@ -130,6 +130,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UseTurret",
+                    "type": "Button",
+                    "id": "8154bfa0-629d-4eb5-b02a-c2bc2c0b3bd4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -379,7 +388,7 @@
                     "name": "",
                     "id": "a920ff03-b139-4601-8fbf-142d15dfee1c",
                     "path": "<Keyboard>/q",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "DropItem",
@@ -528,6 +537,28 @@
                     "action": "Punch",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a8b4bb53-0364-4913-a425-5ad50020c792",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "UseTurret",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f628ae5-7ee0-440c-afc5-976604e4eb35",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "UseTurret",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -621,6 +652,24 @@
                     "type": "PassThrough",
                     "id": "d3babd0a-5cae-48b1-906c-b0804f017fda",
                     "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Num1",
+                    "type": "Button",
+                    "id": "07a6c378-410b-4abb-b71b-e864e344fbf1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Num2",
+                    "type": "Button",
+                    "id": "f4e8b4b8-2d86-45cd-98bf-a8bfb5f02e22",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -899,6 +948,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dbb6d490-3120-4516-910d-deb716950e69",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Num1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1c14718-7b2d-4076-a3b6-81f209b2f09b",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Num2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

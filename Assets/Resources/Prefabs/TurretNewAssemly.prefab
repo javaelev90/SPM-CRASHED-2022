@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 872368567276280232}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: MuzzlePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 872368569187660501}
-  m_Layer: 0
+  - component: {fileID: 6238680748340963004}
+  - component: {fileID: 6202572651884709573}
+  m_Layer: 15
   m_Name: TurretBodyRotationPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,6 +63,62 @@ Transform:
   m_Father: {fileID: 2675339614533622037}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6238680748340963004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872368569187660500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 0
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
+--- !u!114 &6202572651884709573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872368569187660500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 6238680748340963004}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1832258550128154399
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +130,7 @@ GameObject:
   - component: {fileID: 2675339614533622037}
   - component: {fileID: 4022047558052849477}
   - component: {fileID: 2046740025564796025}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TurretNeck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +212,7 @@ GameObject:
   - component: {fileID: 5906233175066621719}
   - component: {fileID: 2570107531318568171}
   - component: {fileID: 7813961259730346700}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TurretBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,10 +294,10 @@ GameObject:
   - component: {fileID: 3067970174018886807}
   - component: {fileID: 2438785178254165550}
   - component: {fileID: 9028936836757210880}
-  - component: {fileID: -8823363271404080214}
-  m_Layer: 0
+  - component: {fileID: 8370338043502138675}
+  m_Layer: 15
   m_Name: TurretNewAssemly
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -252,11 +310,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2438785178254165549}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 320.8243, y: 28.410023, z: 306.86853}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5016081356813758149}
   - {fileID: 2291911088631269549}
+  - {fileID: 4438309778369196255}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -272,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2c0167fa75964c449d63e71de138973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzlePoint: {fileID: 872368567276279895}
+  turretMuzzlePoint: {fileID: 872368567276279895}
   turretBody: {fileID: 872368569187660500}
   currentTarget: {fileID: 0}
   newTarget: {fileID: 0}
@@ -285,7 +344,7 @@ MonoBehaviour:
   bullet: {fileID: 668565094928829969, guid: 857bb64d64c9b32479e40ac65bca18f3, type: 3}
   fireTimer: 1
   turretDamage: 3
-  pivot: {fileID: 0}
+  useTurretPosition: {fileID: 4438309778369196255}
 --- !u!114 &9028936836757210880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,44 +363,53 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: -8823363271404080214}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-8823363271404080214
-MonoBehaviour:
+--- !u!65 &8370338043502138675
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2438785178254165549}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 1
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.3673344, z: 1.1676025}
+  m_Center: {x: 0, y: 0.67846584, z: 0.052520752}
+--- !u!1 &6083227631821183784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4438309778369196255}
+  m_Layer: 15
+  m_Name: UsePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4438309778369196255
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6083227631821183784}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.91, z: -1.42}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3067970174018886807}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6192109498249480244
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +421,7 @@ GameObject:
   - component: {fileID: 5016081356813758149}
   - component: {fileID: 2979377757985212944}
   - component: {fileID: 4105159955271539590}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: TurretBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2291911088631269549}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -31,15 +31,15 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
                     pooledObjectPrefab.transform.position,
                     Quaternion.identity
                 );
-            pooledObject.ObjectPool = this;
-            pooledObject.UpdateActiveState(false);
+            //pooledObject.ObjectPool = this;
+            //pooledObject.UpdateActiveState(false);
             pooledObjects.Enqueue(pooledObject);
         }
     }
 
     private PooledObject Instantiate(Vector3 position, Quaternion rotation)
     {
-        return PhotonNetwork.Instantiate("Prefabs/Enemies/"+pooledObjectPrefab.name, position, rotation).GetComponent<PooledObject>();
+        return PhotonNetwork.Instantiate("Prefabs/Enemies/"+pooledObjectPrefab.name, position, rotation, 0, new object[] { photonView.ViewID }).GetComponent<PooledObject>();
     }
 
     public void DeSpawnPool()
@@ -50,11 +50,19 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         }
     }
 
-    public void Spawn(Vector3 position, int photonViewTargetId)
+    public void Spawn(Vector3 position, Quaternion rotation, int photonViewTargetId)
     {
         if(pooledObjects.Count > 0)
         {
-            photonView.RPC(nameof(MasterSpawn), RpcTarget.MasterClient, position, photonViewTargetId);
+            photonView.RPC(nameof(MasterSpawn), RpcTarget.MasterClient, position, rotation, photonViewTargetId);
+        }
+    }
+
+    public void SpawnWithParameters(Vector3 position, Quaternion rotation, int photonViewTargetId, object[] parameters)
+    {
+        if (pooledObjects.Count > 0)
+        {
+            photonView.RPC(nameof(MasterSpawnWithParameters), RpcTarget.MasterClient, position, rotation, photonViewTargetId, parameters);
         }
     }
 
@@ -64,7 +72,7 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void MasterSpawn(Vector3 position, int photonViewTargetId)
+    private void MasterSpawn(Vector3 position, Quaternion rotation, int photonViewTargetId)
     {
         if (PhotonNetwork.IsMasterClient == false)
         {
@@ -72,9 +80,27 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
             return;
         }
         PooledObject pooledObject = pooledObjects.Dequeue();
-        pooledObject.transform.position = position;
+        pooledObject.transform.SetPositionAndRotation(position, rotation);
         pooledObject.transform.SetParent(transform);
         pooledObject.ObjectPool = this;
+        pooledObject.photonViewTargetId = photonViewTargetId;
+        activeObjects.Add(pooledObject.photonView.ViewID, pooledObject);
+        pooledObject.UpdateActiveState(true);
+    }
+
+    [PunRPC]
+    private void MasterSpawnWithParameters(Vector3 position, Quaternion rotation, int photonViewTargetId, object[] parameters)
+    {
+        if (PhotonNetwork.IsMasterClient == false)
+        {
+            Debug.LogError($"[PhotonObjectPool::MasterSpawn] Only the master is allowed to spawn objects.");
+            return;
+        }
+        PooledObject pooledObject = pooledObjects.Dequeue();
+        pooledObject.transform.SetPositionAndRotation(position, rotation);
+        pooledObject.transform.SetParent(transform);
+        pooledObject.ObjectPool = this;
+        pooledObject.Initialize(parameters);
         pooledObject.photonViewTargetId = photonViewTargetId;
         activeObjects.Add(pooledObject.photonView.ViewID, pooledObject);
         pooledObject.UpdateActiveState(true);
