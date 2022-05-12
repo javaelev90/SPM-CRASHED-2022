@@ -13,6 +13,12 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     [SerializeField] private float pickUpDistance = 3;
     [SerializeField] private Inventory inventory;
+    [SerializeField] public AudioSource source;
+    [SerializeField] public AudioClip Goo;
+    [SerializeField] public AudioClip Metal;
+    [SerializeField] public AudioClip Meat;
+
+
     [SerializeField] private InventorySystem inventorySystem;
     [SerializeField] private Transform dropTransform;
     [SerializeField] private float timeToDrop = 0.5f;
@@ -34,9 +40,12 @@ public class PickingUp : MonoBehaviourPunCallbacks
         EventSystem.Instance.UnregisterListener<TypeToInventoryEvent>(ItemTypeToDrop);
     }
 
+    public DialoguePickups dialog;
+
     void Start()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        source = GetComponent<AudioSource>();
         if (photonView.IsMine)
         {
             GameObject.FindGameObjectWithTag("InventoryHandler").GetComponent<Handler>().inventory = inventory;
@@ -77,7 +86,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 inventorySystem.Add<Metal>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
-
+                source.PlayOneShot(Metal);
             }
             else if (typ == Pickup_Typs.Pickup.GreenGoo)
             {
@@ -85,6 +94,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 inventorySystem.Add<GreenGoo>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+                source.PlayOneShot(Goo);
             }
             else if (typ == Pickup_Typs.Pickup.AlienMeat)
             {
@@ -92,6 +102,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 inventorySystem.Add<AlienMeat>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+                 source.PlayOneShot(Meat);
             }
             else if (typ == Pickup_Typs.Pickup.Revive)
             {

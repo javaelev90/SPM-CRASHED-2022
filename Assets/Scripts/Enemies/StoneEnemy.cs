@@ -20,6 +20,11 @@ public class StoneEnemy : AIBaseLogic
     private GameObject fleePos;
 
     private bool isFleeing;
+
+    AudioSource source;
+    public AudioClip walk;
+    public AudioClip angry;
+    public AudioClip attack;
     private void Start()
     {
         minThrowRange = viewRadius / 2f;
@@ -28,6 +33,7 @@ public class StoneEnemy : AIBaseLogic
         fleePos = new GameObject();
         fleePos.name = "Fleeposition";
         wayPoint = wayPointSystem.GetNewPosition;
+        source = GetComponent<AudioSource>();
     }
 
     protected override void Update()
@@ -170,6 +176,7 @@ public class StoneEnemy : AIBaseLogic
             proj.DamageDealer = stoneDamage;
             proj.Velocity += directionToTarget * 10f;
             proj.IsShot = true;
+            source.PlayOneShot(attack);
         }
     }
 
@@ -189,6 +196,7 @@ public class StoneEnemy : AIBaseLogic
         else
         {
             agent.isStopped = false;
+            source.Play();
         }
 
         if (agent.isOnNavMesh && target != null)

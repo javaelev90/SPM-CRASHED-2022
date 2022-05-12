@@ -67,6 +67,9 @@ public class Controller3D : MonoBehaviourPunCallbacks
     private string currentControlScheme; // The controlls we are currently using (Keyboard&Mouse or Gamepad)
     Vector2 cameraLooking; // The input from mouse/gamepad that is used to move camera
 
+    AudioSource source;
+    public AudioClip clip;
+
 
     protected virtual void Awake()
     {
@@ -85,6 +88,9 @@ public class Controller3D : MonoBehaviourPunCallbacks
         isMine = photonView.IsMine;
         Cursor.lockState = CursorLockMode.Locked;
         healthHandler = GetComponent<HealthHandler>();
+        source = GetComponent<AudioSource>();
+
+
     }
 
     private void OnEnable()
@@ -138,8 +144,10 @@ public class Controller3D : MonoBehaviourPunCallbacks
         if (playerActions.Player.Jump.IsPressed() && Body.Grounded)
         {
             Vector3 jumpMovement = Vector3.up * jumpForce;
-
+            source.PlayOneShot(clip);
             Body.Velocity += jumpMovement;
+
+
         }
     }
 
@@ -153,6 +161,8 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
             input = mainCam.transform.rotation * input;
             input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
+            
+     
 
             //Body.Velocity += input;
 
@@ -341,4 +351,5 @@ public class Controller3D : MonoBehaviourPunCallbacks
         if (mainCam)
             Gizmos.DrawWireSphere(mainCam.transform.position, radius);
     }
+
 }

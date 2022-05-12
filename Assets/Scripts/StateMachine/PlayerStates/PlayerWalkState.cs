@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(menuName = ("PlayerWalkState"))]
 public class PlayerWalkState : State
@@ -9,10 +10,13 @@ public class PlayerWalkState : State
     private Vector3 input;
 
 
+
     public override void Enter()
     {
         base.Enter();
+   
         player.animator.SetBool("isRunning", true);
+      
     }
 
     public override void UpdateState()
@@ -23,10 +27,12 @@ public class PlayerWalkState : State
         if (input.magnitude > float.Epsilon)
         {
             player.Body.Accelerate(input, maxSpeed);
+            
         }
         else
         {
             player.Body.Decelerate();
+        
         }
 
         //if (player.Body.Grounded && Input.GetKeyDown(KeyCode.Space))
@@ -39,6 +45,8 @@ public class PlayerWalkState : State
             stateMachine.ChangeState<PlayerIdleState>();
         }
     }
+
+  
 
     public override void Exit()
     {

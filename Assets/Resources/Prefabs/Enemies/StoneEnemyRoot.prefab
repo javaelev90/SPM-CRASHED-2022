@@ -867,10 +867,10 @@ GameObject:
   - component: {fileID: 5495731618562740638}
   - component: {fileID: 5495731618562740634}
   - component: {fileID: 5495731618562740635}
-  - component: {fileID: 5495731618562740636}
   - component: {fileID: 5495731618562740615}
   - component: {fileID: 6410203659263109712}
-  - component: {fileID: 7523679755571015134}
+  - component: {fileID: 5805036622619029246}
+  - component: {fileID: 3832143261542263938}
   m_Layer: 9
   m_Name: StoneEnemyPrefab
   m_TagString: Untagged
@@ -1012,24 +1012,9 @@ MonoBehaviour:
   timeToThrow: 2
   stoneDamage: 3
   timeToWayPoint: 4
---- !u!114 &5495731618562740636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5495731618562740639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a71bbf32508ae4c942b675d89fd132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBarHandler: {fileID: 4946720192807495970}
-  itemDropPrefab: {fileID: 0}
-  dropOffsetY: 1
-  MaxHealth: 15
-  CurrentHealth: 15
-  isAlive: 1
+  walk: {fileID: 8300000, guid: cfbe109ff897e8845b183d89a6bf9c5a, type: 3}
+  angry: {fileID: 0}
+  attack: {fileID: 8300000, guid: b604b4d8329994741b72d1701a18a8ce, type: 3}
 --- !u!195 &5495731618562740615
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1085,7 +1070,103 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
---- !u!114 &7523679755571015134
+--- !u!82 &5805036622619029246
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5495731618562740639}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -3502601922304438056, guid: 8082db654c41ecd4d87706bd7ecc5950, type: 2}
+  m_audioClip: {fileID: 8300000, guid: cfbe109ff897e8845b183d89a6bf9c5a, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 15
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &3832143261542263938
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1098,6 +1179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarHandler: {fileID: 4946720192807495970}
+  hit: {fileID: 0}
   itemDropPrefab: {fileID: 0}
   dropOffsetY: 1
   MaxHealth: 15

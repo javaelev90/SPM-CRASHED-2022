@@ -21,15 +21,19 @@ public class Weapon : MonoBehaviour
     private float shotCooldown = 0f;
     public bool IsShooting { get; set; }
 
-    private void Start()
-    {
-        
-    }
+    [SerializeField] private AudioSource sourceOne;
+    public AudioClip[] shot;
 
     void Update()
     {
         Cooldown();
         Shoot();
+    }
+
+    void Start()
+    {
+        sourceOne = GetComponent<AudioSource>();
+     
     }
 
     private void Cooldown()
@@ -57,6 +61,8 @@ public class Weapon : MonoBehaviour
                 if (healthHandler)
                 {
                     Debug.Log("Hit the enemy.");
+                    AudioClip clip = GetAudioClip();
+                    sourceOne.PlayOneShot(clip);
                     healthHandler.TakeDamage(weaponDamage);
                 }
 
@@ -70,5 +76,11 @@ public class Weapon : MonoBehaviour
             // Add cooldown time
             shotCooldown = delayBetweenShots;
         }
+    }
+
+    private AudioClip GetAudioClip()
+    {
+        int index = Random.Range(0, shot.Length - 1);
+        return shot[index];
     }
 }
