@@ -29,7 +29,7 @@ public class World : MonoBehaviour
     Dictionary<Vector3Int, ChunkData> chunkDataDictionary = new Dictionary<Vector3Int, ChunkData>();
     Dictionary<Vector3Int, ChunkRenderer> chunkDictionary = new Dictionary<Vector3Int, ChunkRenderer>();
 
-    private void Start()
+    private void Awake()
     {
         /*labyrinthReader = labyrinthDesign.GetComponent<LabyrinthReader>();
         map = labyrinthReader.GenerateCubePosition2DArray(chunkSize);
