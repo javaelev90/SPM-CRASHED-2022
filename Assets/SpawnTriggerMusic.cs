@@ -10,12 +10,6 @@ public class SpawnTriggerMusic : MonoBehaviour
     public AudioMixerSnapshot combat;
     private bool flipState = false; 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player")){
             combat.TransitionTo(0.5f);
