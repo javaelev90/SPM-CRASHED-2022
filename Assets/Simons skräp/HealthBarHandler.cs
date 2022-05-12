@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class HealthBarHandler : MonoBehaviour
 {
     private Image healthBarImage;

@@ -161,6 +161,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num1"",
+                    ""type"": ""Button"",
+                    ""id"": ""b7a26e25-a584-4b61-9b9a-e09b6e526e70"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num2"",
+                    ""type"": ""Button"",
+                    ""id"": ""52b60ef3-0c7c-4a42-acbf-d725d31dedd9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -581,6 +599,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""UseTurret"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2beb8f4f-de4f-4f2c-af06-f2cb6b362532"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b3bf921-aa77-4e0e-99f4-928a8cfa12ff"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -674,24 +714,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""d3babd0a-5cae-48b1-906c-b0804f017fda"",
                     ""expectedControlType"": ""Quaternion"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Num1"",
-                    ""type"": ""Button"",
-                    ""id"": ""07a6c378-410b-4abb-b71b-e864e344fbf1"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Num2"",
-                    ""type"": ""Button"",
-                    ""id"": ""f4e8b4b8-2d86-45cd-98bf-a8bfb5f02e22"",
-                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -972,28 +994,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""dbb6d490-3120-4516-910d-deb716950e69"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""Num1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e1c14718-7b2d-4076-a3b6-81f209b2f09b"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardMouse"",
-                    ""action"": ""Num2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1045,6 +1045,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_ShipPickUp = m_Player.FindAction("ShipPickUp", throwIfNotFound: true);
         m_Player_DeleteTurret = m_Player.FindAction("DeleteTurret", throwIfNotFound: true);
         m_Player_UseTurret = m_Player.FindAction("UseTurret", throwIfNotFound: true);
+        m_Player_Num1 = m_Player.FindAction("Num1", throwIfNotFound: true);
+        m_Player_Num2 = m_Player.FindAction("Num2", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1057,8 +1059,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
-        m_UI_Num1 = m_UI.FindAction("Num1", throwIfNotFound: true);
-        m_UI_Num2 = m_UI.FindAction("Num2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1133,6 +1133,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ShipPickUp;
     private readonly InputAction m_Player_DeleteTurret;
     private readonly InputAction m_Player_UseTurret;
+    private readonly InputAction m_Player_Num1;
+    private readonly InputAction m_Player_Num2;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1152,6 +1154,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @ShipPickUp => m_Wrapper.m_Player_ShipPickUp;
         public InputAction @DeleteTurret => m_Wrapper.m_Player_DeleteTurret;
         public InputAction @UseTurret => m_Wrapper.m_Player_UseTurret;
+        public InputAction @Num1 => m_Wrapper.m_Player_Num1;
+        public InputAction @Num2 => m_Wrapper.m_Player_Num2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1206,6 +1210,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @UseTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
                 @UseTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
                 @UseTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
+                @Num1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum1;
+                @Num1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum1;
+                @Num1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum1;
+                @Num2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
+                @Num2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
+                @Num2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1255,6 +1265,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @UseTurret.started += instance.OnUseTurret;
                 @UseTurret.performed += instance.OnUseTurret;
                 @UseTurret.canceled += instance.OnUseTurret;
+                @Num1.started += instance.OnNum1;
+                @Num1.performed += instance.OnNum1;
+                @Num1.canceled += instance.OnNum1;
+                @Num2.started += instance.OnNum2;
+                @Num2.performed += instance.OnNum2;
+                @Num2.canceled += instance.OnNum2;
             }
         }
     }
@@ -1273,8 +1289,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
-    private readonly InputAction m_UI_Num1;
-    private readonly InputAction m_UI_Num2;
     public struct UIActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1289,8 +1303,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
-        public InputAction @Num1 => m_Wrapper.m_UI_Num1;
-        public InputAction @Num2 => m_Wrapper.m_UI_Num2;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1330,12 +1342,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
-                @Num1.started -= m_Wrapper.m_UIActionsCallbackInterface.OnNum1;
-                @Num1.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnNum1;
-                @Num1.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnNum1;
-                @Num2.started -= m_Wrapper.m_UIActionsCallbackInterface.OnNum2;
-                @Num2.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnNum2;
-                @Num2.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnNum2;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -1370,12 +1376,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
-                @Num1.started += instance.OnNum1;
-                @Num1.performed += instance.OnNum1;
-                @Num1.canceled += instance.OnNum1;
-                @Num2.started += instance.OnNum2;
-                @Num2.performed += instance.OnNum2;
-                @Num2.canceled += instance.OnNum2;
             }
         }
     }
@@ -1415,6 +1415,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnShipPickUp(InputAction.CallbackContext context);
         void OnDeleteTurret(InputAction.CallbackContext context);
         void OnUseTurret(InputAction.CallbackContext context);
+        void OnNum1(InputAction.CallbackContext context);
+        void OnNum2(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -1428,7 +1430,5 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
-        void OnNum1(InputAction.CallbackContext context);
-        void OnNum2(InputAction.CallbackContext context);
     }
 }
