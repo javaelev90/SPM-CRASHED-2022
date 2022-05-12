@@ -53,7 +53,7 @@ public class EventStarter : MonoBehaviour
         //light.SetCycleOngoing(true);
         //light.SetMinTimeUntilDawn(minTimeLeftAfter);
         EventSystem.Instance.FireEvent(new EventEvent(false));
-        EventSystem.Instance.FireEvent(new AttachPartEvent());
+        EventSystem.Instance.FireEvent(new AttachPartEvent(attachedPart, missingPart));
         teleportToShip.TP();
         Destroy(gameObject);
     }
