@@ -12,7 +12,7 @@ public class WalkNode : Node
     private float timeCounter;
     private bool isWaiting;
     private float distanceDiff = 2f;
-    private Transform newTarget;
+    private Vector3 newTarget;
 
     public WalkNode(AIBaseLogic ai, NavMeshAgent agent, WayPointSystem wayPointSystem)
     {
@@ -20,7 +20,7 @@ public class WalkNode : Node
         this.agent = agent;
         this.wayPointSystem = wayPointSystem;
         timeCounter = timer;
-        newTarget = wayPointSystem.NewRandomPosition;
+        newTarget = wayPointSystem.GetNewPosition;
         agent.speed = movementSpeed;
     }
 
@@ -28,16 +28,16 @@ public class WalkNode : Node
     {
         if (!isWaiting)
         {
-            if (Vector3.Distance(agent.transform.position, newTarget.position) < distanceDiff)
+            if (Vector3.Distance(agent.transform.position, newTarget) < distanceDiff)
             {
                 isWaiting = true;
                 timeCounter = timer;
-                newTarget = wayPointSystem.NewRandomPosition;
+                newTarget = wayPointSystem.GetNewPosition;
                 agent.isStopped = false;
             }
             else
             {
-                agent.SetDestination(newTarget.position);
+                agent.SetDestination(newTarget);
             }
         }
         else

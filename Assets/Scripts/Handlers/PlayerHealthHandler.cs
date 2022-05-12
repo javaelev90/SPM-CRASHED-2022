@@ -29,7 +29,7 @@ public class PlayerHealthHandler : HealthHandler
             DropItem();
         }
         CurrentHealth = 0;
-        transform.root.gameObject.SetActive(false);
+        UpdateActiveState(false);
     }
 
     public override void DropItem()
@@ -56,4 +56,14 @@ public class PlayerHealthHandler : HealthHandler
         transform.position = revivePosition;
     }
 
+    private void UpdateActiveState(bool active)
+    {
+        photonView.RPC(nameof(UpdateActiveStateRPC), RpcTarget.All, active);
+    }
+
+    [PunRPC]
+    private void UpdateActiveStateRPC(bool active)
+    {
+        transform.root.gameObject.SetActive(active);
+    }
 }

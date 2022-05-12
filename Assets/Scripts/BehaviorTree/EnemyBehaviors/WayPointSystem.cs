@@ -1,18 +1,74 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WayPointSystem : MonoBehaviour
 {
     [SerializeField] private int numberOfPoints;
-    [SerializeField] private float spreadRadius;
+    [SerializeField] public float spreadRadius;
     [SerializeField] private float delay;
-
+    [SerializeField] private bool manuallyPlacedPoints;
+    
     private float timeCounter;
     private Vector3 position = Vector3.zero;
-    private Transform randomPosition;
-    public Transform RandomPosition
-    { get { return randomPosition; } }
+    private Vector3 nextPosition;
+    public Vector3 NextPosition
+    { get { return nextPosition; } }
+    private int nextIndexPosition = 0;
+    List<Vector3> wayPoints = new List<Vector3>();
 
     private void Awake()
+    {
+        if (manuallyPlacedPoints == false)
+        {
+            CreateRandomWayPoints();
+        }
+    }
+
+    public Vector3 GetNewPosition
+    {
+        get
+        {
+            if (manuallyPlacedPoints == false)
+            {
+                return NewRandomPosition;
+            }
+            else
+            {
+                return NextPositionWayPoint;
+            }
+        }
+    }
+
+    public Vector3 NewRandomPosition
+    {
+        get
+        {
+            int random = Random.Range(0, transform.childCount);
+            nextPosition = transform.GetChild(random).position;
+            return nextPosition;
+        }
+    }
+
+    public Vector3 NextPositionWayPoint
+    {
+        get
+        {   
+            if(wayPoints.Count > 0)
+            {
+                nextPosition = wayPoints[nextIndexPosition];
+                nextIndexPosition++;
+                if (nextIndexPosition >= wayPoints.Count) nextIndexPosition = 0;
+            }
+            else
+            {
+                nextPosition = transform.position;
+            }
+            return nextPosition;
+        }
+    }
+
+    public void CreateRandomWayPoints()
     {
         for (int i = 0; i < numberOfPoints; i++)
         {
@@ -29,16 +85,11 @@ public class WayPointSystem : MonoBehaviour
             t.position = position;
         }
 
-        randomPosition = transform.GetChild(0);
+        nextPosition = transform.GetChild(0).position;
     }
 
-    public Transform NewRandomPosition
+    public void AssignWayPoints(List<Vector3> wayPoints)
     {
-        get
-        {
-            int random = Random.Range(0, transform.childCount);
-            randomPosition = transform.GetChild(random);
-            return randomPosition;
-        }
+        this.wayPoints = wayPoints;
     }
 }
