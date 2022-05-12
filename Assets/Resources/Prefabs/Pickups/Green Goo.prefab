@@ -328,6 +328,7 @@ MonoBehaviour:
   textSpeed: 0.06
   numberOfLines:
   - Or building supplies...
+  - 
   textComponent: {fileID: 8466425066721670017}
   players: {fileID: 3841394467579001525}
   isFirst: 0
@@ -406,8 +407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8abac46d3108df4fb19ed73f983c84e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canSoldierPickup: 1
-  canEngineerPickup: 1
   dialogs:
   - {fileID: 3841394467579001525}
   - {fileID: 1980443996925738998}
@@ -424,8 +423,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiObject: {fileID: 5761930508130197477}
-  canSoldierPickup: 0
-  canEngineerPickup: 0
+  canSoldierPickup: 1
+  canEngineerPickup: 1
 --- !u!1 &5563257113643808014
 GameObject:
   m_ObjectHideFlags: 0

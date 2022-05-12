@@ -6,9 +6,7 @@ using EventCallbacksSystem;
 
 public class ShowUI : MonoBehaviour
 {
-  
-    [SerializeField] private bool canSoldierPickup;
-    [SerializeField] private bool canEngineerPickup;
+
 
     [SerializeField] DialoguePickups[] dialogs;
 
@@ -16,18 +14,17 @@ public class ShowUI : MonoBehaviour
     
 
     // Start is called before the first frame update
- 
+
     void OnTriggerEnter(Collider player){
-        if(( done && canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>()) || (canEngineerPickup && player.gameObject.GetComponent<Engineer>()))
+        if(done && player.CompareTag("Player"))
         {  
-           
-            done = false; 
-            
+        done = false; 
            foreach(DialoguePickups dialogue in dialogs)
            {
                 dialogue.beginDialogue();
+                  
            }
+        
         }
-
     }
 }
