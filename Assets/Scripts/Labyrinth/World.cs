@@ -82,7 +82,6 @@ public class World : MonoBehaviour
                 
                 if (map[x,z] > 0)
                 {
-                    Debug.Log(1);
                     voxelType = BlockType.Wall;
                 }
                 Chunk.SetBlock(data, new Vector3Int(x, 0, z), voxelType);
