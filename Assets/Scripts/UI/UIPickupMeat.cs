@@ -5,7 +5,7 @@ using UnityEngine;
 public class UIPickupMeat : MonoBehaviour
 {
 
-    [SerializeField] DialoguePickups[] dialogs;
+     [SerializeField] DialoguePickups dialogs;
 
      private static bool done = true;
     
@@ -16,11 +16,10 @@ public class UIPickupMeat : MonoBehaviour
         if(done && player.CompareTag("Player"))
         {  
         done = false; 
-           foreach(DialoguePickups dialogue in dialogs)
-           {
-                dialogue.beginDialogue();
-                  
-           }
+    
+           
+                dialogs.beginDialogue();
+           
         
         }
     }

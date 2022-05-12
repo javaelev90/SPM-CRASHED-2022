@@ -6,8 +6,6 @@ using EventCallbacksSystem;
 
 public class ShowUI : MonoBehaviour
 {
-
-
     [SerializeField] DialoguePickups[] dialogs;
 
      private static bool done = true;

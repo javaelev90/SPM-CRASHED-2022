@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using EventCallbacksSystem;
+
 
 public class UIPickupMetal : MonoBehaviour
 {
 
-    [SerializeField] DialoguePickups[] dialogs;
+   [SerializeField] DialoguePickups dialogs;
 
      private static bool done = true;
     
@@ -16,11 +19,10 @@ public class UIPickupMetal : MonoBehaviour
         if(done && player.CompareTag("Player"))
         {  
         done = false; 
-           foreach(DialoguePickups dialogue in dialogs)
-           {
-                dialogue.beginDialogue();
-                  
-           }
+    
+           
+                dialogs.beginDialogue();
+           
         
         }
     }
