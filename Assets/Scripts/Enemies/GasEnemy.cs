@@ -16,7 +16,7 @@ public class GasEnemy : AIBaseLogic
     private float timeCounterWaypoint;
     private float timeCounterGas;
     private float timeCounterMelee;
-    private Transform wayPoint;
+    private Vector3 wayPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +26,7 @@ public class GasEnemy : AIBaseLogic
         timeCounterGas = timeToGas;
         timeCounterMelee = timeToMelee;
         timeCounterWaypoint = timeToWayPoint;
-        wayPoint = wayPointSystem.RandomPosition;
+        wayPoint = wayPointSystem.GetNewPosition;
     }
 
     // Update is called once per frame
@@ -119,7 +119,7 @@ public class GasEnemy : AIBaseLogic
             }
 
             if (agent.isOnNavMesh)
-                agent.destination = wayPoint.position;
+                agent.destination = wayPoint;
         }
     }
 

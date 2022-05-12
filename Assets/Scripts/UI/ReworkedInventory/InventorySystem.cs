@@ -10,6 +10,7 @@ public class InventorySystem : ScriptableObject
 {
     [SerializeField] private int alienMeatAmount = 10;
     [SerializeField] private int metalAmount = 10;
+    [SerializeField] private int greenGoo = 10;
 
 
     // dictionary for ability
@@ -30,7 +31,7 @@ public class InventorySystem : ScriptableObject
     }
 
     // add item
-    public bool Add<T>(int amount) where T : Item
+    public bool Add<T>(int amount = 1) where T : Item
     {
         Type keyType = typeof(T);
         if (amounts.ContainsKey(keyType))
@@ -45,18 +46,28 @@ public class InventorySystem : ScriptableObject
     // remove item
     public bool Remove<T>(int amount) where T : Item
     {
+        return RemoveAmount<T>(amount);
+    }
+
+    private bool RemoveAmount<T>(int amount = 1) where T : Item
+    {
         Type keyType = typeof(T);
-        if (amounts.ContainsKey(keyType))
+        int availableAmount = AvailableAmount<T>();
+        if (availableAmount != -1 && availableAmount - amount >= 0)
         {
-            int availableAmount = amounts[keyType];
-            amounts[keyType] = availableAmount - amount >= 0 ? amounts[keyType] -= amount : availableAmount;
+            amounts[keyType] -= amount;
             return true;
         }
         return false;
     }
 
+    public int Amount<T>() where T: Item
+    {
+        return AvailableAmount<T>();
+    }
+
     // get item
-    public int AvailableAmount<T>() where T : Item
+    private int AvailableAmount<T>() where T : Item
     {
         Type keyType = typeof(T);
         if (amounts.ContainsKey(keyType))
@@ -70,17 +81,13 @@ public class InventorySystem : ScriptableObject
     public GameObject ItemPrefab<T>() where T : Item
     {
         Type keyType = typeof(T);
-        if (prefabs.ContainsKey(keyType) && amounts[keyType] > 0)
+        if (prefabs.ContainsKey(keyType) && AvailableAmount<T>() != -1)
         {
+            RemoveAmount<T>();
             return prefabs[keyType].gameObject;
         }
         return new GameObject("EmptyObject");
     }
-
-    // upgrade ability
-    // add attribute
-    // update attribute
-
 
     [ContextMenu("LoadPrefabsToInventory")]
     public void LoadPrefabs()
@@ -93,16 +100,19 @@ public class InventorySystem : ScriptableObject
         if (Directory.Exists("Assets/Resources/Prefabs/Pickups"))
         {
             Debug.Log("Folder exists");
-            Item[] items = Resources.FindObjectsOfTypeAll<Item>();
-            if (items != null)
-            {
-                Debug.Log("Number of items: " + items.Length);
+            //Item[] items = Resources.FindObjectsOfTypeAll<Item>();
+            System.Object[] os = Resources.LoadAll("Prefabs/Pickups", typeof(Item));
 
-                foreach (Item i in items)
+            if (os.Length > 0)
+            {
+                Debug.Log("Number of items: " + os.Length);
+
+                foreach (System.Object i in os)
                 {
-                    if (!prefabs.ContainsKey(i.GetType()))
+                    Item item = (Item)i;
+                    if (!prefabs.ContainsKey(item.GetType()))
                     {
-                        prefabs.Add(i.GetType(), i.ItemPrefab);
+                        prefabs.Add(item.GetType(), item.ItemPrefab);
                     }
                 }
 
@@ -117,7 +127,7 @@ public class InventorySystem : ScriptableObject
 
                 if (!amounts.ContainsKey(keyType))
                 {
-                    amounts.Add(keyType, 10);
+                    amounts.Add(keyType, 0);
                 }
             }
         }
