@@ -524,9 +524,9 @@ GameObject:
   - component: {fileID: 9179345938377622924}
   - component: {fileID: 9179345938377622128}
   - component: {fileID: 9179345938377622129}
-  - component: {fileID: 9179345938377622926}
   - component: {fileID: 9179345938377622927}
   - component: {fileID: 3674751209715239008}
+  - component: {fileID: 7804690975010698445}
   m_Layer: 7
   m_Name: ShipPickup
   m_TagString: ShipPart
@@ -602,19 +602,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &9179345938377622926
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9179345938377622925}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9179345938377622927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,7 +618,8 @@ MonoBehaviour:
   minTimeLeftAfter: 120
   dome: {fileID: 9179345939069179989}
   teleportToShip: {fileID: 9179345938338096545}
-  ship: {fileID: 0}
+  missingPart: {fileID: 0}
+  attachedPart: {fileID: 0}
   eventSpawners: []
 --- !u!114 &3674751209715239008
 MonoBehaviour:
@@ -655,6 +643,20 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!64 &7804690975010698445
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179345938377622925}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &9179345939069179989
 GameObject:
   m_ObjectHideFlags: 0

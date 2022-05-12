@@ -128,7 +128,7 @@ public class LightingManager : MonoBehaviour
 
     public void SetCycleOngoing(EventEvent eventEvent)
     {
-        cycleOngoing = eventEvent.Start;
+        cycleOngoing = !eventEvent.Start;
     }
 
     public void SetMinTimeUntilDawn(ShipPartEvent shipPartEvent)
