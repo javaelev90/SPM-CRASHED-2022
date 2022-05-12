@@ -6,10 +6,15 @@ using EventCallbacksSystem;
 
 public class ShipHealth : HealthHandler
 {
+    AudioSource source;
+    public AudioClip clip;
 
     public override void TakeDamage(int amount)
     {
         photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);
+        if(amount < 95){
+            source.PlayOneShot(clip);
+        }
     }
 
     [PunRPC]
@@ -23,7 +28,6 @@ public class ShipHealth : HealthHandler
             }
         }
     }
-
     public override void Die()
     {
         EventSystem.Instance.FireEvent(new GameOverEvent("Ship has been destroyed"));

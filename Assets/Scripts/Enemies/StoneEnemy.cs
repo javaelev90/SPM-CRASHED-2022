@@ -196,7 +196,7 @@ public class StoneEnemy : AIBaseLogic
         else
         {
             agent.isStopped = false;
-            source.Play();
+            //source.Play();
         }
 
         if (agent.isOnNavMesh && target != null)
