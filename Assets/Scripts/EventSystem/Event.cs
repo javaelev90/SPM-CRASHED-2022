@@ -1,6 +1,5 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+
 namespace EventCallbacksSystem
 {
     public abstract class Event
@@ -68,30 +67,26 @@ namespace EventCallbacksSystem
 
     public class TurretDamageUpgradeEvent : Event { }
 
-
-    public class TypeToInventoryEvent : Event
+    public class GameOverEvent : Event
     {
-        private Pickup_Typs.Pickup type;
-        public Pickup_Typs.Pickup Type { get { return type; } }
+        public string Reason { get; set; }
 
-        public TypeToInventoryEvent(Pickup_Typs.Pickup type)
+        public GameOverEvent(string reason)
         {
-            this.type = type;
+            Reason = reason;
         }
     }
 
-    public class UpdateUIAmountsEvent : Event
+    public class AttachPartEvent : Event
     {
-        private Dictionary<System.Type, int> amounts;
-        private int amount;
-        private Pickup_Typs.Pickup type;
-        public Dictionary<System.Type, int> Amounts { get { return amounts; } set { amounts = value; } }
+        public GameObject AttachedPart { get; set; }
+        public GameObject MissingPart { get; set; }
 
-        public UpdateUIAmountsEvent(Dictionary<System.Type, int> amounts)
+        public AttachPartEvent(GameObject attachedPart, GameObject missingPart)
         {
-            this.amounts = amounts;
+            AttachedPart = attachedPart;
+            MissingPart = missingPart;
         }
-
-        public UpdateUIAmountsEvent() { }
     }
+
 }

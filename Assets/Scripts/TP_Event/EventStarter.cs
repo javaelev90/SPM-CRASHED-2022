@@ -9,7 +9,9 @@ public class EventStarter : MonoBehaviour
     public float minTimeLeftAfter = 120f;
     public GameObject dome;
     public TeleportToShip teleportToShip;
-    public Ship ship;
+    public GameObject missingPart;
+    public GameObject attachedPart;
+
 
     public List<ObjectSpawner> eventSpawners;
     
@@ -51,8 +53,8 @@ public class EventStarter : MonoBehaviour
         //light.SetCycleOngoing(true);
         //light.SetMinTimeUntilDawn(minTimeLeftAfter);
         EventSystem.Instance.FireEvent(new EventEvent(false));
+        EventSystem.Instance.FireEvent(new AttachPartEvent(attachedPart, missingPart));
         teleportToShip.TP();
-        ship.newPartObtained();
         Destroy(gameObject);
     }
 }
