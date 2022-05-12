@@ -71,7 +71,17 @@ public class HealthHandler : MonoBehaviourPunCallbacks
 
     private void UpdateHealthBar()
     {
-        healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+        if (gameObject.CompareTag("Player"))
+        {
+            if (photonView.IsMine)
+            {
+                healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+            }
+        }
+        else
+        {
+            healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+        }
     }
 
     protected void InstantiateRoomObject(object[] parameters)

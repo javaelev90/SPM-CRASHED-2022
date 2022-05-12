@@ -479,9 +479,14 @@ MonoBehaviour:
     m_Bits: 256
   pickUpDistance: 3
   inventory: {fileID: 2433093780270635284}
+  source: {fileID: 0}
+  Goo: {fileID: 0}
+  Metal: {fileID: 0}
+  Meat: {fileID: 0}
   inventorySystem: {fileID: 11400000, guid: 2c55d78c344521e41b5c4732242259f0, type: 2}
   dropTransform: {fileID: 0}
   timeToDrop: 0.5
+  dialog: {fileID: 0}
 --- !u!114 &2433093780270635284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +579,7 @@ MonoBehaviour:
   animator: {fileID: -4059197858113975227}
   inventory: {fileID: 2433093780270635284}
   playerInput: {fileID: 5344456586567406286}
+  clip: {fileID: 0}
   turret: {fileID: 2411392565204665798, guid: 3358d40555310ec4d8266bc256c4335e, type: 3}
   turretPos: {fileID: 2520650330550881837}
   maxTurretToSpawn: 3
@@ -934,6 +940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarHandler: {fileID: 810019847775400831}
+  hit: {fileID: 0}
   itemDropPrefab: {fileID: 4836580809429015468, guid: f39236fffe98f4742b352f1e1ac28581, type: 3}
   dropOffsetY: 1
   MaxHealth: 15

@@ -83,7 +83,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
             if (typ == Pickup_Typs.Pickup.Metal)
             {
                 inventory.addMetal(pickUpComponent.amount);
-                inventorySystem.Add<Metal>(pickUpComponent.amount);
+                //inventorySystem.Add<Metal>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
                 source.PlayOneShot(Metal);
@@ -91,7 +91,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
             else if (typ == Pickup_Typs.Pickup.GreenGoo)
             {
                 inventory.addGreenGoo(pickUpComponent.amount);
-                inventorySystem.Add<GreenGoo>(pickUpComponent.amount);
+                //inventorySystem.Add<GreenGoo>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
                 source.PlayOneShot(Goo);
@@ -99,7 +99,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
             else if (typ == Pickup_Typs.Pickup.AlienMeat)
             {
                 inventory.addAlienMeat(pickUpComponent.amount);
-                inventorySystem.Add<AlienMeat>(pickUpComponent.amount);
+                //inventorySystem.Add<AlienMeat>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
                  source.PlayOneShot(Meat);
