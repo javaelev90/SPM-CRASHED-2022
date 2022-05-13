@@ -74,7 +74,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     public void PickUp()
     {
-        if (PickUpHitCheck(pickupLayer) && photonView.IsMine)
+        if (PickUpHitCheck(pickupLayer))
         {
             Pickup pickUpComponent = pickup.transform.gameObject.GetComponent<Pickup>();
             Pickup_Typs.Pickup typ = pickUpComponent.getTyp();

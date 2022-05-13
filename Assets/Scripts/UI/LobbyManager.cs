@@ -17,6 +17,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private ArrayList currentRoomList = new ArrayList();
     public Character PlayerChoice { get; set; }
     public bool IsMaster { get { return PhotonNetwork.IsMasterClient; } }
+    private bool isStarted = false;
+
     // Joined server
     // Click character
     // Send RPC, choose character
@@ -174,9 +176,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        if (IsMaster && AreAllPlayersReady())
+        if (IsMaster && AreAllPlayersReady() && isStarted == false)
         {
             Debug.Log("Everyone is ready, starting game.");
+            isStarted = true;
             PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.GameSceneName);
         }
     }

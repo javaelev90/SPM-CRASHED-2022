@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4836580809429015467}
   - component: {fileID: 4836580809429015465}
   - component: {fileID: 1725062272548089113}
+  - component: {fileID: 116659052063260205}
   m_Layer: 17
   m_Name: ReviveBadge
   m_TagString: Untagged
@@ -74,6 +75,19 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!65 &116659052063260205
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4836580809429015468}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2736278, y: 0.31625193, z: 0.20090011}
+  m_Center: {x: 0.006325677, y: 0.09100324, z: -0.0055566877}
 --- !u!1 &4870407171770401504
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,7 +100,7 @@ GameObject:
   - component: {fileID: 2822595216654597538}
   - component: {fileID: 1886275658134880373}
   - component: {fileID: 7976355513366204813}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogs: []
-  uiObject: {fileID: 0}
+  uiObject: {fileID: 8241754081980275590}
   canSoldierPickup: 1
   canEngineerPickup: 1
 --- !u!1 &6892311537538402842
@@ -164,7 +178,7 @@ GameObject:
   - component: {fileID: 7703870072214056734}
   - component: {fileID: 4056170550637883664}
   - component: {fileID: 3804855362667739731}
-  m_Layer: 5
+  m_Layer: 17
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +277,7 @@ GameObject:
   - component: {fileID: 7378066394681968822}
   - component: {fileID: 7957589901362871546}
   - component: {fileID: 7861454944717556531}
-  m_Layer: 5
+  m_Layer: 17
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -382,6 +396,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7518944400292387708, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: -3305187950661814415, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3305187950661814415, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3305187950661814415, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -2997412980584704251, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -390,10 +420,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: ReviveBadgeNew
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5161686754749353991, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5161686754749353991, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5161686754749353991, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5415956344203419718, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7b85e7c3067da974fbb8feeea4b48856, type: 2}
+    - target: {fileID: 9170052175966754795, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9fc297912cb8ff40b7fee6387f22424, type: 3}
 --- !u!4 &8524708454072407708 stripped
