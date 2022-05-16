@@ -171,7 +171,7 @@ public class StoneEnemy : AIBaseLogic
         if (timer <= 0f)
         {
             timer = timeToThrow;
-            GameObject bull = PhotonNetwork.Instantiate("Prefabs/" + bullet.name, transform.position, Quaternion.identity);
+            GameObject bull = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + bullet.name, transform.position, Quaternion.identity);
             Projectile proj = bull.GetComponent<Projectile>();
             proj.DamageDealer = stoneDamage;
             proj.Velocity += directionToTarget * 10f;
