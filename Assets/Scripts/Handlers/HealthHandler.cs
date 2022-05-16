@@ -8,7 +8,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     [Header("Required components")]
     [SerializeField] private HealthBarHandler healthBarHandler;
 
-    AudioSource source;
+    protected AudioSource source;
     public AudioClip hit;
 
     [Header("Item drop")]
