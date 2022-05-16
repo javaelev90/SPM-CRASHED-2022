@@ -117,5 +117,16 @@ namespace EventCallbacksSystem
 
         public UpdateUIAmountsEvent() { }
     }
+     
+    public class ImmortalEvent : Event
+    {
+        private bool immortal;
+        public bool Immortal { get { return immortal; } }
+
+        public ImmortalEvent(bool immortal)
+        {
+            this.immortal = immortal;
+        } 
+    }
 
 }

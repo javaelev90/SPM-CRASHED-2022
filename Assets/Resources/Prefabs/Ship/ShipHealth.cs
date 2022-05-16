@@ -6,9 +6,22 @@ using EventCallbacksSystem;
 
 public class ShipHealth : HealthHandler
 {
+    private bool immortal = false;
+    private void Start()
+    {
+        EventSystem.Instance.RegisterListener<ImmortalEvent>(SetImmortal);
+    }
 
+    public void SetImmortal(ImmortalEvent immortal)
+    {
+        this.immortal = immortal.Immortal;
+    }
     public override void TakeDamage(int amount)
     {
+        if (immortal)
+        {
+            amount = 0;
+        }
         photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);
     }
 
