@@ -48,7 +48,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
         source = GetComponent<AudioSource>();
         if (photonView.IsMine)
         {
-            GameObject.FindGameObjectWithTag("InventoryHandler").GetComponent<Handler>().inventory = inventory;
+            //GameObject.FindGameObjectWithTag("InventoryHandler").GetComponent<Handler>().inventory = inventory;
         }
         inventorySystem.LoadPrefabs();
 
@@ -165,7 +165,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
                     {
                         go = inventorySystem.ItemPrefab<CookedAlienMeat>();
                         PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
-                        inventorySystem.Remove<AlienMeat>();
+                        inventorySystem.Remove<CookedAlienMeat>();
                     }
                     break;
                 case Pickup_Typs.Pickup.GreenGoo:

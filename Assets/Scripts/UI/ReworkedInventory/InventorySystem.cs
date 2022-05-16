@@ -5,13 +5,9 @@ using UnityEditor;
 using System.IO;
 using EventCallbacksSystem;
 
-[CreateAssetMenu(fileName = "New Inventory Object", menuName = "InventorySystem/Inventory")]
-public class InventorySystem : ScriptableObject
+public class InventorySystem : MonoBehaviour
 {
-    [SerializeField] private int alienMeatAmount = 10;
-    [SerializeField] private int metalAmount = 10;
-    [SerializeField] private int greenGoo = 10;
-
+  
     // dictionary for prefabs
     private Dictionary<Type, GameObject> prefabs;
 
@@ -133,7 +129,7 @@ public class InventorySystem : ScriptableObject
 
                 if (!amounts.ContainsKey(keyType))
                 {
-                    amounts.Add(keyType, 0);
+                    amounts.Add(keyType, 5);
                 }
             }
         }
@@ -141,8 +137,5 @@ public class InventorySystem : ScriptableObject
         uiEvent.Amounts = amounts;
         EventSystem.Instance.FireEvent(uiEvent);
 
-#if UNITY_EDITOR
-        EditorUtility.SetDirty(this);
-#endif
     }
 }
