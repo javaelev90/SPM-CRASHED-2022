@@ -11,11 +11,15 @@ public class GlobalSettings : SingletonScriptableObject<GlobalSettings>
     [SerializeField] private string prefabsEnemiesPath;
     [SerializeField] private string prefabsUIPath;
     [SerializeField] private string prefabsPlayerCharacterPath;
+    [SerializeField] private string prefabsEquipmentPath;
+    [SerializeField] private string prefabsMiscPath;
     [SerializeField] private GameSettings gameSettings;
 
     public static string PickupsPath { get { return Instance.prefabsPickupPath; } }
     public static string EnemiesPath { get { return Instance.prefabsEnemiesPath; } }
     public static string UIPath { get { return Instance.prefabsUIPath; } }
     public static string PlayerCharacterPath { get { return Instance.prefabsPlayerCharacterPath; } }
+    public static string EquipmentPath { get { return Instance.prefabsEquipmentPath; } }
+    public static string MiscPath { get { return Instance.prefabsMiscPath; } }
     public static GameSettings GameSettings { get { return Instance.gameSettings; } }
 }

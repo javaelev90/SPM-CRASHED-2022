@@ -117,7 +117,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void AddPlayer(Player newPlayer)
     {
         Debug.Log($"User {newPlayer.UserId} connected");
-        GameObject playerInfo = PhotonNetwork.Instantiate("Prefabs/UI/MenuLobby/" + lobbyPlayerPrefab.name, playerList.transform.position, Quaternion.identity);
+        GameObject playerInfo = PhotonNetwork.Instantiate(GlobalSettings.UIPath + "MenuLobby/" + lobbyPlayerPrefab.name, playerList.transform.position, Quaternion.identity);
         playerInfo.transform.SetParent(playerList.transform, false);
         playerInfo.GetComponent<LobbyPlayerMenuHandler>().SetPlayerName(newPlayer.NickName);
         playerInfo.GetComponent<LobbyPlayerMenuHandler>().LobbyPlayerId = newPlayer.UserId;

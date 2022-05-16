@@ -20,7 +20,7 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private int turretDamage;
     [SerializeField] private int turretDamageIncreaseAtUpgrade;
     [SerializeField] private int turretHealthIncreaseAtUpgrade;
-    private string pathBullet = "Prefabs/Bullet";
+    private string pathBullet = GlobalSettings.MiscPath + "Bullet";
     private GameObject emptyTarget;
     [SerializeField] public Transform useTurretPosition;
     public bool IsPlaced { get; set; }

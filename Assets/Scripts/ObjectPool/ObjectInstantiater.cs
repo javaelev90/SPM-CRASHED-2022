@@ -16,7 +16,7 @@ public class ObjectInstantiater : MonoBehaviourPunCallbacks
 
     [SerializeField] List<PhotonObjectPool> objectPools;
 
-    [SerializeField] string prefabPath = "Prefabs/Pickups/";
+    [SerializeField] string prefabPath = GlobalSettings.PickupsPath;
 
     public void InitializeWorld()
     {
