@@ -411,6 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarHandler: {fileID: 519849385}
+  hit: {fileID: 0}
   itemDropPrefab: {fileID: 0}
   dropOffsetY: 1
   MaxHealth: 15
@@ -465,9 +466,14 @@ MonoBehaviour:
     m_Bits: 256
   pickUpDistance: 2
   inventory: {fileID: 8866465657321124185}
+  source: {fileID: 0}
+  Goo: {fileID: 0}
+  Metal: {fileID: 0}
+  Meat: {fileID: 0}
   inventorySystem: {fileID: 0}
   dropTransform: {fileID: 0}
   timeToDrop: 0.5
+  dialog: {fileID: 0}
 --- !u!114 &8866465657321124185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,6 +533,7 @@ MonoBehaviour:
   animator: {fileID: -2848051172062990726}
   inventory: {fileID: 8866465657321124185}
   playerInput: {fileID: 0}
+  clip: {fileID: 0}
   fireLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -874,6 +881,8 @@ MonoBehaviour:
     m_Bits: 512
   maxAmmo: 0
   currentAmmo: 0
+  sourceOne: {fileID: 0}
+  shot: []
 --- !u!95 &-2848051172062990726
 Animator:
   serializedVersion: 3
@@ -916,7 +925,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571670694635274859}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.40963224, y: -0.5763692, z: -0.5763692, w: 0.40963224}
   m_LocalPosition: {x: -0.07, y: 0.298, z: 0.544}
   m_LocalScale: {x: 1, y: 1, z: 2.1792026}
   m_Children:

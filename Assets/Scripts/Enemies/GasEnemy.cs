@@ -18,6 +18,11 @@ public class GasEnemy : AIBaseLogic
     private float timeCounterMelee;
     private Vector3 wayPoint;
 
+    AudioSource source;
+    public AudioClip walk;
+    public AudioClip angry;
+    public AudioClip attack;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +32,8 @@ public class GasEnemy : AIBaseLogic
         timeCounterMelee = timeToMelee;
         timeCounterWaypoint = timeToWayPoint;
         wayPoint = wayPointSystem.GetNewPosition;
+        source = GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
@@ -50,16 +57,19 @@ public class GasEnemy : AIBaseLogic
             {
                 AggroBasedOnSight();
                 AttackBasedOnSight();
+             
             }
 
             if (IsAttacked)
             {
                 AggroBasedOnAttack();
+                
             }
 
             if (!IsAggresive && !IsAttacked)
             {
                 MoveToWayPoint();
+          
             }
         }
     }
@@ -88,6 +98,7 @@ public class GasEnemy : AIBaseLogic
             {
                 IsAggresive = true;
                 timeCounterAggro = timeToAggro;
+              
             }
         }
         else if (!IsWithinSight && IsAggresive)
@@ -104,7 +115,9 @@ public class GasEnemy : AIBaseLogic
     }
 
     private void MoveToWayPoint()
+
     {
+        
         if (eventTarget)
         {
             agent.SetDestination(eventTarget.position);
@@ -130,12 +143,15 @@ public class GasEnemy : AIBaseLogic
             if (IsAggresive)
             {
                 Move();
+             
             }
         }
     }
 
     private void Move()
     {
+        source.Play();
+
         if (distanceToTarget < gasRadius)
         {
             PoisonGas();
@@ -149,6 +165,7 @@ public class GasEnemy : AIBaseLogic
         else
         {
             agent.isStopped = false;
+            source.Play();
         }
 
         if (agent.isOnNavMesh && target != null)
@@ -186,6 +203,7 @@ public class GasEnemy : AIBaseLogic
                 target.GetComponent<HealthHandler>().TakeDamage(poisonDamage);
 
             timeCounterGas = timeToGas;
+            source.PlayOneShot(angry);
         }
     }
 

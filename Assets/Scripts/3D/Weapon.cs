@@ -17,19 +17,23 @@ public class Weapon : MonoBehaviour
     [SerializeField] LayerMask layersThatShouldBeHit;
     [SerializeField] private int maxAmmo;
     [SerializeField] private int currentAmmo;
+    private AudioClip clip;
 
     private float shotCooldown = 0f;
     public bool IsShooting { get; set; }
 
-    private void Start()
-    {
-        
-    }
+    [SerializeField] private AudioSource sourceOne;
+    public AudioClip[] shot;
 
     void Update()
     {
         Cooldown();
         Shoot();
+    }
+
+    void Start()
+    {
+        sourceOne = GetComponent<AudioSource>();
     }
 
     private void Cooldown()
@@ -57,6 +61,7 @@ public class Weapon : MonoBehaviour
                 if (healthHandler)
                 {
                     Debug.Log("Hit the enemy.");
+                    
                     healthHandler.TakeDamage(weaponDamage);
                 }
 
@@ -66,9 +71,18 @@ public class Weapon : MonoBehaviour
                     Debug.Log(ai.transform.name);
                     ai.FindAttackingTarget(transform);
                 }
+                
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;
+            clip = GetAudioClip();
+            sourceOne.PlayOneShot(clip);
         }
+    }
+
+    private AudioClip GetAudioClip()
+    {
+        int index = Random.Range(0, shot.Length - 1);
+        return shot[index];
     }
 }

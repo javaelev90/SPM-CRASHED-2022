@@ -29,10 +29,16 @@ public class Timer : MonoBehaviour
     private float flashduration = 0.5f;
     private bool flashing = false;
 
+    private AudioSource source;
+
+    public AudioClip clip;
+
     // Start is called before the first frame update
     void Start()
     {
         EventSystem.Instance.RegisterListener<EventEvent>(DisplayingTime);
+        source = GetComponent<AudioSource>();
+
 
         if (!lightingManager.IsNight)
         {
@@ -57,6 +63,7 @@ public class Timer : MonoBehaviour
         if (timeLeft > 0 && timeLeft < 5 && !flashing)
         {
             StartCoroutine(Flash3());
+            source.PlayOneShot(clip);
         }
     }
 

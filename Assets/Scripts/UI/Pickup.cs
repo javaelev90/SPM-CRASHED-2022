@@ -8,10 +8,13 @@ public class Pickup : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     [SerializeField] private Pickup_Typs.Pickup typ;
     [SerializeField] private GameObject playerToRevive;
     public int amount;
+    [SerializeField] public AudioSource source;
+    [SerializeField] public AudioClip clip;
 
     // Start is called before the first frame update
     void Start()
     {
+        source = GetComponent<AudioSource>();
 
     }
 

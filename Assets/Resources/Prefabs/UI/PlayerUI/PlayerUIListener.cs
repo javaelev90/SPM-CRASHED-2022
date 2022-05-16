@@ -7,7 +7,6 @@ using EventCallbacksSystem;
 
 public class PlayerUIListener : MonoBehaviour
 {
-    // Start is called before the first frame update
 
     [SerializeField] private SlotItem cookedMeat;
     [SerializeField] private SlotItem greenGoo;

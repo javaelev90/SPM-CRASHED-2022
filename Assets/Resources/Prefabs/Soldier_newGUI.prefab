@@ -1939,6 +1939,7 @@ GameObject:
   - component: {fileID: 4291286374942008847}
   - component: {fileID: 6743905861710182149}
   - component: {fileID: 7863038337600069507}
+  - component: {fileID: 135328109760395258}
   m_Layer: 6
   m_Name: Soldier_newGUI
   m_TagString: Player
@@ -2460,6 +2461,7 @@ MonoBehaviour:
   bulletSpeed: 0
   skinWidth: 0.5
   groundCheckDistance: 0
+  playerGUI: {fileID: 2307961086417413040}
   isFPS: 1
   camPositionFPS: {fileID: 1062666686369538696}
   cameraOffsetTPS: {x: 0, y: 0, z: 0}
@@ -2553,9 +2555,21 @@ MonoBehaviour:
     m_Bits: 256
   pickUpDistance: 3
   inventory: {fileID: 4291286374942008847}
-  inventorySystem: {fileID: 11400000, guid: 2c55d78c344521e41b5c4732242259f0, type: 2}
+  inventorySystem: {fileID: 135328109760395258}
   dropTransform: {fileID: 7139494137675265887}
   timeToDrop: 0.5
+--- !u!114 &135328109760395258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8165497487343435536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 840fa9bc41b1cec489aa0cf06d4fe3a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8256723190442810443
 GameObject:
   m_ObjectHideFlags: 0
@@ -2945,6 +2959,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+--- !u!1 &2307961086417413040 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 641137327987738267, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+  m_PrefabInstance: {fileID: 2945988995309790507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5996147401507242697 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8922995540805740514, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
@@ -2955,7 +2974,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4909781169431746621, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
   m_PrefabInstance: {fileID: 2945988995309790507}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2307961086417413040}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50f284e77e848ec4b8c35f7132d7a21c, type: 3}

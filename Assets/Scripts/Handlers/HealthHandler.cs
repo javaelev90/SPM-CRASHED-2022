@@ -8,6 +8,9 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     [Header("Required components")]
     [SerializeField] private HealthBarHandler healthBarHandler;
 
+    AudioSource source;
+    public AudioClip hit;
+
     [Header("Item drop")]
     [SerializeField] protected GameObject itemDropPrefab;
     [SerializeField] private float dropOffsetY = 1f;
@@ -25,6 +28,8 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     {
         base.OnEnable();
         ResetHealth();
+        source = GetComponent<AudioSource>();
+
     }
 
     protected void ResetHealth()
@@ -66,7 +71,17 @@ public class HealthHandler : MonoBehaviourPunCallbacks
 
     private void UpdateHealthBar()
     {
-        healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+        if (gameObject.CompareTag("Player"))
+        {
+            if (photonView.IsMine)
+            {
+                healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+            }
+        }
+        else
+        {
+            healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+        }
     }
 
     protected void InstantiateRoomObject(object[] parameters)

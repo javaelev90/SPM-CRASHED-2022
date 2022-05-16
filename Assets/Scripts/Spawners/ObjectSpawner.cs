@@ -45,8 +45,11 @@ public class ObjectSpawner : MonoBehaviour
         if (PhotonNetwork.IsMasterClient && spawnerIsTriggered)
         {
             SpawnObjects();
+            
         }
     }
+
+    
 
     public void ResetSpawner()
     {
