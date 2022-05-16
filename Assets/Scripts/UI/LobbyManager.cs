@@ -17,6 +17,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private ArrayList currentRoomList = new ArrayList();
     public Character PlayerChoice { get; set; }
     public bool IsMaster { get { return PhotonNetwork.IsMasterClient; } }
+    private bool isStarted = false;
+
     // Joined server
     // Click character
     // Send RPC, choose character
@@ -115,7 +117,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void AddPlayer(Player newPlayer)
     {
         Debug.Log($"User {newPlayer.UserId} connected");
-        GameObject playerInfo = PhotonNetwork.Instantiate("Prefabs/UI/MenuLobby/" + lobbyPlayerPrefab.name, playerList.transform.position, Quaternion.identity);
+        GameObject playerInfo = PhotonNetwork.Instantiate(GlobalSettings.UIPath + "MenuLobby/" + lobbyPlayerPrefab.name, playerList.transform.position, Quaternion.identity);
         playerInfo.transform.SetParent(playerList.transform, false);
         playerInfo.GetComponent<LobbyPlayerMenuHandler>().SetPlayerName(newPlayer.NickName);
         playerInfo.GetComponent<LobbyPlayerMenuHandler>().LobbyPlayerId = newPlayer.UserId;
@@ -174,9 +176,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        if (IsMaster && AreAllPlayersReady())
+        if (IsMaster && AreAllPlayersReady() && isStarted == false)
         {
             Debug.Log("Everyone is ready, starting game.");
+            isStarted = true;
             PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.GameSceneName);
         }
     }

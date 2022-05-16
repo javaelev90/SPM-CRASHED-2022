@@ -20,12 +20,16 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private int turretDamage;
     [SerializeField] private int turretDamageIncreaseAtUpgrade;
     [SerializeField] private int turretHealthIncreaseAtUpgrade;
-    private string pathBullet = "Prefabs/Bullet";
+
     private GameObject emptyTarget;
     [SerializeField] public Transform useTurretPosition;
     public bool IsPlaced { get; set; }
     private float counter;
     private bool isMine;
+
+    private AudioSource source;
+
+    public AudioClip clip;
 
     // Start is called before the first frame update
     void Awake()
@@ -36,6 +40,8 @@ public class Turret : MonoBehaviourPunCallbacks
         emptyTarget.transform.position = transform.forward * 3f;
         EventSystem.Instance.RegisterListener<TurretDamageUpgradeEvent>(DamageUpgrade);
         EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(HealthUpgrade);
+        source = GetComponent<AudioSource>();
+
     }
 
     public void DamageUpgrade(TurretDamageUpgradeEvent turretDamageUpgrade)
@@ -108,12 +114,13 @@ public class Turret : MonoBehaviourPunCallbacks
             counter -= Time.deltaTime;
             if (counter <= 0f)
             {
-                GameObject bullet = PhotonNetwork.Instantiate(pathBullet, turretMuzzlePoint.transform.position, turretBody.transform.rotation);
+                GameObject bullet = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + "Bullet", turretMuzzlePoint.transform.position, turretBody.transform.rotation);
                 Projectile projectile = bullet.GetComponent<Projectile>();
                 projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
                 projectile.DamageDealer = turretDamage;
                 projectile.IsShot = true;
                 counter = fireTimer;
+                source.PlayOneShot(clip);
                 //Debug.Log("Is shooting");
             }
         }

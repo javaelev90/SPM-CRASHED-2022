@@ -143,7 +143,7 @@ public class Engineer : Controller3D
             if (ctx.started)
             {
                 Debug.Log("Holding button should show turret outline");
-                outlinedTurret = PhotonNetwork.Instantiate("Prefabs/" + outlinedTurretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
+                outlinedTurret = PhotonNetwork.Instantiate(GlobalSettings.EquipmentPath + outlinedTurretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
 
                 isPressed = true;
             }
@@ -153,7 +153,7 @@ public class Engineer : Controller3D
                 Debug.Log("released button should result in placing turret");
                 if (canPutDownTurret) //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
                 {
-                    turretObject = PhotonNetwork.Instantiate("Prefabs/" + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
+                    turretObject = PhotonNetwork.Instantiate(GlobalSettings.EquipmentPath + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
 
                     if (turretObject != null) //&& playerActions.Player.PlaceTurret.IsPressed() //Input.GetMouseButtonUp(1))
                     {

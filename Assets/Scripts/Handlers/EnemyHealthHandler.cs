@@ -24,7 +24,7 @@ public class EnemyHealthHandler : HealthHandler
 
     public override void Die()
     {
-        if (itemDropPrefab is object)
+        if (itemDropPrefab != null)
         {
             DropItem();
         }

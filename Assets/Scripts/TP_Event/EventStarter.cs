@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EventCallbacksSystem;
+using Photon.Pun;
 
-public class EventStarter : MonoBehaviour
+public class EventStarter : MonoBehaviourPunCallbacks
 {
     public float eventTime = 30f;
     public float minTimeLeftAfter = 120f;
@@ -30,7 +31,8 @@ public class EventStarter : MonoBehaviour
         
     }
 
-    public void StartEvent()
+    [PunRPC]
+    private void StartEventRPC()
     {
         //timeDisplay.DisplayingTime(false);
         //light.SetCycleOngoing(false);
@@ -44,6 +46,23 @@ public class EventStarter : MonoBehaviour
         }
 
         StartCoroutine(TeleportIn(eventTime));
+    }
+
+    public void StartEvent()
+    {
+        photonView.RPC(nameof(StartEventRPC), RpcTarget.All);
+        //timeDisplay.DisplayingTime(false);
+        ////light.SetCycleOngoing(false);
+        //EventSystem.Instance.FireEvent(new EventEvent(true));
+
+        //dome.SetActive(true);
+
+        //foreach (ObjectSpawner objectSpawner in eventSpawners)
+        //{
+        //    objectSpawner.TriggerSpawner();
+        //}
+
+        //StartCoroutine(TeleportIn(eventTime));
     }
 
     private IEnumerator TeleportIn(float eventTime)

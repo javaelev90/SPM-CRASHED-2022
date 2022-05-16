@@ -6,11 +6,13 @@ using UnityEngine;
 public class PlayerJumpState : State
 {
     [SerializeField] private float jumpFactor = 5f;
+
     public override void Enter()
     {
         base.Enter();
         Vector3 jumpForce = Vector3.up * jumpFactor;
         player.Body.AddForce(jumpForce);
+      
 
     }
 
@@ -23,6 +25,7 @@ public class PlayerJumpState : State
             {
 
                 stateMachine.ChangeState<PlayerIdleState>();
+      
             }
             else
             {
