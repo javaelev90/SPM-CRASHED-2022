@@ -26,8 +26,8 @@ public class Engineer : Controller3D
     [SerializeField] private GameObject outlinedTurretPrefab;
     GameObject outlinedTurret;
     bool isPressed = false;
-    bool isUsingTurret = false;
-    Turret turretObj;
+    public bool isUsingTurret { get;  set; }
+    [SerializeField] private Turret turretObj;
 
     [Header("Carry Ship Part")]
     /// <summary>
@@ -51,6 +51,7 @@ public class Engineer : Controller3D
     void Start()
     {
         StartCoroutine(Wait(5));
+        isUsingTurret = false;
         //playerActions = new PlayerInputActions();
 
     }
@@ -72,6 +73,10 @@ public class Engineer : Controller3D
         if (isPressed)
         {
             OnPlacementStarted();
+        }
+        if (isUsingTurret)
+        {
+           transform.position = usePositionPos.transform.position;
         }
         //playerActions.Player.PlaceTurret.started += ctx => OnPlacementStarted();
         //playerActions.Player.PlaceTurret.canceled +=
@@ -113,7 +118,7 @@ public class Engineer : Controller3D
 
     public void OnPlacementStarted()
     {
-        Debug.Log("show outline of turret where to place");
+        //Debug.Log("show outline of turret where to place");
 
         canPutDownTurret = true;
         //Vector3 targetLocation;
@@ -142,7 +147,7 @@ public class Engineer : Controller3D
         {
             if (ctx.started)
             {
-                Debug.Log("Holding button should show turret outline");
+                //Debug.Log("Holding button should show turret outline");
                 outlinedTurret = PhotonNetwork.Instantiate("Prefabs/" + outlinedTurretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
 
                 isPressed = true;
@@ -150,17 +155,17 @@ public class Engineer : Controller3D
 
             if (ctx.canceled)
             {
-                Debug.Log("released button should result in placing turret");
+                //Debug.Log("released button should result in placing turret");
                 if (canPutDownTurret) //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
                 {
                     turretObject = PhotonNetwork.Instantiate("Prefabs/" + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
 
                     if (turretObject != null) //&& playerActions.Player.PlaceTurret.IsPressed() //Input.GetMouseButtonUp(1))
                     {
-                        turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
+                        turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.forward, Vector3.forward) * turretObject.transform.rotation;
                         //if (hit.collider != null && hit.distance < 3f)
                         //{
-                        Debug.Log("turret should be placed");
+                        //Debug.Log("turret should be placed");
                         turretObject.transform.position = turretPos.transform.position;
                         turretObject.GetComponent<Turret>().IsPlaced = true;
                         turretCount++;
@@ -171,7 +176,7 @@ public class Engineer : Controller3D
 
                     // Ta bort outline objectet
                     isPressed = false;
-                    Destroy(outlinedTurret);
+                    PhotonNetwork.Destroy(outlinedTurret);
 
                     // Reset targetTime
                     targetTime = 1f;
@@ -214,37 +219,51 @@ public class Engineer : Controller3D
         */
     }
 
+    Transform GetChildWithName(GameObject objectToSearch, string childName)
+    {
+        Transform child = null;
+        foreach (Transform t in objectToSearch.GetComponentsInChildren<Transform>())
+        {
+            if (t.name == childName)
+            {
+                child = t;
+                break;
+            }
+        }
+        return child;
+    }
 
+    Transform usePositionPos;
+    //public Controller3D hitBitch;
     public void OnTurretUse()
     {
         if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret") && playerActions.Player.UseTurret.IsPressed())
         {
-            Debug.Log("Imagine you are using the turret");
+            Debug.Log("You are using the turret");
             isUsingTurret = true;
             ChangeControlls.ControlType = 2;
 
+            hit.collider.GetComponent<Turret>().isCurrent = true;
+            turretBodyTransform = GetChildWithName(hit.collider.gameObject, "TurretBodyRotationPoint");
+            //muzzleOnTheFukingTurret = GetChildWithName(hit.collider.gameObject, "MuzzlePoint");
+
             // Put Engineer behind the turret that was hit
-            foreach (Transform child in hit.transform)
-            {
-                if (child.name == "UsePosition")
-                {
-                    transform.position = child.transform.position;
-                }
-            }
+            usePositionPos = GetChildWithName(hit.collider.gameObject, "UsePosition"); 
 
-
-
-            //Debug.Log("Yes" + isUsingTurret);
+            Debug.Log("Yes " + isUsingTurret);
         }
+        
         else if (isUsingTurret == true && playerActions.Player.UseTurret.IsPressed())
         {
             Debug.Log("You are no longer using turret");
             isUsingTurret = false;
             ChangeControlls.ControlType = 1;
-            //Debug.Log("No" + isUsingTurret);
+            Debug.Log("No " + isUsingTurret);
         }
         
+
     }
+
 
     public void PickUpShipPart()
     {

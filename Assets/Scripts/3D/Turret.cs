@@ -8,7 +8,7 @@ public class Turret : MonoBehaviourPunCallbacks
 {
     [Header("Turret Properties")]
     [SerializeField] private GameObject turretMuzzlePoint;
-    [SerializeField] private GameObject turretBody;
+    [SerializeField] public GameObject turretBody;
     [SerializeField] private Transform currentTarget;
     [SerializeField] private Transform newTarget;
     [SerializeField] private LayerMask enemyLayer;
@@ -23,9 +23,12 @@ public class Turret : MonoBehaviourPunCallbacks
     private string pathBullet = "Prefabs/Bullet";
     private GameObject emptyTarget;
     [SerializeField] public Transform useTurretPosition;
+    [SerializeField] public Transform useTurretBody;
+
     public bool IsPlaced { get; set; }
     private float counter;
     private bool isMine;
+    public bool isCurrent;
 
     // Start is called before the first frame update
     void Awake()
@@ -33,6 +36,7 @@ public class Turret : MonoBehaviourPunCallbacks
         counter = fireTimer;
         isMine = photonView.IsMine;
         emptyTarget = new GameObject();
+        isCurrent = false;
         emptyTarget.transform.position = transform.forward * 3f;
         EventSystem.Instance.RegisterListener<TurretDamageUpgradeEvent>(DamageUpgrade);
         EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(HealthUpgrade);
@@ -47,8 +51,6 @@ public class Turret : MonoBehaviourPunCallbacks
     {
         //... += turretHealthIncreaseAtUpgrade;
     }
-
-
 
     private void FindTargets()
     {
@@ -72,10 +74,7 @@ public class Turret : MonoBehaviourPunCallbacks
             Quaternion rotateTo = Quaternion.LookRotation(direction, turretBody.transform.up);
             turretBody.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
 
-            // Clamp rotation so it doesn't go all over the place and end up uppside down
-            rotateTo.x = ClampAngle(rotateTo.x, -90f, 90f);
-            rotateTo.z = ClampAngle(rotateTo.z, -90f, 90f);
-
+            //ClampRotBody();
         }
 
         if (colliders.Length == 0)
@@ -92,12 +91,29 @@ public class Turret : MonoBehaviourPunCallbacks
         return Mathf.Min(angle, to);
     }
 
+    public void ClampRotBody()
+    {
+        // Clamp rotation so it doesn't go all over the place and end up upside down
+        Vector3 pivotRotation = turretBody.transform.eulerAngles;
+        pivotRotation.x = Mathf.Clamp(pivotRotation.x, -90f, 90f);
+        pivotRotation.y = Mathf.Clamp(pivotRotation.y, -90f, 90f);
+        pivotRotation.z = Mathf.Clamp(pivotRotation.z, -90f, 90f);
+        transform.eulerAngles = pivotRotation;
+        //rotateTo.z = ClampAngle(rotateTo.z, -90f, 90f);
+    }
+
+    public Engineer eng;
+    [SerializeField] private Controller3D engobj;
+
     // Update is called once per frame
     void Update()
     {
+        //ClampRotBody();
 
         FindTargets();
 
+        //counter -= Time.deltaTime;
+        //eng = engobj.GetComponent<Engineer>();
         if (currentTarget.position != emptyTarget.transform.position)
         {
             //if (Vector3.Distance(currentTarget.transform.position, transform.position) > radius)
@@ -105,29 +121,55 @@ public class Turret : MonoBehaviourPunCallbacks
             //    currentTarget = transform;
             //}
 
+            //ClampRotBody();
+
             counter -= Time.deltaTime;
             if (counter <= 0f)
             {
-                GameObject bullet = PhotonNetwork.Instantiate(pathBullet, turretMuzzlePoint.transform.position, turretBody.transform.rotation);
-                Projectile projectile = bullet.GetComponent<Projectile>();
-                projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
-                projectile.DamageDealer = turretDamage;
-                projectile.IsShot = true;
-                counter = fireTimer;
-                //Debug.Log("Is shooting");
+                TurretShoot();
             }
+
         }
         else
         {
             //turretBody.transform.LookAt(Vector3.forward, Vector3.up);
         }
 
+        Debug.Log(eng.isShootingTurret);
+        
+        if (eng.isShootingTurret)
+        {
+            Debug.Log("FUCK YOU ");
+            counter -= Time.deltaTime;
+            if (counter <= 0f)
+            {
+                TurretShoot();
+            }
 
-
+        }     
+       
         Debug.DrawRay(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
         //if (IsPlaced)
         //{
         //}
+
+    }
+
+    private void Start()
+    {
+        eng = GetComponent<Engineer>();
+    }
+
+    public void TurretShoot()
+    {
+        // Debug.Log("AAAAAAAAAA");
+        GameObject bullet = PhotonNetwork.Instantiate(pathBullet, turretMuzzlePoint.transform.position, turretBody.transform.rotation); //Skjuter inte från muzzlepoint
+        Projectile projectile = bullet.GetComponent<Projectile>();
+        projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f; // Skjuter i fel riktning
+        projectile.DamageDealer = turretDamage;
+        projectile.IsShot = true;
+        counter = fireTimer;
+        Debug.Log("Is shooting");
 
     }
 

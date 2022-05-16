@@ -558,6 +558,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""eccf2bce-2b94-4ea5-a083-5530bd2d8e4b"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""DeleteTurret"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""d95bfbe7-1f3a-4bee-afa8-d74661568da9"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",

@@ -111,7 +111,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
                     RoatateCamera();
                     break;
                 case 2:
-                    RoatateCamera();
+                    EngineerUseTurretHandling();
                     break;
             }
         }
@@ -170,6 +170,59 @@ public class Controller3D : MonoBehaviourPunCallbacks
             }
             */
         }
+    }
+
+    public Turret turretObjRef;
+    public Engineer engineerRef;
+    public Transform turretBodyTransform;
+    [SerializeField] private LayerMask enemyLayer;
+    //public Transform muzzleOnTheFukingTurret;
+    public bool isShootingTurret { get; set; }
+
+    
+
+    public void EngineerUseTurretHandling()
+    {
+        RoatateCamera();
+        PlayerRotation();
+        //Vector3 gravitationForce;
+        //float gravity = 9.81f;
+        //gravitationForce = Vector3.down * gravity * Time.deltaTime;
+        //Body.Velocity += gravitationForce;
+
+        if (engineerRef.GetComponent<Engineer>().isUsingTurret == true)
+        {
+            // Rotate the turret towards where the player is looking
+            Physics.Raycast(muzzlePoint.transform.position, muzzlePoint.transform.forward, out RaycastHit hit, 20f, enemyLayer);
+            // skapa nytt obj framför muzzle som direction, origin är muzzlepoint
+            Vector3 lookDirection = (muzzlePoint.transform.position - transform.position).normalized;
+            Quaternion rotateTo = Quaternion.LookRotation(lookDirection, turretBodyTransform.transform.up);
+            turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
+
+            if (playerActions.Player.Shoot.IsPressed() && isShootingTurret == false)
+            {
+                //turretObjRef.TurretShoot();
+                isShootingTurret = true;
+                Debug.Log("Pew pew");
+            }
+            Debug.Log("fuck you bitch" + isShootingTurret);
+
+            //GameObject turretRotationPoint = turretObjRef.turretBody;
+            //Debug.Log(turretRotationPoint.name);
+            //turretbodyshitcomponetnfuck = turretRotationPoint.GetComponent<Transform>();
+
+            //muzzlePoint.transform.position = mainCam.ScreenToWorldPoint(cameraLooking);
+            //turretbodyshitcomponetnfuck.gameObject.transform.LookAt(muzzlePoint.transform);
+            //muzzleOnTheFukingTurret.gameObject.transform.LookAt(muzzlePoint.transform);
+
+            //turretbodyshitcomponetnfuck.transform.Rotate(cameraLooking.x, cameraLooking.y, 0f, Space.Self); //= Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0);//Quaternion.Lerp(turretbodyshit.transform.rotation, mainCam.transform.rotation, 4f * Time.deltaTime);
+            //Debug.Log(turretbodyshitcomponetnfuck.transform.rotation);
+            //Vector3 resultingPosition = mainCam.transform.position + mainCam.transform.forward * 4f;
+            //turretFuckYOu.turretBody.transform.position = resultingPosition;
+        }
+
+
+
     }
 
     public void MoveCamera(InputAction.CallbackContext obj)
