@@ -179,6 +179,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""test"",
+                    ""type"": ""Button"",
+                    ""id"": ""817f9463-a47f-4810-a8e8-b907d9393ce4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -621,6 +630,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Num2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2669431-3ed6-407e-b7dc-a6e329d165b2"",
+                    ""path"": ""<Keyboard>/rightBracket"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""test"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""183188f5-7f34-4add-8ea5-4f82f6912546"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""test"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1047,6 +1078,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_UseTurret = m_Player.FindAction("UseTurret", throwIfNotFound: true);
         m_Player_Num1 = m_Player.FindAction("Num1", throwIfNotFound: true);
         m_Player_Num2 = m_Player.FindAction("Num2", throwIfNotFound: true);
+        m_Player_test = m_Player.FindAction("test", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1135,6 +1167,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_UseTurret;
     private readonly InputAction m_Player_Num1;
     private readonly InputAction m_Player_Num2;
+    private readonly InputAction m_Player_test;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1156,6 +1189,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @UseTurret => m_Wrapper.m_Player_UseTurret;
         public InputAction @Num1 => m_Wrapper.m_Player_Num1;
         public InputAction @Num2 => m_Wrapper.m_Player_Num2;
+        public InputAction @test => m_Wrapper.m_Player_test;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1216,6 +1250,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Num2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
                 @Num2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
                 @Num2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
+                @test.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
+                @test.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
+                @test.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1271,6 +1308,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Num2.started += instance.OnNum2;
                 @Num2.performed += instance.OnNum2;
                 @Num2.canceled += instance.OnNum2;
+                @test.started += instance.OnTest;
+                @test.performed += instance.OnTest;
+                @test.canceled += instance.OnTest;
             }
         }
     }
@@ -1417,6 +1457,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnUseTurret(InputAction.CallbackContext context);
         void OnNum1(InputAction.CallbackContext context);
         void OnNum2(InputAction.CallbackContext context);
+        void OnTest(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
