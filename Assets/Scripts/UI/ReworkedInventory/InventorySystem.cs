@@ -6,21 +6,12 @@ using EventCallbacksSystem;
 
 public class InventorySystem : MonoBehaviour
 {
-  
     // dictionary for prefabs
     private Dictionary<Type, GameObject> prefabs;
 
     // dictionary for amounts
     private Dictionary<Type, int> amounts = new Dictionary<Type, int>();
     private UpdateUIAmountsEvent uiEvent = new UpdateUIAmountsEvent();
-
-    private void Awake()
-    {
-        if (prefabs != null)
-        {
-            Debug.Log("prefabs " + prefabs.Count);
-        }
-    }
 
     // add item
     public bool Add<T>(int amount = 1) where T : Item
@@ -88,11 +79,9 @@ public class InventorySystem : MonoBehaviour
         return new GameObject("EmptyObject");
     }
 
-    [ContextMenu("LoadPrefabsToInventory")]
+    // load prefabs into dictionary
     public void LoadPrefabs()
     {
-
-
         if (prefabs == null)
         {
             prefabs = new Dictionary<Type, GameObject>();
@@ -101,7 +90,6 @@ public class InventorySystem : MonoBehaviour
         if (Directory.Exists("Assets/Resources/Prefabs/Pickups"))
         {
             Debug.Log("Folder exists");
-            //Item[] items = Resources.FindObjectsOfTypeAll<Item>();
             System.Object[] os = Resources.LoadAll("Prefabs/Pickups", typeof(Item));
 
             if (os.Length > 0)
@@ -128,13 +116,12 @@ public class InventorySystem : MonoBehaviour
 
                 if (!amounts.ContainsKey(keyType))
                 {
-                    amounts.Add(keyType, 5);
+                    amounts.Add(keyType, 0);
                 }
             }
         }
 
         uiEvent.Amounts = amounts;
         EventSystem.Instance.FireEvent(uiEvent);
-
     }
 }

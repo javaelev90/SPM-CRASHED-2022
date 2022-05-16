@@ -19,7 +19,9 @@ public class Controller3D : MonoBehaviourPunCallbacks
     [Header("Player")]
     [SerializeField] private float skinWidth = 0.5f;
     [SerializeField] private float groundCheckDistance;
+    [SerializeField] private GameObject playerGUI;
     private HealthHandler healthHandler;
+
 
     [Header("Camera settings")]
     [SerializeField] private bool isFPS;
@@ -93,7 +95,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
         Cursor.lockState = CursorLockMode.Locked;
         healthHandler = GetComponent<HealthHandler>();
         source = GetComponent<AudioSource>();
-
+        playerGUI.SetActive(isMine);
 
 
         mainCam = Camera.main;
