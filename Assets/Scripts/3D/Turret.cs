@@ -20,7 +20,7 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private int turretDamage;
     [SerializeField] private int turretDamageIncreaseAtUpgrade;
     [SerializeField] private int turretHealthIncreaseAtUpgrade;
-    private string pathBullet = "Prefabs/Bullet";
+    
     private GameObject emptyTarget;
     [SerializeField] public Transform useTurretPosition;
     [SerializeField] public Transform useTurretBody;
@@ -135,7 +135,7 @@ public class Turret : MonoBehaviourPunCallbacks
             counter -= Time.deltaTime;
             if (counter <= 0f)
             {
-                GameObject bullet = PhotonNetwork.Instantiate(pathBullet, turretMuzzlePoint.transform.position, turretBody.transform.rotation);
+                GameObject bullet = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + "Bullet", turretMuzzlePoint.transform.position, turretBody.transform.rotation);
                 Projectile projectile = bullet.GetComponent<Projectile>();
                 projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
                 projectile.DamageDealer = turretDamage;

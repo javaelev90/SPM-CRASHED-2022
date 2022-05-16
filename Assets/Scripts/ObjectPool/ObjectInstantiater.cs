@@ -16,8 +16,6 @@ public class ObjectInstantiater : MonoBehaviourPunCallbacks
 
     [SerializeField] List<PhotonObjectPool> objectPools;
 
-    [SerializeField] string prefabPath = GlobalSettings.PickupsPath;
-
     public void InitializeWorld()
     {
         CreatePickups();
@@ -36,7 +34,7 @@ public class ObjectInstantiater : MonoBehaviourPunCallbacks
         {
             float y = Terrain.activeTerrain.SampleHeight(new Vector3(location.position.x, 10f, location.position.z));
             Vector3 newLocation = new Vector3(location.position.x, y + yOffset, location.position.z);
-            PhotonNetwork.InstantiateRoomObject(prefabPath + prefab.name, newLocation, location.rotation);
+            PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + prefab.name, newLocation, location.rotation);
         }
     }
 

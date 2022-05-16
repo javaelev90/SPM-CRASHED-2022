@@ -70,6 +70,9 @@ public class Controller3D : MonoBehaviourPunCallbacks
     AudioSource source;
     public AudioClip clip;
 
+    [Header("FPS Visuals")]
+    [SerializeField] GameObject weaponVisuals;
+    [SerializeField] GameObject bodyMesh;
 
     protected virtual void Awake()
     {
@@ -84,13 +87,21 @@ public class Controller3D : MonoBehaviourPunCallbacks
         capsuleCollider = GetComponent<CapsuleCollider>();
         body = GetComponent<PhysicsBody>();
 
-        mainCam = Camera.main;
+       
+        //weaponPrefab.transform.SetParent(mainCam.transform);
         isMine = photonView.IsMine;
         Cursor.lockState = CursorLockMode.Locked;
         healthHandler = GetComponent<HealthHandler>();
         source = GetComponent<AudioSource>();
 
 
+
+        mainCam = Camera.main;
+        mainCam.transform.position = camPositionFPS.transform.position;
+        mainCam.transform.SetParent(camPositionFPS.transform);
+        camPositionFPS.transform.rotation = Quaternion.LookRotation(bodyMesh.transform.position, Vector3.up);
+        mainCam.transform.rotation = camPositionFPS.transform.rotation;
+        //bodyMesh.SetActive(isMine == false);
     }
 
     private void OnEnable()
@@ -257,8 +268,8 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
         cameraRotation.x = Mathf.Clamp(cameraRotation.x, minXrotation, maxXrotation);
 
-        mainCam.transform.localRotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f);
-
+        //mainCam.transform.localRotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f);
+        camPositionFPS.transform.localRotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f);
         transform.rotation = Quaternion.Euler(0f, cameraRotation.y, 0f);
     }
 
@@ -295,11 +306,14 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
     private void UpdateCamera()
     {
-        mainCam.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0.0f);
+        //mainCam.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0.0f);
+        camPositionFPS.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0.0f);
 
         if (isFPS)
         {
-            mainCam.transform.position = camPositionFPS.transform.position;
+            //mainCam.transform.position = camPositionFPS.transform.position;
+            camPositionFPS.transform.position = camPositionFPS.transform.position;
+
         }
         else
         {
