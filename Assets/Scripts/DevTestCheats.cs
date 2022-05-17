@@ -3,19 +3,22 @@ using EventCallbacksSystem;
 
 public class DevTestCheats : MonoBehaviour
 {
-    
-    private bool cheatMenyActive;
-    [SerializeField] private GameObject cheatCanvas;
+    [SerializeField] private GameObject devCanvas;
 
     // Start is called before the first frame update
     void Start()
     {
-        cheatMenyActive = false;
+        EventSystem.Instance.RegisterListener<DevToolEvent>(DevToolOn);
     }
 
     // Update is called once per frame
-   
 
+
+
+    public void DevToolOn(DevToolEvent on)
+    {
+        devCanvas.SetActive(on.On);
+    }
     public void BecomeImmortal(bool immortal)
     {
         EventSystem.Instance.FireEvent(new ImmortalEvent(immortal));

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
-
+using EventCallbacksSystem;
 public class Controller3D : MonoBehaviourPunCallbacks
 {
     [Header("Multiplayer")]
@@ -422,6 +422,13 @@ public class Controller3D : MonoBehaviourPunCallbacks
     {
         if (mainCam)
             Gizmos.DrawWireSphere(mainCam.transform.position, radius);
+    }
+
+    private bool devToolOn = false;
+    public void DevTool()
+    {
+        devToolOn = !devToolOn;
+        EventSystem.Instance.FireEvent(new DevToolEvent(devToolOn));
     }
 
 }
