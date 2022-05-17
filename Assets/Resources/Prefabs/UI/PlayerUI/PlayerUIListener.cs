@@ -4,18 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using EventCallbacksSystem;
+using UnityEngine.InputSystem;
 
 public class PlayerUIListener : MonoBehaviour
 {
-
-    [SerializeField] private SlotItem cookedMeat;
-    [SerializeField] private SlotItem greenGoo;
-    [SerializeField] private bool IsSoldier;
     [SerializeField] private List<SlotItem> slotItems;
     private Dictionary<Pickup_Typs.Pickup, SlotItem> slots;
-    private Dictionary<Type, int> uiAmounts = new Dictionary<Type, int>();
-
-    private SlotItem previousSelected;
+    private int selectedIndex;
 
     private void OnEnable()
     {
@@ -28,15 +23,6 @@ public class PlayerUIListener : MonoBehaviour
                 slots.Add(si.PickupType, si);
             }
         }
-
-        if (IsSoldier)
-        {
-            slots[Pickup_Typs.Pickup.Metal].gameObject.SetActive(false);
-        }
-        else
-        {
-            slots[Pickup_Typs.Pickup.AlienMeat].gameObject.SetActive(false);
-        }
     }
 
     private void OnDisable()
@@ -46,11 +32,11 @@ public class PlayerUIListener : MonoBehaviour
 
     public void UpdateAmounts(UpdateUIAmountsEvent e)
     {
-        uiAmounts = e.Amounts;
-
-        foreach (KeyValuePair<Type, int> keyValuePair in uiAmounts)
+        Debug.LogError("Updated amounts method for UI");
+        foreach (KeyValuePair<Type, int> keyValuePair in e.Amounts)
         {
-            if(keyValuePair.Key == typeof(AlienMeat))
+            Debug.LogError("Update loop for UI amounts");
+            if (keyValuePair.Key == typeof(AlienMeat))
             {
                 slots[Pickup_Typs.Pickup.AlienMeat].UpdateNumberOfItems(keyValuePair.Value);
             }
@@ -65,27 +51,43 @@ public class PlayerUIListener : MonoBehaviour
             if (keyValuePair.Key == typeof(GreenGoo))
             {
                 slots[Pickup_Typs.Pickup.GreenGoo].UpdateNumberOfItems(keyValuePair.Value);
+                Debug.LogError("Updated greengoo specific UI amounts");
             }
         }
     }
 
-    public void OnCookedMeatSelected()
+    public void PreviousItem(InputAction.CallbackContext ctx) // use as previous
     {
-        previousSelected = greenGoo;
-        cookedMeat.SelectItem();
-        previousSelected.DeselectItem();
-        previousSelected = cookedMeat;
-        TypeToInventoryEvent te = new TypeToInventoryEvent(Pickup_Typs.Pickup.CookedAlienMeat);
+        if (ctx.started)
+        {
+            if (selectedIndex != 0)
+                slotItems[selectedIndex].DeselectItem();
+
+            if (selectedIndex > 0)
+                slotItems[--selectedIndex].SelectItem();
+
+            if (selectedIndex == 0)
+                slotItems[selectedIndex].SelectItem();
+
+        }
+
+        TypeToInventoryEvent te = new TypeToInventoryEvent(slotItems[selectedIndex].PickupType);
         EventSystem.Instance.FireEvent(te);
     }
 
-    public void OnGreenGoSelected()
+    public void NextItem(InputAction.CallbackContext ctx) // use as next selected
     {
-        previousSelected = cookedMeat;
-        greenGoo.SelectItem();
-        previousSelected.DeselectItem();
-        previousSelected = cookedMeat;
-        TypeToInventoryEvent te = new TypeToInventoryEvent(Pickup_Typs.Pickup.GreenGoo);
+        if (ctx.started)
+        {
+            if (selectedIndex != slotItems.Count - 1)
+                slotItems[selectedIndex].DeselectItem();
+
+            if (selectedIndex < slotItems.Count - 1)
+                slotItems[++selectedIndex].SelectItem();
+
+        }
+
+        TypeToInventoryEvent te = new TypeToInventoryEvent(slotItems[selectedIndex].PickupType);
         EventSystem.Instance.FireEvent(te);
     }
 

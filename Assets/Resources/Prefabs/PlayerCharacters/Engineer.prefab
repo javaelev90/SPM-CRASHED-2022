@@ -291,7 +291,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5125041606094569842}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.56, z: 0.408}
+  m_LocalPosition: {x: 0, y: 0.56, z: 0.017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5125041606170365177}
@@ -580,6 +580,14 @@ MonoBehaviour:
   inventory: {fileID: 2433093780270635284}
   playerInput: {fileID: 5344456586567406286}
   clip: {fileID: 0}
+  weaponVisuals: {fileID: 5125041606170365157}
+  bodyMesh: {fileID: 5125041606170365157}
+  turretObjRef: {fileID: 2438785178254165550, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
+  engineerRef: {fileID: 1484468382420821516}
+  turretBodyTransform: {fileID: 3067970174018886807, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
   turret: {fileID: 2411392565204665798, guid: 3358d40555310ec4d8266bc256c4335e, type: 3}
   turretPos: {fileID: 2520650330550881837}
   maxTurretToSpawn: 3
@@ -594,6 +602,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65536
   outlinedTurretPrefab: {fileID: 8025784739738023711, guid: 84205b8d5a2c8a644a97fa040e65db20, type: 3}
+  turretObj: {fileID: 2438785178254165550, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
   destination: {fileID: 431206142263564548}
   player: {fileID: 5125041606170365177}
   muzzlePosition: {fileID: 1099855166}
@@ -693,6 +702,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1484468382420821516}
+        m_TargetAssemblyTypeName: Controller3D, Assembly-CSharp
+        m_MethodName: EngineerUseTurretLooking
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f08da3b2-7b73-4f97-94b7-d20b71f6c166
     m_ActionName: Player/Look[/XInputControllerWindows/rightStick,/Mouse/delta]
   - m_PersistentCalls:
@@ -717,6 +738,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: Engineer, Assembly-CSharp
         m_MethodName: StunEnemy
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1484468382420821516}
+        m_TargetAssemblyTypeName: Controller3D, Assembly-CSharp
+        m_MethodName: EngineerUseTurretHandling
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -903,6 +936,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 52b60ef3-0c7c-4a42-acbf-d725d31dedd9
     m_ActionName: Player/Num2[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 817f9463-a47f-4810-a8e8-b907d9393ce4
+    m_ActionName: Player/test[/Keyboard/rightBracket]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
