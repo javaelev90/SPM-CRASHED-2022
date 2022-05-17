@@ -18,11 +18,10 @@ public class Weapon : MonoBehaviour
     [SerializeField] LayerMask layersThatShouldBeHit;
     [SerializeField] private int maxAmmo;
     [SerializeField] private int currentAmmo;
-    private AudioClip clip;
 
     private float shotCooldown = 0f;
     public bool IsShooting { get; set; }
-
+    [SerializeField] private Animator animator;
     [SerializeField] private AudioSource sourceOne;
     public AudioClip[] shot;
 
@@ -30,6 +29,8 @@ public class Weapon : MonoBehaviour
     {
         Cooldown();
         Shoot();
+        if(IsShooting == false)
+            animator.SetBool("isShooting", false);
     }
 
     void Start()
@@ -55,6 +56,7 @@ public class Weapon : MonoBehaviour
         if(OnCoolDown() == false && IsShooting == true)
         {
             muzzlePosition.Play();
+            animator.SetBool("isShooting", true);
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,
                 out RaycastHit hitInfo, weaponRange, layersThatShouldBeHit))
             {
@@ -74,8 +76,7 @@ public class Weapon : MonoBehaviour
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;
-            clip = GetAudioClip();
-            sourceOne.PlayOneShot(clip);
+            sourceOne.PlayOneShot(GetAudioClip());
         }
     }
 

@@ -32,10 +32,8 @@ public class PlayerUIListener : MonoBehaviour
 
     public void UpdateAmounts(UpdateUIAmountsEvent e)
     {
-        Debug.LogError("Updated amounts method for UI");
         foreach (KeyValuePair<Type, int> keyValuePair in e.Amounts)
         {
-            Debug.LogError("Update loop for UI amounts");
             if (keyValuePair.Key == typeof(AlienMeat))
             {
                 slots[Pickup_Typs.Pickup.AlienMeat].UpdateNumberOfItems(keyValuePair.Value);
@@ -51,7 +49,6 @@ public class PlayerUIListener : MonoBehaviour
             if (keyValuePair.Key == typeof(GreenGoo))
             {
                 slots[Pickup_Typs.Pickup.GreenGoo].UpdateNumberOfItems(keyValuePair.Value);
-                Debug.LogError("Updated greengoo specific UI amounts");
             }
         }
     }
