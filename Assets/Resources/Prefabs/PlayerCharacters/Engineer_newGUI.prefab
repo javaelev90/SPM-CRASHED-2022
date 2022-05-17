@@ -640,11 +640,35 @@ MonoBehaviour:
     m_ActionId: 8154bfa0-629d-4eb5-b02a-c2bc2c0b3bd4
     m_ActionName: Player/UseTurret[/Keyboard/t]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3629283465073232503}
+        m_TargetAssemblyTypeName: PlayerUIListener, Assembly-CSharp
+        m_MethodName: PreviousItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: b7a26e25-a584-4b61-9b9a-e09b6e526e70
     m_ActionName: Player/Num1[/Keyboard/1]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3629283465073232503}
+        m_TargetAssemblyTypeName: PlayerUIListener, Assembly-CSharp
+        m_MethodName: NextItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 52b60ef3-0c7c-4a42-acbf-d725d31dedd9
     m_ActionName: Player/Num2[/Keyboard/2]
   - m_PersistentCalls:
@@ -998,6 +1022,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8922995540805740514, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
   m_PrefabInstance: {fileID: 8538479512827073098}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3629283465073232503 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4909781169431746621, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+  m_PrefabInstance: {fileID: 8538479512827073098}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9122888633193452753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f284e77e848ec4b8c35f7132d7a21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5923882439087954011 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2615217345970375185, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
