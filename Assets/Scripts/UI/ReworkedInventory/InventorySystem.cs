@@ -13,6 +13,11 @@ public class InventorySystem : MonoBehaviour
     private Dictionary<Type, int> amounts = new Dictionary<Type, int>();
     private UpdateUIAmountsEvent uiEvent = new UpdateUIAmountsEvent();
 
+    private void Awake()
+    {
+        LoadPrefabs();
+    }
+
     // add item
     public bool Add<T>(int amount = 1) where T : Item
     {

@@ -11,21 +11,27 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventSystem.Instance.RegisterListener<StartLobbyEvent>(EnterLobby);
+        EventSystem.Instance.RegisterListener<EnterLobbyEvent>(EnterLobby);
+        EventSystem.Instance.RegisterListener<JoinedLobbyEvent>(JoinedLobby);
         EventSystem.Instance.RegisterListener<LeaveLobbyEvent>(LeaveLobby);
     }
 
-    public void EnterLobby(StartLobbyEvent lobbyEvent)
+    public void EnterLobby(EnterLobbyEvent lobbyEvent)
     {
-        if (lobbyEvent.IsNameLongEnough)
-        {
-            mainMenu.SetActive(false);
-            lobbyMenu.SetActive(true);
-        } 
-        else
+        if (lobbyEvent.IsNameLongEnough == false)
         {
             Debug.Log("Server name is too short.");
         }
+        else
+        {
+            Debug.Log("Trying to enter lobby.");
+        }
+    }
+
+    public void JoinedLobby(JoinedLobbyEvent lobbyEvent)
+    {
+        mainMenu.SetActive(false);
+        lobbyMenu.SetActive(true);
     }
 
     public void LeaveLobby(LeaveLobbyEvent lobbyEvent)
