@@ -42,7 +42,7 @@ public class Minimap : MonoBehaviour
                 Vector3 directionToOtherPlayer = Ship.transform.position - Player.transform.position;
                 otherPlayerPos.x = directionToOtherPlayer.x;
                 otherPlayerPos.y = directionToOtherPlayer.z;
-                otherPlayerMarker.anchoredPosition = shipMarkerPos * 1f;
+                otherPlayerMarker.anchoredPosition = otherPlayerPos * 1f;
             }
         }
     }
