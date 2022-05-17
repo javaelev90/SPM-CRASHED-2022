@@ -12,7 +12,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [SerializeField] private LayerMask spaceShipLayer;
 
     [SerializeField] private float pickUpDistance = 3;
-    [SerializeField] private Inventory inventory;
     [SerializeField] public AudioSource source;
     [SerializeField] public AudioClip Goo;
     [SerializeField] public AudioClip Metal;
@@ -46,11 +45,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
         source = GetComponent<AudioSource>();
-        if (photonView.IsMine)
-        {
-            //GameObject.FindGameObjectWithTag("InventoryHandler").GetComponent<Handler>().inventory = inventory;
-        }
-        inventorySystem.LoadPrefabs();
     }
 
     private void Update()
@@ -81,31 +75,24 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
             if (typ == Pickup_Typs.Pickup.Metal)
             {
-                inventory.addMetal(pickUpComponent.amount);
                 inventorySystem.Add<Metal>(pickUpComponent.amount);
-                //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
                 source.PlayOneShot(Metal);
             }
             else if (typ == Pickup_Typs.Pickup.GreenGoo)
             {
-                inventory.addGreenGoo(pickUpComponent.amount);
                 inventorySystem.Add<GreenGoo>(pickUpComponent.amount);
-                //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
                 source.PlayOneShot(Goo);
             }
             else if (typ == Pickup_Typs.Pickup.AlienMeat)
             {
-                inventory.addAlienMeat(pickUpComponent.amount);
                 inventorySystem.Add<AlienMeat>(pickUpComponent.amount);
-                //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
                 source.PlayOneShot(Meat);
             }
             else if (typ == Pickup_Typs.Pickup.Revive)
             {
-                inventory.HasReviveBadge = true;
                 inventorySystem.Add<ReviveBadge>();
                 otherPlayer = pickUpComponent.getPlayerToRevive();
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
@@ -117,12 +104,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
     {
         if (PickUpHitCheck(spaceShipLayer))
         {
-            if (inventory.HasReviveBadge)
-            {
-                inventory.HasReviveBadge = false;
-                otherPlayer.GetComponent<PhotonView>().RPC("ReviveRPC", RpcTarget.AllViaServer, transform.position);
-            }
-
             if (inventorySystem.Amount<ReviveBadge>() > 0)
             {
                 inventorySystem.Remove<ReviveBadge>();
@@ -131,6 +112,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
         }
     }
 
+    //legacy
     public void Cook()
     {
         if (PickUpHitCheck(fireLayer))
@@ -141,9 +123,9 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     public void Eat()
     {
-        if (inventory.CookedAlienMeat > 0)
+        if (inventorySystem.Amount<AlienMeat>() > 0)
         {
-            inventory.eat();
+            inventorySystem.Remove<AlienMeat>();
             photonView.RPC("AddHealth", RpcTarget.All, 1);
         }
     }
