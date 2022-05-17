@@ -134,7 +134,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
                     break;
                 case 2:
                     RoatateCamera();
-                    EngineerUseTurretHandling();
+                    //EngineerUseTurretHandling();
                     break;
             }
         }
@@ -207,7 +207,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
 
 
-    public void EngineerUseTurretHandling()
+    public void EngineerUseTurretHandling(InputAction.CallbackContext ctx)
     {
         RoatateCamera();
         PlayerRotation();
@@ -218,18 +218,20 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
         if (engineerRef.GetComponent<Engineer>().isUsingTurret == true)
         {
-            // Rotate the turret towards where the player is looking
-            Physics.Raycast(muzzlePoint.transform.position, muzzlePoint.transform.forward, out RaycastHit hit, 20f, enemyLayer);
-            // skapa nytt obj framf?r muzzle som direction, origin ?r muzzlepoint
-            Vector3 lookDirection = (muzzlePoint.transform.position - transform.position).normalized;
-            Quaternion rotateTo = Quaternion.LookRotation(lookDirection, turretBodyTransform.transform.up);
-            turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
+                // Rotate the turret towards where the player is looking
+            //Physics.Raycast(muzzlePoint.transform.position, muzzlePoint.transform.forward, out RaycastHit hit, 20f, enemyLayer);
+                // skapa nytt obj framf?r muzzle som direction, origin ?r muzzlepoint
+            //Vector3 lookDirection = (muzzlePoint.transform.position - transform.position).normalized;
+            //Quaternion rotateTo = Quaternion.LookRotation(lookDirection, turretBodyTransform.transform.up);
+            //turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
 
-            if (playerActions.Player.Shoot.IsPressed())
+            if (ctx.performed) //playerActions.Player.Shoot.IsPressed()
             {
-                //turretObjRef.TurretShoot();
                 isShootingTurret = true;
-                //Debug.Log("Pew pew");
+            }
+            if (ctx.canceled)
+            {
+                isShootingTurret = false;
             }
             Debug.Log("isShootingTurret " + isShootingTurret);
 
@@ -249,6 +251,19 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
 
 
+    }
+
+    public void EngineerUseTurretLooking()
+    {
+        if (engineerRef.GetComponent<Engineer>().isUsingTurret == true)
+        {
+            // Rotate the turret towards where the player is looking
+            Physics.Raycast(muzzlePoint.transform.position, muzzlePoint.transform.forward, out RaycastHit hit, 20f, enemyLayer);
+            // skapa nytt obj framf?r muzzle som direction, origin ?r muzzlepoint
+            Vector3 lookDirection = (muzzlePoint.transform.position - transform.position).normalized;
+            Quaternion rotateTo = Quaternion.LookRotation(lookDirection, turretBodyTransform.transform.up);
+            turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
+        }
     }
 
     public void MoveCamera(InputAction.CallbackContext obj)

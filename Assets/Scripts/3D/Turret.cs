@@ -20,27 +20,28 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private int turretDamage;
     [SerializeField] private int turretDamageIncreaseAtUpgrade;
     [SerializeField] private int turretHealthIncreaseAtUpgrade;
-    
-    private GameObject emptyTarget;
     [SerializeField] public Transform useTurretPosition;
     [SerializeField] public Transform useTurretBody;
 
+    private GameObject emptyTarget;
+    private Engineer engineerRef;
+
     public bool IsPlaced { get; set; }
     private float counter;
-    private bool isMine;
+    //private bool isMine;
     public bool isCurrent;
 
     // Start is called before the first frame update
     void Awake()
     {
         counter = fireTimer;
-        isMine = photonView.IsMine;
+        //isMine = photonView.IsMine;
         emptyTarget = new GameObject();
         isCurrent = false;
         emptyTarget.transform.position = transform.forward * 3f;
         EventSystem.Instance.RegisterListener<TurretDamageUpgradeEvent>(DamageUpgrade);
         EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(HealthUpgrade);
-        eng = FindObjectOfType<Engineer>();
+        engineerRef = FindObjectOfType<Engineer>();
     }
 
     public void DamageUpgrade(TurretDamageUpgradeEvent turretDamageUpgrade)
@@ -109,11 +110,6 @@ public class Turret : MonoBehaviourPunCallbacks
         //rotateTo.z = ClampAngle(rotateTo.z, -90f, 90f);
     }
 
-    private Engineer eng;
-    private Controller3D engobj;
-
-    
-
     // Update is called once per frame
     void Update()
     {
@@ -121,29 +117,16 @@ public class Turret : MonoBehaviourPunCallbacks
 
         FindTargets();
 
-        //counter -= Time.deltaTime;
-        //eng = engobj.GetComponent<Engineer>();
+        // If the turret is in auto-mode (targets enemies automatically)
         if (currentTarget.position != emptyTarget.transform.position)
         {
-            //if (Vector3.Distance(currentTarget.transform.position, transform.position) > radius)
-            //{
-            //    currentTarget = transform;
-            //}
-
             //ClampRotBody();
 
             counter -= Time.deltaTime;
-            if (counter <= 0f)
-            {
-                GameObject bullet = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + "Bullet", turretMuzzlePoint.transform.position, turretBody.transform.rotation);
-                Projectile projectile = bullet.GetComponent<Projectile>();
-                projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
-                projectile.DamageDealer = turretDamage;
-                projectile.IsShot = true;
-                counter = fireTimer;
-                //Debug.Log("Is shooting");
+            //if (counter <= 0f)
+            //{
                 TurretShoot();
-            }
+            //}
 
         }
         else
@@ -151,44 +134,35 @@ public class Turret : MonoBehaviourPunCallbacks
             //turretBody.transform.LookAt(Vector3.forward, Vector3.up);
         }
 
-        //eng = engobj.GetComponent<Engineer>();
-        Debug.Log("isShootingTurret in turret script " + eng.isShootingTurret);
-
-        if (eng.isShootingTurret == true)
+        // If the Engineer is using the turret and shooting
+        if (engineerRef.isUsingTurret == true)
         {
-            Debug.Log("FUCK YOU ");
             counter -= Time.deltaTime;
-            if (counter <= 0f)
+            if (engineerRef.isShootingTurret == true)
             {
-                TurretShoot();
+                //if (counter <= 0f)
+                //{
+                    TurretShoot();
+                //}
             }
-
-
         }
 
         Debug.DrawRay(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
-        //if (IsPlaced)
-        //{
-        //}
-
-    }
-
-    private void Start()
-    {
-        //eng = engobj.GetComponent<Engineer>();
     }
 
     public void TurretShoot()
     {
-        // Debug.Log("AAAAAAAAAA");
-        GameObject bullet = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + "Bullet", turretMuzzlePoint.transform.position, turretBody.transform.rotation); //Skjuter inte fr?n muzzlepoint
-        Projectile projectile = bullet.GetComponent<Projectile>();
-        projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f; // Skjuter i fel riktning
-        projectile.DamageDealer = turretDamage;
-        projectile.IsShot = true;
-        counter = fireTimer;
-        Debug.Log("Is shooting");
-
+        if (counter <= 0f)
+        {
+            GameObject bullet = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + "Bullet", turretMuzzlePoint.transform.position, turretBody.transform.rotation);
+            Projectile projectile = bullet.GetComponent<Projectile>();
+            projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
+            projectile.DamageDealer = turretDamage;
+            projectile.IsShot = true;
+            counter = fireTimer;
+            Debug.Log("Is shooting");
+        }
+        
     }
 
     private void OnDrawGizmos()
