@@ -8,7 +8,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     [Header("Required components")]
     [SerializeField] private HealthBarHandler healthBarHandler;
 
-    AudioSource source;
+    protected AudioSource source;
     public AudioClip hit;
 
     [Header("Item drop")]
@@ -71,12 +71,22 @@ public class HealthHandler : MonoBehaviourPunCallbacks
 
     private void UpdateHealthBar()
     {
-        healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+        if (gameObject.CompareTag("Player"))
+        {
+            if (photonView.IsMine)
+            {
+                healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+            }
+        }
+        else
+        {
+            healthBarHandler.SetHealthBarValue((float)CurrentHealth / MaxHealth);
+        }
     }
 
     protected void InstantiateRoomObject(object[] parameters)
     {
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + dropOffsetY, transform.position.z);
-        PhotonNetwork.InstantiateRoomObject("Prefabs/Pickups/" + itemDropPrefab.name, spawnPosition, Quaternion.identity, 0, parameters);
+        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + itemDropPrefab.name, spawnPosition, Quaternion.identity, 0, parameters);
     }
 }

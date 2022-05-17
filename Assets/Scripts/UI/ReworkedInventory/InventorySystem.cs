@@ -1,26 +1,18 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System.IO;
+using EventCallbacksSystem;
 
-
-[CreateAssetMenu(fileName = "New Inventory Object", menuName = "InventorySystem/Inventory")]
-public class InventorySystem : ScriptableObject
+public class InventorySystem : MonoBehaviour
 {
-    [SerializeField] private int alienMeatAmount = 10;
-    [SerializeField] private int metalAmount = 10;
-    [SerializeField] private int greenGoo = 10;
-
-
-    // dictionary for ability
-    // dictionary for attributes
-
+  
     // dictionary for prefabs
     private Dictionary<Type, GameObject> prefabs;
 
     // dictionary for amounts
     private Dictionary<Type, int> amounts = new Dictionary<Type, int>();
+    private UpdateUIAmountsEvent uiEvent = new UpdateUIAmountsEvent();
 
     private void Awake()
     {
@@ -33,35 +25,43 @@ public class InventorySystem : ScriptableObject
     // add item
     public bool Add<T>(int amount = 1) where T : Item
     {
+        return AddAmount<T>(amount);
+    }
+
+    private bool AddAmount<T>(int amount = 1) where T : Item
+    {
         Type keyType = typeof(T);
         if (amounts.ContainsKey(keyType))
         {
             amounts[keyType] += amount;
-            Debug.Log("Added " + amount + ": " + keyType);
+            uiEvent.Amounts = amounts;
+            EventSystem.Instance.FireEvent(uiEvent);
             return true;
         }
         return false;
     }
 
     // remove item
-    public bool Remove<T>(int amount) where T : Item
+    public bool Remove<T>(int amount = 1) where T : Item
     {
         return RemoveAmount<T>(amount);
     }
 
-    private bool RemoveAmount<T>(int amount = 1) where T : Item
+    private bool RemoveAmount<T>(int amount) where T : Item
     {
         Type keyType = typeof(T);
         int availableAmount = AvailableAmount<T>();
         if (availableAmount != -1 && availableAmount - amount >= 0)
         {
             amounts[keyType] -= amount;
+            uiEvent.Amounts = amounts;
+            EventSystem.Instance.FireEvent(uiEvent);
             return true;
         }
         return false;
     }
 
-    public int Amount<T>() where T: Item
+    public int Amount<T>() where T : Item
     {
         return AvailableAmount<T>();
     }
@@ -83,7 +83,6 @@ public class InventorySystem : ScriptableObject
         Type keyType = typeof(T);
         if (prefabs.ContainsKey(keyType) && AvailableAmount<T>() != -1)
         {
-            RemoveAmount<T>();
             return prefabs[keyType].gameObject;
         }
         return new GameObject("EmptyObject");
@@ -92,6 +91,8 @@ public class InventorySystem : ScriptableObject
     [ContextMenu("LoadPrefabsToInventory")]
     public void LoadPrefabs()
     {
+
+
         if (prefabs == null)
         {
             prefabs = new Dictionary<Type, GameObject>();
@@ -127,13 +128,13 @@ public class InventorySystem : ScriptableObject
 
                 if (!amounts.ContainsKey(keyType))
                 {
-                    amounts.Add(keyType, 0);
+                    amounts.Add(keyType, 5);
                 }
             }
         }
 
-#if UNITY_EDITOR
-        EditorUtility.SetDirty(this);
-#endif
+        uiEvent.Amounts = amounts;
+        EventSystem.Instance.FireEvent(uiEvent);
+
     }
 }

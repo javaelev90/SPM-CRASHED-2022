@@ -139,6 +139,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Num1",
+                    "type": "Button",
+                    "id": "b7a26e25-a584-4b61-9b9a-e09b6e526e70",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Num2",
+                    "type": "Button",
+                    "id": "52b60ef3-0c7c-4a42-acbf-d725d31dedd9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -559,6 +577,28 @@
                     "action": "UseTurret",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2beb8f4f-de4f-4f2c-af06-f2cb6b362532",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Num1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b3bf921-aa77-4e0e-99f4-928a8cfa12ff",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Num2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -652,24 +692,6 @@
                     "type": "PassThrough",
                     "id": "d3babd0a-5cae-48b1-906c-b0804f017fda",
                     "expectedControlType": "Quaternion",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Num1",
-                    "type": "Button",
-                    "id": "07a6c378-410b-4abb-b71b-e864e344fbf1",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Num2",
-                    "type": "Button",
-                    "id": "f4e8b4b8-2d86-45cd-98bf-a8bfb5f02e22",
-                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -948,28 +970,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Submit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "dbb6d490-3120-4516-910d-deb716950e69",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "Num1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e1c14718-7b2d-4076-a3b6-81f209b2f09b",
-                    "path": "<Keyboard>/2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "Num2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

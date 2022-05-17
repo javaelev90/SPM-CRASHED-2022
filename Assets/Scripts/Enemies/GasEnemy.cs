@@ -127,7 +127,7 @@ public class GasEnemy : AIBaseLogic
             timeCounterWaypoint -= Time.deltaTime;
             if (timeCounterWaypoint <= 0f)
             {
-                wayPoint = wayPointSystem.NewRandomPosition;
+                wayPoint = wayPointSystem.GetNewPosition;
                 timeCounterWaypoint = timeToWayPoint;
             }
 

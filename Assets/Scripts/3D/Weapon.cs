@@ -15,6 +15,9 @@ public class Weapon : MonoBehaviour
     [Tooltip("If gun will shoot continuously when shoot button is pressed vs one shot per click.")]
     [SerializeField] public bool automaticWeapon = false;
     [SerializeField] LayerMask layersThatShouldBeHit;
+    [SerializeField] private int maxAmmo;
+    [SerializeField] private int currentAmmo;
+    private AudioClip clip;
 
     private float shotCooldown = 0f;
     public bool IsShooting { get; set; }
@@ -31,7 +34,6 @@ public class Weapon : MonoBehaviour
     void Start()
     {
         sourceOne = GetComponent<AudioSource>();
-     
     }
 
     private void Cooldown()
@@ -59,8 +61,7 @@ public class Weapon : MonoBehaviour
                 if (healthHandler)
                 {
                     Debug.Log("Hit the enemy.");
-                    AudioClip clip = GetAudioClip();
-                    sourceOne.PlayOneShot(clip);
+                    
                     healthHandler.TakeDamage(weaponDamage);
                 }
 
@@ -70,9 +71,12 @@ public class Weapon : MonoBehaviour
                     Debug.Log(ai.transform.name);
                     ai.FindAttackingTarget(transform);
                 }
+                
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;
+            clip = GetAudioClip();
+            sourceOne.PlayOneShot(clip);
         }
     }
 

@@ -51,11 +51,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (character == Character.SOLDIER)
         {
-            playerObject = PhotonNetwork.Instantiate("Prefabs/" + soldierPrefab.name, spawnPoint.position, spawnPoint.rotation);
+            playerObject = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + soldierPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
         else
         {
-            playerObject = PhotonNetwork.Instantiate("Prefabs/" + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
+            playerObject = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
 
     }

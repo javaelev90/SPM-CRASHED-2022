@@ -16,7 +16,7 @@ public class UIPickupMetal : MonoBehaviour
     // Start is called before the first frame update
 
     void OnTriggerEnter(Collider player){
-        if(done && player.CompareTag("Player"))
+        if(done && player.gameObject.GetComponent<Engineer>())
         {  
         done = false; 
     
