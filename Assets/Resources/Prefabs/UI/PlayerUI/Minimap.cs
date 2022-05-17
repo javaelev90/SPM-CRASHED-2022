@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Minimap : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-    [SerializeField] private GameObject otherPlayer;
+    public GameObject Player { get; set;}
+    public GameObject OtherPlayer { get; set;}
     public GameObject Ship { get; set; }
 
-    [SerializeField] private GameObject shipMarker;
+    [SerializeField] private RectTransform shipMarker;
     [SerializeField] private GameObject otherPlayerMarker;
 
     Vector2 shipMarkerPos;
@@ -24,24 +24,15 @@ public class Minimap : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        if (player.GetComponent<SoldierCharacter>())
-            otherPlayer = FindObjectOfType<Engineer>().gameObject;
-        else if (player.GetComponent<Engineer>())
-            otherPlayer.GetComponent<SoldierCharacter>();
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (Ship)
+        if (Ship && Player)
         {
-            Vector3 directionToShip = Ship.transform.position - player.transform.position;
+            Vector3 directionToShip = Ship.transform.position - Player.transform.position;
             shipMarkerPos.x = directionToShip.x;
             shipMarkerPos.y = directionToShip.z;
-            shipMarker.transform.position = shipMarkerPos * 1f;
+            shipMarker.anchoredPosition = shipMarkerPos * 1f;
         }
     }
 }

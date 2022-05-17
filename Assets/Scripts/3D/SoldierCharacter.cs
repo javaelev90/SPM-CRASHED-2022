@@ -22,6 +22,10 @@ public class SoldierCharacter : Controller3D
     {
         base.Awake();
         //weapon = GetComponent<Weapon>();
+        if (photonView.IsMine)
+            Minimap.Instance.Player = gameObject;
+        else
+            Minimap.Instance.OtherPlayer = gameObject;
     }
 
     protected override void Update()

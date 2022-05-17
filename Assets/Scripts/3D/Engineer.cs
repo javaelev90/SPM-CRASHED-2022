@@ -63,6 +63,10 @@ public class Engineer : Controller3D
     protected override void Awake()
     {
         base.Awake();
+        if (photonView.IsMine)
+            Minimap.Instance.Player = gameObject;
+        else
+            Minimap.Instance.OtherPlayer = gameObject;
     }
 
     // Update is called once per frame
