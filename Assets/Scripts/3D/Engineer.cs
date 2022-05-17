@@ -159,17 +159,10 @@ public class Engineer : Controller3D
                 //Debug.Log("released button should result in placing turret");
 
                 // if() //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
+
                 // If there are 3 placed turrets and a new one is placed, delete the first one
                 if (turretCount == maxTurretToSpawn && isTryingToPlaceTurret)  
                 {
-                    /*
-                    //Current Target Tree
-                    GameObject currentTree = trees[0];
-                    //Removeing the tree from the list
-                    trees.Remove(currentTree);
-                    Destroy(currentTree);
-                    */
-
                     GameObject turretToDestroy = objects[0];
                     objects.Remove(turretToDestroy);
                     PhotonNetwork.Destroy(turretToDestroy);
@@ -177,37 +170,40 @@ public class Engineer : Controller3D
                     //DequeueTurret();
                 }
 
-
-                turretObject = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
-
-                if (turretObject != null) //&& playerActions.Player.PlaceTurret.IsPressed() //Input.GetMouseButtonUp(1))
+                if (hit.distance < 1)
                 {
-                    turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
-                    turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.forward, Vector3.forward) * turretObject.transform.rotation;
-                    //if (hit.collider != null && hit.distance < 3f)
-                    //{
-                    //Debug.Log("turret should be placed");
-                    turretObject.transform.position = turretPos.transform.position;
-                    turretObject.GetComponent<Turret>().IsPlaced = true;
+                    turretObject = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
 
-                    // Add another turret to the queue and increase count of turrets
-                    turretCount++;
-                    objects.Add(turretObject);
-                    //turrets.Enqueue(turretObject);
+                    if (turretObject != null) //&& playerActions.Player.PlaceTurret.IsPressed() //Input.GetMouseButtonUp(1))
+                    {
+                        turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
+                        turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.forward, Vector3.forward) * turretObject.transform.rotation;
+                        //if (hit.collider != null && hit.distance < 3f)
+                        //{
+                        //Debug.Log("turret should be placed");
+                        turretObject.transform.position = turretPos.transform.position;
+                        turretObject.GetComponent<Turret>().IsPlaced = true;
 
-                    // Ta bort outline objectet
-                    isPressed = false;
+                        // Add another turret to the queue and increase count of turrets
+                        turretCount++;
+                        objects.Add(turretObject);
+                        //turrets.Enqueue(turretObject);
 
-                    //Destroy(outlinedTurret);
-                    PhotonNetwork.Destroy(outlinedTurret);
+                        // Ta bort outline objectet
+                        isPressed = false;
 
-                    // Reset targetTime
-                    targetTime = 1f;
+                        //Destroy(outlinedTurret);
+                        PhotonNetwork.Destroy(outlinedTurret);
 
-                    // Is no longer trying to place a turret
-                    isTryingToPlaceTurret = false;
+                        // Reset targetTime
+                        targetTime = 1f;
 
+                        // Is no longer trying to place a turret
+                        isTryingToPlaceTurret = false;
+
+                    }
                 }
+                
 
             }
 
