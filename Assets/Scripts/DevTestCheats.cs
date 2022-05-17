@@ -8,19 +8,16 @@ public class DevTestCheats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventSystem.Instance.RegisterListener<DevToolEvent>(DevToolOn);
+        EventSystem.Instance.RegisterListener<ImmortalEvent>(DevToolOn);
     }
 
     // Update is called once per frame
 
 
 
-    public void DevToolOn(DevToolEvent on)
+    public void DevToolOn(ImmortalEvent immortal)
     {
-        devCanvas.SetActive(on.On);
+        devCanvas.SetActive(!devCanvas.activeSelf); ;
     }
-    public void BecomeImmortal(bool immortal)
-    {
-        EventSystem.Instance.FireEvent(new ImmortalEvent(immortal));
-    }
+  
 }

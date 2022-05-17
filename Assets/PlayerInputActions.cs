@@ -181,9 +181,36 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""test"",
+                    ""name"": ""Immortal"",
                     ""type"": ""Button"",
                     ""id"": ""817f9463-a47f-4810-a8e8-b907d9393ce4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GreenGoo"",
+                    ""type"": ""Button"",
+                    ""id"": ""318a7f1e-df3a-4d27-b7a4-a6aa454ee991"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Metal"",
+                    ""type"": ""Button"",
+                    ""id"": ""c77aa0ab-75b0-4018-ac19-2a1b783b64c1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Beef"",
+                    ""type"": ""Button"",
+                    ""id"": ""a2465578-b245-43de-aafa-a1a06f7cbd47"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -634,22 +661,44 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d2669431-3ed6-407e-b7dc-a6e329d165b2"",
-                    ""path"": ""<Keyboard>/rightBracket"",
+                    ""path"": ""<Keyboard>/i"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
-                    ""action"": ""test"",
+                    ""action"": ""Immortal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""183188f5-7f34-4add-8ea5-4f82f6912546"",
-                    ""path"": """",
+                    ""id"": ""ea93892e-1451-4100-b47b-ba003b52008c"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""GreenGoo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96df7258-566f-4500-85e3-5e79a4c00211"",
+                    ""path"": ""<Keyboard>/m"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""test"",
+                    ""action"": ""Metal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5fdd88f8-93f5-4c5f-a70e-b5a45b6e24b9"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Beef"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1078,7 +1127,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_UseTurret = m_Player.FindAction("UseTurret", throwIfNotFound: true);
         m_Player_Num1 = m_Player.FindAction("Num1", throwIfNotFound: true);
         m_Player_Num2 = m_Player.FindAction("Num2", throwIfNotFound: true);
-        m_Player_test = m_Player.FindAction("test", throwIfNotFound: true);
+        m_Player_Immortal = m_Player.FindAction("Immortal", throwIfNotFound: true);
+        m_Player_GreenGoo = m_Player.FindAction("GreenGoo", throwIfNotFound: true);
+        m_Player_Metal = m_Player.FindAction("Metal", throwIfNotFound: true);
+        m_Player_Beef = m_Player.FindAction("Beef", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1167,7 +1219,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_UseTurret;
     private readonly InputAction m_Player_Num1;
     private readonly InputAction m_Player_Num2;
-    private readonly InputAction m_Player_test;
+    private readonly InputAction m_Player_Immortal;
+    private readonly InputAction m_Player_GreenGoo;
+    private readonly InputAction m_Player_Metal;
+    private readonly InputAction m_Player_Beef;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1189,7 +1244,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @UseTurret => m_Wrapper.m_Player_UseTurret;
         public InputAction @Num1 => m_Wrapper.m_Player_Num1;
         public InputAction @Num2 => m_Wrapper.m_Player_Num2;
-        public InputAction @test => m_Wrapper.m_Player_test;
+        public InputAction @Immortal => m_Wrapper.m_Player_Immortal;
+        public InputAction @GreenGoo => m_Wrapper.m_Player_GreenGoo;
+        public InputAction @Metal => m_Wrapper.m_Player_Metal;
+        public InputAction @Beef => m_Wrapper.m_Player_Beef;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1250,9 +1308,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Num2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
                 @Num2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
                 @Num2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
-                @test.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
-                @test.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
-                @test.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
+                @Immortal.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnImmortal;
+                @Immortal.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnImmortal;
+                @Immortal.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnImmortal;
+                @GreenGoo.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGreenGoo;
+                @GreenGoo.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGreenGoo;
+                @GreenGoo.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGreenGoo;
+                @Metal.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMetal;
+                @Metal.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMetal;
+                @Metal.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMetal;
+                @Beef.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBeef;
+                @Beef.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBeef;
+                @Beef.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBeef;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1308,9 +1375,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Num2.started += instance.OnNum2;
                 @Num2.performed += instance.OnNum2;
                 @Num2.canceled += instance.OnNum2;
-                @test.started += instance.OnTest;
-                @test.performed += instance.OnTest;
-                @test.canceled += instance.OnTest;
+                @Immortal.started += instance.OnImmortal;
+                @Immortal.performed += instance.OnImmortal;
+                @Immortal.canceled += instance.OnImmortal;
+                @GreenGoo.started += instance.OnGreenGoo;
+                @GreenGoo.performed += instance.OnGreenGoo;
+                @GreenGoo.canceled += instance.OnGreenGoo;
+                @Metal.started += instance.OnMetal;
+                @Metal.performed += instance.OnMetal;
+                @Metal.canceled += instance.OnMetal;
+                @Beef.started += instance.OnBeef;
+                @Beef.performed += instance.OnBeef;
+                @Beef.canceled += instance.OnBeef;
             }
         }
     }
@@ -1457,7 +1533,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnUseTurret(InputAction.CallbackContext context);
         void OnNum1(InputAction.CallbackContext context);
         void OnNum2(InputAction.CallbackContext context);
-        void OnTest(InputAction.CallbackContext context);
+        void OnImmortal(InputAction.CallbackContext context);
+        void OnGreenGoo(InputAction.CallbackContext context);
+        void OnMetal(InputAction.CallbackContext context);
+        void OnBeef(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

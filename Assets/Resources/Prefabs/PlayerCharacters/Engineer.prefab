@@ -555,6 +555,7 @@ MonoBehaviour:
   bulletSpeed: 0
   skinWidth: 0.01
   groundCheckDistance: 0.1
+  playerGUI: {fileID: 0}
   isFPS: 1
   camPositionFPS: {fileID: 5125041606094569842}
   cameraOffsetTPS: {x: 0, y: 0, z: 0}
@@ -937,7 +938,19 @@ MonoBehaviour:
     m_ActionId: 52b60ef3-0c7c-4a42-acbf-d725d31dedd9
     m_ActionName: Player/Num2[/Keyboard/2]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1484468382420821516}
+        m_TargetAssemblyTypeName: Controller3D, Assembly-CSharp
+        m_MethodName: DevTool
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 817f9463-a47f-4810-a8e8-b907d9393ce4
     m_ActionName: Player/test[/Keyboard/rightBracket]
   m_NeverAutoSwitchControlSchemes: 0

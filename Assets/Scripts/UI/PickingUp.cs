@@ -211,4 +211,19 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 pickUpDistance,
                 layer, QueryTriggerInteraction.Ignore);
     }
+
+    public void AddMetalDEV()
+    {
+        inventorySystem.Add<Metal>(1);
+    }
+
+    public void AddGooDEV()
+    {
+        inventorySystem.Add<GreenGoo>(1);
+    }
+
+    public void AddMeatDEV()
+    {
+        inventorySystem.Add<AlienMeat>(1);
+    }
 }
