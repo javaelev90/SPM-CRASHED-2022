@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 427306726}
-  m_IndirectSpecularColor: {r: 0.12731646, g: 0.13414545, b: 0.121078685, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731604, g: 0.1341452, b: 0.12107857, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5228,6 +5228,10 @@ PrefabInstance:
     - target: {fileID: 2410566175000735422, guid: 23b77e5d5d69e0942b9f5559fdf976ae, type: 3}
       propertyPath: m_Name
       value: PickupUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2410566175000735422, guid: 23b77e5d5d69e0942b9f5559fdf976ae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23b77e5d5d69e0942b9f5559fdf976ae, type: 3}
@@ -39970,7 +39974,6 @@ MonoBehaviour:
   - {fileID: 1011641359}
   - {fileID: 1016100106}
   objectPools: []
-  prefabPath: Prefabs/Pickups/
 --- !u!4 &771109146
 Transform:
   m_ObjectHideFlags: 0
@@ -43363,7 +43366,7 @@ Transform:
   - {fileID: 409178191}
   - {fileID: 1229971753}
   m_Father: {fileID: 0}
-  m_RootOrder: 33
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &850842417
 PrefabInstance:
@@ -88960,7 +88963,7 @@ Transform:
   - {fileID: 2065979328}
   - {fileID: 1937852703}
   m_Father: {fileID: 0}
-  m_RootOrder: 32
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1564234904
 GameObject:
@@ -95538,7 +95541,7 @@ Transform:
   - {fileID: 764920754}
   - {fileID: 854937811}
   m_Father: {fileID: 0}
-  m_RootOrder: 34
+  m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0.233, y: 3.787, z: 1.306}
 --- !u!1 &1753609100
 GameObject:
@@ -101344,7 +101347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 690320899291289517, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
       propertyPath: m_RootOrder
-      value: 35
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 690320899291289517, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
       propertyPath: m_AnchorMax.x
@@ -110657,7 +110660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 1520749292}
   objectPool: {fileID: 0}
-  soldierPrefab: {fileID: 9218574915160184169, guid: 5903ded0fe4bf55438c0f50d8150710f, type: 3}
+  soldierPrefab: {fileID: 4717172599527124038, guid: 27324ed1ee365a5449c5e0f3b3c3d0e3, type: 3}
   engineerPrefab: {fileID: 5125041606170365157, guid: 5854e12e70968754c943fad24d996f6c, type: 3}
   spawnPoint: {fileID: 1913197448}
   objectInstantiater: {fileID: 771109145}
@@ -120210,7 +120213,7 @@ Transform:
   m_Children:
   - {fileID: 1140545107}
   m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2022151310
 GameObject:

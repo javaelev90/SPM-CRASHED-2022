@@ -162,7 +162,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-
             GameObject go;
             switch (itemTypeToDrop)
             {
