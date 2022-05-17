@@ -60,7 +60,9 @@ public class PlayerUIListener : MonoBehaviour
     {
         if (ctx.started)
         {
-            slotItems[selectedIndex].DeselectItem();
+            if (selectedIndex != 0)
+                slotItems[selectedIndex].DeselectItem();
+
             if (selectedIndex > 0)
                 slotItems[--selectedIndex].SelectItem();
 
@@ -77,9 +79,10 @@ public class PlayerUIListener : MonoBehaviour
     {
         if (ctx.started)
         {
-            slotItems[selectedIndex].DeselectItem();
+            if (selectedIndex != slotItems.Count - 1)
+                slotItems[selectedIndex].DeselectItem();
 
-            if (selectedIndex < slotItems.Count)
+            if (selectedIndex < slotItems.Count - 1)
                 slotItems[++selectedIndex].SelectItem();
 
         }
