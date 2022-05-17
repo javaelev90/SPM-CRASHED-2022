@@ -22,8 +22,23 @@ public class SoldierCharacter : Controller3D
     {
         if (photonView.IsMine)
             Minimap.Instance.Player = gameObject;
-        else
-            Minimap.Instance.OtherPlayer = gameObject;
+
+        StartCoroutine(SearchOtherPlayer());
+    }
+
+
+    IEnumerator SearchOtherPlayer()
+    {
+        while (true)
+        {
+            Minimap.Instance.OtherPlayer = FindObjectOfType<Engineer>()?.gameObject;
+            if (Minimap.Instance.OtherPlayer != null)
+            {
+                break;
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     protected override void Awake()

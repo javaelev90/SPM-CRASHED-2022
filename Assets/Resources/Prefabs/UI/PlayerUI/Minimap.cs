@@ -15,6 +15,7 @@ public class Minimap : MonoBehaviour
     Vector2 otherPlayerPos;
 
     public static Minimap Instance { get; private set; }
+
     private void OnEnable()
     {
         if (Instance == null)
@@ -39,7 +40,7 @@ public class Minimap : MonoBehaviour
 
             if (OtherPlayer)
             {
-                Vector3 directionToOtherPlayer = Ship.transform.position - Player.transform.position;
+                Vector3 directionToOtherPlayer = OtherPlayer.transform.position - Player.transform.position;
                 otherPlayerPos.x = directionToOtherPlayer.x;
                 otherPlayerPos.y = directionToOtherPlayer.z;
                 otherPlayerMarker.anchoredPosition = otherPlayerPos * 1f;
