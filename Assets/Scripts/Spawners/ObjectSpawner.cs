@@ -104,16 +104,7 @@ public class ObjectSpawner : MonoBehaviour
         Vector3 xzPosition = Random.insideUnitCircle * spawnRadius;
         float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x + xzPosition.x, 0f, transform.position.z + xzPosition.z));
         Vector3 spawnPosition = new Vector3(transform.position.x + xzPosition.x, y + yOffset, transform.position.z + xzPosition.z);
-
-        if (wayPoints.Count > 0)
-        {
-            objectPool.SpawnWithParameters(spawnPosition, transform.rotation, photonViewTargetId, new object[] { wayPointSpawnRadius, GetWayPointPositions().ToArray() });
-
-        }
-        else
-        {
-            objectPool.Spawn(spawnPosition, transform.rotation, photonViewTargetId);
-        }
+        SpawnAtPosition(spawnPosition);
     }
 
     private void SpawnObjectsOnPosition()
@@ -122,15 +113,20 @@ public class ObjectSpawner : MonoBehaviour
 
         float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x, 0f, transform.position.z));
         Vector3 spawnPosition = new Vector3(transform.position.x, y + yOffset, transform.position.z);
+        SpawnAtPosition(spawnPosition);
 
-        if(wayPoints.Count > 0)
+    }
+
+    private void SpawnAtPosition(Vector3 position)
+    {
+        if (wayPoints.Count > 0)
         {
-            objectPool.SpawnWithParameters(spawnPosition, transform.rotation, photonViewTargetId, new object[] { wayPointSpawnRadius, GetWayPointPositions().ToArray() });
+            objectPool.SpawnWithParameters(position, transform.rotation, photonViewTargetId, new object[] { wayPointSpawnRadius, GetWayPointPositions().ToArray() });
 
         }
         else
         {
-            objectPool.Spawn(spawnPosition, transform.rotation, photonViewTargetId);
+            objectPool.Spawn(position, transform.rotation, photonViewTargetId);
         }
     }
 
