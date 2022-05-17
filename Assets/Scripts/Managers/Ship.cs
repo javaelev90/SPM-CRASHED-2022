@@ -30,6 +30,7 @@ public class Ship : MonoBehaviour
 
     void Start()
     {
+        Minimap.Instance.Ship = gameObject;
         EventSystem.Instance.RegisterListener<AttachPartEvent>(newPartObtained);
         nextUpgrade = 0;
         StartCoroutine(Wait(5));
