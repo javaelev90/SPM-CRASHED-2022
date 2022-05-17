@@ -117,7 +117,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
     {
         if (PickUpHitCheck(fireLayer))
         {
-            inventory.cook();
         }
     }
 
