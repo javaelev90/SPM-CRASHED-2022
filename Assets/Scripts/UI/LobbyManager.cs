@@ -54,7 +54,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             PhotonNetwork.JoinOrCreateRoom(lobbyNameInput.text, roomOptions, null, null);
             inputIsLongEnough = true;
         }
-        EventSystem.Instance.FireEvent(new StartLobbyEvent(inputIsLongEnough));
+        EventSystem.Instance.FireEvent(new EnterLobbyEvent(inputIsLongEnough));
     }
 
     public void SetPlayerReady(bool ready, string userId)
@@ -72,6 +72,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined a room successfully!");
+        EventSystem.Instance.FireEvent(new JoinedLobbyEvent());
         if (IsMaster)
         {
             AddPlayer(PhotonNetwork.LocalPlayer);

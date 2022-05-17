@@ -114,7 +114,6 @@ public class ObjectSpawner : MonoBehaviour
         float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x, 0f, transform.position.z));
         Vector3 spawnPosition = new Vector3(transform.position.x, y + yOffset, transform.position.z);
         SpawnAtPosition(spawnPosition);
-
     }
 
     private void SpawnAtPosition(Vector3 position)
@@ -122,7 +121,6 @@ public class ObjectSpawner : MonoBehaviour
         if (wayPoints.Count > 0)
         {
             objectPool.SpawnWithParameters(position, transform.rotation, photonViewTargetId, new object[] { wayPointSpawnRadius, GetWayPointPositions().ToArray() });
-
         }
         else
         {
