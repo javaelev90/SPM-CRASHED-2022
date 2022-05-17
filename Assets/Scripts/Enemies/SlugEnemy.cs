@@ -27,7 +27,6 @@ public class SlugEnemy : AIBaseLogic
         maxBlowUpRadius = viewRadius / 1.5f;
         wayPoint = wayPointSystem.GetNewPosition;
         timeCounterExplosion = timeToExplosion;
-        Debug.Log("root " + root.name);
         source = GetComponent<AudioSource>();
 
     }

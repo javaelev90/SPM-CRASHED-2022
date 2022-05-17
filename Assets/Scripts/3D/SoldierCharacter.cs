@@ -18,14 +18,19 @@ public class SoldierCharacter : Controller3D
 
     private float shotCooldown = 0f;
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-        //weapon = GetComponent<Weapon>();
         if (photonView.IsMine)
             Minimap.Instance.Player = gameObject;
         else
             Minimap.Instance.OtherPlayer = gameObject;
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        //weapon = GetComponent<Weapon>();
+       
     }
 
     protected override void Update()

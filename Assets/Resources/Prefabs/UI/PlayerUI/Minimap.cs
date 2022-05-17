@@ -9,7 +9,7 @@ public class Minimap : MonoBehaviour
     public GameObject Ship { get; set; }
 
     [SerializeField] private RectTransform shipMarker;
-    [SerializeField] private GameObject otherPlayerMarker;
+    [SerializeField] private RectTransform otherPlayerMarker;
 
     Vector2 shipMarkerPos;
     Vector2 otherPlayerPos;
@@ -27,12 +27,23 @@ public class Minimap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Ship && Player)
+        if (Player)
         {
-            Vector3 directionToShip = Ship.transform.position - Player.transform.position;
-            shipMarkerPos.x = directionToShip.x;
-            shipMarkerPos.y = directionToShip.z;
-            shipMarker.anchoredPosition = shipMarkerPos * 1f;
+            if (Ship)
+            {
+                Vector3 directionToShip = Ship.transform.position - Player.transform.position;
+                shipMarkerPos.x = directionToShip.x;
+                shipMarkerPos.y = directionToShip.z;
+                shipMarker.anchoredPosition = shipMarkerPos * 1f;
+            }
+
+            if (OtherPlayer)
+            {
+                Vector3 directionToOtherPlayer = Ship.transform.position - Player.transform.position;
+                otherPlayerPos.x = directionToOtherPlayer.x;
+                otherPlayerPos.y = directionToOtherPlayer.z;
+                otherPlayerMarker.anchoredPosition = shipMarkerPos * 1f;
+            }
         }
     }
 }
