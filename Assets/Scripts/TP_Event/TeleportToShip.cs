@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EventCallbacksSystem;
 
 public class TeleportToShip : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class TeleportToShip : MonoBehaviour
     public GameObject soldierTPPosition;
     public GameObject engenerTPPosition;
 
-
-    public void TP()
+    private void Start()
+    {
+        EventSystem.Instance.RegisterListener<TeleportToShipEvent>(Teleport);
+    }
+    public void Teleport(TeleportToShipEvent teleport)
     {
         //soldier.transform.position = soldierTPPosition.transform.position;
         playerObject = GameManager.playerObject;

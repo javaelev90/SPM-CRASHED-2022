@@ -59,6 +59,10 @@ namespace EventCallbacksSystem
         }
     }
 
+    public class TeleportToShipEvent : Event
+    {
+    }
+
     public class PlayerHealthUpgradeEvent : Event { }
 
     public class GunDamageUpgradeEvent : Event { }

@@ -7,6 +7,8 @@ public class UpgradePanel : MonoBehaviour
 {
     [SerializeField] private GameObject Panel;
     [SerializeField] private GameObject ErrorMsg;
+    [SerializeField] private GameObject CostInfo;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,19 +25,25 @@ public class UpgradePanel : MonoBehaviour
     // When hitting X
     public void ClosePanel()
     {
-        ErrorMsg?.SetActive(false);
+        Debug.Log(1);
+        ErrorMsg.SetActive(false);
         Panel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void ToggleErrorMessage(bool active)
     {
-        ErrorMsg?.SetActive(active);
+        ErrorMsg.SetActive(active);
     }
 
     public void SetErrorMessage(string errorMessage)
     {
         if(ErrorMsg)
             ErrorMsg.GetComponent<Text>().text = errorMessage;
+    }
+
+    public void SetCostInfo(string costInfo)
+    {
+        CostInfo.GetComponent<Text>().text = costInfo;
     }
 }

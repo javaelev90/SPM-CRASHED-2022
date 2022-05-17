@@ -7,7 +7,6 @@ using Photon.Pun;
 public class EventStarter : MonoBehaviourPunCallbacks
 {
     public float eventTime = 30f;
-    public float minTimeLeftAfter = 120f;
     public GameObject dome;
     public TeleportToShip teleportToShip;
     public GameObject missingPart;
@@ -68,12 +67,9 @@ public class EventStarter : MonoBehaviourPunCallbacks
     private IEnumerator TeleportIn(float eventTime)
     {
         yield return new WaitForSeconds(eventTime);
-        //timeDisplay.DisplayingTime(true);
-        //light.SetCycleOngoing(true);
-        //light.SetMinTimeUntilDawn(minTimeLeftAfter);
         EventSystem.Instance.FireEvent(new EventEvent(false));
         EventSystem.Instance.FireEvent(new AttachPartEvent(attachedPart, missingPart));
-        teleportToShip.TP();
+        EventSystem.Instance.FireEvent(new TeleportToShipEvent());
         Destroy(gameObject);
     }
 }
