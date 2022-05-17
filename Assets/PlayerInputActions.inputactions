@@ -146,7 +146,7 @@
                     "id": "b7a26e25-a584-4b61-9b9a-e09b6e526e70",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Tap",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -156,6 +156,15 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "test",
+                    "type": "Button",
+                    "id": "817f9463-a47f-4810-a8e8-b907d9393ce4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -597,6 +606,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Num2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2669431-3ed6-407e-b7dc-a6e329d165b2",
+                    "path": "<Keyboard>/rightBracket",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "test",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "183188f5-7f34-4add-8ea5-4f82f6912546",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "test",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

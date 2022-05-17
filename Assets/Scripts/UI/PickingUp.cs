@@ -51,7 +51,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
             //GameObject.FindGameObjectWithTag("InventoryHandler").GetComponent<Handler>().inventory = inventory;
         }
         inventorySystem.LoadPrefabs();
-
     }
 
     private void Update()
@@ -83,7 +82,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
             if (typ == Pickup_Typs.Pickup.Metal)
             {
                 inventory.addMetal(pickUpComponent.amount);
-                //inventorySystem.Add<Metal>(pickUpComponent.amount);
+                inventorySystem.Add<Metal>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
                 source.PlayOneShot(Metal);
@@ -91,7 +90,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
             else if (typ == Pickup_Typs.Pickup.GreenGoo)
             {
                 inventory.addGreenGoo(pickUpComponent.amount);
-                //inventorySystem.Add<GreenGoo>(pickUpComponent.amount);
+                inventorySystem.Add<GreenGoo>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
                 source.PlayOneShot(Goo);
@@ -99,14 +98,15 @@ public class PickingUp : MonoBehaviourPunCallbacks
             else if (typ == Pickup_Typs.Pickup.AlienMeat)
             {
                 inventory.addAlienMeat(pickUpComponent.amount);
-                //inventorySystem.Add<AlienMeat>(pickUpComponent.amount);
+                inventorySystem.Add<AlienMeat>(pickUpComponent.amount);
                 //Destroy(pickup.transform.gameObject);
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
-                 source.PlayOneShot(Meat);
+                source.PlayOneShot(Meat);
             }
             else if (typ == Pickup_Typs.Pickup.Revive)
             {
                 inventory.HasReviveBadge = true;
+                inventorySystem.Add<ReviveBadge>();
                 otherPlayer = pickUpComponent.getPlayerToRevive();
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
             }
@@ -120,6 +120,12 @@ public class PickingUp : MonoBehaviourPunCallbacks
             if (inventory.HasReviveBadge)
             {
                 inventory.HasReviveBadge = false;
+                otherPlayer.GetComponent<PhotonView>().RPC("ReviveRPC", RpcTarget.AllViaServer, transform.position);
+            }
+
+            if (inventorySystem.Amount<ReviveBadge>() > 0)
+            {
+                inventorySystem.Remove<ReviveBadge>();
                 otherPlayer.GetComponent<PhotonView>().RPC("ReviveRPC", RpcTarget.AllViaServer, transform.position);
             }
         }
@@ -156,7 +162,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-
             GameObject go;
             switch (itemTypeToDrop)
             {
@@ -176,8 +181,24 @@ public class PickingUp : MonoBehaviourPunCallbacks
                         inventorySystem.Remove<GreenGoo>();
                     }
                     break;
-            }
 
+                case Pickup_Typs.Pickup.Metal:
+                    if (inventorySystem.Amount<Metal>() > 0)
+                    {
+                        go = inventorySystem.ItemPrefab<Metal>();
+                        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
+                        inventorySystem.Remove<Metal>();
+                    }
+                    break;
+                case Pickup_Typs.Pickup.AlienMeat:
+                    if (inventorySystem.Amount<AlienMeat>() > 0)
+                    {
+                        go = inventorySystem.ItemPrefab<AlienMeat>();
+                        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
+                        inventorySystem.Remove<AlienMeat>();
+                    }
+                    break;
+            }
         }
     }
 

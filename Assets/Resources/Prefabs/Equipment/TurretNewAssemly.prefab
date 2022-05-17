@@ -24,11 +24,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872368567276279895}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.002, y: 1.096, z: 1.108}
+  m_LocalPosition: {x: 0.002, y: 1.096, z: 1.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5906233175066621719}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &872368569187660500
 GameObject:
@@ -230,6 +230,7 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.9137, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4438309778369196255}
   - {fileID: 872368567276280232}
   m_Father: {fileID: 872368569187660501}
   m_RootOrder: 0
@@ -316,7 +317,6 @@ Transform:
   m_Children:
   - {fileID: 5016081356813758149}
   - {fileID: 2291911088631269549}
-  - {fileID: 4438309778369196255}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -348,7 +348,8 @@ MonoBehaviour:
   turretDamageIncreaseAtUpgrade: 0
   turretHealthIncreaseAtUpgrade: 0
   useTurretPosition: {fileID: 4438309778369196255}
-  clip: {fileID: 8300000, guid: 970f18261fe127b4c95751e7a978b58f, type: 3}
+  useTurretBody: {fileID: 5906233175066621719}
+  isCurrent: 0
 --- !u!114 &9028936836757210880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,12 +504,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6083227631821183784}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.91, z: -1.42}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.0979996, z: -1.2000122}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 3067970174018886807}
-  m_RootOrder: 2
+  m_Father: {fileID: 5906233175066621719}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6192109498249480244
 GameObject:

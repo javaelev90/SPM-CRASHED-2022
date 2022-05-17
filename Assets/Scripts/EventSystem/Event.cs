@@ -118,4 +118,27 @@ namespace EventCallbacksSystem
         public UpdateUIAmountsEvent() { }
     }
 
+    public class DevToolEvent : Event
+    {
+        private bool on;
+
+        public bool On { get { return on; } }
+
+        public DevToolEvent(bool on)
+        {
+            this.on = on;
+        }
+    }
+     
+    public class ImmortalEvent : Event
+    {
+        private bool immortal;
+        public bool Immortal { get { return immortal; } }
+
+        public ImmortalEvent(bool immortal)
+        {
+            this.immortal = immortal;
+        } 
+    }
+
 }
