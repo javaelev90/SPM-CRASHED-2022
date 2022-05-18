@@ -18,10 +18,34 @@ public class SoldierCharacter : Controller3D
 
     private float shotCooldown = 0f;
 
+    private void Start()
+    {
+        if (photonView.IsMine)
+            Minimap.Instance.Player = gameObject;
+
+        StartCoroutine(SearchOtherPlayer());
+    }
+
+
+    IEnumerator SearchOtherPlayer()
+    {
+        while (true)
+        {
+            Minimap.Instance.OtherPlayer = FindObjectOfType<Engineer>()?.gameObject;
+            if (Minimap.Instance.OtherPlayer != null)
+            {
+                break;
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
         //weapon = GetComponent<Weapon>();
+       
     }
 
     protected override void Update()

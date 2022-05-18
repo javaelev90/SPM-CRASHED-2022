@@ -23,6 +23,8 @@ public class PlayerUIListener : MonoBehaviour
                 slots.Add(si.PickupType, si);
             }
         }
+
+        slotItems[selectedIndex].SelectItem();
     }
 
     private void OnDisable()
@@ -32,10 +34,8 @@ public class PlayerUIListener : MonoBehaviour
 
     public void UpdateAmounts(UpdateUIAmountsEvent e)
     {
-        Debug.LogError("Updated amounts method for UI");
         foreach (KeyValuePair<Type, int> keyValuePair in e.Amounts)
         {
-            Debug.LogError("Update loop for UI amounts");
             if (keyValuePair.Key == typeof(AlienMeat))
             {
                 slots[Pickup_Typs.Pickup.AlienMeat].UpdateNumberOfItems(keyValuePair.Value);
@@ -44,14 +44,9 @@ public class PlayerUIListener : MonoBehaviour
             {
                 slots[Pickup_Typs.Pickup.Metal].UpdateNumberOfItems(keyValuePair.Value);
             }
-            if (keyValuePair.Key == typeof(CookedAlienMeat))
-            {
-                slots[Pickup_Typs.Pickup.CookedAlienMeat].UpdateNumberOfItems(keyValuePair.Value);
-            }
             if (keyValuePair.Key == typeof(GreenGoo))
             {
                 slots[Pickup_Typs.Pickup.GreenGoo].UpdateNumberOfItems(keyValuePair.Value);
-                Debug.LogError("Updated greengoo specific UI amounts");
             }
         }
     }
@@ -60,15 +55,17 @@ public class PlayerUIListener : MonoBehaviour
     {
         if (ctx.started)
         {
-            if (selectedIndex != 0)
-                slotItems[selectedIndex].DeselectItem();
+            slotItems[selectedIndex].DeselectItem();
+            selectedIndex--;
 
-            if (selectedIndex > 0)
-                slotItems[--selectedIndex].SelectItem();
-
-            if (selectedIndex == 0)
+            if (selectedIndex >= 0)
                 slotItems[selectedIndex].SelectItem();
 
+            if (selectedIndex < 0)
+            {
+                selectedIndex = slotItems.Count - 1;
+                slotItems[selectedIndex].SelectItem();
+            }
         }
 
         TypeToInventoryEvent te = new TypeToInventoryEvent(slotItems[selectedIndex].PickupType);
@@ -79,11 +76,17 @@ public class PlayerUIListener : MonoBehaviour
     {
         if (ctx.started)
         {
-            if (selectedIndex != slotItems.Count - 1)
-                slotItems[selectedIndex].DeselectItem();
+            slotItems[selectedIndex].DeselectItem();
+            selectedIndex++;
 
-            if (selectedIndex < slotItems.Count - 1)
-                slotItems[++selectedIndex].SelectItem();
+            if (selectedIndex <= slotItems.Count - 1)
+                slotItems[selectedIndex].SelectItem();
+
+            if (selectedIndex > slotItems.Count - 1)
+            {
+                selectedIndex = 0;
+                slotItems[selectedIndex].SelectItem();
+            }
 
         }
 

@@ -435,11 +435,9 @@ public class Controller3D : MonoBehaviourPunCallbacks
             Gizmos.DrawWireSphere(mainCam.transform.position, radius);
     }
 
-    private bool devToolOn = false;
-    public void DevTool()
+    public void Immortal()
     {
-        devToolOn = !devToolOn;
-        EventSystem.Instance.FireEvent(new DevToolEvent(devToolOn));
+        EventSystem.Instance.FireEvent(new ImmortalEvent());
     }
 
 }

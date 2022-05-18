@@ -7,18 +7,15 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
 {
     [SerializeField] public GameObject pooledObjectPrefab;
     [SerializeField] private int maxPoolSize;
-    public Queue<PooledObject> pooledObjects;
-    public Dictionary<int, PooledObject> activeObjects;
+    public Queue<PooledObject> pooledObjects = new Queue<PooledObject>();
+    public Dictionary<int, PooledObject> activeObjects = new Dictionary<int, PooledObject>();
 
-    private void Start()
+    private void Awake()
     {
         if (!pooledObjectPrefab.GetComponent<PooledObject>())
         {
             throw new MissingComponentException();
         }
-        pooledObjects = new Queue<PooledObject>();
-        activeObjects = new Dictionary<int, PooledObject>();
-
         LoadPool();
     }
 

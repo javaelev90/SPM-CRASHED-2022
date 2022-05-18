@@ -13,6 +13,11 @@ public class InventorySystem : MonoBehaviour
     private Dictionary<Type, int> amounts = new Dictionary<Type, int>();
     private UpdateUIAmountsEvent uiEvent = new UpdateUIAmountsEvent();
 
+    private void Awake()
+    {
+        LoadPrefabs();
+    }
+
     // add item
     public bool Add<T>(int amount = 1) where T : Item
     {
@@ -27,7 +32,7 @@ public class InventorySystem : MonoBehaviour
             amounts[keyType] += amount;
             uiEvent.Amounts = amounts;
             EventSystem.Instance.FireEvent(uiEvent);
-            Debug.LogErrorFormat("Amount of {0} is : {1}", keyType, amounts[keyType]);
+            //Debug.LogErrorFormat("Amount of {0} is : {1}", keyType, amounts[keyType]);
             return true;
         }
         return false;
@@ -48,7 +53,7 @@ public class InventorySystem : MonoBehaviour
             amounts[keyType] -= amount;
             uiEvent.Amounts = amounts;
             EventSystem.Instance.FireEvent(uiEvent);
-            Debug.LogErrorFormat("Amount of {0} is : {1}", keyType, amounts[keyType]);
+            //Debug.LogErrorFormat("Amount of {0} is : {1}", keyType, amounts[keyType]);
             return true;
         }
         return false;
@@ -94,7 +99,6 @@ public class InventorySystem : MonoBehaviour
         {
 
             System.Object[] os = Resources.LoadAll(GlobalSettings.PickupsPath, typeof(Item));
-            Debug.LogError("Objects from resource folder " + os.Length);
 
             if (os.Length > 0)
             {

@@ -12,9 +12,9 @@ public class ShipHealth : HealthHandler
         EventSystem.Instance.RegisterListener<ImmortalEvent>(SetImmortal);
     }
 
-    public void SetImmortal(ImmortalEvent immortal)
+    public void SetImmortal(ImmortalEvent immortalEvent)
     {
-        this.immortal = immortal.Immortal;
+        immortal = !immortal;
     }
     public override void TakeDamage(int amount)
     {
