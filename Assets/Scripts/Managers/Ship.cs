@@ -11,7 +11,7 @@ public class Ship : MonoBehaviour
     [SerializeField] private float radius = 10f;
     private bool triggerActive = false;
     [SerializeField] Engineer player;
-    private int nextUpgrade;
+    public int nextUpgrade;
     public bool allShipPartsCollected = false;
     public List<ShipUpgradeCost> shipUpgradeCost;
     AudioSource source;
