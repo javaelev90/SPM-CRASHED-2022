@@ -141,14 +141,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
             GameObject go;
             switch (itemTypeToDrop)
             {
-                case Pickup_Typs.Pickup.CookedAlienMeat:
-                    if (inventorySystem.Amount<CookedAlienMeat>() > 0)
-                    {
-                        go = inventorySystem.ItemPrefab<CookedAlienMeat>();
-                        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
-                        inventorySystem.Remove<CookedAlienMeat>();
-                    }
-                    break;
                 case Pickup_Typs.Pickup.GreenGoo:
                     if (inventorySystem.Amount<GreenGoo>() > 0)
                     {

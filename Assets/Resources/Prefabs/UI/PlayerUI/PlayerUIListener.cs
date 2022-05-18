@@ -44,10 +44,6 @@ public class PlayerUIListener : MonoBehaviour
             {
                 slots[Pickup_Typs.Pickup.Metal].UpdateNumberOfItems(keyValuePair.Value);
             }
-            if (keyValuePair.Key == typeof(CookedAlienMeat))
-            {
-                slots[Pickup_Typs.Pickup.CookedAlienMeat].UpdateNumberOfItems(keyValuePair.Value);
-            }
             if (keyValuePair.Key == typeof(GreenGoo))
             {
                 slots[Pickup_Typs.Pickup.GreenGoo].UpdateNumberOfItems(keyValuePair.Value);
@@ -59,7 +55,6 @@ public class PlayerUIListener : MonoBehaviour
     {
         if (ctx.started)
         {
-            //if (selectedIndex != 0)
             slotItems[selectedIndex].DeselectItem();
             selectedIndex--;
 
@@ -83,7 +78,6 @@ public class PlayerUIListener : MonoBehaviour
         {
             slotItems[selectedIndex].DeselectItem();
             selectedIndex++;
-            //if (selectedIndex != slotItems.Count - 1)
 
             if (selectedIndex <= slotItems.Count - 1)
                 slotItems[selectedIndex].SelectItem();
