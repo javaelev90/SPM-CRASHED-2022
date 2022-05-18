@@ -29,8 +29,6 @@ public class Weapon : MonoBehaviour
     {
         Cooldown();
         Shoot();
-        if(IsShooting == false)
-            animator.SetBool("isShooting", false);
     }
 
     void Start()
@@ -56,7 +54,8 @@ public class Weapon : MonoBehaviour
         if(OnCoolDown() == false && IsShooting == true)
         {
             muzzlePosition.Play();
-            animator.SetBool("isShooting", true);
+            animator.CrossFadeInFixedTime("Shooting", 0.1f);
+
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,
                 out RaycastHit hitInfo, weaponRange, layersThatShouldBeHit))
             {
