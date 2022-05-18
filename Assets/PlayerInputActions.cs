@@ -163,7 +163,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Num1"",
+                    ""name"": ""PreviousItem"",
                     ""type"": ""Button"",
                     ""id"": ""b7a26e25-a584-4b61-9b9a-e09b6e526e70"",
                     ""expectedControlType"": ""Button"",
@@ -172,7 +172,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Num2"",
+                    ""name"": ""NextItem"",
                     ""type"": ""Button"",
                     ""id"": ""52b60ef3-0c7c-4a42-acbf-d725d31dedd9"",
                     ""expectedControlType"": ""Button"",
@@ -643,7 +643,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Num1"",
+                    ""action"": ""PreviousItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -654,7 +654,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Num2"",
+                    ""action"": ""NextItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1125,8 +1125,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_ShipPickUp = m_Player.FindAction("ShipPickUp", throwIfNotFound: true);
         m_Player_DeleteTurret = m_Player.FindAction("DeleteTurret", throwIfNotFound: true);
         m_Player_UseTurret = m_Player.FindAction("UseTurret", throwIfNotFound: true);
-        m_Player_Num1 = m_Player.FindAction("Num1", throwIfNotFound: true);
-        m_Player_Num2 = m_Player.FindAction("Num2", throwIfNotFound: true);
+        m_Player_PreviousItem = m_Player.FindAction("PreviousItem", throwIfNotFound: true);
+        m_Player_NextItem = m_Player.FindAction("NextItem", throwIfNotFound: true);
         m_Player_Immortal = m_Player.FindAction("Immortal", throwIfNotFound: true);
         m_Player_GreenGoo = m_Player.FindAction("GreenGoo", throwIfNotFound: true);
         m_Player_Metal = m_Player.FindAction("Metal", throwIfNotFound: true);
@@ -1217,8 +1217,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ShipPickUp;
     private readonly InputAction m_Player_DeleteTurret;
     private readonly InputAction m_Player_UseTurret;
-    private readonly InputAction m_Player_Num1;
-    private readonly InputAction m_Player_Num2;
+    private readonly InputAction m_Player_PreviousItem;
+    private readonly InputAction m_Player_NextItem;
     private readonly InputAction m_Player_Immortal;
     private readonly InputAction m_Player_GreenGoo;
     private readonly InputAction m_Player_Metal;
@@ -1242,8 +1242,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @ShipPickUp => m_Wrapper.m_Player_ShipPickUp;
         public InputAction @DeleteTurret => m_Wrapper.m_Player_DeleteTurret;
         public InputAction @UseTurret => m_Wrapper.m_Player_UseTurret;
-        public InputAction @Num1 => m_Wrapper.m_Player_Num1;
-        public InputAction @Num2 => m_Wrapper.m_Player_Num2;
+        public InputAction @PreviousItem => m_Wrapper.m_Player_PreviousItem;
+        public InputAction @NextItem => m_Wrapper.m_Player_NextItem;
         public InputAction @Immortal => m_Wrapper.m_Player_Immortal;
         public InputAction @GreenGoo => m_Wrapper.m_Player_GreenGoo;
         public InputAction @Metal => m_Wrapper.m_Player_Metal;
@@ -1302,12 +1302,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @UseTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
                 @UseTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
                 @UseTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
-                @Num1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum1;
-                @Num1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum1;
-                @Num1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum1;
-                @Num2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
-                @Num2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
-                @Num2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNum2;
+                @PreviousItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousItem;
+                @PreviousItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousItem;
+                @PreviousItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousItem;
+                @NextItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextItem;
+                @NextItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextItem;
+                @NextItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextItem;
                 @Immortal.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnImmortal;
                 @Immortal.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnImmortal;
                 @Immortal.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnImmortal;
@@ -1369,12 +1369,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @UseTurret.started += instance.OnUseTurret;
                 @UseTurret.performed += instance.OnUseTurret;
                 @UseTurret.canceled += instance.OnUseTurret;
-                @Num1.started += instance.OnNum1;
-                @Num1.performed += instance.OnNum1;
-                @Num1.canceled += instance.OnNum1;
-                @Num2.started += instance.OnNum2;
-                @Num2.performed += instance.OnNum2;
-                @Num2.canceled += instance.OnNum2;
+                @PreviousItem.started += instance.OnPreviousItem;
+                @PreviousItem.performed += instance.OnPreviousItem;
+                @PreviousItem.canceled += instance.OnPreviousItem;
+                @NextItem.started += instance.OnNextItem;
+                @NextItem.performed += instance.OnNextItem;
+                @NextItem.canceled += instance.OnNextItem;
                 @Immortal.started += instance.OnImmortal;
                 @Immortal.performed += instance.OnImmortal;
                 @Immortal.canceled += instance.OnImmortal;
@@ -1531,8 +1531,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnShipPickUp(InputAction.CallbackContext context);
         void OnDeleteTurret(InputAction.CallbackContext context);
         void OnUseTurret(InputAction.CallbackContext context);
-        void OnNum1(InputAction.CallbackContext context);
-        void OnNum2(InputAction.CallbackContext context);
+        void OnPreviousItem(InputAction.CallbackContext context);
+        void OnNextItem(InputAction.CallbackContext context);
         void OnImmortal(InputAction.CallbackContext context);
         void OnGreenGoo(InputAction.CallbackContext context);
         void OnMetal(InputAction.CallbackContext context);
