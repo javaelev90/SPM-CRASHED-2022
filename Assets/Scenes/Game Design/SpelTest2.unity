@@ -87428,7 +87428,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: bcfca7a8269e28c41b5c1147c32c5fb1, type: 3}
     - target: {fileID: 6946362057768142591, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: CurrentHealth
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7220925143707903787, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: m_Layer
@@ -111206,11 +111206,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 1520749292}
-  objectPool: {fileID: 0}
   soldierPrefab: {fileID: 4717172599527124038, guid: 27324ed1ee365a5449c5e0f3b3c3d0e3, type: 3}
   engineerPrefab: {fileID: 2924166598192640433, guid: c18e97eacc7951544aa0bac7a9b25940, type: 3}
   spawnPoint: {fileID: 1913197448}
   objectInstantiater: {fileID: 1124703449}
+  objectCulling: {fileID: 0}
 --- !u!4 &1918496971
 Transform:
   m_ObjectHideFlags: 0
