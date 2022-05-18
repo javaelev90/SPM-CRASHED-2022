@@ -6,10 +6,10 @@ using EventCallbacksSystem;
 
 public class PlayerUpgradePanel : MonoBehaviour
 {
-    [SerializeField] private GameObject damageupgradeButton;
+    [SerializeField] private GameObject damageUpgradeButton;
     [SerializeField] private GameObject gunRateTurretHealthButton;
 
-    [SerializeField] private int healthUpgradeAmount;
+    [SerializeField] private int healthUpgradeAmount = 2;
     [SerializeField] int gunDamageUpgradeAmount = 1;
     [SerializeField] float fireRateUpgradePercent = 0.2f;
     [SerializeField] int turretDamageUpgradeAmount = 1;
@@ -24,12 +24,12 @@ public class PlayerUpgradePanel : MonoBehaviour
         player = GameManager.character;
         if(player == Character.ENGINEER)
         {
-            damageupgradeButton.GetComponent<Text>().text = "Upgrade Turret Damage";
+            damageUpgradeButton.GetComponent<Text>().text = "Upgrade Turret Damage";
             gunRateTurretHealthButton.GetComponent<Text>().text = "Upgade Turret Health";
         }
         else if (player == Character.SOLDIER)
         {
-            damageupgradeButton.GetComponent<Text>().text = "Upgrade Weapon Damage";
+            damageUpgradeButton.GetComponent<Text>().text = "Upgrade Weapon Damage";
             gunRateTurretHealthButton.GetComponent<Text>().text = "Upgade Fire Rate";
         }
     }
@@ -66,7 +66,6 @@ public class PlayerUpgradePanel : MonoBehaviour
 
     private void Exit()
     {
-        EventSystem.Instance.FireEvent(new ShipUppgradPanelEvent());
         gameObject.SetActive(false);
     }
 }

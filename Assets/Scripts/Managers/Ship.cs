@@ -5,7 +5,8 @@ using UnityEngine;
 using EventCallbacksSystem;
 using System.Linq;
 using UnityEngine.UI;
-public class Ship : MonoBehaviour
+using Photon.Pun;
+public class Ship : MonoBehaviourPunCallbacks
 {
     [SerializeField] private ShipUpgradePanel shipUpgradePanel;
     [SerializeField] private Button shipUpgradeButton;
@@ -69,7 +70,7 @@ public class Ship : MonoBehaviour
             nextUpgrade++;
             source.PlayOneShot(connect);
             shipUpgradePanel.gameObject.SetActive(false);
-            playerUpgradePanal.SetActive(true);
+            OpenPlayerUpgradePanel();
             allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
             return true;
         }
@@ -135,6 +136,18 @@ public class Ship : MonoBehaviour
 
     private void OpenPlayerUpgradePanel()
     {
-        EventSystem.Instance.FireEvent(new OpenPlayerUpgradePanelEvent());
+        photonView.RPC(nameof(OpenUpgradePanelRPC), RpcTarget.All);
     }
+    [PunRPC]
+    private void OpenUpgradePanelRPC()
+    {
+        //EventSystem.Instance.FireEvent(new OpenPlayerUpgradePanelEvent());
+        //OpenPlayerUpgradePanel();
+        playerUpgradePanal.SetActive(true);
+    }
+
+    /*public void OpenPlayerUpgradePanel()
+    {
+        playerUpgradePanal.SetActive(true);
+    }*/
 }
