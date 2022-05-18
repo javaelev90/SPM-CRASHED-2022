@@ -15,4 +15,29 @@ public class PlayerHurtTestGreta : MonoBehaviour
     {
         
     }
+
+    //Lerp between startValue and endValue over 'duration' seconds
+    /*private IEnumerator LerpVignette(float startValue, float endValue, float duration)
+    {
+        float elapsed = 0;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float value = Mathf.Lerp(startValue, endValue, elapsed / duration);
+            bodySkinnedMeshRenderer.SetBlendShapeWeight(0, value);
+            yield return null;
+        }
+    }*/
+
+    /*private bool talking = true;
+    //animate open and closed, then repeat
+    private IEnumerator AnimateMouth()
+    {
+        while (talking)
+        {
+            //yield return StartCoroutine waits for that coroutine to finish before continuing
+            yield return StartCoroutine(LerpShape(0, 23, .5f));
+            yield return StartCoroutine(LerpShape(23, 0, .5f));
+        }
+    }*/
 }
