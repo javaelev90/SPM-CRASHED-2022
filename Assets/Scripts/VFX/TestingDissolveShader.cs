@@ -5,20 +5,23 @@ using UnityEngine;
 public class TestingDissolveShader : MonoBehaviour
 {
 
-    public Material dissolveMat;
+    /*public Material dissolveMat;
     public float health;
-    public float maxHealth;
+    public float maxHealth;*/
+    public Animator animator;
 
 
     void Start()
     {
-        dissolveMat.SetFloat("DISSOLVEVALUE", health / maxHealth);
+        if (gameObject.CompareTag("GlowTest"))
+        animator.SetTrigger("Hurt");
     }
 
     void Update()
     {
+        /*
             health -= 0.1f;
-            dissolveMat.SetFloat("DISSOLVEVALUE", health / maxHealth);
+            dissolveMat.SetFloat("DISSOLVEVALUE", health / maxHealth);*/
     }
    
  
