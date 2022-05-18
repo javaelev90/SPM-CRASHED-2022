@@ -167,7 +167,11 @@ public class SlugEnemy : AIBaseLogic
             {
                 foreach (Collider coll in targets)
                 {
-                    coll.transform.GetComponent<HealthHandler>().TakeDamage(explosionDamage);
+                    HealthHandler healthHandler = coll.transform.GetComponent<HealthHandler>();
+                    if (healthHandler != null)
+                    {
+                        healthHandler.TakeDamage(explosionDamage);
+                    }
                 }
             }
             root.DeSpawn();
