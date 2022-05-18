@@ -193,6 +193,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "RepairTurret",
+                    "type": "Button",
+                    "id": "414c7bf4-a997-48a6-ba58-e005e22bdc62",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -677,6 +686,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Beef",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a445ffe2-035e-425e-92dd-ec60f4b5eb86",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "RepairTurret",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -215,6 +215,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RepairTurret"",
+                    ""type"": ""Button"",
+                    ""id"": ""414c7bf4-a997-48a6-ba58-e005e22bdc62"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -701,6 +710,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Beef"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a445ffe2-035e-425e-92dd-ec60f4b5eb86"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RepairTurret"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1131,6 +1151,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_GreenGoo = m_Player.FindAction("GreenGoo", throwIfNotFound: true);
         m_Player_Metal = m_Player.FindAction("Metal", throwIfNotFound: true);
         m_Player_Beef = m_Player.FindAction("Beef", throwIfNotFound: true);
+        m_Player_RepairTurret = m_Player.FindAction("RepairTurret", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1223,6 +1244,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_GreenGoo;
     private readonly InputAction m_Player_Metal;
     private readonly InputAction m_Player_Beef;
+    private readonly InputAction m_Player_RepairTurret;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1248,6 +1270,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @GreenGoo => m_Wrapper.m_Player_GreenGoo;
         public InputAction @Metal => m_Wrapper.m_Player_Metal;
         public InputAction @Beef => m_Wrapper.m_Player_Beef;
+        public InputAction @RepairTurret => m_Wrapper.m_Player_RepairTurret;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1320,6 +1343,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Beef.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBeef;
                 @Beef.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBeef;
                 @Beef.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBeef;
+                @RepairTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRepairTurret;
+                @RepairTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRepairTurret;
+                @RepairTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRepairTurret;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1387,6 +1413,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Beef.started += instance.OnBeef;
                 @Beef.performed += instance.OnBeef;
                 @Beef.canceled += instance.OnBeef;
+                @RepairTurret.started += instance.OnRepairTurret;
+                @RepairTurret.performed += instance.OnRepairTurret;
+                @RepairTurret.canceled += instance.OnRepairTurret;
             }
         }
     }
@@ -1537,6 +1566,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnGreenGoo(InputAction.CallbackContext context);
         void OnMetal(InputAction.CallbackContext context);
         void OnBeef(InputAction.CallbackContext context);
+        void OnRepairTurret(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

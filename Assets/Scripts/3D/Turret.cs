@@ -38,8 +38,8 @@ public class Turret : MonoBehaviourPunCallbacks
         emptyTarget = new GameObject();
         isCurrent = false;
         emptyTarget.transform.position = transform.forward * 3f;
-        //EventSystem.Instance.RegisterListener<TurretDamageUpgradeEvent>(DamageUpgrade);
-        //EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(HealthUpgrade);
+        EventSystem.Instance.RegisterListener<TurretDamageUpgradeEvent>(DamageUpgrade);
+        EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(HealthUpgrade);
         engineerRef = FindObjectOfType<Engineer>();
     }
 
@@ -55,10 +55,8 @@ public class Turret : MonoBehaviourPunCallbacks
 
     public void HealthUpgrade(TurretHealthUpgradeEvent turretDamageUpgrade)
     {
-        //... += turretHealthIncreaseAtUpgrade;
+        transform.GetComponent<HealthHandler>().MaxHealth += turretHealthIncreaseAtUpgrade;
     }
-
-
 
     private void FindTargets()
     {
@@ -66,7 +64,7 @@ public class Turret : MonoBehaviourPunCallbacks
         if (colliders.Length > 0)
         {
             currentTarget = colliders[0].transform;
-            Debug.Log(currentTarget);
+            //Debug.Log("Turret current target: "currentTarget);
 
             foreach (Collider col in colliders)
             {
@@ -77,16 +75,11 @@ public class Turret : MonoBehaviourPunCallbacks
                 }
             }
 
-
             Vector3 direction = (currentTarget.position - transform.position).normalized;
             Quaternion rotateTo = Quaternion.LookRotation(direction, turretBody.transform.up);
             turretBody.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
 
-            // Clamp rotation so it doesn't go all over the place and end up uppside down
-            rotateTo.x = ClampAngle(rotateTo.x, -90f, 90f);
-            rotateTo.z = ClampAngle(rotateTo.z, -90f, 90f);
-
-            //ClampRotBody();
+            ClampRotBody();
         }
 
         if (colliders.Length == 0)
@@ -95,61 +88,42 @@ public class Turret : MonoBehaviourPunCallbacks
         }
     }
 
-    float ClampAngle(float angle, float from, float to)
-    {
-        // accepts e.g. -80, 80
-        if (angle < 0f) angle = 360 + angle;
-        if (angle > 180f) return Mathf.Max(angle, 360 + from);
-        return Mathf.Min(angle, to);
-    }
-
     public void ClampRotBody()
     {
         // Clamp rotation so it doesn't go all over the place and end up upside down
         Vector3 pivotRotation = turretBody.transform.eulerAngles;
-        pivotRotation.x = Mathf.Clamp(pivotRotation.x, -90f, 90f);
-        pivotRotation.y = Mathf.Clamp(pivotRotation.y, -90f, 90f);
-        pivotRotation.z = Mathf.Clamp(pivotRotation.z, -90f, 90f);
-        transform.eulerAngles = pivotRotation;
-        //rotateTo.z = ClampAngle(rotateTo.z, -90f, 90f);
+        pivotRotation.x = Mathf.Clamp(pivotRotation.x, -30f, 30f);
+        pivotRotation.z = Mathf.Clamp(pivotRotation.z, 0f, 0f);
+        turretBody.transform.eulerAngles = pivotRotation;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //ClampRotBody();
-
-        FindTargets();
-
-        // If the turret is in auto-mode (targets enemies automatically)
-        if (currentTarget.position != emptyTarget.transform.position)
+        if (transform.GetComponent<HealthHandler>().isAlive == true)
         {
-            //ClampRotBody();
-
-            counter -= Time.deltaTime;
-            //if (counter <= 0f)
-            //{
-                TurretShoot();
-            //}
-
-        }
-        else
-        {
-            //turretBody.transform.LookAt(Vector3.forward, Vector3.up);
-        }
-
-        // If the Engineer is using the turret and shooting
-        if (engineerRef.isUsingTurret == true)
-        {
-            counter -= Time.deltaTime;
-            if (engineerRef.isShootingTurret == true)
+            // If the turret is in auto-mode (targets enemies automatically)
+            if (engineerRef.isUsingTurret == false)
             {
-                //if (counter <= 0f)
-                //{
+                FindTargets();
+
+                if (currentTarget.position != emptyTarget.transform.position)
+                {
+                    counter -= Time.deltaTime;
                     TurretShoot();
-                //}
+                }
+            }
+
+            // If the Engineer is using the turret and shooting
+            else
+            {
+                counter -= Time.deltaTime;
+                if (engineerRef.isShootingTurret == true)
+                {
+                    TurretShoot();
+                }
             }
         }
+        
 
         Debug.DrawRay(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
     }
@@ -166,7 +140,6 @@ public class Turret : MonoBehaviourPunCallbacks
             counter = fireTimer;
             Debug.Log("Is shooting");
         }
-        
     }
 
     private void OnDrawGizmos()
