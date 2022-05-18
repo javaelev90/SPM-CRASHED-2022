@@ -19,7 +19,7 @@ public class Ship : MonoBehaviour
     public AudioClip connect;
     public float minTimeUntilDaw = 120f;
 
-    
+
 
     [Serializable]
     public class ShipUpgradeCost
@@ -35,12 +35,13 @@ public class Ship : MonoBehaviour
     {
         Minimap.Instance.Ship = gameObject;
         EventSystem.Instance.RegisterListener<AttachPartEvent>(newPartObtained);
+        EventSystem.Instance.RegisterListener<ShipUppgradPanelEvent>(OpenUpgradePanel);
         nextUpgrade = 0;
-      
+
         StartCoroutine(Wait(5));
         //Wait(5);
         source = GetComponent<AudioSource>();
-        
+
 
     }
 
@@ -50,26 +51,6 @@ public class Ship : MonoBehaviour
         {
             yield return new WaitForSeconds(sec);
             player = FindObjectOfType<Engineer>();
-        }
-
-    }
-
-    private void Update()
-    {
-        if(player != null)
-        {
-            Collider[] colliderHits = Physics.OverlapSphere(transform.position, radius);
-
-            foreach (Collider col in colliderHits)
-            {
-                if (col.transform.gameObject.GetComponent<Engineer>())
-                {
-                    if (player && player.playerActions.Player.PickUp.IsPressed() && Panel != null && Panel.gameObject.activeSelf == false)
-                    {
-                        OpenUpgradePanel();
-                    }
-                }
-            }
         }
 
     }
@@ -89,7 +70,7 @@ public class Ship : MonoBehaviour
         EventSystem.Instance.FireEvent(new ShipPartEvent(minTimeUntilDaw));
     }
 
-    
+
 
     public bool UppgradeShip()
     {
@@ -97,7 +78,7 @@ public class Ship : MonoBehaviour
         {
             shipUpgradeCost[nextUpgrade].partMissing.SetActive(false);
             shipUpgradeCost[nextUpgrade].partAttached.SetActive(true);
-            nextUpgrade++;           
+            nextUpgrade++;
             source.PlayOneShot(connect);
             OpenUpgradePanel();
             allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
@@ -135,9 +116,9 @@ public class Ship : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 
-    public void OpenUpgradePanel()
+    private void OpenUpgradePanel()
     {
-        if(Panel != null)
+        if (Panel != null)
         {
             InventorySystem inventory = player.gameObject.GetComponent<InventorySystem>();
             bool isActive = Panel.gameObject.activeSelf;
@@ -150,7 +131,7 @@ public class Ship : MonoBehaviour
             else if (inventory.Amount<Metal>() < shipUpgradeCost[nextUpgrade].metalCost || inventory.Amount<GreenGoo>() < shipUpgradeCost[nextUpgrade].gooCost)
             {
                 upgradeButton.interactable = false;
-                Panel.SetCostInfo("Not enough resources");
+                Panel.SetCostInfo($"Not enough resources \n Metal: {shipUpgradeCost[nextUpgrade].metalCost} \n Green Goo: {shipUpgradeCost[nextUpgrade].gooCost}");
             }
             else
             {
@@ -160,5 +141,10 @@ public class Ship : MonoBehaviour
             Panel.ToggleErrorMessage(false);
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    public void OpenUpgradePanel(ShipUppgradPanelEvent shipUppgradPanelEvent)
+    {
+        OpenUpgradePanel();
     }
 }

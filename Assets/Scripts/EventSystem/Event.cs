@@ -130,4 +130,8 @@ namespace EventCallbacksSystem
     {
     }
 
+    public class ShipUppgradPanelEvent : Event
+    {
+    }
+
 }

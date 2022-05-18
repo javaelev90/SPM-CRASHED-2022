@@ -98,6 +98,10 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
             }
         }
+        else if (PickUpHitCheck(spaceShipLayer))
+        {
+            EventSystem.Instance.FireEvent(new ShipUppgradPanelEvent());
+        }
     }
 
     public void Revive()

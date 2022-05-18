@@ -908,6 +908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Panel: {fileID: 2425212453680318269}
   ErrorMsg: {fileID: 6549803190660757436}
+  CostInfo: {fileID: 3186376498328056754}
 --- !u!1 &2782802082379410965
 GameObject:
   m_ObjectHideFlags: 0
@@ -1202,7 +1203,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -11.7}
+  m_AnchoredPosition: {x: 0, y: -62.07}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4154612380408469944
@@ -1377,7 +1378,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Do you want to upgrade? '
+  m_Text: "Do you want to upgrade? \nGreen Goo: 4\nMetal: 4"
 --- !u!1 &4412941615923314335
 GameObject:
   m_ObjectHideFlags: 0
@@ -1885,12 +1886,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Panel: {fileID: 6012642451911984348}
+  upgradeButton: {fileID: 1720241810709306476}
   radius: 10
   player: {fileID: 0}
   allShipPartsCollected: 0
   shipUpgradeCost:
   - metalCost: 1
     gooCost: 1
+    partAvalibul: 0
+    partMissing: {fileID: 0}
+    partAttached: {fileID: 0}
+  - metalCost: 2
+    gooCost: 3
     partAvalibul: 0
     partMissing: {fileID: 0}
     partAttached: {fileID: 0}
@@ -2215,7 +2222,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -4
   m_TargetDisplay: 0
 --- !u!114 &7238960868466440654
 MonoBehaviour:
@@ -2274,7 +2281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &839492740599621381
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2329,7 +2336,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2535,7 +2542,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 53.7}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 180, y: 64.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4171402348598775181
 CanvasRenderer:

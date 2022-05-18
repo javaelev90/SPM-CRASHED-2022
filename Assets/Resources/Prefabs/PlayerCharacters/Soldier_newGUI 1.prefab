@@ -1667,7 +1667,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6717242514041474261}
         m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
-        m_MethodName: PickUp
+        m_MethodName: AddGooDEV
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1681,10 +1681,10 @@ MonoBehaviour:
     m_ActionName: Player/GreenGoo[/Keyboard/g]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 840723939357521241}
-        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: addMetal
-        m_Mode: 3
+      - m_Target: {fileID: 6717242514041474261}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: AddMeatDEV
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1697,10 +1697,10 @@ MonoBehaviour:
     m_ActionName: Player/Metal[/Keyboard/m]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 840723939357521241}
-        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: addAlienMeat
-        m_Mode: 3
+      - m_Target: {fileID: 6717242514041474261}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: AddMetalDEV
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

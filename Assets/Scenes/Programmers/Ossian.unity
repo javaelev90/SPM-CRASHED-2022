@@ -86742,30 +86742,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1190187240945067386, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 1190187240945067386, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 64.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720241810709306476, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720241810709306476, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: m_Interactable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2425212453680318269, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4844093847086818895, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -62.07
-      objectReference: {fileID: 0}
     - target: {fileID: 4876045312804445792, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: m_RootOrder
       value: 27
@@ -86814,42 +86790,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shiip
       objectReference: {fileID: 0}
-    - target: {fileID: 5687322484506772114, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: m_Text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5687322484506772114, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: m_FontData.m_Alignment
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6012642451911984348, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: CostInfo
-      value: 
-      objectReference: {fileID: 1520749295}
-    - target: {fileID: 6549803190660757436, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6847832930241481955, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: m_Text
-      value: "Do you want to upgrade? \nGreen Goo: 4\nMetal: 4"
-      objectReference: {fileID: 0}
-    - target: {fileID: 7413377871239008371, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: upgradeButton
-      value: 
-      objectReference: {fileID: 1520749296}
-    - target: {fileID: 7413377871239008371, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: shipUpgradeCost.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7413377871239008371, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: shipUpgradeCost.Array.data[1].gooCost
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7413377871239008371, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-      propertyPath: shipUpgradeCost.Array.data[1].metalCost
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 8610809992933808817, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: engenerTPPosition
       value: 
@@ -86881,22 +86821,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4632727497257510301, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
   m_PrefabInstance: {fileID: 1520749291}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1520749295 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3186376498328056754, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-  m_PrefabInstance: {fileID: 1520749291}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1520749296 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1720241810709306476, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-  m_PrefabInstance: {fileID: 1520749291}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1520749299 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1876275236820787597, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
@@ -109986,7 +109910,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913197447}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 267.47, y: 35.19, z: 71.15}
+  m_LocalPosition: {x: 323.83, y: 30.79, z: 306.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -110187,11 +110111,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 1520749292}
-  objectPool: {fileID: 0}
   soldierPrefab: {fileID: 4717172599527124038, guid: 27324ed1ee365a5449c5e0f3b3c3d0e3, type: 3}
   engineerPrefab: {fileID: 2924166598192640433, guid: c18e97eacc7951544aa0bac7a9b25940, type: 3}
   spawnPoint: {fileID: 1913197448}
   objectInstantiater: {fileID: 771109145}
+  objectCulling: {fileID: 0}
 --- !u!4 &1918496971
 Transform:
   m_ObjectHideFlags: 0
