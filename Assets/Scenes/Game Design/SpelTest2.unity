@@ -185,7 +185,7 @@ MonoBehaviour:
   delayBetweenSpawns: 54
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -6932,7 +6932,7 @@ MonoBehaviour:
   delayBetweenSpawns: 27
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -8210,7 +8210,7 @@ MonoBehaviour:
   delayBetweenSpawns: 27
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -11093,7 +11093,7 @@ MonoBehaviour:
   delayBetweenSpawns: 27
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -22569,7 +22569,7 @@ MonoBehaviour:
   delayBetweenSpawns: 27
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -28214,7 +28214,7 @@ MonoBehaviour:
   delayBetweenSpawns: 27
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -51381,7 +51381,7 @@ MonoBehaviour:
   delayBetweenSpawns: 40.5
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -56741,7 +56741,7 @@ MonoBehaviour:
   delayBetweenSpawns: 27
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -58349,7 +58349,7 @@ MonoBehaviour:
   delayBetweenSpawns: 27
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -79346,7 +79346,7 @@ MonoBehaviour:
   delayBetweenSpawns: 40.5
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -80421,7 +80421,7 @@ MonoBehaviour:
   delayBetweenSpawns: 27
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -81996,7 +81996,7 @@ MonoBehaviour:
   delayBetweenSpawns: 27
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
@@ -87190,6 +87190,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2375624687142426691, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 372472945862592039, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -87527,6 +87531,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1328868974914991582, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
   m_PrefabInstance: {fileID: 1520749291}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1520749301 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -2375624687142426691, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+  m_PrefabInstance: {fileID: 1520749291}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!64 &1520749302
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -87635,17 +87650,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2782802082379410965, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
   m_PrefabInstance: {fileID: 1520749291}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1520749313 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8643368028430957452, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
-  m_PrefabInstance: {fileID: 1520749291}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1523530037
 GameObject:
   m_ObjectHideFlags: 0
@@ -109634,7 +109638,7 @@ MonoBehaviour:
   delayBetweenSpawns: 27
   spawnRadius: 1
   spawnWithinRadius: 0
-  initialTarget: {fileID: 1520749313}
+  initialTarget: {fileID: 1520749301}
   wayPoints: []
   wayPointSpawnRadius: 4
   yOffset: 1
