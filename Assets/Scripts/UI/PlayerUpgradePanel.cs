@@ -6,11 +6,10 @@ using EventCallbacksSystem;
 
 public class PlayerUpgradePanel : MonoBehaviour
 {
-    [SerializeField] private GameObject panel;
-    [SerializeField] private GameObject damage;
-    [SerializeField] private GameObject gunRateTurretHealth;
+    [SerializeField] private GameObject damageupgradeButton;
+    [SerializeField] private GameObject gunRateTurretHealthButton;
 
-    [SerializeField] private int upgradeAmount;
+    [SerializeField] private int healthUpgradeAmount;
     [SerializeField] int gunDamageUpgradeAmount = 1;
     [SerializeField] float fireRateUpgradePercent = 0.2f;
     [SerializeField] int turretDamageUpgradeAmount = 1;
@@ -25,19 +24,20 @@ public class PlayerUpgradePanel : MonoBehaviour
         player = GameManager.character;
         if(player == Character.ENGINEER)
         {
-            damage.GetComponent<Text>().text = "Upgrade Turret Damage";
-            gunRateTurretHealth.GetComponent<Text>().text = "Upgade Turret Health";
+            damageupgradeButton.GetComponent<Text>().text = "Upgrade Turret Damage";
+            gunRateTurretHealthButton.GetComponent<Text>().text = "Upgade Turret Health";
         }
         else if (player == Character.SOLDIER)
         {
-            damage.GetComponent<Text>().text = "Upgrade Weapon Damage";
-            gunRateTurretHealth.GetComponent<Text>().text = "Upgade Fire Rate";
+            damageupgradeButton.GetComponent<Text>().text = "Upgrade Weapon Damage";
+            gunRateTurretHealthButton.GetComponent<Text>().text = "Upgade Fire Rate";
         }
     }
 
     public void HealthUpgrade()
     {
-        EventSystem.Instance.FireEvent(new HealthUpgradeEvent(upgradeAmount));
+        EventSystem.Instance.FireEvent(new HealthUpgradeEvent(healthUpgradeAmount));
+        Exit();
     }
     public void DamageUpgrade()
     {
@@ -49,6 +49,7 @@ public class PlayerUpgradePanel : MonoBehaviour
         {
             EventSystem.Instance.FireEvent(new TurretDamageUpgradeEvent(turretDamageUpgradeAmount));
         }
+        Exit();
     }
     public void GunRateTurretHealthUpgrade()
     {
@@ -60,6 +61,12 @@ public class PlayerUpgradePanel : MonoBehaviour
         {
             EventSystem.Instance.FireEvent(new TurretHealthUpgradeEvent(turretHealthUpgradeAmount));
         }
+        Exit();
     }
 
+    private void Exit()
+    {
+        EventSystem.Instance.FireEvent(new ShipUppgradPanelEvent());
+        gameObject.SetActive(false);
+    }
 }

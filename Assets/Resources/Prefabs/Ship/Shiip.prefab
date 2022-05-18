@@ -846,7 +846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3540068372834364593
 RectTransform:
   m_ObjectHideFlags: 0
@@ -920,6 +920,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706c7736ba50dc24e92a1c407f3a7657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panel: {fileID: 0}
+  damage: {fileID: 0}
+  gunRateTurretHealth: {fileID: 0}
+  upgradeAmount: 0
+  gunDamageUpgradeAmount: 1
+  fireRateUpgradePercent: 0.2
+  turretDamageUpgradeAmount: 1
+  turretHealthUpgradeAmount: 1
 --- !u!1 &1876275236820787597
 GameObject:
   m_ObjectHideFlags: 0
@@ -1326,7 +1334,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9194530255051333176}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1266666132028859875}
+        m_TargetAssemblyTypeName: PlayerUpgradePanel, Assembly-CSharp
+        m_MethodName: GunRateTurretHealthUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2896626400010128490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,7 +1548,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6603311716601502777}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1266666132028859875}
+        m_TargetAssemblyTypeName: PlayerUpgradePanel, Assembly-CSharp
+        m_MethodName: HealthUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3145139273687179940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,7 +2004,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 779359930222224267}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1266666132028859875}
+        m_TargetAssemblyTypeName: PlayerUpgradePanel, Assembly-CSharp
+        m_MethodName: DamageUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4412941615923314335
 GameObject:
   m_ObjectHideFlags: 0
@@ -2605,11 +2649,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31372bb00e2a1b04d9f992ebe0bfab89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Panel: {fileID: 6012642451911984348}
-  upgradeButton: {fileID: 1720241810709306476}
+  shipUpgradePanel: {fileID: 6012642451911984348}
+  shipUpgradeButton: {fileID: 1720241810709306476}
+  playerUpgradePanal: {fileID: 1613823205771917659}
   radius: 10
   allShipPartsCollected: 0
   shipUpgradeCost:
+  - metalCost: 1
+    gooCost: 1
+    partAvalibul: 0
+    partMissing: {fileID: 0}
+    partAttached: {fileID: 0}
+  - metalCost: 1
+    gooCost: 1
+    partAvalibul: 0
+    partMissing: {fileID: 0}
+    partAttached: {fileID: 0}
   - metalCost: 1
     gooCost: 1
     partAvalibul: 0
