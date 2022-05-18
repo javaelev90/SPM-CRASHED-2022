@@ -256,29 +256,7 @@ public class Engineer : Controller3D
             objects.Remove(GTG);
             Destroy(GTG);
             turretCount--;
-            //DequeueTurret();
         }
-
-        /*
-        Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out hit, 10f, turretLayer);
-
-        if (playerActions.Player.DeleteTurret.IsPressed())
-        {
-            //Transform greenGooDropPos = turretPrefab.transform.Find("DropMetal");
-            //Transform metalDropPos = turretPrefab.transform.Find("DropGoo");
-
-            if (hit.collider.gameObject.CompareTag("Turret"))
-            {
-                //GameObject greenGooDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + greenGooPrefab.name, greenGooDropPos.transform.position, Quaternion.identity);
-                //greenGooDrop.name = "Green Goo";
-                //GameObject metalDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + metalPrefab.name, metalDropPos.transform.position, Quaternion.identity);
-                //metalDrop.name = "Metal";
-                Debug.Log("Destroy that lil turret bitch");
-
-                Destroy(hit.collider.gameObject);
-            }
-        }
-        */
     }
 
 
@@ -345,6 +323,7 @@ public class Engineer : Controller3D
                 if (obj.CurrentHealth == obj.MaxHealth || isUsingTurret == true)
                 {
                     Debug.Log("Already max health or is using turret");
+                    // TODO add text to explain why repair not activating
                     return;
                 }
 
@@ -369,7 +348,7 @@ public class Engineer : Controller3D
                         turretHealthHandler.AddHealth(healthToAddIfDead);
                     }
 
-                    // Play sound
+                    // TODO Play sound
 
                     Debug.Log("Repaired the turret");
                 }
