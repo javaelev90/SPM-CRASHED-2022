@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
+using EventCallbacksSystem;
 
 public class Weapon : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class Weapon : MonoBehaviour
     void Start()
     {
         sourceOne = GetComponent<AudioSource>();
+        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
+        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
     }
 
     private void Cooldown()
@@ -83,5 +86,15 @@ public class Weapon : MonoBehaviour
     {
         int index = Random.Range(0, shot.Length - 1);
         return shot[index];
+    }
+
+    public void UpgradeDamage(GunDamageUpgradeEvent damageUpgradeEvent)
+    {
+        weaponDamage += damageUpgradeEvent.UpgradeAmount;
+    }
+
+    public void FireRateUpgrade(GunFireRateUpgradeEvent gunRateUpgradeEvent)
+    {
+        delayBetweenShots *= (1 - gunRateUpgradeEvent.UpgradePercent);
     }
 }

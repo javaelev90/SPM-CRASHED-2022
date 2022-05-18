@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using EventCallbacksSystem;
 
 public class HealthHandler : MonoBehaviourPunCallbacks
 {
@@ -89,4 +90,5 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + dropOffsetY, transform.position.z);
         PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + itemDropPrefab.name, spawnPosition, Quaternion.identity, 0, parameters);
     }
+
 }

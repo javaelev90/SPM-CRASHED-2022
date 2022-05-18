@@ -7,17 +7,17 @@ using System.Linq;
 using UnityEngine.UI;
 public class Ship : MonoBehaviour
 {
-    [SerializeField] private UpgradePanel Panel;
-    [SerializeField] private Button upgradeButton;
+    [SerializeField] private ShipUpgradePanel shipUpgradePanel;
+    [SerializeField] private Button shipUpgradeButton;
+    [SerializeField] private GameObject playerUpgradePanal;
     [SerializeField] private float radius = 10f;
-    private bool triggerActive = false;
-    [SerializeField] Engineer player;
     private int nextUpgrade;
     public bool allShipPartsCollected = false;
     public List<ShipUpgradeCost> shipUpgradeCost;
     AudioSource source;
     public AudioClip connect;
     public float minTimeUntilDaw = 120f;
+    private InventorySystem inventory;
 
 
 
@@ -31,29 +31,17 @@ public class Ship : MonoBehaviour
         public GameObject partAttached;
     }
 
-    void Start()
+    private void Start()
     {
         Minimap.Instance.Ship = gameObject;
         EventSystem.Instance.RegisterListener<AttachPartEvent>(newPartObtained);
-        EventSystem.Instance.RegisterListener<ShipUppgradPanelEvent>(OpenUpgradePanel);
+        EventSystem.Instance.RegisterListener<ShipUppgradPanelEvent>(OpenShipUpgradePanel);
         nextUpgrade = 0;
 
-        StartCoroutine(Wait(5));
-        //Wait(5);
         source = GetComponent<AudioSource>();
-
-
     }
 
-    IEnumerator Wait(float sec)
-    {
-        while (player == null)
-        {
-            yield return new WaitForSeconds(sec);
-            player = FindObjectOfType<Engineer>();
-        }
-
-    }
+  
 
     public void newPartObtained(AttachPartEvent attachPartEvent)
     {
@@ -80,7 +68,8 @@ public class Ship : MonoBehaviour
             shipUpgradeCost[nextUpgrade].partAttached.SetActive(true);
             nextUpgrade++;
             source.PlayOneShot(connect);
-            OpenUpgradePanel();
+            shipUpgradePanel.gameObject.SetActive(false);
+            playerUpgradePanal.SetActive(true);
             allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
             return true;
         }
@@ -89,16 +78,13 @@ public class Ship : MonoBehaviour
 
     private bool TakeResources()
     {
-        if (player != null)
+        if (inventory.Amount<GreenGoo>() >= shipUpgradeCost[nextUpgrade].gooCost && inventory.Amount<Metal>() >= shipUpgradeCost[nextUpgrade].metalCost && shipUpgradeCost[nextUpgrade].partAvalibul)
         {
-            InventorySystem inventory = player.gameObject.GetComponent<InventorySystem>();
-            if (inventory.Amount<GreenGoo>() >= shipUpgradeCost[nextUpgrade].gooCost && inventory.Amount<Metal>() >= shipUpgradeCost[nextUpgrade].metalCost && shipUpgradeCost[nextUpgrade].partAvalibul)
-            {
-                inventory.Remove<Metal>(shipUpgradeCost[nextUpgrade].metalCost);
-                inventory.Remove<GreenGoo>(shipUpgradeCost[nextUpgrade].gooCost);
-                return true;
-            }
+            inventory.Remove<Metal>(shipUpgradeCost[nextUpgrade].metalCost);
+            inventory.Remove<GreenGoo>(shipUpgradeCost[nextUpgrade].gooCost);
+            return true;
         }
+
         return false;
     }
 
@@ -106,8 +92,8 @@ public class Ship : MonoBehaviour
     {
         if (!UppgradeShip())
         {
-            Panel.ToggleErrorMessage(true);
-            Panel.SetErrorMessage("Something fucked up!");
+            shipUpgradePanel.ToggleErrorMessage(true);
+            shipUpgradePanel.SetErrorMessage("Something fucked up!");
         }
     }
 
@@ -116,35 +102,39 @@ public class Ship : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 
-    private void OpenUpgradePanel()
+    private void OpenShipUpgradePanel()
     {
-        if (Panel != null)
+        if (shipUpgradePanel != null)
         {
-            InventorySystem inventory = player.gameObject.GetComponent<InventorySystem>();
-            bool isActive = Panel.gameObject.activeSelf;
-            Panel.gameObject.SetActive(!isActive);
+            inventory = GameManager.playerObject.GetComponent<InventorySystem>();
+            shipUpgradePanel.gameObject.SetActive(true);
             if (!shipUpgradeCost[nextUpgrade].partAvalibul)
             {
-                upgradeButton.interactable = false;
-                Panel.SetCostInfo("No new ship part obtained for upgrade");
+                shipUpgradeButton.interactable = false;
+                shipUpgradePanel.SetCostInfo("No new ship part obtained for upgrade");
             }
             else if (inventory.Amount<Metal>() < shipUpgradeCost[nextUpgrade].metalCost || inventory.Amount<GreenGoo>() < shipUpgradeCost[nextUpgrade].gooCost)
             {
-                upgradeButton.interactable = false;
-                Panel.SetCostInfo($"Not enough resources \n Metal: {shipUpgradeCost[nextUpgrade].metalCost} \n Green Goo: {shipUpgradeCost[nextUpgrade].gooCost}");
+                shipUpgradeButton.interactable = false;
+                shipUpgradePanel.SetCostInfo($"Not enough resources \n Metal: {shipUpgradeCost[nextUpgrade].metalCost} \n Green Goo: {shipUpgradeCost[nextUpgrade].gooCost}");
             }
             else
             {
-                upgradeButton.interactable = true;
-                Panel.SetCostInfo($"Do you want to upgrade? \n Metal: {shipUpgradeCost[nextUpgrade].metalCost} \n Green Goo: {shipUpgradeCost[nextUpgrade].gooCost}");
+                shipUpgradeButton.interactable = true;
+                shipUpgradePanel.SetCostInfo($"Do you want to upgrade? \n Metal: {shipUpgradeCost[nextUpgrade].metalCost} \n Green Goo: {shipUpgradeCost[nextUpgrade].gooCost}");
             }
-            Panel.ToggleErrorMessage(false);
+            shipUpgradePanel.ToggleErrorMessage(false);
             Cursor.lockState = CursorLockMode.None;
         }
     }
 
-    public void OpenUpgradePanel(ShipUppgradPanelEvent shipUppgradPanelEvent)
+    public void OpenShipUpgradePanel(ShipUppgradPanelEvent shipUppgradPanelEvent)
     {
-        OpenUpgradePanel();
+        OpenShipUpgradePanel();
+    }
+
+    private void OpenPlayerUpgradePanel()
+    {
+        EventSystem.Instance.FireEvent(new OpenPlayerUpgradePanelEvent());
     }
 }

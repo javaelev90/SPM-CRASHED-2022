@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private ObjectCulling objectCulling;
     public static GameObject playerObject;
 
-    private Character character;
+    public static Character character;
 
     private bool IsMine { get { return photonView.IsMine; } }
     private bool gameIsOver = false;

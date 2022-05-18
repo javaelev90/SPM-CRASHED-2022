@@ -14,6 +14,8 @@ public class TeleportToShip : MonoBehaviour
     {
         EventSystem.Instance.RegisterListener<TeleportToShipEvent>(Teleport);
     }
+
+
     public void Teleport(TeleportToShipEvent teleport)
     {
         //soldier.transform.position = soldierTPPosition.transform.position;

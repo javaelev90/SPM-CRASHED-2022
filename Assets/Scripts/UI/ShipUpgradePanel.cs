@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradePanel : MonoBehaviour
+public class ShipUpgradePanel : MonoBehaviour
 {
     [SerializeField] private GameObject Panel;
     [SerializeField] private GameObject ErrorMsg;
@@ -25,9 +25,8 @@ public class UpgradePanel : MonoBehaviour
     // When hitting X
     public void ClosePanel()
     {
-        Debug.Log(1);
         ErrorMsg.SetActive(false);
-        Panel.SetActive(false);
+        gameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
 

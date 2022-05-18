@@ -18,7 +18,6 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private PhotonView bullet;
     [SerializeField] private float fireTimer = 1f;
     [SerializeField] private int turretDamage;
-    [SerializeField] private int turretDamageIncreaseAtUpgrade;
     [SerializeField] private int turretHealthIncreaseAtUpgrade;
     [SerializeField] public Transform useTurretPosition;
     [SerializeField] public Transform useTurretBody;
@@ -44,9 +43,14 @@ public class Turret : MonoBehaviourPunCallbacks
         engineerRef = FindObjectOfType<Engineer>();
     }
 
+    private void Start()
+    {
+        EventSystem.Instance.RegisterListener<TurretDamageUpgradeEvent>(DamageUpgrade);
+    }
+
     public void DamageUpgrade(TurretDamageUpgradeEvent turretDamageUpgrade)
     {
-        turretDamage += turretDamageIncreaseAtUpgrade;
+        turretDamage += turretDamageUpgrade.UpgradeAmount;
     }
 
     public void HealthUpgrade(TurretHealthUpgradeEvent turretDamageUpgrade)
