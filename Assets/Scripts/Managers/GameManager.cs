@@ -59,11 +59,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             playerObject = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
-
-        if (IsMine)
-        {
-            objectCulling.Initialize(playerObject);
-        }
+        //playerObject.GetComponent<PhotonView>().Group = 1;
+        //PhotonNetwork.SetSendingEnabled(0, false);
+        //PhotonNetwork.SetSendingEnabled(1, true);
+        //if (IsMine)
+        //{
+        //objectCulling.Initialize(playerObject);
+        //}
 
     }
 

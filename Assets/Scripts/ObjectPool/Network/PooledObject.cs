@@ -20,6 +20,11 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public Action CustomRecycleFunction { get; set; }
     public Action<object[]> CustomInitializeFunction;
     public int photonViewTargetId = -1;
+    public int photonGroup = 0;
+    private void Start()
+    {
+        photonGroup = photonView.Group;
+    }
 
     public void Initialize(object[] parameters)
     {
@@ -79,8 +84,6 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         CustomRecycleFunction?.Invoke();
     }
-
-   
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
