@@ -16,7 +16,6 @@ public class LocalPooledObject : MonoBehaviour
     public RecyclingBehavior recyclingBehaviour;
     public LocalObjectPool ObjectPool { get; set; }
     public Action CustomRecycleFunction { get; set; }
-    public List<LocalPooledObjectPart> localObjectPart;
 
     public void Recycle()
     {
@@ -26,16 +25,15 @@ public class LocalPooledObject : MonoBehaviour
                 break;
             case RecyclingBehavior.Transform:
                 RecycleTransform();
-                RecycleChildObject();
+                RecycleUtils.ResetGameObjectComponents(ObjectPool.pooledObjectPrefab.transform, transform);
                 break;
             case RecyclingBehavior.Custom:
                 RecycleCustom();
-                RecycleChildObject();
+                RecycleUtils.ResetGameObjectComponents(ObjectPool.pooledObjectPrefab.transform, transform);
                 break;
             case RecyclingBehavior.CustomAndTransform:
-                RecycleTransform();
+                RecycleUtils.ResetGameObjectComponents(ObjectPool.pooledObjectPrefab.transform, transform);
                 RecycleCustom();
-                RecycleChildObject();
                 break;
         }
     }
@@ -54,13 +52,5 @@ public class LocalPooledObject : MonoBehaviour
     private void RecycleCustom()
     {
         CustomRecycleFunction?.Invoke();
-    }
-
-    private void RecycleChildObject()
-    {
-        foreach (LocalPooledObjectPart pooledObjectPart in localObjectPart)
-        {
-            pooledObjectPart.Recycle();
-        }
     }
 }

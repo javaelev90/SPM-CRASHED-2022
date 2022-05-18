@@ -20,28 +20,28 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private int turretDamage;
     [SerializeField] private int turretDamageIncreaseAtUpgrade;
     [SerializeField] private int turretHealthIncreaseAtUpgrade;
+    [SerializeField] public Transform useTurretPosition;
+    [SerializeField] public Transform useTurretBody;
 
     private GameObject emptyTarget;
-    [SerializeField] public Transform useTurretPosition;
+    private Engineer engineerRef;
+
     public bool IsPlaced { get; set; }
     private float counter;
-    private bool isMine;
-
-    private AudioSource source;
-
-    public AudioClip clip;
+    //private bool isMine;
+    public bool isCurrent;
 
     // Start is called before the first frame update
     void Awake()
     {
         counter = fireTimer;
-        isMine = photonView.IsMine;
+        //isMine = photonView.IsMine;
         emptyTarget = new GameObject();
+        isCurrent = false;
         emptyTarget.transform.position = transform.forward * 3f;
-        EventSystem.Instance.RegisterListener<TurretDamageUpgradeEvent>(DamageUpgrade);
-        EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(HealthUpgrade);
-        source = GetComponent<AudioSource>();
-
+        //EventSystem.Instance.RegisterListener<TurretDamageUpgradeEvent>(DamageUpgrade);
+        //EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(HealthUpgrade);
+        engineerRef = FindObjectOfType<Engineer>();
     }
 
     public void DamageUpgrade(TurretDamageUpgradeEvent turretDamageUpgrade)
@@ -82,6 +82,7 @@ public class Turret : MonoBehaviourPunCallbacks
             rotateTo.x = ClampAngle(rotateTo.x, -90f, 90f);
             rotateTo.z = ClampAngle(rotateTo.z, -90f, 90f);
 
+            //ClampRotBody();
         }
 
         if (colliders.Length == 0)
@@ -98,44 +99,70 @@ public class Turret : MonoBehaviourPunCallbacks
         return Mathf.Min(angle, to);
     }
 
+    public void ClampRotBody()
+    {
+        // Clamp rotation so it doesn't go all over the place and end up upside down
+        Vector3 pivotRotation = turretBody.transform.eulerAngles;
+        pivotRotation.x = Mathf.Clamp(pivotRotation.x, -90f, 90f);
+        pivotRotation.y = Mathf.Clamp(pivotRotation.y, -90f, 90f);
+        pivotRotation.z = Mathf.Clamp(pivotRotation.z, -90f, 90f);
+        transform.eulerAngles = pivotRotation;
+        //rotateTo.z = ClampAngle(rotateTo.z, -90f, 90f);
+    }
+
     // Update is called once per frame
     void Update()
     {
+        //ClampRotBody();
 
         FindTargets();
 
+        // If the turret is in auto-mode (targets enemies automatically)
         if (currentTarget.position != emptyTarget.transform.position)
         {
-            //if (Vector3.Distance(currentTarget.transform.position, transform.position) > radius)
-            //{
-            //    currentTarget = transform;
-            //}
+            //ClampRotBody();
 
             counter -= Time.deltaTime;
-            if (counter <= 0f)
-            {
-                GameObject bullet = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + "Bullet", turretMuzzlePoint.transform.position, turretBody.transform.rotation);
-                Projectile projectile = bullet.GetComponent<Projectile>();
-                projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
-                projectile.DamageDealer = turretDamage;
-                projectile.IsShot = true;
-                counter = fireTimer;
-                source.PlayOneShot(clip);
-                //Debug.Log("Is shooting");
-            }
+            //if (counter <= 0f)
+            //{
+                TurretShoot();
+            //}
+
         }
         else
         {
             //turretBody.transform.LookAt(Vector3.forward, Vector3.up);
         }
 
-
+        // If the Engineer is using the turret and shooting
+        if (engineerRef.isUsingTurret == true)
+        {
+            counter -= Time.deltaTime;
+            if (engineerRef.isShootingTurret == true)
+            {
+                //if (counter <= 0f)
+                //{
+                    TurretShoot();
+                //}
+            }
+        }
 
         Debug.DrawRay(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
-        //if (IsPlaced)
-        //{
-        //}
+    }
 
+    public void TurretShoot()
+    {
+        if (counter <= 0f)
+        {
+            GameObject bullet = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + "Bullet", turretMuzzlePoint.transform.position, turretBody.transform.rotation);
+            Projectile projectile = bullet.GetComponent<Projectile>();
+            projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
+            projectile.DamageDealer = turretDamage;
+            projectile.IsShot = true;
+            counter = fireTimer;
+            Debug.Log("Is shooting");
+        }
+        
     }
 
     private void OnDrawGizmos()
@@ -143,3 +170,4 @@ public class Turret : MonoBehaviourPunCallbacks
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 }
+

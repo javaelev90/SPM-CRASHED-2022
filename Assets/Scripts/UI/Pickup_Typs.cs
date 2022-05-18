@@ -9,7 +9,6 @@ public class Pickup_Typs : MonoBehaviour
         Metal,
         GreenGoo,
         AlienMeat,
-        CookedAlienMeat,
         Revive,
         Fire,
         None

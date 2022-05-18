@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
-
+using EventCallbacksSystem;
 public class Controller3D : MonoBehaviourPunCallbacks
 {
     [Header("Multiplayer")]
@@ -19,7 +19,9 @@ public class Controller3D : MonoBehaviourPunCallbacks
     [Header("Player")]
     [SerializeField] private float skinWidth = 0.5f;
     [SerializeField] private float groundCheckDistance;
+    [SerializeField] private GameObject playerGUI;
     private HealthHandler healthHandler;
+
 
     [Header("Camera settings")]
     [SerializeField] private bool isFPS;
@@ -70,6 +72,9 @@ public class Controller3D : MonoBehaviourPunCallbacks
     AudioSource source;
     public AudioClip clip;
 
+    [Header("FPS Visuals")]
+    [SerializeField] GameObject weaponVisuals;
+    [SerializeField] GameObject bodyMesh;
 
     protected virtual void Awake()
     {
@@ -84,13 +89,24 @@ public class Controller3D : MonoBehaviourPunCallbacks
         capsuleCollider = GetComponent<CapsuleCollider>();
         body = GetComponent<PhysicsBody>();
 
-        mainCam = Camera.main;
+       
+        //weaponPrefab.transform.SetParent(mainCam.transform);
         isMine = photonView.IsMine;
         Cursor.lockState = CursorLockMode.Locked;
         healthHandler = GetComponent<HealthHandler>();
         source = GetComponent<AudioSource>();
+        playerGUI.SetActive(isMine);
 
+        if (isMine)
+        {
+            mainCam = Camera.main;
+            mainCam.transform.position = camPositionFPS.transform.position;
+            mainCam.transform.SetParent(camPositionFPS.transform);
+            camPositionFPS.transform.rotation = Quaternion.LookRotation(bodyMesh.transform.position, Vector3.up);
+            mainCam.transform.rotation = camPositionFPS.transform.rotation;
+        }
 
+        //bodyMesh.SetActive(isMine == false);
     }
 
     private void OnEnable()
@@ -118,6 +134,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
                     break;
                 case 2:
                     RoatateCamera();
+                    //EngineerUseTurretHandling();
                     break;
             }
         }
@@ -181,6 +198,73 @@ public class Controller3D : MonoBehaviourPunCallbacks
             */
         }
     }
+    public Turret turretObjRef;
+    public Engineer engineerRef;
+    public Transform turretBodyTransform;
+    [SerializeField] private LayerMask enemyLayer;
+    //public Transform muzzleOnTheFukingTurret;
+    public bool isShootingTurret { get; set; }
+
+
+
+    public void EngineerUseTurretHandling(InputAction.CallbackContext ctx)
+    {
+        RoatateCamera();
+        PlayerRotation();
+        //Vector3 gravitationForce;
+        //float gravity = 9.81f;
+        //gravitationForce = Vector3.down * gravity * Time.deltaTime;
+        //Body.Velocity += gravitationForce;
+
+        if (engineerRef.GetComponent<Engineer>().isUsingTurret == true)
+        {
+                // Rotate the turret towards where the player is looking
+            //Physics.Raycast(muzzlePoint.transform.position, muzzlePoint.transform.forward, out RaycastHit hit, 20f, enemyLayer);
+                // skapa nytt obj framf?r muzzle som direction, origin ?r muzzlepoint
+            //Vector3 lookDirection = (muzzlePoint.transform.position - transform.position).normalized;
+            //Quaternion rotateTo = Quaternion.LookRotation(lookDirection, turretBodyTransform.transform.up);
+            //turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
+
+            if (ctx.performed) //playerActions.Player.Shoot.IsPressed()
+            {
+                isShootingTurret = true;
+            }
+            if (ctx.canceled)
+            {
+                isShootingTurret = false;
+            }
+            Debug.Log("isShootingTurret " + isShootingTurret);
+
+            //GameObject turretRotationPoint = turretObjRef.turretBody;
+            //Debug.Log(turretRotationPoint.name);
+            //turretbodyshitcomponetnfuck = turretRotationPoint.GetComponent<Transform>();
+
+            //muzzlePoint.transform.position = mainCam.ScreenToWorldPoint(cameraLooking);
+            //turretbodyshitcomponetnfuck.gameObject.transform.LookAt(muzzlePoint.transform);
+            //muzzleOnTheFukingTurret.gameObject.transform.LookAt(muzzlePoint.transform);
+
+            //turretbodyshitcomponetnfuck.transform.Rotate(cameraLooking.x, cameraLooking.y, 0f, Space.Self); //= Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0);//Quaternion.Lerp(turretbodyshit.transform.rotation, mainCam.transform.rotation, 4f * Time.deltaTime);
+            //Debug.Log(turretbodyshitcomponetnfuck.transform.rotation);
+            //Vector3 resultingPosition = mainCam.transform.position + mainCam.transform.forward * 4f;
+            //turretFuckYOu.turretBody.transform.position = resultingPosition;
+        }
+
+
+
+    }
+
+    public void EngineerUseTurretLooking()
+    {
+        if (engineerRef.GetComponent<Engineer>().isUsingTurret == true)
+        {
+            // Rotate the turret towards where the player is looking
+            Physics.Raycast(muzzlePoint.transform.position, muzzlePoint.transform.forward, out RaycastHit hit, 20f, enemyLayer);
+            // skapa nytt obj framf?r muzzle som direction, origin ?r muzzlepoint
+            Vector3 lookDirection = (muzzlePoint.transform.position - transform.position).normalized;
+            Quaternion rotateTo = Quaternion.LookRotation(lookDirection, turretBodyTransform.transform.up);
+            turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
+        }
+    }
 
     public void MoveCamera(InputAction.CallbackContext obj)
     {
@@ -204,8 +288,8 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
         cameraRotation.x = Mathf.Clamp(cameraRotation.x, minXrotation, maxXrotation);
 
-        mainCam.transform.localRotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f);
-
+        //mainCam.transform.localRotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f);
+        camPositionFPS.transform.localRotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f);
         transform.rotation = Quaternion.Euler(0f, cameraRotation.y, 0f);
     }
 
@@ -242,11 +326,14 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
     private void UpdateCamera()
     {
-        mainCam.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0.0f);
+        //mainCam.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0.0f);
+        camPositionFPS.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0.0f);
 
         if (isFPS)
         {
-            mainCam.transform.position = camPositionFPS.transform.position;
+            //mainCam.transform.position = camPositionFPS.transform.position;
+            camPositionFPS.transform.position = camPositionFPS.transform.position;
+
         }
         else
         {
@@ -350,6 +437,11 @@ public class Controller3D : MonoBehaviourPunCallbacks
     {
         if (mainCam)
             Gizmos.DrawWireSphere(mainCam.transform.position, radius);
+    }
+
+    public void Immortal()
+    {
+        EventSystem.Instance.FireEvent(new ImmortalEvent());
     }
 
 }

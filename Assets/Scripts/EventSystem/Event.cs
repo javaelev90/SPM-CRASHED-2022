@@ -26,13 +26,17 @@ namespace EventCallbacksSystem
         public bool IsTriggered { get { return isTriggered; } }
     }
 
-    public class StartLobbyEvent : Event
+    public class EnterLobbyEvent : Event
     {
         public bool IsNameLongEnough { get; set; }
-        public StartLobbyEvent(bool isNameLongEnough)
+        public EnterLobbyEvent(bool isNameLongEnough)
         {
             IsNameLongEnough = isNameLongEnough;
         }
+    }
+
+    public class JoinedLobbyEvent : Event
+    {
     }
 
     public class LeaveLobbyEvent : Event
@@ -57,6 +61,10 @@ namespace EventCallbacksSystem
         {
             TimeUntilDawn = timeUntilDawn;
         }
+    }
+
+    public class TeleportToShipEvent : Event
+    {
     }
 
     public class PlayerHealthUpgradeEvent : Event { }
@@ -116,6 +124,14 @@ namespace EventCallbacksSystem
         }
 
         public UpdateUIAmountsEvent() { }
+    }
+     
+    public class ImmortalEvent : Event
+    {
+    }
+
+    public class ShipUppgradPanelEvent : Event
+    {
     }
 
 }
