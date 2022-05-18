@@ -47,8 +47,12 @@ public class ShowUI : MonoBehaviour
             if (isLocalPlayer && uiObject.activeSelf)
             {
                 uiObject.SetActive(false);
+                 foreach (var d in dialogs)
+            {
+                StopCoroutine(d.type);
             }
         }
     }
 }
+    }
 }

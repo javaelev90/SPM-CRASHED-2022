@@ -13,11 +13,15 @@ public class DialoguePickups : MonoBehaviour
     public bool isFirst;
     private bool isDone;
     private bool isTyping;
+
+    public Coroutine type;
+
+    ShowUiDialogue dialog;
   
    public void beginDialogue()
     {
         index = 0;
-        StartCoroutine(Type());
+        type = StartCoroutine(Type());
     }
 
     IEnumerator Type()
@@ -42,6 +46,14 @@ public class DialoguePickups : MonoBehaviour
         else
         {
             players.Next();
+        }
+    }
+
+    public void OnTriggerExit(){
+        if(gameObject.CompareTag("Player")){
+            StopCoroutine(Type());
+            textComponent.CancelInvoke();
+            textComponent.ClearMesh();
         }
     }
     public void Next()

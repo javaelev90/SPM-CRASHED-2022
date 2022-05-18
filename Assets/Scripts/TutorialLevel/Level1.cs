@@ -13,7 +13,16 @@ public class Level1 : MonoBehaviour
     private float delayBetweenChecks = 0.5f;
 
     public Ship ship;
+
+    public GameObject uiObject;
     
+    public GameObject panel;
+     void Start()
+    {
+        uiObject.SetActive(false);
+        panel.SetActive(true);
+
+    }
 
     private void TutorialOver(){
         if(PlacedTurret() && pool.activeObjects.Count == 0 && ship.nextUpgrade>0){
@@ -21,6 +30,8 @@ public class Level1 : MonoBehaviour
             foreach (var c in colliders)
             {
                 c.SetActive(false);
+                uiObject.SetActive(true);
+                panel.SetActive(false);
             }
         }
     }
