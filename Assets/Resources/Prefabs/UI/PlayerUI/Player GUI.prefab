@@ -804,7 +804,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6681164600960992288
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1363,8 +1363,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dabda19219482934f95260159c77b43a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMarker: {fileID: 3701021196003066654}
   shipMarker: {fileID: 7929222228560722878}
   otherPlayerMarker: {fileID: 2170215294322881575}
+  minimapCircle: {fileID: 7671384541175114607}
+  outerMarkerShip: {fileID: 6681164600960992288}
+  outerMarkerOtherPlayer: {fileID: 6426053569499466750}
+  scale: 2
 --- !u!1 &3678659512080499721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,10 +1402,10 @@ RectTransform:
   m_Father: {fileID: 3420161293819456278}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &554608504701094476
 CanvasRenderer:
@@ -2057,7 +2062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6426053569499466750
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2332,10 +2337,10 @@ RectTransform:
   m_Father: {fileID: 3420161293819456278}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1759918333555228919
 CanvasRenderer:
