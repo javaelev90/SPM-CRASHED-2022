@@ -67,16 +67,6 @@ namespace EventCallbacksSystem
     {
     }
 
-    public class PlayerHealthUpgradeEvent : Event { }
-
-    public class GunDamageUpgradeEvent : Event { }
-
-    public class GunReloadUpgradeEvent : Event { }
-
-    public class TurretHealthUpgradeEvent : Event { }
-
-    public class TurretDamageUpgradeEvent : Event { }
-
     public class GameOverEvent : Event
     {
         public string Reason { get; set; }
@@ -133,5 +123,64 @@ namespace EventCallbacksSystem
     public class ShipUppgradPanelEvent : Event
     {
     }
+
+    public class OpenPlayerUpgradePanelEvent : Event
+    {
+    }
+    public class HealthUpgradeEvent : Event
+    {
+        private int upgradeAmount;
+        public int UpgradeAmount { get { return upgradeAmount; } }
+
+        public HealthUpgradeEvent(int upgradeAmount)
+        {
+            this.upgradeAmount = upgradeAmount;
+        }
+    }
+    public class GunDamageUpgradeEvent : Event
+    {
+        private int upgradeAmount;
+        public int UpgradeAmount { get { return upgradeAmount; } }
+
+        public GunDamageUpgradeEvent(int upgradeAmount)
+        {
+            this.upgradeAmount = upgradeAmount;
+        }
+    }
+    public class GunFireRateUpgradeEvent : Event
+    {
+        private float upgradePercent;
+        public float UpgradePercent { get { return upgradePercent; } }
+
+        public GunFireRateUpgradeEvent(float upgradePercent)
+        {
+            this.upgradePercent = upgradePercent;
+        }
+    }
+
+    public class TurretDamageUpgradeEvent : Event
+    {
+        private int upgradeAmount;
+        public int UpgradeAmount { get { return upgradeAmount; } }
+
+        public TurretDamageUpgradeEvent(int upgradeAmount)
+        {
+            this.upgradeAmount = upgradeAmount;
+        }
+    }
+
+    public class TurretHealthUpgradeEvent : Event
+    {
+        private int upgradeAmount;
+        public int UpgradeAmount { get { return upgradeAmount; } }
+
+        public TurretHealthUpgradeEvent(int upgradeAmount)
+        {
+            this.upgradeAmount = upgradeAmount;
+        }
+    }
+
+
+
 
 }

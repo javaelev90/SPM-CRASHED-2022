@@ -10,6 +10,7 @@ public class PlayerHealthHandler : HealthHandler
     private void Start()
     {
         EventSystem.Instance.RegisterListener<ImmortalEvent>(SetImmortal);
+        EventSystem.Instance.RegisterListener<HealthUpgradeEvent>(UpgradeHealth);
     }
 
     public void SetImmortal(ImmortalEvent immortalEvent)
@@ -81,5 +82,11 @@ public class PlayerHealthHandler : HealthHandler
     private void UpdateActiveStateRPC(bool active)
     {
         transform.root.gameObject.SetActive(active);
+    }
+
+    public void UpgradeHealth(HealthUpgradeEvent healthUpgradeEvent)
+    {
+        MaxHealth += healthUpgradeEvent.UpgradeAmount;
+        CurrentHealth += healthUpgradeEvent.UpgradeAmount;
     }
 }
