@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 427306726}
-  m_IndirectSpecularColor: {r: 0.12731604, g: 0.1341452, b: 0.12107857, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731624, g: 0.1341452, b: 0.12107847, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -110548,6 +110548,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1918496971}
   - component: {fileID: 1918496970}
+  - component: {fileID: 1918496972}
+  - component: {fileID: 1918496973}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -110568,11 +110570,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 1520749292}
-  objectPool: {fileID: 0}
   soldierPrefab: {fileID: 4717172599527124038, guid: 27324ed1ee365a5449c5e0f3b3c3d0e3, type: 3}
   engineerPrefab: {fileID: 2924166598192640433, guid: c18e97eacc7951544aa0bac7a9b25940, type: 3}
   spawnPoint: {fileID: 1913197448}
   objectInstantiater: {fileID: 771109145}
+  objectCulling: {fileID: 1918496972}
 --- !u!4 &1918496971
 Transform:
   m_ObjectHideFlags: 0
@@ -110587,6 +110589,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1918496972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918496969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29cb42ed8b845bb4786db2c0dd20d7fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minCullingSquareSide: 5
+  minQuadTreeCapacity: 5
+--- !u!114 &1918496973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918496969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 6
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1920107661
 GameObject:
   m_ObjectHideFlags: 0
