@@ -16,7 +16,7 @@ public class Level1 : MonoBehaviour
     
 
     private void TutorialOver(){
-        if(pool.activeObjects.Count == 0 && turretPlaced == true && ship.nextUpgrade>0){
+        if(PlacedTurret() && pool.activeObjects.Count == 0 && ship.nextUpgrade>0){
             
             foreach (var c in colliders)
             {
@@ -25,8 +25,8 @@ public class Level1 : MonoBehaviour
         }
     }
 
-    private void PlacedTurret(){
-        turretPlaced = FindObjectOfType<Turret>() != null;
+    private bool PlacedTurret(){
+        return FindObjectOfType<Turret>() != null;
     }
 
     // Update is called once per frame
