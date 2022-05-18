@@ -15,13 +15,13 @@ public class Minimap : MonoBehaviour
     [SerializeField] private RectTransform minimapCircle;
     [SerializeField] private RectTransform outerMarkerShip;
     [SerializeField] private RectTransform outerMarkerOtherPlayer;
+    [SerializeField] private Transform outerMarkerShipParent;
     [SerializeField] private float scale = 1f;
     private float radius;
-    private GameObject outerMarkerShipParent;
 
     Vector2 shipMarkerPos;
     Vector2 otherPlayerPos;
-
+    float angle;
     public static Minimap Instance { get; private set; }
 
     private void OnEnable()
@@ -33,7 +33,6 @@ public class Minimap : MonoBehaviour
         }
 
         radius = minimapCircle.sizeDelta.x / 2f;
-        outerMarkerShipParent = outerMarkerShip.transform.parent.gameObject;
     }
 
     // Update is called once per frame
@@ -49,9 +48,10 @@ public class Minimap : MonoBehaviour
                 {
                     shipMarker.GetComponent<RawImage>().enabled = false;
                     outerMarkerShip.gameObject.SetActive(true);
-                    float angle = Vector2.Angle(playerMarker.anchoredPosition, shipMarker.anchoredPosition);
-                    Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
-                    outerMarkerShipParent.transform.rotation = Quaternion.Slerp(outerMarkerShipParent.transform.rotation, rotation, 0.3f);
+
+                    Vector2 direction = shipMarker.anchoredPosition - Vector2.up;
+                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    outerMarkerShipParent.transform.rotation = Quaternion.Euler(0f, 0f, angle);
                 }
                 else
                 {
@@ -66,7 +66,8 @@ public class Minimap : MonoBehaviour
                 PositionOnMinimap(OtherPlayer.transform, otherPlayerMarker, otherPlayerPos);
             }
         }
-
+        
+        Debug.Log("Angle " + angle);
     }
 
     private bool IsInsideUnitCircle(RectTransform rect)
