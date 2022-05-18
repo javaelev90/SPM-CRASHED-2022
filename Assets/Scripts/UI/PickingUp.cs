@@ -112,14 +112,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
         }
     }
 
-    //legacy
-    public void Cook()
-    {
-        if (PickUpHitCheck(fireLayer))
-        {
-        }
-    }
-
     public void Eat()
     {
         if (inventorySystem.Amount<AlienMeat>() > 0)
@@ -140,7 +132,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [PunRPC]
     private void DropItemRPC()
     {
-
         if (PhotonNetwork.IsMasterClient)
         {
             GameObject go;
@@ -182,7 +173,6 @@ public class PickingUp : MonoBehaviourPunCallbacks
             }
         }
     }
-
 
     private bool PickUpHitCheck(LayerMask layer)
     {

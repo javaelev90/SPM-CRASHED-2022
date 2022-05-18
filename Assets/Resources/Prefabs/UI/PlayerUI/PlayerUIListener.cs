@@ -23,6 +23,8 @@ public class PlayerUIListener : MonoBehaviour
                 slots.Add(si.PickupType, si);
             }
         }
+
+        slotItems[selectedIndex].SelectItem();
     }
 
     private void OnDisable()
@@ -57,15 +59,18 @@ public class PlayerUIListener : MonoBehaviour
     {
         if (ctx.started)
         {
-            if (selectedIndex != 0)
-                slotItems[selectedIndex].DeselectItem();
+            //if (selectedIndex != 0)
+            slotItems[selectedIndex].DeselectItem();
+            selectedIndex--;
 
-            if (selectedIndex > 0)
-                slotItems[--selectedIndex].SelectItem();
-
-            if (selectedIndex == 0)
+            if (selectedIndex >= 0)
                 slotItems[selectedIndex].SelectItem();
 
+            if (selectedIndex < 0)
+            {
+                selectedIndex = slotItems.Count - 1;
+                slotItems[selectedIndex].SelectItem();
+            }
         }
 
         TypeToInventoryEvent te = new TypeToInventoryEvent(slotItems[selectedIndex].PickupType);
@@ -76,11 +81,18 @@ public class PlayerUIListener : MonoBehaviour
     {
         if (ctx.started)
         {
-            if (selectedIndex != slotItems.Count - 1)
-                slotItems[selectedIndex].DeselectItem();
+            slotItems[selectedIndex].DeselectItem();
+            selectedIndex++;
+            //if (selectedIndex != slotItems.Count - 1)
 
-            if (selectedIndex < slotItems.Count - 1)
-                slotItems[++selectedIndex].SelectItem();
+            if (selectedIndex <= slotItems.Count - 1)
+                slotItems[selectedIndex].SelectItem();
+
+            if (selectedIndex > slotItems.Count - 1)
+            {
+                selectedIndex = 0;
+                slotItems[selectedIndex].SelectItem();
+            }
 
         }
 
