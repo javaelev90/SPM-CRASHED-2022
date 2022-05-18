@@ -934,6 +934,7 @@ MonoBehaviour:
   outerMarkerShip: {fileID: 6681164600960992288}
   outerMarkerOtherPlayer: {fileID: 6426053569499466750}
   outerMarkerShipParent: {fileID: 6681164600960992288}
+  outerMarkerOtherPlayerParent: {fileID: 6426053569499466750}
   scale: 2
 --- !u!1 &3678659512080499721
 GameObject:
@@ -1663,7 +1664,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6426053569499466750
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1679,10 +1680,10 @@ RectTransform:
   m_Father: {fileID: 3420161293819456278}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: -100, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5925212628443243235
 GameObject:
