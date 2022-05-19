@@ -10,7 +10,6 @@ public class SlugEnemy : AIBaseLogic
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float timeToWayPoint;
     [SerializeField] private float timeToExplosion;
-    [SerializeField] private float timeToChainReaction = 0.2f;
     [SerializeField] private int explosionDamage;
     [SerializeField] private GameObject explosionEffects;
     [SerializeField] private LayerMask AttackableTargets;
@@ -34,7 +33,6 @@ public class SlugEnemy : AIBaseLogic
         maxBlowUpRadius = viewRadius / 1.5f;
         wayPoint = wayPointSystem.GetNewPosition;
         timeCounterExplosion = timeToExplosion;
-        timeCounterChainReaction = timeToChainReaction;
         source = GetComponent<AudioSource>();
     }
 
@@ -166,14 +164,8 @@ public class SlugEnemy : AIBaseLogic
 
     public void BlowUp(bool canBlowUp)
     {
-        if (canBlowUp)
-        {
-            timeCounterChainReaction -= Time.deltaTime;
-        } 
-        else
-        {
-            timeCounterExplosion -= Time.deltaTime;
-        }
+
+        timeCounterExplosion -= Time.deltaTime;
         if ((canBlowUp || timeCounterExplosion <= 0f)  && isBlowingUp == false)
         {
             isBlowingUp = true;
@@ -203,7 +195,6 @@ public class SlugEnemy : AIBaseLogic
             root.DeSpawn();
             source.PlayOneShot(explode);
             timeCounterExplosion = timeToExplosion;
-            timeCounterChainReaction = timeToChainReaction;
         }
     }
 
