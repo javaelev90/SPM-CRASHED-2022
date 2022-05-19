@@ -17,10 +17,14 @@ public class Level1 : MonoBehaviour
     public GameObject uiObject;
     
     public GameObject panel;
+
+    public Timer time;
      void Start()
     {
         uiObject.SetActive(false);
         panel.SetActive(true);
+        time.DisplayingTime(false);
+        time.Show(false);
 
     }
 
@@ -32,6 +36,8 @@ public class Level1 : MonoBehaviour
                 c.SetActive(false);
                 uiObject.SetActive(true);
                 panel.SetActive(false);
+                time.DisplayingTime(true);
+                time.Show(true);
             }
         }
     }

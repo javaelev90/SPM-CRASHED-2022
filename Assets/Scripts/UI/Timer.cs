@@ -98,6 +98,11 @@ public class Timer : MonoBehaviour
         sekundTwo.enabled = enabled;
     }
 
+    public void Show(bool enabled){
+        day.enabled = enabled;
+        night.enabled = enabled;
+    }
+
     private IEnumerator Flash3()
     {
         flashing = true;
@@ -119,10 +124,15 @@ public class Timer : MonoBehaviour
 
     public void DisplayingTime(EventEvent eventEvent)
     {
-        minutEtt.enabled = !eventEvent.Start;
-        minutTwo.enabled = !eventEvent.Start;
-        separate.enabled = !eventEvent.Start;
-        sekundEtt.enabled = !eventEvent.Start;
-        sekundTwo.enabled = !eventEvent.Start;
+        DisplayingTime(!eventEvent.Start);
+    }
+
+    public void DisplayingTime(bool on)
+    {
+        minutEtt.enabled = on;
+        minutTwo.enabled = on;
+        separate.enabled = on;
+        sekundEtt.enabled = on;
+        sekundTwo.enabled = on;
     }
 }
