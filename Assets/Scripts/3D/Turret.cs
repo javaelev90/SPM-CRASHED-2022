@@ -38,8 +38,6 @@ public class Turret : MonoBehaviourPunCallbacks
         emptyTarget = new GameObject();
         isCurrent = false;
         emptyTarget.transform.position = transform.forward * 3f;
-        EventSystem.Instance.RegisterListener<TurretDamageUpgradeEvent>(DamageUpgrade);
-        EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(HealthUpgrade);
         engineerRef = FindObjectOfType<Engineer>();
     }
 
@@ -51,11 +49,6 @@ public class Turret : MonoBehaviourPunCallbacks
     public void DamageUpgrade(TurretDamageUpgradeEvent turretDamageUpgrade)
     {
         turretDamage += turretDamageUpgrade.UpgradeAmount;
-    }
-
-    public void HealthUpgrade(TurretHealthUpgradeEvent turretDamageUpgrade)
-    {
-        transform.GetComponent<HealthHandler>().MaxHealth += turretHealthIncreaseAtUpgrade;
     }
 
     private void FindTargets()

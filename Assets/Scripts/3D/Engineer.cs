@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Engineer : Controller3D
 {
-    private float targetTime = 1f;
+    private float placeTimer = 1f;
 
     [Header("Turrets")]
     [SerializeField] private PhotonView turret;
@@ -16,8 +16,8 @@ public class Engineer : Controller3D
     [SerializeField] private int maxTurretToSpawn = 3;
     [SerializeField] private int turretCount;
     [SerializeField] private Vector3 turretOffset;
-    [SerializeField] private int gooCostTurret = 1;
-    [SerializeField] private int metalCostTurret = 1;
+    //[SerializeField] private int gooCostTurret;
+    //[SerializeField] private int metalCostTurret;
     //[SerializeField] private GameObject turretObject;
     private bool canPutDownTurret;
     //private string pathTurret = "Resources/Prefabs/TurretAssembly";
@@ -40,6 +40,7 @@ public class Engineer : Controller3D
     public TurretCost turretRepairCosts;
     [SerializeField] private int healthToAdd = 10;
     [SerializeField] private int healthToAddIfDead = 6;
+    [SerializeField] private Animator atFullHealthText;
 
     [Header("TurretBuild")]
     public TurretCost turretBuildCosts;
@@ -50,7 +51,7 @@ public class Engineer : Controller3D
         public int metalCost;
         public int gooCost;
     }
-    
+
 
     [Header("Carry Ship Part")]
     /// <summary>
@@ -87,7 +88,7 @@ public class Engineer : Controller3D
         while (true)
         {
             Minimap.Instance.OtherPlayer = FindObjectOfType<SoldierCharacter>()?.gameObject;
-            if(Minimap.Instance.OtherPlayer != null)
+            if (Minimap.Instance.OtherPlayer != null)
             {
                 break;
             }
@@ -106,7 +107,7 @@ public class Engineer : Controller3D
     {
         base.Update();
         Cooldown();
-        targetTime -= Time.deltaTime;
+        placeTimer -= Time.deltaTime;
         PickUpShipPart();
         //OnTurretUse();
         if (isPressed)
@@ -177,7 +178,7 @@ public class Engineer : Controller3D
         GameObject turretObject;
         isTryingToPlaceTurret = true;
 
-        if (targetTime < 0.0f && isUsingTurret == false) // turretCount < maxTurretToSpawn && 
+        if (placeTimer <= 0.0f && isUsingTurret == false) // turretCount < maxTurretToSpawn && 
         {
             // Check if resources needed is in inventory
             InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
@@ -205,42 +206,41 @@ public class Engineer : Controller3D
                         turretCount--;
                     }
 
-                    if (hit.distance < 1)
+
+                    turretObject = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPos.position, Quaternion.identity);
+
+                    if (turretObject != null)
                     {
-                        turretObject = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPos.position, Quaternion.identity);
+                        turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
+                        turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.forward, Vector3.forward) * turretObject.transform.rotation;
+                        //if (hit.collider != null && hit.distance < 3f)
+                        //Debug.Log("turret should be placed");
 
-                        if (turretObject != null)
-                        {
-                            turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
-                            turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.forward, Vector3.forward) * turretObject.transform.rotation;
-                            //if (hit.collider != null && hit.distance < 3f)
-                            //Debug.Log("turret should be placed");
+                        turretObject.transform.position = turretPos.transform.position;
+                        turretObject.GetComponent<Turret>().IsPlaced = true;
 
-                            turretObject.transform.position = turretPos.transform.position;
-                            turretObject.GetComponent<Turret>().IsPlaced = true;
+                        // Remove resources
+                        inventorySystem.Remove<Metal>(turretBuildCosts.metalCost);
+                        inventorySystem.Remove<GreenGoo>(turretBuildCosts.gooCost);
 
-                            // Remove resources
-                            inventorySystem.Remove<Metal>(turretBuildCosts.metalCost);
-                            inventorySystem.Remove<GreenGoo>(turretBuildCosts.gooCost);
+                        // Add another turret to the queue and increase count of turrets
+                        turretCount++;
+                        objects.Add(turretObject);
 
-                            // Add another turret to the queue and increase count of turrets
-                            turretCount++;
-                            objects.Add(turretObject);
+                        // Destroy the outlined turret (for both players)
+                        isPressed = false;
+                        PhotonNetwork.Destroy(outlinedTurret);
 
-                            // Destroy the outlined turret (for both players)
-                            isPressed = false;
-                            PhotonNetwork.Destroy(outlinedTurret);
+                        // Reset targetTime
+                        placeTimer = 1f;
 
-                            // Reset targetTime
-                            targetTime = 1f;
-
-                            // Is no longer trying to place a turret
-                            isTryingToPlaceTurret = false;
-                        }
+                        // Is no longer trying to place a turret
+                        isTryingToPlaceTurret = false;
                     }
+
                 }
             }
-            
+
         }
     }
 
@@ -249,13 +249,12 @@ public class Engineer : Controller3D
     /// </summary>
     public void OnTurretDestroy()
     {
-        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret") && playerActions.Player.DeleteTurret.IsPressed())
+        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
-            //Debug.Log("Imagine items get dropped here");
             hit.collider.GetComponent<TurretHealthHandler>().SalvageDrop();
             GameObject GTG = hit.collider.gameObject;
             objects.Remove(GTG);
-            Destroy(GTG);
+            PhotonNetwork.Destroy(GTG);
             turretCount--;
         }
     }
@@ -280,7 +279,7 @@ public class Engineer : Controller3D
 
     public void OnTurretUse()
     {
-        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret") && playerActions.Player.UseTurret.IsPressed())
+        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
             if (hit.collider.GetComponent<HealthHandler>().isAlive)
             {
@@ -304,22 +303,13 @@ public class Engineer : Controller3D
                 usePositionPos = GetChildWithName(hit.collider.gameObject, "UsePosition");
             }
         }
-        
-        else if (isUsingTurret == true && playerActions.Player.UseTurret.IsPressed())
+
+        else if (isUsingTurret == true)
         {
             //Debug.Log("You are no longer using turret");
             isUsingTurret = false;
             ChangeControlls.ControlType = 1;
         }
-    }
-
-    [SerializeField] private Animator atFullHealthText;
-    IEnumerator ExecuteAfterTime(float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        // Code to execute after the delay
-        atFullHealthText.gameObject.SetActive(false);
     }
 
     public void OnTurretRepair(InputAction.CallbackContext ctx)
@@ -332,7 +322,7 @@ public class Engineer : Controller3D
                 TurretHealthHandler obj = hit.collider.gameObject.GetComponent<TurretHealthHandler>();
                 if (obj.CurrentHealth == obj.MaxHealth)
                 {
-                    
+
                     Debug.Log("Already max health");
                     // Text to explain why repair not activating
                     atFullHealthText.gameObject.SetActive(true);
@@ -373,10 +363,17 @@ public class Engineer : Controller3D
                     Debug.Log("Not enough resources");
                 }
             }
-                
+
         }
     }
 
+    IEnumerator ExecuteAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        // Code to execute after the delay
+        atFullHealthText.gameObject.SetActive(false);
+    }
 
     public void PickUpShipPart()
     {
