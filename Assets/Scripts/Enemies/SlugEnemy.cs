@@ -10,6 +10,7 @@ public class SlugEnemy : AIBaseLogic
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float timeToWayPoint;
     [SerializeField] private float timeToExplosion;
+    [SerializeField] private float timeToChainReaction = 0.2f;
     [SerializeField] private int explosionDamage;
     [SerializeField] private GameObject explosionEffects;
     [SerializeField] private LayerMask AttackableTargets;
@@ -17,7 +18,9 @@ public class SlugEnemy : AIBaseLogic
 
     private float timeCounterWaypoint;
     private float timeCounterExplosion;
+    private float timeCounterChainReaction;
     private Vector3 wayPoint;
+    private bool isBlowingUp;
 
     AudioSource source;
     public AudioClip walk;
@@ -31,6 +34,7 @@ public class SlugEnemy : AIBaseLogic
         maxBlowUpRadius = viewRadius / 1.5f;
         wayPoint = wayPointSystem.GetNewPosition;
         timeCounterExplosion = timeToExplosion;
+        timeCounterChainReaction = timeToChainReaction;
         source = GetComponent<AudioSource>();
     }
 
@@ -145,7 +149,7 @@ public class SlugEnemy : AIBaseLogic
         if (distanceToTarget < maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
         {
             if (agent.isOnNavMesh) agent.isStopped = true;
-            BlowUp();
+            BlowUp(false);
         }
         else
         {
@@ -160,11 +164,19 @@ public class SlugEnemy : AIBaseLogic
         }
     }
 
-    public void BlowUp()
+    public void BlowUp(bool canBlowUp)
     {
-        timeCounterExplosion -= Time.deltaTime;
-        if (timeCounterExplosion <= 0f)
+        if (canBlowUp)
         {
+            timeCounterChainReaction -= Time.deltaTime;
+        } 
+        else
+        {
+            timeCounterExplosion -= Time.deltaTime;
+        }
+        if ((canBlowUp || timeCounterExplosion <= 0f)  && isBlowingUp == false)
+        {
+            isBlowingUp = true;
             Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, AttackableTargets);
             if (targets.Length > 0)
             {
@@ -177,7 +189,7 @@ public class SlugEnemy : AIBaseLogic
                         enemy = coll.GetComponent<SlugEnemy>();
                         if (enemy && !(enemy.gameObject.GetInstanceID() == gameObject.GetInstanceID()))
                         {
-                            enemy.BlowUp();
+                            enemy.BlowUp(true);
                         }
 
                         if (!enemy)
@@ -191,6 +203,7 @@ public class SlugEnemy : AIBaseLogic
             root.DeSpawn();
             source.PlayOneShot(explode);
             timeCounterExplosion = timeToExplosion;
+            timeCounterChainReaction = timeToChainReaction;
         }
     }
 
