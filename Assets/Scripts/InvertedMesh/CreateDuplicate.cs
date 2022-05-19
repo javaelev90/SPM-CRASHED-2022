@@ -30,6 +30,7 @@ public class CreateDuplicate : MonoBehaviour
     {
         
     }
+#if (UNITY_EDITOR)
     [ContextMenu("Generate Invert")]
     public void CreateInvetedDuplicate()
     {
@@ -46,4 +47,5 @@ public class CreateDuplicate : MonoBehaviour
         AssetDatabase.CreateAsset(incertedMesh, path + "/" + nameOfNewMesh + ".asset");
         AssetDatabase.SaveAssets();
     }
+#endif
 }
