@@ -65,16 +65,22 @@ public class Ship : MonoBehaviourPunCallbacks
     {
         if (TakeResources())
         {
-            shipUpgradeCost[nextUpgrade].partMissing.SetActive(false);
-            shipUpgradeCost[nextUpgrade].partAttached.SetActive(true);
-            nextUpgrade++;
-            source.PlayOneShot(connect);
-            shipUpgradePanel.gameObject.SetActive(false);
-            OpenPlayerUpgradePanel();
-            allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
+            photonView.RPC(nameof(UpgradeShipRPC), RpcTarget.All);
             return true;
         }
         return false;
+    }
+
+    [PunRPC]
+    private void UpgradeShipRPC()
+    {
+        shipUpgradeCost[nextUpgrade].partMissing.SetActive(false);
+        shipUpgradeCost[nextUpgrade].partAttached.SetActive(true);
+        nextUpgrade++;
+        source.PlayOneShot(connect);
+        shipUpgradePanel.gameObject.SetActive(false);
+        OpenPlayerUpgradePanel();
+        allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
     }
 
     private bool TakeResources()
@@ -136,15 +142,16 @@ public class Ship : MonoBehaviourPunCallbacks
 
     private void OpenPlayerUpgradePanel()
     {
-        photonView.RPC(nameof(OpenUpgradePanelRPC), RpcTarget.All);
-    }
-    [PunRPC]
-    private void OpenUpgradePanelRPC()
-    {
-        //EventSystem.Instance.FireEvent(new OpenPlayerUpgradePanelEvent());
-        //OpenPlayerUpgradePanel();
+        //photonView.RPC(nameof(OpenUpgradePanelRPC), RpcTarget.All);
         playerUpgradePanal.SetActive(true);
     }
+    //[PunRPC]
+    //private void OpenUpgradePanelRPC()
+    //{
+    //    //EventSystem.Instance.FireEvent(new OpenPlayerUpgradePanelEvent());
+    //    //OpenPlayerUpgradePanel();
+    //    playerUpgradePanal.SetActive(true);
+    //}
 
     /*public void OpenPlayerUpgradePanel()
     {
