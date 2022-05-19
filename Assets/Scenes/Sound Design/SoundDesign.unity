@@ -11090,6 +11090,7 @@ Transform:
   - {fileID: 716005300}
   - {fileID: 1911156997}
   - {fileID: 1379905899}
+  - {fileID: 1391827937}
   m_Father: {fileID: 0}
   m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0.233, y: 3.787, z: 1.306}
@@ -86236,7 +86237,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339485852}
   m_LocalRotation: {x: -0, y: 0.00000005960463, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -660}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1740250885}
@@ -86244,8 +86245,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 140}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 301, y: 140}
+  m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1339485854
 MonoBehaviour:
@@ -86267,7 +86268,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Right click to place turret
+  m_text: "Collect 5 metal and 5 goo and \nright click to place turret"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3237822981ff47847b4059e024921ae9, type: 2}
   m_sharedMaterial: {fileID: 8377216565244525414, guid: 3237822981ff47847b4059e024921ae9, type: 2}
@@ -86294,7 +86295,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40.7
+  m_fontSize: 32.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -89276,6 +89277,163 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391414243}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1391827933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1391827937}
+  - component: {fileID: 1391827936}
+  - component: {fileID: 1391827935}
+  - component: {fileID: 1391827934}
+  m_Layer: 0
+  m_Name: Rain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1391827934
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391827933}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: bb7a23ee0891ef844b8fde15e538cc96, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 48.41394
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1391827935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391827933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8c5c8a5437acd24db26340d15bc5c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  played: 0
+  triggerSound: {fileID: 8300000, guid: bb7a23ee0891ef844b8fde15e538cc96, type: 3}
+--- !u!65 &1391827936
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391827933}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1391827937
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391827933}
+  m_LocalRotation: {x: -0.0024064574, y: -0.0330197, z: -0.011322616, w: 0.9993877}
+  m_LocalPosition: {x: -1.2765423, y: 0.04566806, z: -0.44458872}
+  m_LocalScale: {x: 1.3933578, y: 1.6928301, z: 0.21747513}
+  m_Children: []
+  m_Father: {fileID: 254672900}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1393939726
 GameObject:
   m_ObjectHideFlags: 0
@@ -119877,7 +120035,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1985947447}
   m_LocalRotation: {x: -0, y: 0.00000005960463, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -229}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 725121810}
@@ -119885,8 +120043,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 140}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -487, y: 140}
+  m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1985947449
 MonoBehaviour:
@@ -119908,7 +120066,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Right click to place turret
+  m_text: "Collect 5 metal and 5 goo and \nright click to place turret"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3237822981ff47847b4059e024921ae9, type: 2}
   m_sharedMaterial: {fileID: 8377216565244525414, guid: 3237822981ff47847b4059e024921ae9, type: 2}
@@ -119935,7 +120093,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40.7
+  m_fontSize: 32.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -120306,10 +120464,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001747070}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2001747075
@@ -131568,6 +131726,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Left wing
       objectReference: {fileID: 0}
+    - target: {fileID: 213226041040322756, guid: 6c19911b681800644b8d65e17691da56, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 213226041040322757, guid: 6c19911b681800644b8d65e17691da56, type: 3}
+      propertyPath: m_fontSize
+      value: 146.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 213226041040322757, guid: 6c19911b681800644b8d65e17691da56, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 146.8
+      objectReference: {fileID: 0}
     - target: {fileID: 213226041040322759, guid: 6c19911b681800644b8d65e17691da56, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -131586,7 +131756,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 213226041040322759, guid: 6c19911b681800644b8d65e17691da56, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 797.99994
+      value: 795.7
       objectReference: {fileID: 0}
     - target: {fileID: 213226041040322759, guid: 6c19911b681800644b8d65e17691da56, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -131600,6 +131770,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 213226041276842787, guid: 6c19911b681800644b8d65e17691da56, type: 3}
+      propertyPath: m_fontSize
+      value: 126.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 213226041276842787, guid: 6c19911b681800644b8d65e17691da56, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 126.5
+      objectReference: {fileID: 0}
     - target: {fileID: 213226041276842789, guid: 6c19911b681800644b8d65e17691da56, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -131618,11 +131796,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 213226041276842789, guid: 6c19911b681800644b8d65e17691da56, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 798
+      value: 788.9
       objectReference: {fileID: 0}
     - target: {fileID: 213226041276842789, guid: 6c19911b681800644b8d65e17691da56, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 474
+      value: 467.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c19911b681800644b8d65e17691da56, type: 3}

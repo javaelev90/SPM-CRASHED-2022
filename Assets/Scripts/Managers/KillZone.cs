@@ -9,6 +9,7 @@ public class KillZone : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            Debug.Log("DEAD");
             other.gameObject.GetComponent<HealthHandler>().Die();
         }
     }
