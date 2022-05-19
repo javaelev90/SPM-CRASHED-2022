@@ -18,11 +18,10 @@ public class Minimap : MonoBehaviour
     [SerializeField] private Transform outerMarkerShipParent;
     [SerializeField] private Transform outerMarkerOtherPlayerParent;
     [SerializeField] private float scale = 1f;
-    private float radius;
 
-    Vector2 shipMarkerPos;
-    Vector2 otherPlayerPos;
-    float angle;
+    private float radius;
+    private Vector2 shipMarkerPos;
+    private Vector2 otherPlayerPos;
     public static Minimap Instance { get; private set; }
 
     private void OnEnable()
@@ -34,6 +33,8 @@ public class Minimap : MonoBehaviour
         }
 
         radius = minimapCircle.sizeDelta.x / 2f;
+        outerMarkerShipParent.gameObject.SetActive(false);
+        outerMarkerOtherPlayerParent.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -44,10 +45,8 @@ public class Minimap : MonoBehaviour
             if (Ship)
             {
                 PositionOnMinimap(Ship.transform, shipMarker, shipMarkerPos);
-
                 ActivateOuterMarker(shipMarker, outerMarkerShipParent);
             }
-
 
             if (OtherPlayer)
             {
@@ -55,9 +54,8 @@ public class Minimap : MonoBehaviour
                 ActivateOuterMarker(otherPlayerMarker, outerMarkerOtherPlayerParent);
             }
         }
-        
-       // Debug.Log("Angle " + angle);
     }
+
 
     private void ActivateOuterMarker(RectTransform objectMarker, Transform parent)
     {

@@ -30,7 +30,6 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         base.OnEnable();
         ResetHealth();
         source = GetComponent<AudioSource>();
-
     }
 
     protected void ResetHealth()
@@ -51,10 +50,12 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         if (CurrentHealth + amount > MaxHealth)
         {
             CurrentHealth = MaxHealth;
+
         }
         else
         {
             CurrentHealth += amount;
+           // UpdateHealthBar();
         }
     }
 
@@ -70,7 +71,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         }
     }
 
-    private void UpdateHealthBar()
+    protected void UpdateHealthBar()
     {
         if (gameObject.CompareTag("Player"))
         {

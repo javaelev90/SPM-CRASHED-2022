@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 using EventCallbacksSystem;
+using Photon.Pun;
 
-public class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviourPunCallbacks
 {
     [Header("Mesh settings")]
     [Tooltip("Position where the gun barrel ends")]
@@ -19,12 +20,18 @@ public class Weapon : MonoBehaviour
     [SerializeField] LayerMask layersThatShouldBeHit;
     [SerializeField] private int maxAmmo;
     [SerializeField] private int currentAmmo;
-
     private float shotCooldown = 0f;
     public bool IsShooting { get; set; }
+
+    [Header("Weapon effects")]
     [SerializeField] private Animator animator;
     [SerializeField] private AudioSource sourceOne;
     public AudioClip[] shot;
+
+    [Header("Inventory")]
+    [SerializeField] private bool useInventory = false;
+    [SerializeField] private InventorySystem inventory;
+    [SerializeField] private int greenGooCost = 1;
 
     void Update()
     {
@@ -63,6 +70,11 @@ public class Weapon : MonoBehaviour
             muzzlePosition.Play();
             animator.CrossFadeInFixedTime("Shooting", 0.1f);
 
+            if (useInventory)
+            {
+                inventory.Remove<GreenGoo>(greenGooCost);
+            }
+
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,
                 out RaycastHit hitInfo, weaponRange, layersThatShouldBeHit))
             {
@@ -75,7 +87,6 @@ public class Weapon : MonoBehaviour
                 AIBaseLogic ai = hitInfo.transform.GetComponent<AIBaseLogic>();
                 if (ai)
                 {
-                    Debug.Log(ai.transform.name);
                     ai.FindAttackingTarget(transform);
                 }
                 

@@ -5,7 +5,10 @@ using UnityEngine;
 using EventCallbacksSystem;
 using System.Linq;
 using UnityEngine.UI;
-public class Ship : MonoBehaviour
+using Photon.Pun;
+using UnityEngine.InputSystem;
+
+public class Ship : MonoBehaviourPunCallbacks
 {
     [SerializeField] private ShipUpgradePanel shipUpgradePanel;
     [SerializeField] private Button shipUpgradeButton;
@@ -66,16 +69,22 @@ public class Ship : MonoBehaviour
     {
         if (TakeResources())
         {
-            shipUpgradeCost[nextUpgrade].partMissing.SetActive(false);
-            shipUpgradeCost[nextUpgrade].partAttached.SetActive(true);
-            nextUpgrade++;
-            source.PlayOneShot(connect);
-            shipUpgradePanel.gameObject.SetActive(false);
-            playerUpgradePanal.SetActive(true);
-            allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
+            photonView.RPC(nameof(UpgradeShipRPC), RpcTarget.All);
             return true;
         }
         return false;
+    }
+
+    [PunRPC]
+    private void UpgradeShipRPC()
+    {
+        shipUpgradeCost[nextUpgrade].partMissing.SetActive(false);
+        shipUpgradeCost[nextUpgrade].partAttached.SetActive(true);
+        nextUpgrade++;
+        source.PlayOneShot(connect);
+        shipUpgradePanel.gameObject.SetActive(false);
+        OpenPlayerUpgradePanel();
+        allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
     }
 
     private bool TakeResources()
@@ -127,6 +136,8 @@ public class Ship : MonoBehaviour
             }
             shipUpgradePanel.ToggleErrorMessage(false);
             Cursor.lockState = CursorLockMode.None;
+            GameManager.playerObject.GetComponent<PlayerInput>().enabled = false;
+
         }
     }
 
@@ -137,6 +148,19 @@ public class Ship : MonoBehaviour
 
     private void OpenPlayerUpgradePanel()
     {
-        EventSystem.Instance.FireEvent(new OpenPlayerUpgradePanelEvent());
+        //photonView.RPC(nameof(OpenUpgradePanelRPC), RpcTarget.All);
+        playerUpgradePanal.SetActive(true);
     }
+    //[PunRPC]
+    //private void OpenUpgradePanelRPC()
+    //{
+    //    //EventSystem.Instance.FireEvent(new OpenPlayerUpgradePanelEvent());
+    //    //OpenPlayerUpgradePanel();
+    //    playerUpgradePanal.SetActive(true);
+    //}
+
+    /*public void OpenPlayerUpgradePanel()
+    {
+        playerUpgradePanal.SetActive(true);
+    }*/
 }

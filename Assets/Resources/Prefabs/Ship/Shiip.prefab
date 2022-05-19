@@ -920,9 +920,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706c7736ba50dc24e92a1c407f3a7657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageupgradeButton: {fileID: 0}
-  gunRateTurretHealthButton: {fileID: 0}
-  healthUpgradeAmount: 0
+  damageUpgradeButton: {fileID: 8359997671430509926}
+  gunRateTurretHealthButton: {fileID: 4770038335728896439}
+  healthUpgradeAmount: 5
   gunDamageUpgradeAmount: 1
   fireRateUpgradePercent: 0.2
   turretDamageUpgradeAmount: 1
@@ -2669,7 +2669,7 @@ MonoBehaviour:
     partMissing: {fileID: 0}
     partAttached: {fileID: 0}
   connect: {fileID: 0}
-  minTimeUntilDaw: 120
+  minTimeUntilDaw: 20
 --- !u!114 &6946362057768142591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2701,6 +2701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f51f634d687055848a6c3f1766dbdbe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerObject: {fileID: 0}
   soldierTPPosition: {fileID: 0}
   engenerTPPosition: {fileID: 0}
 --- !u!64 &167663292310576839

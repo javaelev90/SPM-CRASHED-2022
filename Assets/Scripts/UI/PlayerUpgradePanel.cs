@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using EventCallbacksSystem;
+using UnityEngine.InputSystem;
 
 public class PlayerUpgradePanel : MonoBehaviour
 {
-    [SerializeField] private GameObject damageupgradeButton;
+    [SerializeField] private GameObject damageUpgradeButton;
     [SerializeField] private GameObject gunRateTurretHealthButton;
 
-    [SerializeField] private int healthUpgradeAmount;
+    [SerializeField] private int healthUpgradeAmount = 2;
     [SerializeField] int gunDamageUpgradeAmount = 1;
     [SerializeField] float fireRateUpgradePercent = 0.2f;
     [SerializeField] int turretDamageUpgradeAmount = 1;
@@ -22,16 +23,23 @@ public class PlayerUpgradePanel : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         player = GameManager.character;
+        
         if(player == Character.ENGINEER)
         {
-            damageupgradeButton.GetComponent<Text>().text = "Upgrade Turret Damage";
+            damageUpgradeButton.GetComponent<Text>().text = "Upgrade Turret Damage";
             gunRateTurretHealthButton.GetComponent<Text>().text = "Upgade Turret Health";
         }
         else if (player == Character.SOLDIER)
         {
-            damageupgradeButton.GetComponent<Text>().text = "Upgrade Weapon Damage";
+            damageUpgradeButton.GetComponent<Text>().text = "Upgrade Weapon Damage";
             gunRateTurretHealthButton.GetComponent<Text>().text = "Upgade Fire Rate";
         }
+    }
+
+    private void OnEnable()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        GameManager.playerObject.GetComponent<PlayerInput>().enabled = false;
     }
 
     public void HealthUpgrade()
@@ -66,7 +74,8 @@ public class PlayerUpgradePanel : MonoBehaviour
 
     private void Exit()
     {
-        EventSystem.Instance.FireEvent(new ShipUppgradPanelEvent());
+        Cursor.lockState = CursorLockMode.Locked;
+        GameManager.playerObject.GetComponent<PlayerInput>().enabled = true;
         gameObject.SetActive(false);
     }
 }

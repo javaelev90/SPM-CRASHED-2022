@@ -1,12 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Engineer : Controller3D
 {
-    private float targetTime = 1f;
+    private float placeTimer = 1f;
 
     [Header("Turrets")]
     [SerializeField] private PhotonView turret;
@@ -14,8 +16,8 @@ public class Engineer : Controller3D
     [SerializeField] private int maxTurretToSpawn = 3;
     [SerializeField] private int turretCount;
     [SerializeField] private Vector3 turretOffset;
-    [SerializeField] private int gooCostTurret = 1;
-    [SerializeField] private int metalCostTurret = 1;
+    //[SerializeField] private int gooCostTurret;
+    //[SerializeField] private int metalCostTurret;
     //[SerializeField] private GameObject turretObject;
     private bool canPutDownTurret;
     //private string pathTurret = "Resources/Prefabs/TurretAssembly";
@@ -34,12 +36,31 @@ public class Engineer : Controller3D
     List<GameObject> objects = new List<GameObject>();
     private bool isTryingToPlaceTurret;
 
+    [Header("TurretRepair")]
+    public TurretCost turretRepairCosts;
+    [SerializeField] private int healthToAdd = 10;
+    [SerializeField] private int healthToAddIfDead = 6;
+    [SerializeField] private Animator atFullHealthText;
+    [SerializeField] private Animator notEnoughResourcesToRepair;
+    [SerializeField] private Animator notEnoughResourcesToBuild;
+
+    [Header("TurretBuild")]
+    public TurretCost turretBuildCosts;
+
+    [Serializable]
+    public class TurretCost
+    {
+        public int metalCost;
+        public int gooCost;
+    }
+
+
     [Header("Carry Ship Part")]
     /// <summary>
     /// PLAYER NEED A CHILD OBJECT CALLED CarryPos
     /// </summary>
     [SerializeField] private Transform destination;
-    [SerializeField] private Transform player;
+    //[SerializeField] private Transform player;
     private GameObject[] shipPart;
     private float checkRadius = 5f;
     RaycastHit hit;
@@ -69,7 +90,7 @@ public class Engineer : Controller3D
         while (true)
         {
             Minimap.Instance.OtherPlayer = FindObjectOfType<SoldierCharacter>()?.gameObject;
-            if(Minimap.Instance.OtherPlayer != null)
+            if (Minimap.Instance.OtherPlayer != null)
             {
                 break;
             }
@@ -88,8 +109,8 @@ public class Engineer : Controller3D
     {
         base.Update();
         Cooldown();
-        targetTime -= Time.deltaTime;
-        PickUpShipPart();
+        placeTimer -= Time.deltaTime;
+        //PickUpShipPart();
         //OnTurretUse();
         if (isPressed)
         {
@@ -101,8 +122,6 @@ public class Engineer : Controller3D
         }
         //TurretHandling();
         //Debug.Log(targetTime);
-
-
     }
 
     private void Cooldown()
@@ -161,124 +180,94 @@ public class Engineer : Controller3D
         GameObject turretObject;
         isTryingToPlaceTurret = true;
 
-        if (targetTime < 0.0f && isUsingTurret == false) // turretCount < maxTurretToSpawn && 
+        if (placeTimer <= 0.0f && isUsingTurret == false) // turretCount < maxTurretToSpawn && 
         {
-            if (ctx.started)
+            // Check if resources needed is in inventory
+            InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
+            if (inventorySystem.Amount<GreenGoo>() >= turretBuildCosts.gooCost && inventorySystem.Amount<Metal>() >= turretBuildCosts.metalCost) // (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
             {
-                //Debug.Log("Holding button should show turret outline");
-
-                outlinedTurret = PhotonNetwork.Instantiate("Prefabs/Equipment/" + outlinedTurretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
-
-                isPressed = true;
-            }
-
-            if (ctx.canceled)
-            {
-                //Debug.Log("released button should result in placing turret");
-
-                // if() //&& (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
-
-                // If there are 3 placed turrets and a new one is placed, delete the first one
-                if (turretCount == maxTurretToSpawn && isTryingToPlaceTurret)  
+                if (ctx.started)
                 {
-                    GameObject turretToDestroy = objects[0];
-                    objects.Remove(turretToDestroy);
-                    PhotonNetwork.Destroy(turretToDestroy);
-                    turretCount--;
-                    //DequeueTurret();
+                    //Debug.Log("Holding button should show turret outline");
+
+                    outlinedTurret = PhotonNetwork.Instantiate("Prefabs/Equipment/" + outlinedTurretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
+
+                    isPressed = true;
                 }
 
-                if (hit.distance < 1)
+                if (ctx.canceled)
                 {
-                    turretObject = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
+                    //Debug.Log("released button should result in placing turret");
 
-                    if (turretObject != null) //&& playerActions.Player.PlaceTurret.IsPressed() //Input.GetMouseButtonUp(1))
+                    // If there are 3 placed turrets and a new one is placed, delete the first one
+                    if (turretCount == maxTurretToSpawn && isTryingToPlaceTurret)
+                    {
+                        GameObject turretToDestroy = objects[0];
+                        objects.Remove(turretToDestroy);
+                        PhotonNetwork.Destroy(turretToDestroy);
+                        turretCount--;
+                    }
+
+
+                    turretObject = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPos.position, Quaternion.identity);
+
+                    if (turretObject != null)
                     {
                         turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.up, Vector3.up) * turretObject.transform.rotation;
                         turretObject.transform.rotation = Quaternion.FromToRotation(turretObject.transform.forward, Vector3.forward) * turretObject.transform.rotation;
                         //if (hit.collider != null && hit.distance < 3f)
-                        //{
                         //Debug.Log("turret should be placed");
+
                         turretObject.transform.position = turretPos.transform.position;
                         turretObject.GetComponent<Turret>().IsPlaced = true;
+
+                        // Remove resources
+                        inventorySystem.Remove<Metal>(turretBuildCosts.metalCost);
+                        inventorySystem.Remove<GreenGoo>(turretBuildCosts.gooCost);
 
                         // Add another turret to the queue and increase count of turrets
                         turretCount++;
                         objects.Add(turretObject);
-                        //turrets.Enqueue(turretObject);
 
-                        // Ta bort outline objectet
+                        // Destroy the outlined turret (for both players)
                         isPressed = false;
-
-                        //Destroy(outlinedTurret);
                         PhotonNetwork.Destroy(outlinedTurret);
 
                         // Reset targetTime
-                        targetTime = 1f;
+                        placeTimer = 1f;
 
                         // Is no longer trying to place a turret
                         isTryingToPlaceTurret = false;
-
                     }
-                }
-                
 
+                }
+            }
+            else
+            {
+                // Text to explain why placement not activating
+                notEnoughResourcesToBuild.gameObject.SetActive(true);
+                notEnoughResourcesToBuild.Play("FadeOut");
+                StartCoroutine(ExecuteAfterTime(2f));
             }
 
         }
-
-
-
     }
 
     /// <summary>
-    /// Destroys the turret the player is looking at
+    /// Destroys the turret the player is looking at and drops resources
     /// </summary>
     public void OnTurretDestroy()
     {
-        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret") && playerActions.Player.DeleteTurret.IsPressed())
+        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
-            Debug.Log("Imagine items get dropped here");
+            hit.collider.GetComponent<TurretHealthHandler>().SalvageDrop();
             GameObject GTG = hit.collider.gameObject;
             objects.Remove(GTG);
-            Destroy(GTG);
+            PhotonNetwork.Destroy(GTG);
             turretCount--;
-            //DequeueTurret();
         }
-
-        /*
-        Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out hit, 10f, turretLayer);
-
-        if (playerActions.Player.DeleteTurret.IsPressed())
-        {
-            //Transform greenGooDropPos = turretPrefab.transform.Find("DropMetal");
-            //Transform metalDropPos = turretPrefab.transform.Find("DropGoo");
-
-            if (hit.collider.gameObject.CompareTag("Turret"))
-            {
-                //GameObject greenGooDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + greenGooPrefab.name, greenGooDropPos.transform.position, Quaternion.identity);
-                //greenGooDrop.name = "Green Goo";
-                //GameObject metalDrop = PhotonNetwork.Instantiate("Prefabs/Pickups/" + metalPrefab.name, metalDropPos.transform.position, Quaternion.identity);
-                //metalDrop.name = "Metal";
-                Debug.Log("Destroy that lil turret bitch");
-
-                Destroy(hit.collider.gameObject);
-            }
-        }
-        */
     }
 
-    /*
-    /// <summary>
-    /// Takes the first turret in the queue, dequeues it, destroys it, and does -- on the turretCount
-    /// </summary>
-    private void DequeueTurret()
-    {
-        GameObject turretToDestroy = turrets.Dequeue();
-        PhotonNetwork.Destroy(turretToDestroy);
-        turretCount--;
-    }
-    */
 
     /// <summary>
     /// Searches a GameObject for a specific child using "childName"
@@ -299,84 +288,114 @@ public class Engineer : Controller3D
 
     public void OnTurretUse()
     {
-        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret") && playerActions.Player.UseTurret.IsPressed())
+        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
-            //Debug.Log("You are using the turret");
-            isUsingTurret = true;
-            ChangeControlls.ControlType = 2;
-
-            // Put Engineer behind the turret that was hit
-            foreach (Transform child in hit.transform)
+            if (hit.collider.GetComponent<HealthHandler>().isAlive)
             {
-                if (child.name == "UsePosition")
+                //Debug.Log("You are using the turret");
+                isUsingTurret = true;
+                ChangeControlls.ControlType = 2;
+
+                // Put Engineer behind the turret that was hit
+                foreach (Transform child in hit.transform)
                 {
-                    transform.position = child.transform.position;
+                    if (child.name == "UsePosition")
+                    {
+                        transform.position = child.transform.position;
+                    }
                 }
+
+                hit.collider.GetComponent<Turret>().isCurrent = true;
+                turretBodyTransform = GetChildWithName(hit.collider.gameObject, "TurretBodyRotationPoint");
+
+                // Put Engineer behind the turret that was hit
+                usePositionPos = GetChildWithName(hit.collider.gameObject, "UsePosition");
             }
-
-            hit.collider.GetComponent<Turret>().isCurrent = true;
-            turretBodyTransform = GetChildWithName(hit.collider.gameObject, "TurretBodyRotationPoint");
-            //muzzleOnTheFukingTurret = GetChildWithName(hit.collider.gameObject, "MuzzlePoint");
-
-            // Put Engineer behind the turret that was hit
-            usePositionPos = GetChildWithName(hit.collider.gameObject, "UsePosition");
-
-            //Debug.Log("Yes" + isUsingTurret);
-            //Debug.Log("Yes isUsingTurret " + isUsingTurret);
         }
 
-        else if (isUsingTurret == true && playerActions.Player.UseTurret.IsPressed())
+        else if (isUsingTurret == true)
         {
             //Debug.Log("You are no longer using turret");
             isUsingTurret = false;
             ChangeControlls.ControlType = 1;
-            //Debug.Log("No" + isUsingTurret);
-            //Debug.Log("No isUsingTurret " + isUsingTurret);
         }
-
-
     }
 
-
-    public void PickUpShipPart()
+    public void OnTurretRepair(InputAction.CallbackContext ctx)
     {
-        if (player != null)
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
-            Collider[] colliderHits = Physics.OverlapSphere(transform.position, checkRadius);
-            //Debug.Log(colliderHits);
-
-            foreach (Collider col in colliderHits)
+            if (ctx.performed)
             {
-                if (col.CompareTag(("ShipPart")) && playerActions.Player.ShipPickUp.IsPressed())
+                // Make sure the turret doesn't alreday have full health
+                TurretHealthHandler obj = hit.collider.gameObject.GetComponent<TurretHealthHandler>();
+                
+                if (obj.CurrentHealth == obj.MaxHealth)
                 {
-                    //destination = player.transform.Find("CarryPos");
-                    //shipPart = GameObject.FindGameObjectsWithTag("ShipPart");
-                    //GetComponent<Rigidbody>().useGravity = false;
-                    //col.transform.position = destination.position;
-                    //col.transform.parent = GameObject.Find("CarryPos").transform;
-                    col.GetComponent<EventStarter>().StartEvent();
-
+                    // Text to explain why repair not activating
+                    atFullHealthText.gameObject.SetActive(true);
+                    atFullHealthText.Play("FadeOut");
+                    StartCoroutine(ExecuteAfterTime(2f));
+                    return;
                 }
-                if (playerActions.Player.DropShitPart.IsPressed())
+                
+
+                // Check if resources needed is in inventory
+                InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
+                if (inventorySystem.Amount<GreenGoo>() >= turretRepairCosts.gooCost && inventorySystem.Amount<Metal>() >= turretRepairCosts.metalCost)
                 {
-                    col.transform.parent = null;
-                    //GetComponent<Rigidbody>().useGravity = true;
+                    // Remove resources
+                    inventorySystem.Remove<Metal>(turretRepairCosts.metalCost);
+                    inventorySystem.Remove<GreenGoo>(turretRepairCosts.gooCost);
+
+                    // Add health back to turret (MAKE SURE IT'S THE RIGHT TURRET)
+                    TurretHealthHandler turretHealthHandler = hit.collider.GetComponent<TurretHealthHandler>();
+                    if (turretHealthHandler.isAlive == true)
+                    {
+                        turretHealthHandler.AddTurretHealth(healthToAdd);
+                    }
+                    else
+                    {
+                        // If it's dead you gotta make it come back to life
+                        turretHealthHandler.isAlive = true;
+                        turretHealthHandler.Revived();
+                        turretHealthHandler.AddTurretHealth(healthToAddIfDead);
+
+                    }
+
+                    // TODO Play sound
                 }
                 else
                 {
-                    //Debug.Log("Outside");
+                    // Text to explain why repair not activating
+                    notEnoughResourcesToRepair.gameObject.SetActive(true);
+                    notEnoughResourcesToRepair.Play("FadeOut");
+                    StartCoroutine(ExecuteAfterTime(2f));
                 }
             }
-        }
 
+        }
     }
+
+    IEnumerator ExecuteAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        // Code to execute after the delay
+        atFullHealthText.gameObject.SetActive(false);
+        notEnoughResourcesToRepair.gameObject.SetActive(false);
+        notEnoughResourcesToBuild.gameObject.SetActive(false);
+    }
+
+    
+    Engineer player;
 
     IEnumerator Wait(float sec)
     {
         while (player == null)
         {
             yield return new WaitForSeconds(sec);
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+            player = FindObjectOfType<Engineer>();//GameObject.FindGameObjectWithTag("Player").transform;
         }
 
     }

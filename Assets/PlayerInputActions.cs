@@ -215,6 +215,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RepairTurret"",
+                    ""type"": ""Button"",
+                    ""id"": ""414c7bf4-a997-48a6-ba58-e005e22bdc62"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -452,7 +461,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6c0229ac-433a-4dee-a18e-11df8c8e6a09"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -594,6 +603,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f58f9a00-2883-4759-877e-b78e636cdb6b"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""DeleteTurret"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""d95bfbe7-1f3a-4bee-afa8-d74661568da9"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
@@ -617,7 +637,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a8b4bb53-0364-4913-a425-5ad50020c792"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -649,11 +669,33 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""68b0e18f-92ba-4f58-8a81-ccc8df889b66"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PreviousItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""8b3bf921-aa77-4e0e-99f4-928a8cfa12ff"",
                     ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""NextItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18645ca7-e35e-4d2e-acdf-69618806327c"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""NextItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -699,6 +741,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Beef"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a445ffe2-035e-425e-92dd-ec60f4b5eb86"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RepairTurret"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ab5754a-2775-4baf-be5b-04afc8221b88"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RepairTurret"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1131,6 +1195,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_GreenGoo = m_Player.FindAction("GreenGoo", throwIfNotFound: true);
         m_Player_Metal = m_Player.FindAction("Metal", throwIfNotFound: true);
         m_Player_Beef = m_Player.FindAction("Beef", throwIfNotFound: true);
+        m_Player_RepairTurret = m_Player.FindAction("RepairTurret", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1223,6 +1288,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_GreenGoo;
     private readonly InputAction m_Player_Metal;
     private readonly InputAction m_Player_Beef;
+    private readonly InputAction m_Player_RepairTurret;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1248,6 +1314,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @GreenGoo => m_Wrapper.m_Player_GreenGoo;
         public InputAction @Metal => m_Wrapper.m_Player_Metal;
         public InputAction @Beef => m_Wrapper.m_Player_Beef;
+        public InputAction @RepairTurret => m_Wrapper.m_Player_RepairTurret;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1320,6 +1387,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Beef.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBeef;
                 @Beef.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBeef;
                 @Beef.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBeef;
+                @RepairTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRepairTurret;
+                @RepairTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRepairTurret;
+                @RepairTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRepairTurret;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1387,6 +1457,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Beef.started += instance.OnBeef;
                 @Beef.performed += instance.OnBeef;
                 @Beef.canceled += instance.OnBeef;
+                @RepairTurret.started += instance.OnRepairTurret;
+                @RepairTurret.performed += instance.OnRepairTurret;
+                @RepairTurret.canceled += instance.OnRepairTurret;
             }
         }
     }
@@ -1537,6 +1610,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnGreenGoo(InputAction.CallbackContext context);
         void OnMetal(InputAction.CallbackContext context);
         void OnBeef(InputAction.CallbackContext context);
+        void OnRepairTurret(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

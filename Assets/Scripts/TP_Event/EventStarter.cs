@@ -8,14 +8,13 @@ public class EventStarter : MonoBehaviourPunCallbacks
 {
     public float eventTime = 30f;
     public GameObject dome;
-    //public TeleportToShip teleportToShip;
     public GameObject missingPart;
     public GameObject attachedPart;
 
 
     public List<ObjectSpawner> eventSpawners;
-    
-    
+    private bool eventStarted = false;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -35,18 +34,23 @@ public class EventStarter : MonoBehaviourPunCallbacks
     {
         //timeDisplay.DisplayingTime(false);
         //light.SetCycleOngoing(false);
-        EventSystem.Instance.FireEvent(new EventEvent(true));
-
-        dome.SetActive(true);
-
-        foreach (ObjectSpawner objectSpawner in eventSpawners)
+        if (eventStarted == false)
         {
-            objectSpawner.TriggerSpawner();
+            eventStarted = true;
+            EventSystem.Instance.FireEvent(new EventEvent(true));
+
+            dome.SetActive(true);
+
+            foreach (ObjectSpawner objectSpawner in eventSpawners)
+            {
+                objectSpawner.TriggerSpawner();
+            }
+
+            StartCoroutine(TeleportIn(eventTime));
         }
 
-        StartCoroutine(TeleportIn(eventTime));
     }
-
+    [ContextMenu("Start Event")]
     public void StartEvent()
     {
         photonView.RPC(nameof(StartEventRPC), RpcTarget.All);
@@ -67,6 +71,12 @@ public class EventStarter : MonoBehaviourPunCallbacks
     private IEnumerator TeleportIn(float eventTime)
     {
         yield return new WaitForSeconds(eventTime);
+        EndEvent();  
+    }
+
+    
+    public void EndEvent()
+    {
         EventSystem.Instance.FireEvent(new EventEvent(false));
         EventSystem.Instance.FireEvent(new AttachPartEvent(attachedPart, missingPart));
         EventSystem.Instance.FireEvent(new TeleportToShipEvent());

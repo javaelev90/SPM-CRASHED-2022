@@ -5,7 +5,7 @@ using EventCallbacksSystem;
 
 public class TeleportToShip : MonoBehaviour
 {
-    private GameObject playerObject;
+    public GameObject playerObject;
 
     public GameObject soldierTPPosition;
     public GameObject engenerTPPosition;
