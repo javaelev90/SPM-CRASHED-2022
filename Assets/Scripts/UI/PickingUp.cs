@@ -178,7 +178,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 pickUpDistance,
                 layer, QueryTriggerInteraction.Ignore);
     }
-
+#if (UNITY_EDITOR)
     public void AddMetalDEV()
     {
         inventorySystem.Add<Metal>(1);
@@ -193,4 +193,5 @@ public class PickingUp : MonoBehaviourPunCallbacks
     {
         inventorySystem.Add<AlienMeat>(1);
     }
+#endif
 }

@@ -410,10 +410,10 @@ public class Controller3D : MonoBehaviourPunCallbacks
         if (mainCam)
             Gizmos.DrawWireSphere(mainCam.transform.position, radius);
     }
-
+#if (UNITY_EDITOR)
     public void Immortal()
     {
         EventSystem.Instance.FireEvent(new ImmortalEvent());
     }
-
+#endif
 }
