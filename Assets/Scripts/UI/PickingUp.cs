@@ -70,7 +70,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
     {
         if (PickUpHitCheck(pickupLayer))
         {
-        
+
             Pickup pickUpComponent = pickup.transform.gameObject.GetComponent<Pickup>();
             Pickup_Typs.Pickup typ = pickUpComponent.getTyp();
             PhotonView pickUpPhotonView = pickup.transform.gameObject.GetComponent<PhotonView>();
@@ -100,7 +100,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
             }
         }
-        
+
         else if (PickUpHitCheck(spaceShipLayer))
         {
             EventSystem.Instance.FireEvent(new ShipUppgradPanelEvent());
@@ -135,7 +135,8 @@ public class PickingUp : MonoBehaviourPunCallbacks
     public void DropItem()
     {
         if (canDrop)
-            photonView.RPC(nameof(DropItemRPC), RpcTarget.MasterClient);
+            //photonView.RPC(nameof(DropItemRPC), RpcTarget.MasterClient);
+            DropItemRPC();
 
         canDrop = false;
     }
@@ -143,38 +144,38 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [PunRPC]
     private void DropItemRPC()
     {
-        if (PhotonNetwork.IsMasterClient)
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        GameObject go;
+        switch (itemTypeToDrop)
         {
-            GameObject go;
-            switch (itemTypeToDrop)
-            {
-                case Pickup_Typs.Pickup.GreenGoo:
-                    if (inventorySystem.Amount<GreenGoo>() > 0)
-                    {
-                        go = inventorySystem.ItemPrefab<GreenGoo>();
-                        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
-                        inventorySystem.Remove<GreenGoo>();
-                    }
-                    break;
+            case Pickup_Typs.Pickup.GreenGoo:
+                if (inventorySystem.Amount<GreenGoo>() > 0)
+                {
+                    go = inventorySystem.ItemPrefab<GreenGoo>();
+                    PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
+                    inventorySystem.Remove<GreenGoo>();
+                }
+                break;
 
-                case Pickup_Typs.Pickup.Metal:
-                    if (inventorySystem.Amount<Metal>() > 0)
-                    {
-                        go = inventorySystem.ItemPrefab<Metal>();
-                        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
-                        inventorySystem.Remove<Metal>();
-                    }
-                    break;
-                case Pickup_Typs.Pickup.AlienMeat:
-                    if (inventorySystem.Amount<AlienMeat>() > 0)
-                    {
-                        go = inventorySystem.ItemPrefab<AlienMeat>();
-                        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
-                        inventorySystem.Remove<AlienMeat>();
-                    }
-                    break;
-            }
+            case Pickup_Typs.Pickup.Metal:
+                if (inventorySystem.Amount<Metal>() > 0)
+                {
+                    go = inventorySystem.ItemPrefab<Metal>();
+                    PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
+                    inventorySystem.Remove<Metal>();
+                }
+                break;
+            case Pickup_Typs.Pickup.AlienMeat:
+                if (inventorySystem.Amount<AlienMeat>() > 0)
+                {
+                    go = inventorySystem.ItemPrefab<AlienMeat>();
+                    PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
+                    inventorySystem.Remove<AlienMeat>();
+                }
+                break;
         }
+        //}
     }
 
     private bool PickUpHitCheck(LayerMask layer)
