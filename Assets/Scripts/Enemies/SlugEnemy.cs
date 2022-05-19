@@ -175,12 +175,15 @@ public class SlugEnemy : AIBaseLogic
                     if (healthHandler != null)
                     {
                         enemy = coll.GetComponent<SlugEnemy>();
-                        if (enemy)
+                        if (enemy && !(enemy.gameObject.GetInstanceID() == gameObject.GetInstanceID()))
                         {
                             enemy.BlowUp();
-                            return;
                         }
-                        healthHandler.TakeDamage(explosionDamage);
+
+                        if (!enemy)
+                        {
+                            healthHandler.TakeDamage(explosionDamage);
+                        }
                     }
                 }
             }
@@ -203,7 +206,7 @@ public class SlugEnemy : AIBaseLogic
     //[PunRPC]
     //private void ReadyToExplode()
     //{
-        
+
     //    snailEffects.ReadyToExplode();
     //}
 
