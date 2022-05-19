@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class EnemyHealthBarTurnToCam : MonoBehaviour
 {
-    private void LateUpdate()
+    private Camera mainCamera;
+    private void Start()
     {
-        transform.LookAt(transform.position + Camera.main.transform.forward);
+        mainCamera = Camera.main;
+    }
+
+    private void LateUpdate()
+    {   
+        
+        transform.LookAt(transform.position + mainCamera.transform.forward);
     }
 }
