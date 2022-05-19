@@ -33,8 +33,4 @@ public class ShowUiDialogue : MonoBehaviour
           
         }
     }
-
-     void OnTriggerExit(){
-        StopCoroutine(dialog.type);
-    }
 }

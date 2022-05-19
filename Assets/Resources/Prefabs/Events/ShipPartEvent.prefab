@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 2242763032326046960}
   - component: {fileID: 4521863965048227773}
   - component: {fileID: 2270335838632756974}
-  - component: {fileID: 3790499810572778309}
+  - component: {fileID: 3013112044935712392}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -314,7 +314,7 @@ MonoBehaviour:
   uiObject: {fileID: 8882614756302039326}
   canSoldierPickup: 0
   canEngineerPickup: 1
---- !u!114 &3790499810572778309
+--- !u!114 &3013112044935712392
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -323,10 +323,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4918704445450129316}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1539b35e636132b46b33504bdbc7d083, type: 3}
+  m_Script: {fileID: 11500000, guid: ae44c9e38f3768a4da25af8aa36506ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogs: {fileID: 837891276169900359}
+  uiObject: {fileID: 8882614756302039326}
+  canSoldierPickup: 0
+  canEngineerPickup: 1
+  dialog: {fileID: 837891276169900359}
 --- !u!1 &6002603962859669051
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,7 +819,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventTime: 30
   dome: {fileID: 9179345939069179989}
-  teleportToShip: {fileID: 0}
   missingPart: {fileID: 0}
   attachedPart: {fileID: 0}
   eventSpawners: []

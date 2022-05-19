@@ -50,6 +50,7 @@ public class Timer : MonoBehaviour
         {
             day.gameObject.SetActive(false);
             night.gameObject.SetActive(true);
+            
         }
         timeLeft = lightingManager.TimeUntilCycle;
     }

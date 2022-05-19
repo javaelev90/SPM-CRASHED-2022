@@ -67,7 +67,7 @@ public class Minimap : MonoBehaviour
             }
         }
         
-        Debug.Log("Angle " + angle);
+       // Debug.Log("Angle " + angle);
     }
 
     private bool IsInsideUnitCircle(RectTransform rect)

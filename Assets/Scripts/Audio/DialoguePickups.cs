@@ -17,6 +17,8 @@ public class DialoguePickups : MonoBehaviour
     public Coroutine type;
 
     ShowUiDialogue dialog;
+
+    [SerializeField] 
   
    public void beginDialogue()
     {
@@ -54,6 +56,7 @@ public class DialoguePickups : MonoBehaviour
             StopCoroutine(Type());
             textComponent.CancelInvoke();
             textComponent.ClearMesh();
+            gameObject.SetActive(false);
         }
     }
     public void Next()
