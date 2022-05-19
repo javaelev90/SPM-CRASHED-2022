@@ -34,8 +34,8 @@ public class LightingManager : MonoBehaviour
 
     private void Start()
     {
-        //EventSystem.Instance.RegisterListener<EventEvent>(SetCycleOngoing);
-        //EventSystem.Instance.RegisterListener<ShipPartEvent>(SetMinTimeUntilDawn);
+        EventSystem.Instance.RegisterListener<EventEvent>(SetCycleOngoing);
+        EventSystem.Instance.RegisterListener<ShipPartEvent>(SetMinTimeUntilDawn);
         timeOfSunrise = dayLength / 2;
         IsNight = timeOfDay > dayLength;
         totalTimeWholeCycle = dayLength + nightLength;
