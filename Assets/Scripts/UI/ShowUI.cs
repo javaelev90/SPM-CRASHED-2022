@@ -38,7 +38,7 @@ public class ShowUI : MonoBehaviour
            }
         
     }
-
+    }
     void OnTriggerExit(Collider player)
     {
         if (player.CompareTag("Player"))
@@ -47,8 +47,15 @@ public class ShowUI : MonoBehaviour
             if (isLocalPlayer && uiObject.activeSelf)
             {
                 uiObject.SetActive(false);
+
+                 foreach (var d in dialogs)
+            {
+                StopCoroutine(d.type);
+                d.gameObject.SetActive(false);
+        
             }
         }
     }
-}
+    }
+    
 }

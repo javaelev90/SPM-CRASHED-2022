@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using EventCallbacksSystem;
+using UnityEngine.InputSystem;
 
 public class PickingUp : MonoBehaviourPunCallbacks
 {
@@ -69,6 +70,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
     {
         if (PickUpHitCheck(pickupLayer))
         {
+        
             Pickup pickUpComponent = pickup.transform.gameObject.GetComponent<Pickup>();
             Pickup_Typs.Pickup typ = pickUpComponent.getTyp();
             PhotonView pickUpPhotonView = pickup.transform.gameObject.GetComponent<PhotonView>();
@@ -98,6 +100,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
             }
         }
+        
         else if (PickUpHitCheck(spaceShipLayer))
         {
             EventSystem.Instance.FireEvent(new ShipUppgradPanelEvent());

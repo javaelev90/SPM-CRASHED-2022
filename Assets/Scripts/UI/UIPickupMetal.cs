@@ -3,27 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using EventCallbacksSystem;
-
+using Photon.Pun;
 
 public class UIPickupMetal : MonoBehaviour
 {
 
-   [SerializeField] DialoguePickups dialogs;
+    [SerializeField] DialoguePickups[] dialogs;
 
      private static bool done = true;
-    
+    public GameObject uiObject;
+    [SerializeField] private bool canSoldierPickup;
+    [SerializeField] private bool canEngineerPickup;
 
     // Start is called before the first frame update
 
-    void OnTriggerEnter(Collider player){
-        if(done && player.gameObject.GetComponent<Engineer>())
+    void OnTriggerEnter(Collider player)
+    {
+        if (player.CompareTag("Player"))
+        {
+            bool isLocalPlayer = player.gameObject.GetComponent<PhotonView>().IsMine;
+            if (isLocalPlayer && ((canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>()) || (canEngineerPickup && player.gameObject.GetComponent<Engineer>())))
+            {
+                uiObject.SetActive(true);
+            }
+        }
+
+         if(done && player.CompareTag("Player"))
         {  
         done = false; 
-    
-           
-                dialogs.beginDialogue();
-           
+           foreach(DialoguePickups dialogue in dialogs)
+           {
+                dialogue.beginDialogue();
+                  
+           }
         
+    }
+    }
+    void OnTriggerExit(Collider player)
+    {
+        if (player.CompareTag("Player"))
+        {
+            bool isLocalPlayer = player.gameObject.GetComponent<PhotonView>().IsMine;
+            if (isLocalPlayer && uiObject.activeSelf)
+            {
+                uiObject.SetActive(false);
+
+                 foreach (var d in dialogs)
+            {
+                StopCoroutine(d.type);
+                d.gameObject.SetActive(false);
+                Debug.Log("går ut");
+            }
         }
     }
+    }
+    
 }

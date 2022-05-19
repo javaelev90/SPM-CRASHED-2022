@@ -22,6 +22,10 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] public Transform useTurretPosition;
     [SerializeField] public Transform useTurretBody;
 
+    public AudioSource source;
+
+    public AudioClip clip;
+
     private GameObject emptyTarget;
     private Engineer engineerRef;
 
@@ -41,6 +45,9 @@ public class Turret : MonoBehaviourPunCallbacks
         //EventSystem.Instance.RegisterListener<TurretDamageUpgradeEvent>(DamageUpgrade);
         //EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(HealthUpgrade);
         engineerRef = FindObjectOfType<Engineer>();
+        source = GetComponent<AudioSource>();
+        source.volume = Random.Range(0.8f, 2);
+        source.pitch = Random.Range(0.8f, 1.4f);
     }
 
     private void Start()
@@ -164,6 +171,9 @@ public class Turret : MonoBehaviourPunCallbacks
             projectile.DamageDealer = turretDamage;
             projectile.IsShot = true;
             counter = fireTimer;
+            source.PlayOneShot(clip);
+            source.volume = Random.Range(0.8f, 2);
+            source.pitch = Random.Range(0.8f, 1.4f);
             Debug.Log("Is shooting");
         }
         

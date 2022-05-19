@@ -9,6 +9,8 @@ public class ShowUiDialogue : MonoBehaviour
     public GameObject uiObject;
     [SerializeField] private bool canSoldierPickup;
     [SerializeField] private bool canEngineerPickup;
+
+    public DialoguePickups dialog;
     
 
     // Start is called before the first frame update
@@ -28,6 +30,7 @@ public class ShowUiDialogue : MonoBehaviour
         if(uiObject.activeSelf)
         {
            uiObject.SetActive(false);
+          
         }
     }
 }

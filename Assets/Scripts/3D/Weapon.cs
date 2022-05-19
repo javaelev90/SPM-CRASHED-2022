@@ -30,6 +30,8 @@ public class Weapon : MonoBehaviour
     {
         Cooldown();
         Shoot();
+        sourceOne.volume = Random.Range(0.8f, 2);
+        sourceOne.pitch = Random.Range(0.8f, 1.4f);
     }
 
     void Start()
@@ -37,6 +39,8 @@ public class Weapon : MonoBehaviour
         sourceOne = GetComponent<AudioSource>();
         EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
         EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
+        sourceOne.volume = Random.Range(1.8f, 2.5f);
+        sourceOne.pitch = Random.Range(0.8f, 1.2f);
     }
 
     private void Cooldown()
@@ -85,7 +89,10 @@ public class Weapon : MonoBehaviour
     private AudioClip GetAudioClip()
     {
         int index = Random.Range(0, shot.Length - 1);
+        sourceOne.volume = Random.Range(1.8f, 2.5f);
+        sourceOne.pitch = Random.Range(0.4f, 1.6f);
         return shot[index];
+       
     }
 
     public void UpgradeDamage(GunDamageUpgradeEvent damageUpgradeEvent)

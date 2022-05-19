@@ -8,7 +8,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
 {
     public float eventTime = 30f;
     public GameObject dome;
-    public TeleportToShip teleportToShip;
+    //public TeleportToShip teleportToShip;
     public GameObject missingPart;
     public GameObject attachedPart;
 
