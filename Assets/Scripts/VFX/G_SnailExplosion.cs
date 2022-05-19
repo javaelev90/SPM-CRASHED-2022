@@ -16,9 +16,8 @@ public class G_SnailExplosion : MonoBehaviour
         var vfx = Instantiate(explosionEffect, snail.transform.position, Quaternion.identity) as GameObject;
         //vfx.transform.SetParent(this.transform); //   vfx.transform.SetParent(snail.transform);
         //var ps = vfx.GetComponent<ParticleSystem>();
-        Destroy(vfx, 10f);// ps.main.duration + ps.main.startLifetime.constantMax);
+        Destroy(vfx.gameObject, 10f);// ps.main.duration + ps.main.startLifetime.constantMax);
         Destroy(this.gameObject, 20f);// ps.main.duration + ps.main.startLifetime.constantMax);
-
         //Instantiate(explosionEffect, this.transform.position, this.transform.rotation);
         SpawnDecal();
         //Destroy(this.gameObject);
@@ -29,7 +28,7 @@ public class G_SnailExplosion : MonoBehaviour
     {
         var vfx = Instantiate(readyToExplodeEffect, snail.transform.position, Quaternion.identity) as GameObject;
         Debug.Log(vfx.name);
-        Destroy(vfx, 3f);
+        Destroy(vfx.gameObject, 3f);
     }
 
     void SpawnDecal()

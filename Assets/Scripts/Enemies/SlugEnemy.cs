@@ -173,8 +173,15 @@ public class SlugEnemy : AIBaseLogic
                 foreach (Collider coll in targets)
                 {
                     HealthHandler healthHandler = coll.transform.GetComponent<HealthHandler>();
+                    SlugEnemy enemy;
                     if (healthHandler != null)
                     {
+                        enemy = coll.GetComponent<SlugEnemy>();
+                        if (enemy)
+                        {
+                            enemy.BlowUp();
+                            return;
+                        }
                         healthHandler.TakeDamage(explosionDamage);
                     }
                 }
@@ -192,7 +199,7 @@ public class SlugEnemy : AIBaseLogic
         snailEffects.Explode();
     }
 
-    [PunRPC] 
+    [PunRPC]
     private void ReadyToExplode()
     {
         snailEffects.snail = gameObject;
