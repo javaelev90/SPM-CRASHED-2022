@@ -12,6 +12,7 @@ public class SlugEnemy : AIBaseLogic
     [SerializeField] private float timeToExplosion;
     [SerializeField] private int explosionDamage;
     [SerializeField] private GameObject explosionEffects;
+    [SerializeField] private LayerMask AttackableTargets;
     private G_SnailExplosion snailEffects;
 
     private float timeCounterWaypoint;
@@ -167,7 +168,7 @@ public class SlugEnemy : AIBaseLogic
         photonView.RPC(nameof(ReadyToExplode), RpcTarget.All);
         if (timeCounterExplosion <= 0f)
         {
-            Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, targetMask);
+            Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, AttackableTargets);
             if (targets.Length > 0)
             {
                 foreach (Collider coll in targets)
