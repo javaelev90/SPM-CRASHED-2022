@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 5603274226023981931}
   - component: {fileID: 48894276342774882}
   - component: {fileID: 2553267416189683229}
+  - component: {fileID: 472340130491931474}
   m_Layer: 9
   m_Name: SlugPrefab
   m_TagString: Enemy
@@ -281,6 +282,7 @@ MonoBehaviour:
   timeToWayPoint: 3
   timeToExplosion: 2
   explosionDamage: 5
+  explosionEffects: {fileID: 2407786938042907698, guid: b128d91ce84906846917e367f2981f8a, type: 3}
   walk: {fileID: 8300000, guid: 0f32544d5f474714982c400523c9336d, type: 3}
   explode: {fileID: 8300000, guid: e7fd944783ec92b40988052f8baee34e, type: 3}
   attack: {fileID: 8300000, guid: 0f32544d5f474714982c400523c9336d, type: 3}
@@ -504,6 +506,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &472340130491931474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5603274226023981941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0deea46f2a84efd4e80ff2dbac80e19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snail: {fileID: 5603274226023981941}
+  explosionEffect: {fileID: 3095588006312428209, guid: 47116fd2e39311344888a9862c31e2bd, type: 3}
+  readyToExplodeEffect: {fileID: 0}
+  SnailGooDecalPrefab: {fileID: 2713433594693982627, guid: 0e512d4ed6c872643a57df4658a9ce0e, type: 3}
+  timeTillExplode: 10
 --- !u!1 &5603274226446826173
 GameObject:
   m_ObjectHideFlags: 0

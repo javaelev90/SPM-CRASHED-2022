@@ -30,7 +30,6 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         base.OnEnable();
         ResetHealth();
         source = GetComponent<AudioSource>();
-
     }
 
     protected void ResetHealth()
