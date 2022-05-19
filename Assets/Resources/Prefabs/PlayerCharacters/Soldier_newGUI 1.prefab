@@ -1735,6 +1735,12 @@ MonoBehaviour:
   skinWidth: 0.5
   groundCheckDistance: 0
   playerGUI: {fileID: 4632813172746365901}
+  turretObjRef: {fileID: 0}
+  engineerRef: {fileID: 0}
+  turretBodyTransform: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isFPS: 1
   camPositionFPS: {fileID: 4510414914690789854}
   cameraOffsetTPS: {x: 0, y: 0, z: 0}
@@ -1762,12 +1768,6 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: e7383899d40cf4c4f9eaedab6b73c84d, type: 3}
   weaponVisuals: {fileID: 4495014406897604462}
   bodyMesh: {fileID: 5263826719921962455}
-  turretObjRef: {fileID: 0}
-  engineerRef: {fileID: 0}
-  turretBodyTransform: {fileID: 0}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   fireLayer:
     serializedVersion: 2
     m_Bits: 0

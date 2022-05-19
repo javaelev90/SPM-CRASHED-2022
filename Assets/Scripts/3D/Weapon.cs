@@ -83,7 +83,6 @@ public class Weapon : MonoBehaviourPunCallbacks
                 AIBaseLogic ai = hitInfo.transform.GetComponent<AIBaseLogic>();
                 if (ai)
                 {
-                    Debug.Log(ai.transform.name);
                     ai.FindAttackingTarget(transform);
                 }
                 

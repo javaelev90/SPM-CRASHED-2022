@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class SlugEnemy : AIBaseLogic
 {
@@ -10,6 +11,8 @@ public class SlugEnemy : AIBaseLogic
     [SerializeField] private float timeToWayPoint;
     [SerializeField] private float timeToExplosion;
     [SerializeField] private int explosionDamage;
+    [SerializeField] private GameObject explosionEffects;
+    private G_SnailExplosion snailEffects;
 
     private float timeCounterWaypoint;
     private float timeCounterExplosion;
@@ -28,7 +31,6 @@ public class SlugEnemy : AIBaseLogic
         wayPoint = wayPointSystem.GetNewPosition;
         timeCounterExplosion = timeToExplosion;
         source = GetComponent<AudioSource>();
-
     }
 
     // Update is called once per frame
@@ -138,10 +140,10 @@ public class SlugEnemy : AIBaseLogic
 
     private void Move()
     {
-        
+
         if (distanceToTarget < maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
         {
-            if(agent.isOnNavMesh) agent.isStopped = true;
+            if (agent.isOnNavMesh) agent.isStopped = true;
             BlowUp();
         }
         else
@@ -159,7 +161,10 @@ public class SlugEnemy : AIBaseLogic
 
     public void BlowUp()
     {
+        GameObject explosion = Instantiate(explosionEffects, transform.position, Quaternion.identity);
+        snailEffects = explosion.GetComponent<G_SnailExplosion>();
         timeCounterExplosion -= Time.deltaTime;
+        photonView.RPC(nameof(ReadyToExplode), RpcTarget.All);
         if (timeCounterExplosion <= 0f)
         {
             Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, targetMask);
@@ -174,10 +179,24 @@ public class SlugEnemy : AIBaseLogic
                     }
                 }
             }
+            photonView.RPC(nameof(Explode), RpcTarget.All);
             root.DeSpawn();
             source.PlayOneShot(explode);
             timeCounterExplosion = timeToExplosion;
         }
+    }
+
+    [PunRPC]
+    private void Explode()
+    {
+        snailEffects.Explode();
+    }
+
+    [PunRPC] 
+    private void ReadyToExplode()
+    {
+        snailEffects.snail = gameObject;
+        snailEffects.ReadyToExplode();
     }
 
     private void Rotate()
