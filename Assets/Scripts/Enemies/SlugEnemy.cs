@@ -162,10 +162,7 @@ public class SlugEnemy : AIBaseLogic
 
     public void BlowUp()
     {
-        GameObject explosion = Instantiate(explosionEffects, transform.position, Quaternion.identity);
-        snailEffects = explosion.GetComponent<G_SnailExplosion>();
         timeCounterExplosion -= Time.deltaTime;
-        photonView.RPC(nameof(ReadyToExplode), RpcTarget.All);
         if (timeCounterExplosion <= 0f)
         {
             Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, AttackableTargets);
@@ -197,15 +194,18 @@ public class SlugEnemy : AIBaseLogic
     [PunRPC]
     private void Explode()
     {
+        GameObject explosion = Instantiate(explosionEffects, transform.position, Quaternion.identity);
+        snailEffects = explosion.GetComponent<G_SnailExplosion>();
+        snailEffects.snail = gameObject;
         snailEffects.Explode();
     }
 
-    [PunRPC]
-    private void ReadyToExplode()
-    {
-        snailEffects.snail = gameObject;
-        snailEffects.ReadyToExplode();
-    }
+    //[PunRPC]
+    //private void ReadyToExplode()
+    //{
+        
+    //    snailEffects.ReadyToExplode();
+    //}
 
     private void Rotate()
     {
