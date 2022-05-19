@@ -188,7 +188,13 @@ public class GasEnemy : AIBaseLogic
         if (timeCounterMelee <= 0f)
         {
             if (IsMasterClient)
-                target.GetComponent<HealthHandler>().TakeDamage(hitDamage);
+            {
+                HealthHandler healthHandler = target.GetComponent<HealthHandler>();
+                if (healthHandler != null)
+                {
+                    healthHandler.TakeDamage(hitDamage);
+                }
+            }
 
             timeCounterMelee = timeToMelee;
         }

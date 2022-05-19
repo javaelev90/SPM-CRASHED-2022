@@ -15,12 +15,12 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.9168547, g: 0.78330797, b: 0.9336026, a: 1}
+  m_FogColor: {r: 0.97496605, g: 0.9413267, b: 1, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.006
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.88284755, g: 0.74493057, b: 0.98412126, a: 1}
+  m_AmbientSkyColor: {r: 0.65918064, g: 0.3533682, b: 0.67115474, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 427306726}
-  m_IndirectSpecularColor: {r: 0.17552017, g: 0.21203391, b: 0.25859988, a: 1}
+  m_IndirectSpecularColor: {r: 0.17365731, g: 0.21710664, b: 0.2992257, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -24164,19 +24164,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6720404845272908005, guid: f79a79f94dd160c4aa3d90c9ac17b943, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.009110279
+      value: 0.06773279
       objectReference: {fileID: 0}
     - target: {fileID: 6720404845272908005, guid: f79a79f94dd160c4aa3d90c9ac17b943, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.08667835
+      value: 0.054848924
       objectReference: {fileID: 0}
     - target: {fileID: 6720404845272908005, guid: f79a79f94dd160c4aa3d90c9ac17b943, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.104130894
+      value: -0.7741887
       objectReference: {fileID: 0}
     - target: {fileID: 6720404845272908005, guid: f79a79f94dd160c4aa3d90c9ac17b943, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.99073744
+      value: 0.62692565
       objectReference: {fileID: 0}
     - target: {fileID: 6720404845810669631, guid: f79a79f94dd160c4aa3d90c9ac17b943, type: 3}
       propertyPath: m_Color.a
@@ -24184,15 +24184,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6720404845810669631, guid: f79a79f94dd160c4aa3d90c9ac17b943, type: 3}
       propertyPath: m_Color.b
-      value: 0.9989714
+      value: 0.876275
       objectReference: {fileID: 0}
     - target: {fileID: 6720404845810669631, guid: f79a79f94dd160c4aa3d90c9ac17b943, type: 3}
       propertyPath: m_Color.g
-      value: 0.9989714
+      value: 0.876275
       objectReference: {fileID: 0}
     - target: {fileID: 6720404845810669631, guid: f79a79f94dd160c4aa3d90c9ac17b943, type: 3}
       propertyPath: m_Color.r
-      value: 0.9989714
+      value: 0.876275
       objectReference: {fileID: 0}
     - target: {fileID: 6720404845810669631, guid: f79a79f94dd160c4aa3d90c9ac17b943, type: 3}
       propertyPath: m_Intensity
@@ -70096,6 +70096,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 305.9
       objectReference: {fileID: 0}
+    - target: {fileID: 7857938870706721981, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
+      propertyPath: objectPool
+      value: 
+      objectReference: {fileID: 1374429932}
     - target: {fileID: 7857938871610000136, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
       propertyPath: pool
       value: 
@@ -70188,6 +70192,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 143.36
       objectReference: {fileID: 0}
+    - target: {fileID: 7857938871870804597, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
+      propertyPath: objectPool
+      value: 
+      objectReference: {fileID: 1374429932}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
 --- !u!1 &1206182537
@@ -94161,7 +94169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7413377871239008371, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: shipUpgradeCost.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7413377871239008371, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: shipUpgradeCost.Array.data[1].gooCost
@@ -94172,11 +94180,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7413377871239008371, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: shipUpgradeCost.Array.data[3].gooCost
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7413377871239008371, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: shipUpgradeCost.Array.data[1].metalCost
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7413377871239008371, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: shipUpgradeCost.Array.data[2].metalCost
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7413377871239008371, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: shipUpgradeCost.Array.data[3].metalCost
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7867145863329647177, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
@@ -94187,6 +94203,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7572cca5894a6aa479a577ac37d921f0, type: 2}
+    - target: {fileID: 8610809992933808817, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: engenerTPPosition
+      value: 
+      objectReference: {fileID: 1913197447}
+    - target: {fileID: 8610809992933808817, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: soldierTPPosition
+      value: 
+      objectReference: {fileID: 1913197447}
     - target: {fileID: 8643368028430957452, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: sceneViewId
       value: 1
@@ -119127,6 +119151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1918496971}
   - component: {fileID: 1918496970}
+  - component: {fileID: 1918496972}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -119166,6 +119191,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1918496972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918496969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 7
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1922018183
 GameObject:
   m_ObjectHideFlags: 0

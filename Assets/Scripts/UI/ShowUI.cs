@@ -5,12 +5,12 @@ using TMPro;
 using EventCallbacksSystem;
 using Photon.Pun;
 
-    
+
 public class ShowUI : MonoBehaviour
 {
     [SerializeField] DialoguePickups[] dialogs;
 
-     private static bool done = true;
+    private static bool done = true;
     public GameObject uiObject;
     [SerializeField] private bool canSoldierPickup;
     [SerializeField] private bool canEngineerPickup;
@@ -28,16 +28,14 @@ public class ShowUI : MonoBehaviour
             }
         }
 
-         if(done && player.CompareTag("Player"))
-        {  
-        done = false; 
-           foreach(DialoguePickups dialogue in dialogs)
-           {
+        if (done && player.CompareTag("Player"))
+        {
+            done = false;
+            foreach (DialoguePickups dialogue in dialogs)
+            {
                 dialogue.beginDialogue();
-                  
-           }
-        
-    }
+            }
+        }
     }
     void OnTriggerExit(Collider player)
     {
@@ -48,14 +46,14 @@ public class ShowUI : MonoBehaviour
             {
                 uiObject.SetActive(false);
 
-                 foreach (var d in dialogs)
-            {
-                StopCoroutine(d.type);
-                d.gameObject.SetActive(false);
-        
+                foreach (var d in dialogs)
+                {
+                    if (d.type != null)
+                        StopCoroutine(d.type);
+                    d.gameObject.SetActive(false);
+                }
             }
         }
     }
-    }
-    
+
 }
