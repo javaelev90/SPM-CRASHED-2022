@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Engineer : Controller3D
 {
@@ -312,18 +313,31 @@ public class Engineer : Controller3D
         }
     }
 
+    [SerializeField] private Animator atFullHealthText;
+    IEnumerator ExecuteAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        // Code to execute after the delay
+        atFullHealthText.gameObject.SetActive(false);
+    }
+
     public void OnTurretRepair(InputAction.CallbackContext ctx)
     {
         if (Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
             if (ctx.performed)
             {
-                // Make sure the turret doesn't alreday have full health or if Enineer is using turret
+                // Make sure the turret doesn't alreday have full health
                 TurretHealthHandler obj = hit.collider.gameObject.GetComponent<TurretHealthHandler>();
-                if (obj.CurrentHealth == obj.MaxHealth || isUsingTurret == true)
+                if (obj.CurrentHealth == obj.MaxHealth)
                 {
-                    Debug.Log("Already max health or is using turret");
-                    // TODO add text to explain why repair not activating
+                    
+                    Debug.Log("Already max health");
+                    // Text to explain why repair not activating
+                    atFullHealthText.gameObject.SetActive(true);
+                    atFullHealthText.Play("FadeOut");
+                    StartCoroutine(ExecuteAfterTime(2f));
                     return;
                 }
 
@@ -339,13 +353,15 @@ public class Engineer : Controller3D
                     TurretHealthHandler turretHealthHandler = hit.collider.GetComponent<TurretHealthHandler>();
                     if (turretHealthHandler.isAlive == true)
                     {
-                        turretHealthHandler.AddHealth(healthToAdd);
+                        turretHealthHandler.AddTurretHealth(healthToAdd);
                     }
                     else
                     {
                         // If it's dead you gotta make it come back to life
                         turretHealthHandler.isAlive = true;
-                        turretHealthHandler.AddHealth(healthToAddIfDead);
+                        turretHealthHandler.Revived();
+                        turretHealthHandler.AddTurretHealth(healthToAddIfDead);
+
                     }
 
                     // TODO Play sound

@@ -202,7 +202,6 @@ public class Controller3D : MonoBehaviourPunCallbacks
     public Engineer engineerRef;
     public Transform turretBodyTransform;
     [SerializeField] private LayerMask enemyLayer;
-    //public Transform muzzleOnTheFukingTurret;
     public bool isShootingTurret { get; set; }
 
 
@@ -211,10 +210,6 @@ public class Controller3D : MonoBehaviourPunCallbacks
     {
         RoatateCamera();
         PlayerRotation();
-        //Vector3 gravitationForce;
-        //float gravity = 9.81f;
-        //gravitationForce = Vector3.down * gravity * Time.deltaTime;
-        //Body.Velocity += gravitationForce;
 
         if (engineerRef.GetComponent<Engineer>().isUsingTurret == true)
         {

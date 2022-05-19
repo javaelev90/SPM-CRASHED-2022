@@ -25,6 +25,33 @@ public class TurretHealthHandler : HealthHandler
         gameObject.transform.GetChild(3).gameObject.SetActive(true);
     }
 
+    public void Revived()
+    {
+        gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        gameObject.transform.GetChild(3).gameObject.SetActive(false);
+        UpdateHealthBar();
+    }
+
+    public void AddTurretHealth(int amount)
+    {
+        photonView.RPC(nameof(AddTurretHealthRPC), RpcTarget.All, amount);
+    }
+
+    [PunRPC]
+    private void AddTurretHealthRPC(int amount)
+    {
+        if (CurrentHealth + amount > MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+
+        }
+        else
+        {
+            CurrentHealth += amount;
+            UpdateHealthBar();
+        }
+    }
+
     public void SalvageDrop()
     {
         if (itemDropPrefab != null)
