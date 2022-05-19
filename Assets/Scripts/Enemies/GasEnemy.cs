@@ -187,7 +187,7 @@ public class GasEnemy : AIBaseLogic
         timeCounterMelee -= Time.deltaTime;
         if (timeCounterMelee <= 0f)
         {
-            if (IsMasterClient)
+            if (IsMasterClient && target != null)
             {
                 HealthHandler healthHandler = target.GetComponent<HealthHandler>();
                 if (healthHandler != null)
@@ -205,7 +205,7 @@ public class GasEnemy : AIBaseLogic
         timeCounterGas -= Time.deltaTime;
         if (timeCounterGas <= 0f)
         {
-            if (IsMasterClient)
+            if (IsMasterClient && target != null)
             {
                 HealthHandler healthHandler = target.GetComponent<HealthHandler>();
                 if (healthHandler != null)
