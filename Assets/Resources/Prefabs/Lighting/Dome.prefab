@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 949818816559701271}
   - component: {fileID: 949818816559701268}
   - component: {fileID: 949818816559701269}
-  - component: {fileID: 949818816559701266}
+  - component: {fileID: 6803332695586658334}
   m_Layer: 7
   m_Name: Dome
   m_TagString: Untagged
@@ -82,8 +82,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &949818816559701266
-SphereCollider:
+--- !u!64 &6803332695586658334
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -92,6 +92,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 7b5e2c0c29edfef4580e0d4080dc01cd, type: 2}
