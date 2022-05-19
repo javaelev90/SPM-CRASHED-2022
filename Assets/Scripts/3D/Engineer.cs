@@ -41,6 +41,8 @@ public class Engineer : Controller3D
     [SerializeField] private int healthToAdd = 10;
     [SerializeField] private int healthToAddIfDead = 6;
     [SerializeField] private Animator atFullHealthText;
+    [SerializeField] private Animator notEnoughResourcesToRepair;
+    [SerializeField] private Animator notEnoughResourcesToBuild;
 
     [Header("TurretBuild")]
     public TurretCost turretBuildCosts;
@@ -240,6 +242,13 @@ public class Engineer : Controller3D
 
                 }
             }
+            else
+            {
+                // Text to explain why placement not activating
+                notEnoughResourcesToBuild.gameObject.SetActive(true);
+                notEnoughResourcesToBuild.Play("FadeOut");
+                StartCoroutine(ExecuteAfterTime(2f));
+            }
 
         }
     }
@@ -320,16 +329,16 @@ public class Engineer : Controller3D
             {
                 // Make sure the turret doesn't alreday have full health
                 TurretHealthHandler obj = hit.collider.gameObject.GetComponent<TurretHealthHandler>();
+                
                 if (obj.CurrentHealth == obj.MaxHealth)
                 {
-
-                    Debug.Log("Already max health");
                     // Text to explain why repair not activating
                     atFullHealthText.gameObject.SetActive(true);
                     atFullHealthText.Play("FadeOut");
                     StartCoroutine(ExecuteAfterTime(2f));
                     return;
                 }
+                
 
                 // Check if resources needed is in inventory
                 InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
@@ -355,12 +364,13 @@ public class Engineer : Controller3D
                     }
 
                     // TODO Play sound
-
-                    Debug.Log("Repaired the turret");
                 }
                 else
                 {
-                    Debug.Log("Not enough resources");
+                    // Text to explain why repair not activating
+                    notEnoughResourcesToRepair.gameObject.SetActive(true);
+                    notEnoughResourcesToRepair.Play("FadeOut");
+                    StartCoroutine(ExecuteAfterTime(2f));
                 }
             }
 
@@ -373,6 +383,8 @@ public class Engineer : Controller3D
 
         // Code to execute after the delay
         atFullHealthText.gameObject.SetActive(false);
+        notEnoughResourcesToRepair.gameObject.SetActive(false);
+        notEnoughResourcesToBuild.gameObject.SetActive(false);
     }
 
     
