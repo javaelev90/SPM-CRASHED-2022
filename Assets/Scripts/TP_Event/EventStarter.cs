@@ -45,7 +45,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
 
         StartCoroutine(TeleportIn(eventTime));
     }
-
+    [ContextMenu("Start Event")]
     public void StartEvent()
     {
         photonView.RPC(nameof(StartEventRPC), RpcTarget.All);
@@ -66,15 +66,15 @@ public class EventStarter : MonoBehaviourPunCallbacks
     private IEnumerator TeleportIn(float eventTime)
     {
         yield return new WaitForSeconds(eventTime);
-        EndEvent();
-        Destroy(gameObject);
+        EndEvent();  
     }
 
-    [ContextMenu("Finsh Event")]
+    
     public void EndEvent()
     {
         EventSystem.Instance.FireEvent(new EventEvent(false));
         EventSystem.Instance.FireEvent(new AttachPartEvent(attachedPart, missingPart));
         EventSystem.Instance.FireEvent(new TeleportToShipEvent());
+        Destroy(gameObject);
     }
 }
