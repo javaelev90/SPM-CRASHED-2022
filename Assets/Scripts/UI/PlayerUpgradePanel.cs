@@ -34,6 +34,11 @@ public class PlayerUpgradePanel : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void HealthUpgrade()
     {
         EventSystem.Instance.FireEvent(new HealthUpgradeEvent(healthUpgradeAmount));
