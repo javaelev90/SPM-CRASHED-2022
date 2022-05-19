@@ -497,11 +497,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarHandler: {fileID: 3102941558247465047}
   hit: {fileID: 0}
-  itemDropPrefab: {fileID: 5563257113643808014, guid: e91eaeefca1cf6b44a325df71e90cc48, type: 3}
+  itemDropPrefab: {fileID: 0}
   dropOffsetY: 1
   MaxHealth: 20
   CurrentHealth: 20
   isAlive: 1
+  pickupPrefabs:
+  - {fileID: 5563257113643808014, guid: e91eaeefca1cf6b44a325df71e90cc48, type: 3}
+  - {fileID: 5648485573748196395, guid: 8d9299097781d6a4cbbca1a773979f70, type: 3}
+  pickups:
+  - {fileID: 5563257113643808014, guid: e91eaeefca1cf6b44a325df71e90cc48, type: 3}
+  - {fileID: 5648485573748196395, guid: 8d9299097781d6a4cbbca1a773979f70, type: 3}
+  amountToSpawn: 5
+  offsetY: 1
 --- !u!1 &3671007234973280596
 GameObject:
   m_ObjectHideFlags: 0

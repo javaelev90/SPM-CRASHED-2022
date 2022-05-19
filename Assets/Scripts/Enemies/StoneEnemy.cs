@@ -190,12 +190,12 @@ public class StoneEnemy : AIBaseLogic
         if (distanceToTarget < maxThrowRange && minThrowRange < distanceToTarget)
         {
             isFleeing = false;
-            agent.isStopped = true;
+            if (agent.isOnNavMesh) agent.isStopped = true;
             Throw();
         }
         else
         {
-            agent.isStopped = false;
+            if (agent.isOnNavMesh) agent.isStopped = false;
             //source.Play();
         }
 

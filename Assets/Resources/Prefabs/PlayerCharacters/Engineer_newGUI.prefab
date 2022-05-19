@@ -327,8 +327,6 @@ MonoBehaviour:
   maxTurretToSpawn: 3
   turretCount: 0
   turretOffset: {x: 0, y: 0, z: 0}
-  gooCostTurret: 0
-  metalCostTurret: 0
   turretPrefab: {fileID: 2438785178254165549, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
   greenGooPrefab: {fileID: 5563257113643808014, guid: e91eaeefca1cf6b44a325df71e90cc48, type: 3}
   metalPrefab: {fileID: 5648485573748196395, guid: 8d9299097781d6a4cbbca1a773979f70, type: 3}
@@ -342,6 +340,7 @@ MonoBehaviour:
     gooCost: 2
   healthToAdd: 10
   healthToAddIfDead: 6
+  atFullHealthText: {fileID: 6861052247371904159}
   turretBuildCosts:
     metalCost: 5
     gooCost: 5
@@ -352,7 +351,6 @@ MonoBehaviour:
   stunLayer:
     serializedVersion: 2
     m_Bits: 512
-  atFullHealthText: {fileID: 6861052247371904159}
 --- !u!114 &2924166598192637620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,7 +505,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2924166598192637930}
         m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
         m_MethodName: PickUp
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

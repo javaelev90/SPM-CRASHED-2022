@@ -2,9 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using EventCallbacksSystem;
 
 public class TurretHealthHandler : HealthHandler
 {
+    [SerializeField] private GameObject[] pickupPrefabs; //size gets set in inspector! drag prefabs in there!
+    [SerializeField] private GameObject[] pickups;
+    [SerializeField] private int amountToSpawn = 5;
+    [SerializeField] private float offsetY = 1f;
+    
+    private void Start()
+    {
+        EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(UpgradeTurretHealth);
+    }
+
+    public void UpgradeTurretHealth(TurretHealthUpgradeEvent turretHealthUpgradeEvent)
+    {
+        MaxHealth += turretHealthUpgradeEvent.UpgradeAmount;
+        CurrentHealth += turretHealthUpgradeEvent.UpgradeAmount;
+    }
+
     public override void TakeDamage(int amount)
     {
         photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);
@@ -54,20 +71,33 @@ public class TurretHealthHandler : HealthHandler
 
     public void SalvageDrop()
     {
-        if (itemDropPrefab != null)
-        {
-            DropItem();
-        }
+        DropItem();
+
     }
 
     public override void DropItem()
     {
-        photonView.RPC(nameof(SpawnGreenGooRPC), RpcTarget.MasterClient);
+        photonView.RPC(nameof(SpawnItems), RpcTarget.MasterClient);
     }
 
     [PunRPC]
-    private void SpawnGreenGooRPC()
+    private void SpawnItems()
     {
-        InstantiateRoomObject(null);
+        SpawnItemDrops();
+    }
+
+    protected void SpawnItemDrops()
+    {
+        pickups = new GameObject[pickupPrefabs.Length]; //makes sure they match length
+
+        for (int i = 0; i < amountToSpawn; i++)
+        {
+            for (int y = 0; y < pickupPrefabs.Length; y++)
+            {
+                Debug.Log("Items get dropped here");
+                Vector3 position = new Vector3(transform.position.x + Random.Range(-2, 2), transform.position.y + offsetY, transform.position.z + Random.Range(-3, 3));
+                pickups[y] = PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + pickupPrefabs[y].name, position, Quaternion.identity);
+            }
+        }
     }
 }
