@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 2924166598192637315}
   - component: {fileID: 2924166598192637442}
   - component: {fileID: 2924166598192637930}
-  - component: {fileID: 2924166598192637337}
   - component: {fileID: 2924166598192637499}
   - component: {fileID: 2924166598192637392}
   - component: {fileID: 2924166598192637620}
@@ -190,7 +189,7 @@ MonoBehaviour:
   kineticFrictionCoefficient: 0.3
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 33152
+    m_Bits: 295808
 --- !u!114 &2924166598192637930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,12 +205,12 @@ MonoBehaviour:
   pickupLayer:
     serializedVersion: 2
     m_Bits: 154624
-  fireLayer:
-    serializedVersion: 2
-    m_Bits: 0
   spaceShipLayer:
     serializedVersion: 2
     m_Bits: 256
+  shipPartLayer:
+    serializedVersion: 2
+    m_Bits: 262144
   pickUpDistance: 3
   source: {fileID: 0}
   Goo: {fileID: 0}
@@ -221,23 +220,6 @@ MonoBehaviour:
   dropTransform: {fileID: 90372043060242596}
   timeToDrop: 0.5
   dialog: {fileID: 0}
---- !u!114 &2924166598192637337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2924166598192640433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d4328438d4e98e48b3d1a7b8b00b28d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  metal: 0
-  greenGoo: 0
-  alienMeat: 0
-  cookedAlienMeat: 0
-  hasReviveBadge: 0
 --- !u!114 &2924166598192637499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +300,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6609b2bd3dacc8449a4615594518fe2, type: 2}
   - {fileID: 11400000, guid: d7ab4444ed09af64faff96bdbf7451bd, type: 2}
   animator: {fileID: 2924166598192642132}
-  inventory: {fileID: 2924166598192637337}
+  inventory: {fileID: 0}
   playerInput: {fileID: 2924166598192637620}
   clip: {fileID: 0}
   weaponVisuals: {fileID: 2924166598192640433}
@@ -807,8 +789,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2924166598192640433}
   m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: b8a7b4962d3ece94aa5fb59658779440, type: 3}
-  m_Controller: {fileID: 9100000, guid: 0a88a2b5195f54b4aa9b89224c8106d2, type: 2}
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

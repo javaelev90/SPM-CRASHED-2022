@@ -974,7 +974,6 @@ GameObject:
   - component: {fileID: 4510414914868607587}
   - component: {fileID: 3896935947547732137}
   - component: {fileID: 1421326361897279499}
-  - component: {fileID: 840723939357521241}
   - component: {fileID: 8779154251557934833}
   - component: {fileID: 7903893666221974611}
   - component: {fileID: 6717242514041474261}
@@ -1333,7 +1332,7 @@ MonoBehaviour:
   kineticFrictionCoefficient: 0.3
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 896
+    m_Bits: 263040
 --- !u!114 &3896935947547732137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1460,19 +1459,7 @@ MonoBehaviour:
     m_ActionId: 29b9d3d4-9dbd-4816-bd1c-51174b903866
     m_ActionName: Player/PickUp[/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6717242514041474261}
-        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
-        m_MethodName: Cook
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 2d8de990-b82a-4220-9d0a-a629d8370a0b
     m_ActionName: Player/Cook[/Keyboard/c]
   - m_PersistentCalls:
@@ -1767,7 +1754,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6609b2bd3dacc8449a4615594518fe2, type: 2}
   - {fileID: 11400000, guid: d7ab4444ed09af64faff96bdbf7451bd, type: 2}
   animator: {fileID: 2079887891689417862}
-  inventory: {fileID: 840723939357521241}
+  inventory: {fileID: 0}
   playerInput: {fileID: 3896935947547732137}
   clip: {fileID: 8300000, guid: e7383899d40cf4c4f9eaedab6b73c84d, type: 3}
   weaponVisuals: {fileID: 4495014406897604462}
@@ -1783,23 +1770,6 @@ MonoBehaviour:
   layersThatShouldBeHit:
     serializedVersion: 2
     m_Bits: 512
---- !u!114 &840723939357521241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4717172599527124038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d4328438d4e98e48b3d1a7b8b00b28d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  metal: 0
-  greenGoo: 0
-  alienMeat: 0
-  cookedAlienMeat: 0
-  hasReviveBadge: 0
 --- !u!114 &8779154251557934833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1852,12 +1822,12 @@ MonoBehaviour:
   pickupLayer:
     serializedVersion: 2
     m_Bits: 138240
-  fireLayer:
-    serializedVersion: 2
-    m_Bits: 0
   spaceShipLayer:
     serializedVersion: 2
     m_Bits: 256
+  shipPartLayer:
+    serializedVersion: 2
+    m_Bits: 262144
   pickUpDistance: 3
   source: {fileID: 453558809299818705}
   Goo: {fileID: 8300000, guid: 01d10acac1a458342915320b1129643c, type: 3}
@@ -3178,6 +3148,38 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3856852540067734086, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3856852540067734086, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3856852540067734086, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3856852540067734086, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5746022450278198367, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5746022450278198367, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5746022450278198367, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5746022450278198367, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6815583141316860800, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3378,6 +3380,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5510816813930139584, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_PrefabInstance: {fileID: 9044887938546033159}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5547672003020540683 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3564792497713129740, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+  m_PrefabInstance: {fileID: 9044887938546033159}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8446593080147799763 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 629859698614144212, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
@@ -3392,10 +3399,5 @@ MonoBehaviour:
 --- !u!1 &4495014406897604462 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4892204836988482921, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
-  m_PrefabInstance: {fileID: 9044887938546033159}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5547672003020540683 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3564792497713129740, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_PrefabInstance: {fileID: 9044887938546033159}
   m_PrefabAsset: {fileID: 0}

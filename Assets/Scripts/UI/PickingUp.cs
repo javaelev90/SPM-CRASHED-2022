@@ -8,8 +8,8 @@ public class PickingUp : MonoBehaviourPunCallbacks
 {
     [Header("Interaction layers")]
     [SerializeField] private LayerMask pickupLayer;
-    [SerializeField] private LayerMask fireLayer;
     [SerializeField] private LayerMask spaceShipLayer;
+    [SerializeField] private LayerMask shipPartLayer;
 
     [SerializeField] private float pickUpDistance = 3;
     [SerializeField] public AudioSource source;
@@ -102,6 +102,10 @@ public class PickingUp : MonoBehaviourPunCallbacks
         {
             EventSystem.Instance.FireEvent(new ShipUppgradPanelEvent());
         }
+        else if (PickUpHitCheck(shipPartLayer))
+        {
+            pickup.transform.gameObject.GetComponent<EventStarter>().StartEvent();
+        }
     }
 
     public void Revive()
@@ -121,7 +125,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
         if (inventorySystem.Amount<AlienMeat>() > 0)
         {
             inventorySystem.Remove<AlienMeat>();
-            photonView.RPC("AddHealth", RpcTarget.All, 1);
+            GetComponent<HealthHandler>().AddHealth(1);
         }
     }
 
