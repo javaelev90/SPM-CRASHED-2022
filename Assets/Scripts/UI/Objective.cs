@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using TMPro;
 
 public class Objective : MonoBehaviour
 {
 
-    public Text ShipPart;
+    public TextMeshProUGUI ShipPart;
     public int part;
     public Ship ship;
     // Start is called before the first frame update

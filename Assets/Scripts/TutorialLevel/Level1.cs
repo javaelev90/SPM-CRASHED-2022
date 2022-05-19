@@ -18,17 +18,22 @@ public class Level1 : MonoBehaviour
     
     public GameObject panel;
 
+    public GameObject found;
+
     public Timer time;
      void Start()
     {
         uiObject.SetActive(false);
         panel.SetActive(true);
+        found.SetActive(false);
+       
         time.DisplayingTime(false);
         time.Show(false);
+      
 
     }
 
-    private void TutorialOver(){
+    public void TutorialOver(){
         if(PlacedTurret() && pool.activeObjects.Count == 0 && ship.nextUpgrade>0){
             
             foreach (var c in colliders)
@@ -38,6 +43,8 @@ public class Level1 : MonoBehaviour
                 panel.SetActive(false);
                 time.DisplayingTime(true);
                 time.Show(true);
+                found.SetActive(true);
+
             }
         }
     }

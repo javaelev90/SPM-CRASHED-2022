@@ -52,7 +52,7 @@ public class ShowUI : MonoBehaviour
             {
                 StopCoroutine(d.type);
                 d.gameObject.SetActive(false);
-                Debug.Log("går ut");
+        
             }
         }
     }
