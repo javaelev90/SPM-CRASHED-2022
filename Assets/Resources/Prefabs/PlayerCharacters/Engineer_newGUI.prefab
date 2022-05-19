@@ -75,6 +75,7 @@ Transform:
   - {fileID: 2924166598192643314}
   - {fileID: 2924166598192643789}
   - {fileID: 984631130397144488}
+  - {fileID: 90372043060242596}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -217,7 +218,7 @@ MonoBehaviour:
   Metal: {fileID: 0}
   Meat: {fileID: 0}
   inventorySystem: {fileID: 2924166598192640432}
-  dropTransform: {fileID: 0}
+  dropTransform: {fileID: 90372043060242596}
   timeToDrop: 0.5
   dialog: {fileID: 0}
 --- !u!114 &2924166598192637337
@@ -289,6 +290,12 @@ MonoBehaviour:
   skinWidth: 0.01
   groundCheckDistance: 0.1
   playerGUI: {fileID: 9122888633193452753}
+  turretObjRef: {fileID: 2438785178254165550, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
+  engineerRef: {fileID: 2924166598192637392}
+  turretBodyTransform: {fileID: 3067970174018886807, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
   isFPS: 1
   camPositionFPS: {fileID: 2924166598192640434}
   cameraOffsetTPS: {x: 0, y: 0, z: 0}
@@ -316,12 +323,6 @@ MonoBehaviour:
   clip: {fileID: 0}
   weaponVisuals: {fileID: 2924166598192640433}
   bodyMesh: {fileID: 2924166598192640433}
-  turretObjRef: {fileID: 2438785178254165550, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
-  engineerRef: {fileID: 2924166598192637392}
-  turretBodyTransform: {fileID: 3067970174018886807, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
   turret: {fileID: 2411392565204665798, guid: 3358d40555310ec4d8266bc256c4335e, type: 3}
   turretPos: {fileID: 2924166598192643430}
   maxTurretToSpawn: 3
@@ -537,7 +538,19 @@ MonoBehaviour:
     m_ActionId: 28840f60-17d7-41c8-ba97-7169f1c54bb1
     m_ActionName: Player/Eat[/XInputControllerWindows/buttonSouth,/Keyboard/x]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2924166598192637930}
+        m_TargetAssemblyTypeName: PickingUp, Assembly-CSharp
+        m_MethodName: DropItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d1d5ac02-6de6-46aa-b993-9465947fb9be
     m_ActionName: Player/DropItem[/XInputControllerWindows/leftShoulder,/Keyboard/q]
   - m_PersistentCalls:
@@ -793,7 +806,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2924166598192640433}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: b8a7b4962d3ece94aa5fb59658779440, type: 3}
   m_Controller: {fileID: 9100000, guid: 0a88a2b5195f54b4aa9b89224c8106d2, type: 2}
   m_CullingMode: 0
@@ -956,6 +969,36 @@ Transform:
   m_Father: {fileID: 2924166598192643789}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4907889875503316599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 90372043060242596}
+  m_Layer: 6
+  m_Name: DropTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &90372043060242596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4907889875503316599}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.27, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2924166598192643476}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6380969563448597806
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,6 +1109,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player GUI
       objectReference: {fileID: 0}
+    - target: {fileID: 641137327987738267, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2465044041546215839, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1100,35 +1147,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3856852540067734086, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3856852540067734086, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3856852540067734086, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 214.55423
       objectReference: {fileID: 0}
     - target: {fileID: 3856852540067734086, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -122.49049
       objectReference: {fileID: 0}
     - target: {fileID: 5746022450278198367, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5746022450278198367, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5746022450278198367, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 339.25705
       objectReference: {fileID: 0}
     - target: {fileID: 5746022450278198367, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -122.49049
       objectReference: {fileID: 0}
     - target: {fileID: 6815583141316860800, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1148,19 +1195,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8628428485139209143, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8628428485139209143, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8628428485139209143, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 89.85141
       objectReference: {fileID: 0}
     - target: {fileID: 8628428485139209143, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -122.49049
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632784715835697079, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8922995540805740514, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_Pivot.x
