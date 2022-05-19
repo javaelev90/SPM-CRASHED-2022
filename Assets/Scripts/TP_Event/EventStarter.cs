@@ -13,8 +13,8 @@ public class EventStarter : MonoBehaviourPunCallbacks
 
 
     public List<ObjectSpawner> eventSpawners;
-    
-    
+    private bool eventStarted = false;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -34,16 +34,21 @@ public class EventStarter : MonoBehaviourPunCallbacks
     {
         //timeDisplay.DisplayingTime(false);
         //light.SetCycleOngoing(false);
-        EventSystem.Instance.FireEvent(new EventEvent(true));
-
-        dome.SetActive(true);
-
-        foreach (ObjectSpawner objectSpawner in eventSpawners)
+        if (eventStarted == false)
         {
-            objectSpawner.TriggerSpawner();
+            eventStarted = true;
+            EventSystem.Instance.FireEvent(new EventEvent(true));
+
+            dome.SetActive(true);
+
+            foreach (ObjectSpawner objectSpawner in eventSpawners)
+            {
+                objectSpawner.TriggerSpawner();
+            }
+
+            StartCoroutine(TeleportIn(eventTime));
         }
 
-        StartCoroutine(TeleportIn(eventTime));
     }
     [ContextMenu("Start Event")]
     public void StartEvent()
