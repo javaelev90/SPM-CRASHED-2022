@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using EventCallbacksSystem;
+using UnityEngine.InputSystem;
 
 public class PlayerUpgradePanel : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class PlayerUpgradePanel : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         player = GameManager.character;
+        
         if(player == Character.ENGINEER)
         {
             damageUpgradeButton.GetComponent<Text>().text = "Upgrade Turret Damage";
@@ -37,6 +39,7 @@ public class PlayerUpgradePanel : MonoBehaviour
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.None;
+        GameManager.playerObject.GetComponent<PlayerInput>().enabled = false;
     }
 
     public void HealthUpgrade()
@@ -72,6 +75,7 @@ public class PlayerUpgradePanel : MonoBehaviour
     private void Exit()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        GameManager.playerObject.GetComponent<PlayerInput>().enabled = true;
         gameObject.SetActive(false);
     }
 }

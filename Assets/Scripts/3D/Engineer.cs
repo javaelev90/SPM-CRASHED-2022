@@ -108,7 +108,7 @@ public class Engineer : Controller3D
         base.Update();
         Cooldown();
         placeTimer -= Time.deltaTime;
-        PickUpShipPart();
+        //PickUpShipPart();
         //OnTurretUse();
         if (isPressed)
         {
@@ -375,37 +375,7 @@ public class Engineer : Controller3D
         atFullHealthText.gameObject.SetActive(false);
     }
 
-    public void PickUpShipPart()
-    {
-        if (player != null)
-        {
-            Collider[] colliderHits = Physics.OverlapSphere(transform.position, checkRadius);
-
-            foreach (Collider col in colliderHits)
-            {
-                if (col.CompareTag(("ShipPart")) && playerActions.Player.ShipPickUp.IsPressed())
-                {
-                    //destination = player.transform.Find("CarryPos");
-                    //shipPart = GameObject.FindGameObjectsWithTag("ShipPart");
-                    //GetComponent<Rigidbody>().useGravity = false;
-                    //col.transform.position = destination.position;
-                    //col.transform.parent = GameObject.Find("CarryPos").transform;
-                    col.GetComponent<EventStarter>().StartEvent();
-
-                }
-                if (playerActions.Player.DropShitPart.IsPressed())
-                {
-                    col.transform.parent = null;
-                    //GetComponent<Rigidbody>().useGravity = true;
-                }
-                else
-                {
-                    //Debug.Log("Outside");
-                }
-            }
-        }
-
-    }
+    
     Engineer player;
 
     IEnumerator Wait(float sec)

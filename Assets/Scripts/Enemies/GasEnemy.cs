@@ -200,7 +200,13 @@ public class GasEnemy : AIBaseLogic
         if (timeCounterGas <= 0f)
         {
             if (IsMasterClient)
-                target.GetComponent<HealthHandler>().TakeDamage(poisonDamage);
+            {
+                HealthHandler healthHandler = target.GetComponent<HealthHandler>();
+                if (healthHandler != null)
+                {
+                    healthHandler.TakeDamage(poisonDamage);
+                }
+            }
 
             timeCounterGas = timeToGas;
             source.PlayOneShot(angry);

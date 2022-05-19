@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class ShipUpgradePanel : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class ShipUpgradePanel : MonoBehaviour
     {
         ErrorMsg.SetActive(false);
         gameObject.SetActive(false);
+        GameManager.playerObject.GetComponent<PlayerInput>().enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
     }
 

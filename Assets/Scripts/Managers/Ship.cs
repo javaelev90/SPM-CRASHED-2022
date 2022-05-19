@@ -6,6 +6,8 @@ using EventCallbacksSystem;
 using System.Linq;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.InputSystem;
+
 public class Ship : MonoBehaviourPunCallbacks
 {
     [SerializeField] private ShipUpgradePanel shipUpgradePanel;
@@ -132,6 +134,8 @@ public class Ship : MonoBehaviourPunCallbacks
             }
             shipUpgradePanel.ToggleErrorMessage(false);
             Cursor.lockState = CursorLockMode.None;
+            GameManager.playerObject.GetComponent<PlayerInput>().enabled = false;
+
         }
     }
 
