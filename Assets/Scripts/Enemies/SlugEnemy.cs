@@ -141,12 +141,12 @@ public class SlugEnemy : AIBaseLogic
         
         if (distanceToTarget < maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
         {
-            agent.isStopped = true;
+            if(agent.isOnNavMesh) agent.isStopped = true;
             BlowUp();
         }
         else
         {
-            agent.isStopped = false;
+            if (agent.isOnNavMesh) agent.isStopped = false;
             source.Play();
         }
 

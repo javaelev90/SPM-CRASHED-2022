@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using Photon.Pun;
 
-public class ObjectCulling : MonoBehaviour
+public class ObjectCulling : MonoBehaviourPunCallbacks
 {
     [Range(5, 60)]
     [SerializeField] private int minCullingSquareSide;
@@ -20,11 +20,17 @@ public class ObjectCulling : MonoBehaviour
     private float worldWidth;
     private float worldHeigth;
     private GameObject player;
+    private GameObject otherPlayer;
     private Quad<PooledObject> playerQuad;
-    private Vector3 previousPosition;
+    private Quad<PooledObject> otherPlayerQuad;
+    private Vector3 playerPrevPosition;
+    private Vector3 otherPlayerPrevPosition;
+
     private float updateDistance = 1f;
     private float updateTimer = 0f;
     private float updateDelay = 0.2f;
+
+    private bool startedCulling = false;
 
     private void Start()
     {
@@ -33,13 +39,34 @@ public class ObjectCulling : MonoBehaviour
         mapBoundary = new Quad<PooledObject>(0, 0, worldWidth, worldHeigth);
     }
 
-    public void Initialize(GameObject player)
+    public void Initialize(GameObject player, Character character)
     {
         this.player = player;
-        previousPosition = player.transform.position;
+        playerPrevPosition = player.transform.position;
+        otherPlayerPrevPosition = player.transform.position;
         pools = FindObjectsOfType<PhotonObjectPool>().ToList();
-        UpdatePlayerQuad();
+        //playerQuad = UpdatePlayerQuad(player.transform);
+        //otherPlayerQuad = UpdatePlayerQuad(otherPlayer.transform);
         UpdateQuadTree();
+        //StartCoroutine(FindOtherPlayer(character));
+    }
+
+    IEnumerator FindOtherPlayer(Character character)
+    {
+        while (otherPlayer == null)
+        {
+            if (character == Character.SOLDIER)
+            {
+                otherPlayer = FindObjectOfType<Engineer>()?.gameObject;
+            }
+            else
+            {
+                otherPlayer = FindObjectOfType<SoldierCharacter>()?.gameObject;
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+        startedCulling = true;
     }
 
     public void UpdateQuadTree()
@@ -52,6 +79,7 @@ public class ObjectCulling : MonoBehaviour
                 AddActiveObjectsToQuadTree(pool.activeObjects);
             }
         }
+        //quadTree.DebugPrint();
     }
 
     private void AddActiveObjectsToQuadTree(Dictionary<int,PooledObject> pool)
@@ -66,17 +94,17 @@ public class ObjectCulling : MonoBehaviour
                     pooledObject.transform.position.z,
                     pooledObject)
                 );
-                pooledObject.photonView.Group = 0;
+                pooledObject.photonView.Group = 1;
             }
         }
         Debug.Log($"Number of active objects {keys.Length}");
     }
 
-    private void UpdatePlayerQuad()
+    private Quad<PooledObject> UpdatePlayerQuad(Transform playerTransform)
     {
-        playerQuad = new Quad<PooledObject>(
-            player.transform.position.x,
-            player.transform.position.z,
+        return new Quad<PooledObject>(
+            playerTransform.position.x,
+            playerTransform.position.z,
             playerCullingSquareSide,
             playerCullingSquareSide
         );
@@ -86,26 +114,48 @@ public class ObjectCulling : MonoBehaviour
     {
         previousActiveObjects.ForEach(activeObject => activeObject.data.photonView.Group = group);
     }
+
+    private void SetActiveState(bool active, List<Point<PooledObject>> previousActiveObjects)
+    {
+        previousActiveObjects.ForEach(activeObject => activeObject.data.UpdateActiveState(active));
+    }
     //WIP
     private void UpdateNOTDONE()
     {
-        updateTimer += Time.deltaTime;
-        if (updateTimer > updateDelay)
+        if (PhotonNetwork.IsMasterClient && startedCulling)
         {
-            if (Vector3.Distance(player.transform.position, previousPosition) > updateDistance)
+            updateTimer += Time.deltaTime;
+            if (updateTimer > updateDelay)
             {
-                UpdatePlayerQuad();
-                UpdateQuadTree();
+                updateTimer = 0f;
 
-                SetInterestGroup(0, activeObjects);
-                activeObjects.Clear();
+                if (Vector3.Distance(player.transform.position, playerPrevPosition) > updateDistance)
+                {
+                    playerQuad = UpdatePlayerQuad(player.transform);
+                    UpdateQuadTree();
 
-                activeObjects = quadTree.Query(playerQuad, activeObjects);
-                SetInterestGroup(1, activeObjects);
-                previousPosition = player.transform.position;
+                    SetActiveState(false, activeObjects);
+                    activeObjects.Clear();
+
+                    activeObjects = quadTree.Query(playerQuad, activeObjects);
+                    SetActiveState(true, activeObjects);
+                    activeObjects.Clear();
+                    playerPrevPosition = player.transform.position;
+                }
+                if (Vector3.Distance(otherPlayer.transform.position, otherPlayerPrevPosition) > updateDistance)
+                {
+                    otherPlayerQuad = UpdatePlayerQuad(otherPlayer.transform);
+                    UpdateQuadTree();
+
+                    SetActiveState(false, activeObjects);
+                    activeObjects.Clear();
+
+                    activeObjects = quadTree.Query(otherPlayerQuad, activeObjects);
+                    SetActiveState(true, activeObjects);
+                    activeObjects.Clear();
+                    otherPlayerPrevPosition = otherPlayer.transform.position;
+                }
             }
-
-            updateTimer = 0f;
         }
     }
 }

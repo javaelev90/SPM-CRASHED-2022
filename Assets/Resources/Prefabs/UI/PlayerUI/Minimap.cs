@@ -55,8 +55,6 @@ public class Minimap : MonoBehaviour
                 ActivateOuterMarker(otherPlayerMarker, outerMarkerOtherPlayerParent);
             }
         }
-        
-        Debug.Log("Angle " + angle);
     }
 
     private void ActivateOuterMarker(RectTransform objectMarker, Transform parent)

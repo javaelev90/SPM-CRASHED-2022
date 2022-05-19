@@ -21,7 +21,13 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public Action<object[]> CustomInitializeFunction;
     public int photonViewTargetId = -1;
     public int photonGroup = 0;
+    
     private void Start()
+    {
+        photonGroup = photonView.Group;
+    }
+
+    private void Update()
     {
         photonGroup = photonView.Group;
     }
