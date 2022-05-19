@@ -66,6 +66,7 @@ public class PlayerUpgradePanel : MonoBehaviour
 
     private void Exit()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         gameObject.SetActive(false);
     }
 }

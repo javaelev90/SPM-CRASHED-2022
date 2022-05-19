@@ -86742,6 +86742,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2375624687142426691, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: sceneViewId
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 1266666132028859875, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: damageupgradeButton
       value: 
@@ -110187,6 +110191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minCullingSquareSide: 5
+  playerCullingSquareSide: 0
   minQuadTreeCapacity: 5
 --- !u!114 &1918496973
 MonoBehaviour:

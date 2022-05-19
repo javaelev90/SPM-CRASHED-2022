@@ -8,7 +8,6 @@ public class EventStarter : MonoBehaviourPunCallbacks
 {
     public float eventTime = 30f;
     public GameObject dome;
-    public TeleportToShip teleportToShip;
     public GameObject missingPart;
     public GameObject attachedPart;
 
@@ -67,9 +66,15 @@ public class EventStarter : MonoBehaviourPunCallbacks
     private IEnumerator TeleportIn(float eventTime)
     {
         yield return new WaitForSeconds(eventTime);
+        EndEvent();
+        Destroy(gameObject);
+    }
+
+    [ContextMenu("Finsh Event")]
+    public void EndEvent()
+    {
         EventSystem.Instance.FireEvent(new EventEvent(false));
         EventSystem.Instance.FireEvent(new AttachPartEvent(attachedPart, missingPart));
         EventSystem.Instance.FireEvent(new TeleportToShipEvent());
-        Destroy(gameObject);
     }
 }
