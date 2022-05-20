@@ -320,16 +320,16 @@ MonoBehaviour:
   outlinedTurretPrefab: {fileID: 8025784739738023711, guid: 84205b8d5a2c8a644a97fa040e65db20, type: 3}
   turretObj: {fileID: 2438785178254165550, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
   turretRepairCosts:
-    metalCost: 2
-    gooCost: 2
+    metalCost: 1
+    gooCost: 1
   healthToAdd: 10
   healthToAddIfDead: 6
   atFullHealthText: {fileID: 6861052247371904159}
   notEnoughResourcesToRepair: {fileID: 5102023820798690768}
   notEnoughResourcesToBuild: {fileID: 3648866211320697494}
   turretBuildCosts:
-    metalCost: 5
-    gooCost: 5
+    metalCost: 2
+    gooCost: 2
   destination: {fileID: 2924166598192643314}
   muzzlePosition: {fileID: 2924166598192643100}
   weaponRange: 15
@@ -447,7 +447,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2924166598192637392}
         m_TargetAssemblyTypeName: Controller3D, Assembly-CSharp
         m_MethodName: Jump
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1260,7 +1260,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Not enough resources.
 
-    2 Green Goo and Metal required'
+    1 Green Goo and Metal required'
 --- !u!95 &5102023820798690768
 Animator:
   serializedVersion: 3
@@ -1361,7 +1361,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Not enough resources.
 
-    5 Green Goo and Metal required'
+    2 Green Goo and Metal required'
 --- !u!95 &3648866211320697494
 Animator:
   serializedVersion: 3
