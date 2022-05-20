@@ -24,7 +24,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [SerializeField] private float timeToDrop = 0.5f;
     private float timeToDropCounter;
     private bool canDrop;
-
+    private bool canPickUp;
     private Transform mainCamera;
     private GameObject otherPlayer;
     private RaycastHit pickup;
@@ -50,12 +50,13 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (!canDrop)
+        if (!canDrop || !canPickUp)
         {
             timeToDropCounter += Time.deltaTime;
             if (timeToDropCounter >= timeToDrop)
             {
                 canDrop = true;
+                canPickUp = true;
                 timeToDropCounter = 0f;
             }
         }
@@ -68,9 +69,9 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     public void PickUp()
     {
-        if (PickUpHitCheck(pickupLayer))
+        if (PickUpHitCheck(pickupLayer) && canPickUp)
         {
-
+            canPickUp = false;
             Pickup pickUpComponent = pickup.transform.gameObject.GetComponent<Pickup>();
             Pickup_Typs.Pickup typ = pickUpComponent.getTyp();
             PhotonView pickUpPhotonView = pickup.transform.gameObject.GetComponent<PhotonView>();
@@ -128,52 +129,89 @@ public class PickingUp : MonoBehaviourPunCallbacks
         if (inventorySystem.Amount<AlienMeat>() > 0)
         {
             inventorySystem.Remove<AlienMeat>();
-            GetComponent<HealthHandler>().AddHealth(1);
+            gameObject.GetComponent<HealthHandler>().AddHealth(1);
         }
     }
 
     public void DropItem()
     {
         if (canDrop)
-            photonView.RPC(nameof(DropItemRPC), RpcTarget.All, (int)itemTypeToDrop);
-        //DropItemRPC();
+        {
+            if (HasAmountToDrop(itemTypeToDrop))
+            {
+                canDrop = false;
+                photonView.RPC(nameof(DropItemRPC), RpcTarget.MasterClient, itemTypeToDrop);
+                
+            }
+        }
+            //DropItemRPC();
 
-        canDrop = false;
+        
+    }
+
+    private bool HasAmountToDrop(Pickup_Typs.Pickup typ)
+    {
+        bool hasAmount = false;
+        switch (typ)
+        {
+            case Pickup_Typs.Pickup.GreenGoo:
+                if (inventorySystem.Amount<GreenGoo>() > 0)
+                {
+                    inventorySystem.Remove<GreenGoo>();
+                    hasAmount = true;
+                }
+                break;
+            case Pickup_Typs.Pickup.Metal:
+                if (inventorySystem.Amount<Metal>() > 0)
+                {
+                    inventorySystem.Remove<Metal>();
+                    hasAmount = true;
+                }
+                break;
+            case Pickup_Typs.Pickup.AlienMeat:
+                if (inventorySystem.Amount<AlienMeat>() > 0)
+                {
+                    inventorySystem.Remove<AlienMeat>();
+                    hasAmount = true;
+                }
+                break;
+        }
+        return hasAmount;
     }
 
     [PunRPC]
-    private void DropItemRPC(int itemTypeToDrop)
+    private void DropItemRPC(Pickup_Typs.Pickup typ)
     {
         if (PhotonNetwork.IsMasterClient)
         {
             GameObject go;
-            Pickup_Typs.Pickup itemTypePickUp = (Pickup_Typs.Pickup)itemTypeToDrop;
-            switch (itemTypePickUp)
+            Debug.Log($"item to drop {typ} is engineer {GetComponent<Engineer>() != null}");
+            switch (typ)
             {
                 case Pickup_Typs.Pickup.GreenGoo:
-                    if (inventorySystem.Amount<GreenGoo>() > 0)
-                    {
-                        go = inventorySystem.ItemPrefab<GreenGoo>();
-                        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
-                        inventorySystem.Remove<GreenGoo>();
-                    }
+                    //if (inventorySystem.Amount<GreenGoo>() > 0)
+                    //{
+                    go = inventorySystem.ItemPrefab<GreenGoo>();
+                    PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
+                    //inventorySystem.Remove<GreenGoo>();
+                    //}
                     break;
 
                 case Pickup_Typs.Pickup.Metal:
-                    if (inventorySystem.Amount<Metal>() > 0)
-                    {
-                        go = inventorySystem.ItemPrefab<Metal>();
-                        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
-                        inventorySystem.Remove<Metal>();
-                    }
+                    //if (inventorySystem.Amount<Metal>() > 0)
+                    //{
+                    go = inventorySystem.ItemPrefab<Metal>();
+                    PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
+                    //inventorySystem.Remove<Metal>();
+                    //}
                     break;
                 case Pickup_Typs.Pickup.AlienMeat:
-                    if (inventorySystem.Amount<AlienMeat>() > 0)
-                    {
-                        go = inventorySystem.ItemPrefab<AlienMeat>();
-                        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
-                        inventorySystem.Remove<AlienMeat>();
-                    }
+                    //if (inventorySystem.Amount<AlienMeat>() > 0)
+                    //{
+                    go = inventorySystem.ItemPrefab<AlienMeat>();
+                    PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
+                    //inventorySystem.Remove<AlienMeat>();
+                    //}
                     break;
             }
         }
