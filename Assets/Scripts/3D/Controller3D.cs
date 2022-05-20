@@ -104,7 +104,11 @@ public class Controller3D : MonoBehaviourPunCallbacks
         source = GetComponent<AudioSource>();
         playerGUI.SetActive(isMine);
 
-
+        mainCam = Camera.main;
+        mainCam.transform.position = camPositionFPS.transform.position;
+        mainCam.transform.SetParent(camPositionFPS.transform);
+        camPositionFPS.transform.rotation = Quaternion.LookRotation(bodyMesh.transform.position, Vector3.up);
+        mainCam.transform.rotation = camPositionFPS.transform.rotation;
 
         //bodyMesh.SetActive(isMine == false);
     }
@@ -114,11 +118,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
         playerActions.Player.Enable();
         if (isMine)
         {
-            mainCam = Camera.main;
-            mainCam.transform.position = camPositionFPS.transform.position;
-            mainCam.transform.SetParent(camPositionFPS.transform);
-            camPositionFPS.transform.rotation = Quaternion.LookRotation(bodyMesh.transform.position, Vector3.up);
-            mainCam.transform.rotation = camPositionFPS.transform.rotation;
+
         }
     }
 
@@ -127,7 +127,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
         playerActions.Player.Disable();
         if (isMine)
         {
-            mainCam.transform.SetParent(null);
+            //mainCam.transform.SetParent(null);
         }
     }
 
