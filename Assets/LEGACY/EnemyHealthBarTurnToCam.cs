@@ -11,8 +11,10 @@ public class EnemyHealthBarTurnToCam : MonoBehaviour
     }
 
     private void LateUpdate()
-    {   
-        
-        transform.LookAt(transform.position + mainCamera.transform.forward);
+    {
+        if (mainCamera != null)
+        {
+            transform.LookAt(transform.position + mainCamera.transform.forward);
+        }
     }
 }
