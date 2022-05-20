@@ -127,7 +127,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
         if (inventorySystem.Amount<AlienMeat>() > 0)
         {
             inventorySystem.Remove<AlienMeat>();
-            GetComponent<HealthHandler>().AddHealth(1);
+            gameObject.GetComponent<HealthHandler>().AddHealth(1);
         }
     }
 

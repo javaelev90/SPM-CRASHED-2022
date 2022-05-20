@@ -45,7 +45,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void AddHealthRPC(int amount)
+    public void AddHealthRPC(int amount)
     {
         if (CurrentHealth + amount > MaxHealth)
         {
@@ -55,8 +55,9 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         else
         {
             CurrentHealth += amount;
-           // UpdateHealthBar();
+           
         }
+        UpdateHealthBar();
     }
 
     public void RemoveHealth(int amount)
