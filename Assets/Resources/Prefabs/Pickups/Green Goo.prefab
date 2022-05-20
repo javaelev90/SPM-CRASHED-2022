@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 4279937393451823817}
   - component: {fileID: 2616555557843784418}
   - component: {fileID: 3172615044747976921}
-  - component: {fileID: 5551614235416604077}
+  - component: {fileID: 2747000294738778929}
   m_Layer: 10
   m_Name: Green Goo
   m_TagString: GreenGoo
@@ -554,8 +554,8 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!135 &5551614235416604077
-SphereCollider:
+--- !u!64 &2747000294738778929
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -564,9 +564,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2737278459017292944, guid: efa5c1ec9714a1e42a35bb09ad06a786, type: 3}
 --- !u!1 &5640554667736046900
 GameObject:
   m_ObjectHideFlags: 0
