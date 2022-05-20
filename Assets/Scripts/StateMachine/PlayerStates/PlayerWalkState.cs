@@ -16,7 +16,7 @@ public class PlayerWalkState : State
         base.Enter();
    
         player.animator.SetBool("isRunning", true);
-      
+        player.animator.CrossFadeInFixedTime("Running", 0.1f);
     }
 
     public override void UpdateState()
