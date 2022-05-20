@@ -45881,7 +45881,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &815598031
 Transform:
   m_ObjectHideFlags: 0
@@ -63743,7 +63743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1132210153
 Transform:
   m_ObjectHideFlags: 0
@@ -72059,7 +72059,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 90f55baeb8e51694f964a96fbb0649e2, type: 2}
     - target: {fileID: 7857938870578816775, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7857938870578816794, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -72131,7 +72131,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7857938870869697272, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7857938870869697277, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
       propertyPath: m_Enabled
@@ -72153,6 +72153,22 @@ PrefabInstance:
       propertyPath: time
       value: 
       objectReference: {fileID: 1650396308}
+    - target: {fileID: 7857938871610000136, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
+      propertyPath: colliders.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857938871610000136, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
+      propertyPath: colliders.Array.data[0]
+      value: 
+      objectReference: {fileID: 1204931430}
+    - target: {fileID: 7857938871610000136, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
+      propertyPath: colliders.Array.data[1]
+      value: 
+      objectReference: {fileID: 1204931429}
+    - target: {fileID: 7857938871610000136, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
+      propertyPath: colliders.Array.data[2]
+      value: 
+      objectReference: {fileID: 1204931428}
     - target: {fileID: 7857938871610000137, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
       propertyPath: m_Name
       value: Tutorial
@@ -72343,7 +72359,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 90f55baeb8e51694f964a96fbb0649e2, type: 2}
     - target: {fileID: 7857938872321503747, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7857938872321503750, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
       propertyPath: m_LocalScale.y
@@ -72358,6 +72374,21 @@ PrefabInstance:
 --- !u!4 &1204931427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7857938871610000143, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
+  m_PrefabInstance: {fileID: 1204931426}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1204931428 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7857938872321503747, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
+  m_PrefabInstance: {fileID: 1204931426}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1204931429 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7857938870578816775, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
+  m_PrefabInstance: {fileID: 1204931426}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1204931430 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7857938870869697272, guid: a58d8b92a66a61e46913e816b695c98e, type: 3}
   m_PrefabInstance: {fileID: 1204931426}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1206182537
@@ -138813,7 +138844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2110322526
 Transform:
   m_ObjectHideFlags: 0
