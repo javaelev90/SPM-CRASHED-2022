@@ -27,9 +27,8 @@ public class Level1 : MonoBehaviour
         panel.SetActive(true);
         found.SetActive(false);
        
-        time.DisplayingTime(false);
-        time.Show(false);
-      
+        //time.DisplayingTime(false);
+        //time.Show(false);
 
     }
 
