@@ -3,24 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Photon.Pun;
-using System.Reflection;
+using UnityEngine.AI;
 
 public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback, IRecycleable
 {
     public enum RecyclingBehavior
     {
         Nothing,
-        Transform,
-        Custom,
-        CustomAndTransform
+        ThisTransform,
+        Everything,
+        EverythingAndCustom
     }
 
-    public RecyclingBehavior recyclingBehaviour;
-    public PhotonObjectPool ObjectPool { get; set; }
+    // Customization functions for resetting/initializing a pooled object.
+    // These are set by the object extending or using the PooledObject class.
     public Action CustomRecycleFunction { get; set; }
     public Action<object[]> CustomInitializeFunction;
+
+    [Header("Pooling preferences")]
+    public RecyclingBehavior recyclingBehaviour;
+    public PhotonObjectPool ObjectPool { get; set; }
+
+    [Header("If object hierarchy is using a NavMeshAgent")]
+    public NavMeshAgent navMeshAgent;
+
+    [Header("Initialization preferences")]
     public int photonViewTargetId = -1;
     public int photonGroup = 0;
+
+    [Header("Performance settings")]
+    public bool shouldBeCulled = true;
     
     private void Start()
     {
@@ -54,14 +66,13 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             case RecyclingBehavior.Nothing:
                 break;
-            case RecyclingBehavior.Transform:
+            case RecyclingBehavior.ThisTransform:
+                RecycleTransform();
+                break;
+            case RecyclingBehavior.Everything:
                 RecycleUtils.ResetGameObjectComponents(ObjectPool.pooledObjectPrefab.transform, transform);
                 break;
-            case RecyclingBehavior.Custom:
-                RecycleCustom();
-                RecycleUtils.ResetGameObjectComponents(ObjectPool.pooledObjectPrefab.transform, transform);
-                break;
-            case RecyclingBehavior.CustomAndTransform:
+            case RecyclingBehavior.EverythingAndCustom:
                 RecycleUtils.ResetGameObjectComponents(ObjectPool.pooledObjectPrefab.transform, transform);
                 RecycleCustom();
                 break;
@@ -96,5 +107,19 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         ObjectPool = PhotonView.Find((int)info.photonView.InstantiationData[0]).gameObject.GetComponent<PhotonObjectPool>();
         transform.SetParent(ObjectPool.transform);
         gameObject.SetActive(false);
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is PooledObject @object &&
+               photonView.GetInstanceID() == @object.photonView.GetInstanceID();
+    }
+
+    public override int GetHashCode()
+    {
+        int hashCode = -164824088;
+        hashCode = hashCode * -1521134295 + base.GetHashCode();
+        hashCode = hashCode * -1521134295 + photonView.GetHashCode();
+        return hashCode;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class QuadTree<T>
 {
@@ -61,14 +62,16 @@ public class QuadTree<T>
         float y = boundary.y;
         float halfWidth = boundary.width / 2;
         float halfHeight = boundary.height / 2;
+        float quadWidth = boundary.width / 4;
+        float quadHeight = boundary.height / 4;
 
-        Quad<T> northWestBoundary = new Quad<T>(x - halfWidth, y - halfHeight, halfWidth, halfHeight);
+        Quad<T> northWestBoundary = new Quad<T>(x - quadWidth, y - quadHeight, halfWidth, halfHeight);
         northWest = new QuadTree<T>(northWestBoundary, quadCapacity, minWidth, minHeight);
-        Quad<T> northEastBoundary = new Quad<T>(x + halfWidth, y - halfHeight, halfWidth, halfHeight);
+        Quad<T> northEastBoundary = new Quad<T>(x + quadWidth, y - quadHeight, halfWidth, halfHeight);
         northEast = new QuadTree<T>(northEastBoundary, quadCapacity, minWidth, minHeight);
-        Quad<T> southWestBoundary = new Quad<T>(x - halfWidth, y + halfHeight, halfWidth, halfHeight);
+        Quad<T> southWestBoundary = new Quad<T>(x - quadWidth, y + quadHeight, halfWidth, halfHeight);
         southWest = new QuadTree<T>(southWestBoundary, quadCapacity, minWidth, minHeight);
-        Quad<T> southEastBoundary = new Quad<T>(x + halfWidth, y + halfHeight, halfWidth, halfHeight);
+        Quad<T> southEastBoundary = new Quad<T>(x + quadWidth, y + quadHeight, halfWidth, halfHeight);
         southEast = new QuadTree<T>(southEastBoundary, quadCapacity, minWidth, minHeight);
 
         foreach (Point<T> point in points)
@@ -132,5 +135,33 @@ public class QuadTree<T>
     public System.Type GetTreeType()
     {
         return typeof(T);
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireCube(new Vector3(boundary.x, 0f, boundary.y), new Vector3(boundary.width, 0f, boundary.height));
+        if (points.Count > 0)
+        {
+            Handles.color = Color.red;
+            Handles.Label(new Vector3(boundary.x, 0f, boundary.y), "" + points.Count);
+        }
+
+        if (northWest is object)
+        {
+            northWest.OnDrawGizmos();
+        }
+        if (northEast is object)
+        {
+            northEast.OnDrawGizmos();
+        }
+        if (southWest is object)
+        {
+            southWest.OnDrawGizmos();
+        }
+        if (southEast is object)
+        {
+            southEast.OnDrawGizmos();
+        }
     }
 }

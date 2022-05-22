@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Point<T>
@@ -11,5 +12,18 @@ public class Point<T>
         this.x = x;
         this.y = y;
         this.data = data;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is Point<T> point &&
+               EqualityComparer<T>.Default.Equals(data, point.data);
+    }
+
+    public override int GetHashCode()
+    {
+        int hashCode = -274470864;
+        hashCode = hashCode * -1521134295 + EqualityComparer<T>.Default.GetHashCode(data);
+        return hashCode;
     }
 }

@@ -626,8 +626,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recyclingBehaviour: 3
+  navMeshAgent: {fileID: 5495731618562740615}
   photonViewTargetId: -1
   photonGroup: 0
+  shouldBeCulled: 1
 --- !u!114 &4946720192697130267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,7 +886,7 @@ GameObject:
   - component: {fileID: 3812025207251281290}
   m_Layer: 9
   m_Name: StoneEnemyPrefab
-  m_TagString: Untagged
+  m_TagString: EnemyMainBody
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1033,7 +1035,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5495731618562740639}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.74
   m_Speed: 3.5

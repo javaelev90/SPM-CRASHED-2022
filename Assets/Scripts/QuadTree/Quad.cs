@@ -16,18 +16,18 @@ public class Quad<T>
     public bool Contains(Point<T> point)
     {
         return (
-            point.x >= x - width &&
-            point.x < x + width &&
-            point.y >= y - height &&
-            point.y < y + height
+            point.x >= x - width / 2 &&
+            point.x < x + width / 2 &&
+            point.y >= y - height / 2 &&
+            point.y < y + height / 2
         );
     }
 
     public bool Intersects(Quad<T> other)
     {
-        return !((other.x - other.width > x + width) ||
-            (other.x + other.width < x - width) ||
-            (other.y + other.height < y - height) ||
-            (other.y - other.height > y + height));
+        return !((other.x - other.width / 2 > x + width / 2) ||
+            (other.x + other.width / 2 < x - width / 2) ||
+            (other.y + other.height / 2 < y - height / 2) ||
+            (other.y - other.height / 2 > y + height / 2));
     }
 }

@@ -124,7 +124,8 @@ public class ObjectSpawner : MonoBehaviour
         }
         else
         {
-            objectPool.Spawn(position, transform.rotation, photonViewTargetId);
+            objectPool.SpawnWithParameters(position, transform.rotation, photonViewTargetId, new object[] { wayPointSpawnRadius });
+            //objectPool.Spawn(position, transform.rotation, photonViewTargetId);
         }
     }
 
