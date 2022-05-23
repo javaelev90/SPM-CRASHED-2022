@@ -38,8 +38,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
 
     protected bool IsMasterClient { get; set; }
     private Coroutine findTargets;
-    public float TimeToAggro
-    { get { return timeToAggro; } }
+    public float TimeToAggro { get { return timeToAggro; } }
     public bool IsWithinSight { get; set; }
     public bool IsAggresive { get; set; }
 
@@ -57,10 +56,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
         StopCoroutine(findTargets);
     }
 
-    protected virtual void Update()
-    {
-
-    }
+    protected virtual void Update() { }
 
     public void StunnedBy(Transform target)
     {
@@ -91,7 +87,6 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
 
     private void FindVisibleTargets()
     {
-
         Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
         IsWithinSight = targetInViewRadius.Length > 0;
 
@@ -114,13 +109,12 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
         {
             visibleTargets.Clear();
         }
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Projectile projectile;
-        if((projectile = other.transform.GetComponent<Projectile>()) != null)
+        if ((projectile = other.transform.GetComponent<Projectile>()) != null)
         {
             GetComponent<HealthHandler>().TakeDamage(projectile.DamageDealer);
         }

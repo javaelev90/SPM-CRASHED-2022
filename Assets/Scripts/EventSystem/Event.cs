@@ -115,7 +115,7 @@ namespace EventCallbacksSystem
 
         public UpdateUIAmountsEvent() { }
     }
-     
+
     public class ImmortalEvent : Event
     {
     }
@@ -180,7 +180,10 @@ namespace EventCallbacksSystem
         }
     }
 
+    public class PlayerHealthUpdate : Event
+    {
 
+    }
 
 
 }
