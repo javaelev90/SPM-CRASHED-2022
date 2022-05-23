@@ -223,7 +223,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
             {
                 isShootingTurret = false;
             }
-            Debug.Log("isShootingTurret " + isShootingTurret);
+            //Debug.Log("isShootingTurret " + isShootingTurret);
         }
     }
 

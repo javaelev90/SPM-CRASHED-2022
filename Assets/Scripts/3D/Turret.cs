@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using EventCallbacksSystem;
+using UnityEngine.VFX;
 
 public class Turret : MonoBehaviourPunCallbacks
 {
@@ -23,7 +24,6 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] public Transform useTurretBody;
 
     public AudioSource source;
-
     public AudioClip clip;
 
     private GameObject emptyTarget;
@@ -128,20 +128,54 @@ public class Turret : MonoBehaviourPunCallbacks
         Debug.DrawRay(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
     }
 
+
+    [SerializeField] VisualEffect muzzlePosition;
     public void TurretShoot()
     {
         if (counter <= 0f)
         {
-            GameObject bullet = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + "Bullet", turretMuzzlePoint.transform.position, turretBody.transform.rotation);
-            Projectile projectile = bullet.GetComponent<Projectile>();
-            projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
-            projectile.DamageDealer = turretDamage;
-            projectile.IsShot = true;
+            float range = 15f;
+            Debug.Log("fuckedy fucked");
+
+            Physics.Raycast(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward, out RaycastHit hitInfo, range, enemyLayer);
+            
+           
+                Debug.Log("duck");
+                //Debug.Log(hitInfo.collider.name);
+                /*
+                HealthHandler healthHandler = hitInfo.transform.GetComponent<HealthHandler>();
+                if (healthHandler)
+                {
+                    Debug.Log("Damage");
+                    healthHandler.TakeDamage(turretDamage);
+                }
+
+                AIBaseLogic ai = hitInfo.transform.GetComponent<AIBaseLogic>();
+                if (ai)
+                {
+                    Debug.Log("findTarget");
+                    ai.FindAttackingTarget(transform);
+                }
+                */
+
+            muzzlePosition.Play();
             counter = fireTimer;
-            source.PlayOneShot(clip);
-            source.volume = Random.Range(0.8f, 2);
-            source.pitch = Random.Range(0.8f, 1.4f);
-            Debug.Log("Is shooting");
+                source.PlayOneShot(clip);
+                source.volume = Random.Range(0.8f, 2);
+                source.pitch = Random.Range(0.8f, 1.4f);
+                Debug.Log("Is shooting");
+            
+            
+            //GameObject bullet = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + "Bullet", turretMuzzlePoint.transform.position, turretBody.transform.rotation);
+            //Projectile projectile = bullet.GetComponent<Projectile>();
+            //projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
+            //projectile.DamageDealer = turretDamage;
+            //projectile.IsShot = true;
+            //counter = fireTimer;
+            //source.PlayOneShot(clip);
+            //source.volume = Random.Range(0.8f, 2);
+            //source.pitch = Random.Range(0.8f, 1.4f);
+            //Debug.Log("Is shooting");
         }
     }
 
