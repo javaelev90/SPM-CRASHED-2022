@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
+using System.Linq;
 
 public class AIBaseLogic : MonoBehaviourPunCallbacks
 {
@@ -132,18 +133,16 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     {
         if (parameters.Length > 0)
         {
-            float spreadRadius = (float)parameters[0];
-            wayPointSystem.spreadRadius = spreadRadius;
+            wayPointSystem.spreadRadius = (float)parameters[0];
+            wayPointSystem.PositionWayPoints(wayPointSystem.AssignLocalPosition);
         }
         if (parameters.Length > 1)
         {
-            List<Vector3> wayPointPositions = new List<Vector3>();
-            object[] parameterList = (object[])parameters[1];
-            for (int index = 0; index < parameterList.Length; index++)
-            {
-                wayPointPositions.Add((Vector3)parameterList[index]);
-            }
-            wayPointSystem.AssignWayPoints(wayPointPositions);
+            root.shouldBeCulled = (bool)parameters[1];
+        }
+        if (parameters.Length > 2)
+        {
+            wayPointSystem.AssignWayPoints(((Vector3[])parameters[2]).ToList());
         }
     }
 }
