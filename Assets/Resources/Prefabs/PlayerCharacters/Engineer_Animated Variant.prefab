@@ -1084,6 +1084,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 414c7bf4-a997-48a6-ba58-e005e22bdc62
     m_ActionName: Player/RepairTurret[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d573a5b-7bfd-4e3c-90f0-688599068280
+    m_ActionName: Player/ObjectiveShow[/Keyboard/3]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1292,6 +1296,7 @@ MonoBehaviour:
   MaxHealth: 40
   CurrentHealth: 40
   isAlive: 1
+  deathParticles: {fileID: 7687256951814429033, guid: 09b9bf7d2cccb804c982ab89b4bd8c20, type: 3}
 --- !u!1001 &5479892261225244096
 PrefabInstance:
   m_ObjectHideFlags: 0
