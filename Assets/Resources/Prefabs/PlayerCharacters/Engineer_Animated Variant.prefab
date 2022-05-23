@@ -446,6 +446,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e022d5bfde0d87645b297e7fd03a55da, type: 2}
+    - target: {fileID: 5866666021909216657, guid: b5144102175e31a4ea669a1d02a14006, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6240733294840144465, guid: b5144102175e31a4ea669a1d02a14006, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -744,8 +748,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 685970158}
         m_TargetAssemblyTypeName: Controller3D, Assembly-CSharp
-        m_MethodName: EngineerUseTurretHandling
-        m_Mode: 0
+        m_MethodName: EngineerUseTurretLooking
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -788,8 +792,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 685970158}
         m_TargetAssemblyTypeName: Controller3D, Assembly-CSharp
-        m_MethodName: EngineerUseTurretLooking
-        m_Mode: 1
+        m_MethodName: EngineerUseTurretHandling
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1256,7 +1260,7 @@ MonoBehaviour:
   kineticFrictionCoefficient: 0.3
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 295808
+    m_Bits: 263040
 --- !u!114 &685970163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1659,6 +1663,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 755618052}
     m_Modifications:
+    - target: {fileID: 262598540950441525, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5b53dcc9edcedf341bc450efcc1b4ea2, type: 2}
     - target: {fileID: 3564792497713129740, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1667,6 +1675,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5052481988669128206, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52579b2dd4eb9bd42b703cb602cec36e, type: 2}
     - target: {fileID: 5510816813930139584, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1711,11 +1723,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6036102022380146760, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -4490788227886997615, guid: 11c10204b5b4dfe4b9f3656469c1e453, type: 3}
     - target: {fileID: 8200289179978387460, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
       propertyPath: m_Name
       value: WeaponParent
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 629859698614144212, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
 --- !u!4 &33256153781697935 stripped
 Transform:
