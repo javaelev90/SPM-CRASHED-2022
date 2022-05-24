@@ -5,12 +5,15 @@ using UnityEngine.UI;
 using System;
 using EventCallbacksSystem;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerUIListener : MonoBehaviour
 {
     [SerializeField] private List<SlotItem> slotItems;
+    [SerializeField] private Animation animations;
     private Dictionary<Pickup_Typs.Pickup, SlotItem> slots;
     private int selectedIndex;
+    private bool isShowingObjective;
 
     private void OnEnable()
     {
@@ -23,7 +26,6 @@ public class PlayerUIListener : MonoBehaviour
                 slots.Add(si.PickupType, si);
             }
         }
-
         slotItems[selectedIndex].SelectItem();
     }
 
@@ -94,5 +96,22 @@ public class PlayerUIListener : MonoBehaviour
         EventSystem.Instance.FireEvent(te);
     }
 
+    public void ObjectiveShow(InputAction.CallbackContext ctx)
+    {
+        if(ctx.started && isShowingObjective == false)
+        {
+            isShowingObjective = true;
+            Debug.Log("Show dropdown");
+            animations.Play("ObjectiveViewerDown");
+            return;
+        }
 
+        if (ctx.started && isShowingObjective == true)
+        {
+            isShowingObjective = false;
+            animations.Play("ObjectiveViewerUp");
+            Debug.Log("No dropdown");
+            return;
+        }
+    }
 }

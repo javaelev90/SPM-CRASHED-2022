@@ -146,7 +146,7 @@ public class Engineer : Controller3D
                 AIBaseLogic aIBaseLogic = hit.transform.GetComponent<AIBaseLogic>();
                 if (aIBaseLogic)
                 {
-                    Debug.Log("Enemy stunned");
+                    //Debug.Log("Enemy stunned");
                     aIBaseLogic.StunnedBy(transform);
                 }
             }
@@ -184,7 +184,7 @@ public class Engineer : Controller3D
         {
             // Check if resources needed is in inventory
             InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
-            if (inventorySystem.Amount<GreenGoo>() >= turretBuildCosts.gooCost && inventorySystem.Amount<Metal>() >= turretBuildCosts.metalCost) // (inventory.GreenGoo >= gooCostTurret && inventory.Metal >= metalCostTurret))
+            if (inventorySystem.Amount<GreenGoo>() >= turretBuildCosts.gooCost && inventorySystem.Amount<Metal>() >= turretBuildCosts.metalCost)
             {
                 if (ctx.started)
                 {

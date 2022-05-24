@@ -1,4 +1,4 @@
-public class Quad<T>
+public class Quad
 {
     public float x;
     public float y;
@@ -13,7 +13,7 @@ public class Quad<T>
         this.height = height;
     }
 
-    public bool Contains(Point<T> point)
+    public bool Contains<T>(Point<T> point) 
     {
         return (
             point.x >= x - width / 2 &&
@@ -23,7 +23,7 @@ public class Quad<T>
         );
     }
 
-    public bool Intersects(Quad<T> other)
+    public bool Intersects(Quad other)
     {
         return !((other.x - other.width / 2 > x + width / 2) ||
             (other.x + other.width / 2 < x - width / 2) ||
