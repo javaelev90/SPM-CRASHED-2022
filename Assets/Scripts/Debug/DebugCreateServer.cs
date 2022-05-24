@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class DebugCreateServer : MonoBehaviourPunCallbacks
 {
     [SerializeField] private string customRoomName;
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject customPlayerPrefab;
     [SerializeField] private Transform spawnPosition;
 
     private void Awake()
@@ -40,7 +40,10 @@ public class DebugCreateServer : MonoBehaviourPunCallbacks
 
     private void InitLevel(Scene scene, LoadSceneMode mode)
     {
-        PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + playerPrefab.name, spawnPosition.position, spawnPosition.rotation);
+        if (customPlayerPrefab != null)
+        {
+            PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + customPlayerPrefab.name, spawnPosition.position, spawnPosition.rotation);
+        }
     }
 
 }
