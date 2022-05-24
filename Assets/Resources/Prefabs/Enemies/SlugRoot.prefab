@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 4417561990126742436}
   - component: {fileID: 784064682960528385}
   - component: {fileID: 3244133131696623819}
+  - component: {fileID: 3196298475615106009}
   m_Layer: 0
   m_Name: SlugLord
   m_TagString: Untagged
@@ -173,6 +174,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 1225b77ffb628ce4a9e2bfa927e55a10, type: 2}
+  - {fileID: 2100000, guid: bad506e0a56f9c041ae3ed4d897ce67d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -194,6 +196,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &3196298475615106009
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892664328204448030}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7415c9349c5c5134e8d2d4d4d1d39ebf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5603274226023981941
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +434,7 @@ MonoBehaviour:
   CurrentHealth: 30
   isAlive: 1
   rootObject: {fileID: 6261632589528798244}
+  hitVFX: {fileID: 1644440166643503569, guid: 560b2ad335432e4438a787f03e419393, type: 3}
 --- !u!82 &2553267416189683229
 AudioSource:
   m_ObjectHideFlags: 0

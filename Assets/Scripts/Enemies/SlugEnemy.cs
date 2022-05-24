@@ -144,7 +144,7 @@ public class SlugEnemy : AIBaseLogic
     private void Move()
     {
 
-        if (distanceToTarget < maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
+        if (distanceToTarget <= maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
         {
             if (agent.isOnNavMesh) agent.isStopped = true;
             BlowUp(false);
