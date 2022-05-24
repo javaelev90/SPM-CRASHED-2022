@@ -70,6 +70,9 @@ public class Engineer : Controller3D
     [SerializeField] float weaponRange = 15f;
     [SerializeField] float delayBetweenShots = 0.5f;
     [SerializeField] public LayerMask stunLayer;
+    [SerializeField] private ParticleActivator shootingEffect;
+    [SerializeField] GameObject hitPosition;
+
     private float shotCooldown = 0f;
 
 
@@ -148,10 +151,12 @@ public class Engineer : Controller3D
                 {
                     //Debug.Log("Enemy stunned");
                     aIBaseLogic.StunnedBy(transform);
+                    Destroy(Instantiate(hitPosition, hit.point, Quaternion.LookRotation(hit.normal)), 10f);
                 }
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;
+            shootingEffect.PlayParticles();
         }
 
     }
