@@ -9,6 +9,7 @@ public class PlayerUIListener : MonoBehaviour
     [SerializeField] private List<SlotItem> slotItems;
     [SerializeField] private ObjectiveViewer objectiveViewer;
     [SerializeField] private GameObject amountEffect; // stoppa in partikeleffekten här
+    private GameObject particleEffectAmount;
     private Dictionary<Pickup_Typs.Pickup, SlotItem> slots;
     private int selectedIndex;
     private bool isShowingObjective;
@@ -40,8 +41,9 @@ public class PlayerUIListener : MonoBehaviour
             if (keyValuePair.Key == typeof(AlienMeat))
             {
                 slots[Pickup_Typs.Pickup.AlienMeat].UpdateNumberOfItems(keyValuePair.Value);
-                // Particles p.transform.position = slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition.anchoredPosition;
-                // particles play
+                particleEffectAmount = Instantiate(amountEffect);
+                particleEffectAmount.transform.position = slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition.anchoredPosition;
+                Destroy(particleEffectAmount, 1f);
             }
             if (keyValuePair.Key == typeof(Metal))
             {
