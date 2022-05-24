@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject lobbyMenu;
 
-    [SerializeField] GameObject loadScene;
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +32,7 @@ public class MenuManager : MonoBehaviour
     public void JoinedLobby(JoinedLobbyEvent lobbyEvent)
     {
         mainMenu.SetActive(false);
-        loadScene.SetActive(false);
+   
         lobbyMenu.SetActive(true);
     }
 
@@ -40,6 +40,6 @@ public class MenuManager : MonoBehaviour
     {
         mainMenu.SetActive(true);
         lobbyMenu.SetActive(false);
-        loadScene.SetActive(true);
+     
     }
 }

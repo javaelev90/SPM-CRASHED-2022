@@ -14,7 +14,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject lobbyPlayerPrefab;
     [SerializeField] List<CharacterChoice> choices;
 
-     [SerializeField] GameObject loadScene;
+   
 
     private ArrayList currentRoomList = new ArrayList();
     public Character PlayerChoice { get; set; }
@@ -32,7 +32,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.GameVersion = "0.1";
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
-         loadScene.SetActive(false);
+    
         if (PhotonNetwork.LocalPlayer.NickName == "")
         {
             PhotonNetwork.LocalPlayer.NickName = "Player";
@@ -185,7 +185,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             Debug.Log("Everyone is ready, starting game.");
             isStarted = true;
             PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.GameSceneName);
-            loadScene.SetActive(true);
+           
         }
     }
 

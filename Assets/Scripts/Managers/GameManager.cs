@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public static Character character;
 
+    public GameObject loadScene;
+
     private bool IsMine { get { return photonView.IsMine; } }
     private bool gameIsOver = false;
     
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         character = (Character)PlayerPrefs.GetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName);
         Initialize();
         Debug.Log($"Oh no, you chose the {character} charater");
+        Destroy(loadScene, 10);
 
     }
 
