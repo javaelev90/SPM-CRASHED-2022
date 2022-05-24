@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EventCallbacksSystem;
 
 public class WeaponUIListener : MonoBehaviour
 {
@@ -12,23 +13,30 @@ public class WeaponUIListener : MonoBehaviour
 
     void Start()
     {
-        if(Minimap.Instance.Player.GetComponent<SoldierCharacter>() == true)
+        if (Minimap.Instance.Player.GetComponent<SoldierCharacter>() == true)
         {
             gunSlot.SetActive(true);
+            EventSystem.Instance.RegisterListener<WeaponAmmunitionUpdateEvent>(UpdateAmmo);
         }
         else
         {
             stunGunSlot.SetActive(true);
+            EventSystem.Instance.RegisterListener<StungunCoolDownEvent>(UpdateStunGun);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void UpdateAmmo()
+    public void UpdateAmmo(WeaponAmmunitionUpdateEvent ev)
+    {
+
+    }
+
+    public void UpdateStunGun(StungunCoolDownEvent ev)
     {
 
     }
