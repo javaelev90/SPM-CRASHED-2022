@@ -7,6 +7,9 @@ using EventCallbacksSystem;
 public class PlayerHealthHandler : HealthHandler
 {
     private bool immortal = false;
+    [SerializeField] private GameObject deathParticles;
+
+
     private void Start()
     {
         EventSystem.Instance.RegisterListener<ImmortalEvent>(SetImmortal);
@@ -46,6 +49,7 @@ public class PlayerHealthHandler : HealthHandler
             DropItem();
         }
         CurrentHealth = 0;
+        Destroy(Instantiate(deathParticles, transform.position, transform.rotation), 10f);
         UpdateActiveState(false);
     }
 

@@ -202,6 +202,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ObjectiveShow",
+                    "type": "Button",
+                    "id": "3d573a5b-7bfd-4e3c-90f0-688599068280",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -741,6 +750,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "RepairTurret",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94856e67-8d97-41a6-bb54-e96c751d0fab",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ObjectiveShow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

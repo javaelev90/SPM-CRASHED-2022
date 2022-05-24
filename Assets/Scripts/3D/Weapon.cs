@@ -11,6 +11,8 @@ public class Weapon : MonoBehaviourPunCallbacks
     [Tooltip("Position where the gun barrel ends")]
     [SerializeField] VisualEffect muzzlePosition;
 
+    [SerializeField] GameObject hitPosition;
+
     [Header("Weapon settings")]
     [SerializeField] float weaponRange = 15f;
     [SerializeField] int weaponDamage = 1;
@@ -63,6 +65,23 @@ public class Weapon : MonoBehaviourPunCallbacks
         return shotCooldown >= 0;
     }
 
+    /// <summary>
+    /// Searches a GameObject for a specific child using "childName"
+    /// </summary>
+    private Transform GetChildWithName(GameObject objectToSearch, string childName)
+    {
+        Transform child = null;
+        foreach (Transform t in objectToSearch.GetComponentsInChildren<Transform>())
+        {
+            if (t.name == childName)
+            {
+                child = t;
+                break;
+            }
+        }
+        return child;
+    }
+
     public void Shoot()
     {
         if(OnCoolDown() == false && IsShooting == true)
@@ -79,10 +98,13 @@ public class Weapon : MonoBehaviourPunCallbacks
                 out RaycastHit hitInfo, weaponRange, layersThatShouldBeHit))
             {
                 HealthHandler healthHandler = hitInfo.transform.GetComponent<HealthHandler>();
-                if (healthHandler)
+                if (healthHandler != null)
                 {
                     healthHandler.TakeDamage(weaponDamage);
                 }
+                // Plays VFX where the bullet hits
+                //Instantiate(hitPosition, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                Destroy(Instantiate(hitPosition, hitInfo.point, Quaternion.LookRotation(hitInfo.normal)), 10f);
 
                 AIBaseLogic ai = hitInfo.transform.GetComponent<AIBaseLogic>();
                 if (ai)

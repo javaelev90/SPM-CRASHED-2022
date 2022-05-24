@@ -1229,6 +1229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzlePosition: {fileID: 6522658275698048355, guid: e3583a0419e68ed4f925ac2059a80dc9, type: 3}
+  hitPosition: {fileID: 0}
   weaponRange: 30
   weaponDamage: 1
   delayBetweenShots: 0.3
@@ -1238,11 +1239,15 @@ MonoBehaviour:
     m_Bits: 512
   maxAmmo: 0
   currentAmmo: 0
+  animator: {fileID: 0}
   sourceOne: {fileID: 4094734280040030718}
   shot:
   - {fileID: 8300000, guid: 89257c298f999d340bee66f3cd650291, type: 3}
   - {fileID: 8300000, guid: c91a1aa0190039b4b8584460bb85fad6, type: 3}
   - {fileID: 8300000, guid: 8a83f95494f351542b4fde9eaba0df3b, type: 3}
+  useInventory: 0
+  inventory: {fileID: 0}
+  greenGooCost: 1
 --- !u!114 &616013412962292102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1536,6 +1541,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 817f9463-a47f-4810-a8e8-b907d9393ce4
     m_ActionName: Player/test[/Keyboard/rightBracket]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 318a7f1e-df3a-4d27-b7a4-a6aa454ee991
+    m_ActionName: Player/GreenGoo[/Keyboard/g]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c77aa0ab-75b0-4018-ac19-2a1b783b64c1
+    m_ActionName: Player/Metal[/Keyboard/m]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a2465578-b245-43de-aafa-a1a06f7cbd47
+    m_ActionName: Player/Beef[/Keyboard/b]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 414c7bf4-a997-48a6-ba58-e005e22bdc62
+    m_ActionName: Player/RepairTurret[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d573a5b-7bfd-4e3c-90f0-688599068280
+    m_ActionName: Player/ObjectiveShow[/Keyboard/3]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1560,6 +1585,12 @@ MonoBehaviour:
   skinWidth: 0.5
   groundCheckDistance: 0
   playerGUI: {fileID: 0}
+  turretObjRef: {fileID: 0}
+  engineerRef: {fileID: 0}
+  turretBodyTransform: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isFPS: 1
   camPositionFPS: {fileID: 968001777}
   cameraOffsetTPS: {x: 0, y: 0, z: 0}
@@ -1587,12 +1618,6 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: e7383899d40cf4c4f9eaedab6b73c84d, type: 3}
   weaponVisuals: {fileID: 2688128606751488051}
   bodyMesh: {fileID: 8616768125131441400}
-  turretObjRef: {fileID: 0}
-  engineerRef: {fileID: 0}
-  turretBodyTransform: {fileID: 0}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   fireLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -1658,6 +1683,7 @@ MonoBehaviour:
   MaxHealth: 40
   CurrentHealth: 40
   isAlive: 1
+  deathParticles: {fileID: 7687256951814429033, guid: 09b9bf7d2cccb804c982ab89b4bd8c20, type: 3}
 --- !u!114 &7178814830326724090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1673,14 +1699,13 @@ MonoBehaviour:
   pickupLayer:
     serializedVersion: 2
     m_Bits: 136192
-  fireLayer:
-    serializedVersion: 2
-    m_Bits: 0
   spaceShipLayer:
     serializedVersion: 2
     m_Bits: 256
+  shipPartLayer:
+    serializedVersion: 2
+    m_Bits: 0
   pickUpDistance: 3
-  inventory: {fileID: 3833389567724244086}
   source: {fileID: 4094734280040030718}
   Goo: {fileID: 8300000, guid: 01d10acac1a458342915320b1129643c, type: 3}
   Metal: {fileID: 8300000, guid: fbca46004b203dd43b21d54f5572f431, type: 3}
