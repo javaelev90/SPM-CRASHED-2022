@@ -41,9 +41,9 @@ public class PlayerUIListener : MonoBehaviour
             if (keyValuePair.Key == typeof(AlienMeat))
             {
                 slots[Pickup_Typs.Pickup.AlienMeat].UpdateNumberOfItems(keyValuePair.Value);
-                particleEffectAmount = Instantiate(amountEffect);
-                particleEffectAmount.transform.position = slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition.anchoredPosition;
-                Destroy(particleEffectAmount, 1f);
+                //particleEffectAmount = Instantiate(amountEffect);
+                //particleEffectAmount.transform.position = slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition.anchoredPosition;
+                //Destroy(particleEffectAmount, 1f);
             }
             if (keyValuePair.Key == typeof(Metal))
             {
