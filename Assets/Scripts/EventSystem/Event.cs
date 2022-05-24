@@ -185,5 +185,21 @@ namespace EventCallbacksSystem
 
     }
 
+    public class ShipUpgradeProgressionEvent : Event
+    {
+        public int UpgradeNumber { get; set; }
+        public int TotalNumberOfParts { get; private set; }
+
+        public ShipUpgradeProgressionEvent(int upgradeNumber, int totalParts)
+        {
+            UpgradeNumber = upgradeNumber;
+            TotalNumberOfParts = totalParts;
+        }
+
+        public ShipUpgradeProgressionEvent(int upgradeNumber)
+        {
+            UpgradeNumber = upgradeNumber;
+        }
+    }
 
 }

@@ -17,6 +17,8 @@ public class PlayerUIListener : MonoBehaviour
     private void OnEnable()
     {
         EventSystem.Instance.RegisterListener<UpdateUIAmountsEvent>(UpdateAmounts);
+        EventSystem.Instance.RegisterListener<ShipUpgradeProgressionEvent>(UpdateShipPartCompleted);
+        EventSystem.Instance.RegisterListener<ShipUpgradeProgressionEvent>(InitializeShipParts);
         slots = new Dictionary<Pickup_Typs.Pickup, SlotItem>();
         if (slotItems != null)
         {
@@ -103,20 +105,36 @@ public class PlayerUIListener : MonoBehaviour
     {
         if(ctx.started && isShowingObjective == false)
         {
-            isShowingObjective = true;
-            objectiveViewer.enabled = true;
-            objectiveViewer.IsDisplayingPanel = true;
-            Debug.Log("Show dropdown");
+            DisplayObjectivePanel(true);
             return;
         }
 
         if (ctx.started && isShowingObjective == true)
         {
-            objectiveViewer.enabled = true;
-            objectiveViewer.IsDisplayingPanel = false;
-            isShowingObjective = false;
-            Debug.Log("No dropdown");
+            DisplayObjectivePanel(false);
             return;
         }
+    }
+
+    private void DisplayObjectivePanel(bool canShow)
+    {
+        isShowingObjective = canShow;
+        objectiveViewer.enabled = true;
+        objectiveViewer.IsDisplayingPanel = isShowingObjective;
+    }
+
+    public void UpdateShipPartCompleted(ShipUpgradeProgressionEvent ev)
+    {
+        objectiveViewer.enabled = true;
+        objectiveViewer.UpdateUpgradedShipParts(ev.UpgradeNumber);
+        objectiveViewer.enabled = false;
+    }
+
+    public void InitializeShipParts(ShipUpgradeProgressionEvent ev)
+    {
+        objectiveViewer.enabled = true;
+        objectiveViewer.InitializeShipPartsAmount(ev.UpgradeNumber, ev.TotalNumberOfParts);
+        objectiveViewer.enabled = false;
+        EventSystem.Instance.UnregisterListener<ShipUpgradeProgressionEvent>(InitializeShipParts);
     }
 }

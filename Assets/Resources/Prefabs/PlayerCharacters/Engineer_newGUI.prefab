@@ -312,8 +312,8 @@ MonoBehaviour:
   turretCount: 0
   turretOffset: {x: 0, y: 0, z: 0}
   turretPrefab: {fileID: 2438785178254165549, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
-  greenGooPrefab: {fileID: 2038809474645085223}
-  metalPrefab: {fileID: 5585584861854218490}
+  greenGooPrefab: {fileID: 0}
+  metalPrefab: {fileID: 0}
   turretLayer:
     serializedVersion: 2
     m_Bits: 65536
@@ -337,6 +337,8 @@ MonoBehaviour:
   stunLayer:
     serializedVersion: 2
     m_Bits: 512
+  shootingEffect: {fileID: 0}
+  hitPosition: {fileID: 0}
 --- !u!114 &2924166598192637620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1435,6 +1437,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3480845617459603609, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3856852540067734086, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1453,7 +1459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5345174043761538964, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5746022450278198367, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1505,7 +1511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8632784715835697079, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8922995540805740514, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_Pivot.x
@@ -1625,13 +1631,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ad973311ee1bf4980de5bdaee5bcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &5585584861854218490 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4322679620565248688, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
-  m_PrefabInstance: {fileID: 8538479512827073098}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2038809474645085223 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7653176568904801901, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
-  m_PrefabInstance: {fileID: 8538479512827073098}
-  m_PrefabAsset: {fileID: 0}
