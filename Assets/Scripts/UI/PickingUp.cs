@@ -141,11 +141,8 @@ public class PickingUp : MonoBehaviourPunCallbacks
             {
                 canDrop = false;
                 photonView.RPC(nameof(DropItemRPC), RpcTarget.MasterClient, itemTypeToDrop);
-                
             }
         }
-            //DropItemRPC();
-
         
     }
 
@@ -189,29 +186,16 @@ public class PickingUp : MonoBehaviourPunCallbacks
             switch (typ)
             {
                 case Pickup_Typs.Pickup.GreenGoo:
-                    //if (inventorySystem.Amount<GreenGoo>() > 0)
-                    //{
                     go = inventorySystem.ItemPrefab<GreenGoo>();
                     PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
-                    //inventorySystem.Remove<GreenGoo>();
-                    //}
                     break;
-
                 case Pickup_Typs.Pickup.Metal:
-                    //if (inventorySystem.Amount<Metal>() > 0)
-                    //{
                     go = inventorySystem.ItemPrefab<Metal>();
                     PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
-                    //inventorySystem.Remove<Metal>();
-                    //}
                     break;
                 case Pickup_Typs.Pickup.AlienMeat:
-                    //if (inventorySystem.Amount<AlienMeat>() > 0)
-                    //{
                     go = inventorySystem.ItemPrefab<AlienMeat>();
                     PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + go.name, dropTransform.position, Quaternion.identity);
-                    //inventorySystem.Remove<AlienMeat>();
-                    //}
                     break;
             }
         }
