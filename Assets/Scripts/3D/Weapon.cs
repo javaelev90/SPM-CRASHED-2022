@@ -17,8 +17,6 @@ public class Weapon : MonoBehaviourPunCallbacks
     [SerializeField] float weaponRange = 15f;
     [SerializeField] int weaponDamage = 1;
     [SerializeField] float delayBetweenShots = 0.5f;
-    [Tooltip("If gun will shoot continuously when shoot button is pressed vs one shot per click.")]
-    [SerializeField] public bool automaticWeapon = false;
     [SerializeField] LayerMask layersThatShouldBeHit;
     [SerializeField] private int maxAmmo;
     [SerializeField] private int currentAmmo;
@@ -115,8 +113,19 @@ public class Weapon : MonoBehaviourPunCallbacks
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;
-            sourceOne.PlayOneShot(GetAudioClip());
+            PlayShotEffects();
         }
+    }
+
+    private void PlayShotEffects()
+    {
+        photonView.RPC(nameof(PlayShotEffectsRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void PlayShotEffectsRPC()
+    {
+        sourceOne.PlayOneShot(GetAudioClip());
     }
 
     private AudioClip GetAudioClip()

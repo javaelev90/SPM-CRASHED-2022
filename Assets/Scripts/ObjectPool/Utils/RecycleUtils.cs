@@ -7,19 +7,19 @@ using System;
 
 public class RecycleUtils
 {
-    public static void ResetGameObjectComponents(Transform prefab, Transform destination)
+    public static void ResetGameObjectComponents(Transform prefab, Transform instantiation)
     {
-        ResetComponents(prefab.gameObject, destination.gameObject);
+        ResetComponents(prefab.gameObject, instantiation.gameObject);
         for (int childIndex = 0; childIndex < prefab.childCount; childIndex++)
         {
-            ResetGameObjectComponents(prefab.GetChild(childIndex), destination.GetChild(childIndex));
+            ResetGameObjectComponents(prefab.GetChild(childIndex), instantiation.GetChild(childIndex));
         }
     }
 
-    public static void ResetComponents(GameObject prefab, GameObject destination)
+    public static void ResetComponents(GameObject prefab, GameObject instantiation)
     {
         Component[] prefabComponents = prefab.GetComponents<Component>();
-        Component[] destinationComponents = destination.GetComponents<Component>();
+        Component[] destinationComponents = instantiation.GetComponents<Component>();
         for (int componentIndex = 0; componentIndex < prefabComponents.Length; componentIndex++)
         {
             if (prefabComponents[componentIndex] is PhotonView)
@@ -29,8 +29,8 @@ public class RecycleUtils
             else if (prefabComponents[componentIndex] is PhotonTransformViewClassic
                 || prefabComponents[componentIndex] is PhotonTransformView)
             {
-                destination.transform.SetPositionAndRotation(prefab.transform.position, prefab.transform.rotation);
-                destination.transform.localScale = prefab.transform.localScale;
+                instantiation.transform.SetPositionAndRotation(prefab.transform.position, prefab.transform.rotation);
+                instantiation.transform.localScale = prefab.transform.localScale;
                 continue;
             }
             else if (prefabComponents[componentIndex] is ParticleSystem)
