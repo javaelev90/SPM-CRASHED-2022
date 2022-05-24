@@ -27,4 +27,9 @@ public class WeaponUIListener : MonoBehaviour
     {
         
     }
+
+    public void UpdateAmmo()
+    {
+
+    }
 }
