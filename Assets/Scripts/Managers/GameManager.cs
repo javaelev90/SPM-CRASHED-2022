@@ -45,20 +45,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            //PhotonNetwork.SetInterestGroups(1, true);
-            //PhotonNetwork.SetInterestGroups(2, true);
-            //PhotonNetwork.SetSendingEnabled(0, true);
-            //PhotonNetwork.SetSendingEnabled(1, true);
-            //PhotonNetwork.SetSendingEnabled(2, true);
-
             objectInstantiater.InitializeWorld();
         }
-        else
-        {
-            //PhotonNetwork.SetInterestGroups(1, false);
-            //PhotonNetwork.SetInterestGroups(2, true);
-            //PhotonNetwork.SetInterestGroups(new byte[] { 1 }, new byte[] { 2 });
-        }
+
 
         if (character == Character.SOLDIER)
         {
