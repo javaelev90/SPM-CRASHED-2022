@@ -30,7 +30,7 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
     private float worldWidth;
     private float worldHeigth;
     private GameObject player;
-    private GameObject otherPlayer;
+    public GameObject otherPlayer;
     private Quad playerQuad;
     private Quad otherPlayerQuad;
     private Vector3 playerPrevPosition;
@@ -71,6 +71,7 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
 
             yield return new WaitForSeconds(0.2f);
         }
+        GameManager.otherPlayer = otherPlayer;
         foundOtherPlayer = true;
     }
 

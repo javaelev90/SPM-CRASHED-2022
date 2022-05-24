@@ -117,7 +117,7 @@ public class Ship : MonoBehaviourPunCallbacks
     {
         if (shipUpgradePanel != null)
         {
-            inventory = GameManager.playerObject.GetComponent<InventorySystem>();
+            inventory = GameManager.player.GetComponent<InventorySystem>();
             shipUpgradePanel.gameObject.SetActive(true);
             if (!shipUpgradeCost[nextUpgrade].partAvalibul)
             {
@@ -136,7 +136,7 @@ public class Ship : MonoBehaviourPunCallbacks
             }
             shipUpgradePanel.ToggleErrorMessage(false);
             Cursor.lockState = CursorLockMode.None;
-            GameManager.playerObject.GetComponent<PlayerInput>().enabled = false;
+            GameManager.player.GetComponent<PlayerInput>().enabled = false;
 
         }
     }

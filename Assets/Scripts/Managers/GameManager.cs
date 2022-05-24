@@ -12,8 +12,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject engineerPrefab;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private ObjectInstantiater objectInstantiater;
-    [SerializeField] private ObjectCulling objectCulling;
-    public static GameObject playerObject;
+    [SerializeField] public ObjectCulling objectCulling;
+    public static GameObject player;
+    public static GameObject otherPlayer;
 
     public static Character character;
 
@@ -61,16 +62,16 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (character == Character.SOLDIER)
         {
-            playerObject = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + soldierPrefab.name, spawnPoint.position, spawnPoint.rotation);
+            player = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + soldierPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
         else
         {
-            playerObject = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
+            player = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
 
         if (PhotonNetwork.IsMasterClient)
         {
-            objectCulling.Initialize(playerObject, character);
+            objectCulling.Initialize(player, character);
         }
 
     }

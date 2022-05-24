@@ -19,7 +19,7 @@ public class TeleportToShip : MonoBehaviour
     public void Teleport(TeleportToShipEvent teleport)
     {
         //soldier.transform.position = soldierTPPosition.transform.position;
-        playerObject = GameManager.playerObject;
+        playerObject = GameManager.player;
 
         if (playerObject.GetComponent<Engineer>())
         {
