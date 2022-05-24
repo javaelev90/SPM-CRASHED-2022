@@ -1,16 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System;
 using EventCallbacksSystem;
 using UnityEngine.InputSystem;
-using TMPro;
 
 public class PlayerUIListener : MonoBehaviour
 {
     [SerializeField] private List<SlotItem> slotItems;
-    [SerializeField] private Animation animations;
+    [SerializeField] private ObjectiveViewer objectiveViewer;
     private Dictionary<Pickup_Typs.Pickup, SlotItem> slots;
     private int selectedIndex;
     private bool isShowingObjective;
@@ -34,6 +31,7 @@ public class PlayerUIListener : MonoBehaviour
         EventSystem.Instance.UnregisterListener<UpdateUIAmountsEvent>(UpdateAmounts);
     }
 
+
     public void UpdateAmounts(UpdateUIAmountsEvent e)
     {
         foreach (KeyValuePair<Type, int> keyValuePair in e.Amounts)
@@ -41,6 +39,7 @@ public class PlayerUIListener : MonoBehaviour
             if (keyValuePair.Key == typeof(AlienMeat))
             {
                 slots[Pickup_Typs.Pickup.AlienMeat].UpdateNumberOfItems(keyValuePair.Value);
+                // Particles p.transform.position = slots[Pickup_Typs.Pickup.AlienMeat].GetComponent<RectTransform>().anchoredPosition;
             }
             if (keyValuePair.Key == typeof(Metal))
             {
@@ -101,15 +100,17 @@ public class PlayerUIListener : MonoBehaviour
         if(ctx.started && isShowingObjective == false)
         {
             isShowingObjective = true;
+            objectiveViewer.enabled = true;
+            objectiveViewer.IsDisplayingPanel = true;
             Debug.Log("Show dropdown");
-            animations.Play("ObjectiveViewerDown");
             return;
         }
 
         if (ctx.started && isShowingObjective == true)
         {
+            objectiveViewer.enabled = true;
+            objectiveViewer.IsDisplayingPanel = false;
             isShowingObjective = false;
-            animations.Play("ObjectiveViewerUp");
             Debug.Log("No dropdown");
             return;
         }
