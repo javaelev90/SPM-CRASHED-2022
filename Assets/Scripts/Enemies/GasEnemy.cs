@@ -159,12 +159,12 @@ public class GasEnemy : AIBaseLogic
 
         if (distanceToTarget < maxMeleeRadius && minMeleeRadius < distanceToTarget)
         {
-            agent.isStopped = true;
+            if (agent.isOnNavMesh) agent.isStopped = true;
             Hit();
         }
         else
         {
-            agent.isStopped = false;
+            if (agent.isOnNavMesh) agent.isStopped = false;
             source.Play();
         }
 
@@ -187,8 +187,14 @@ public class GasEnemy : AIBaseLogic
         timeCounterMelee -= Time.deltaTime;
         if (timeCounterMelee <= 0f)
         {
-            if (IsMasterClient)
-                target.GetComponent<HealthHandler>().TakeDamage(hitDamage);
+            if (IsMasterClient && target != null)
+            {
+                HealthHandler healthHandler = target.GetComponent<HealthHandler>();
+                if (healthHandler != null)
+                {
+                    healthHandler.TakeDamage(hitDamage);
+                }
+            }
 
             timeCounterMelee = timeToMelee;
         }
@@ -199,8 +205,14 @@ public class GasEnemy : AIBaseLogic
         timeCounterGas -= Time.deltaTime;
         if (timeCounterGas <= 0f)
         {
-            if (IsMasterClient)
-                target.GetComponent<HealthHandler>().TakeDamage(poisonDamage);
+            if (IsMasterClient && target != null)
+            {
+                HealthHandler healthHandler = target.GetComponent<HealthHandler>();
+                if (healthHandler != null)
+                {
+                    healthHandler.TakeDamage(poisonDamage);
+                }
+            }
 
             timeCounterGas = timeToGas;
             source.PlayOneShot(angry);

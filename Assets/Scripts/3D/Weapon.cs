@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
+using EventCallbacksSystem;
+using Photon.Pun;
 
-public class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviourPunCallbacks
 {
     [Header("Mesh settings")]
     [Tooltip("Position where the gun barrel ends")]
-    [SerializeField] Transform muzzlePosition;
+    [SerializeField] VisualEffect muzzlePosition;
+
+    [SerializeField] GameObject hitPosition;
 
     [Header("Weapon settings")]
     [SerializeField] float weaponRange = 15f;
@@ -17,23 +22,34 @@ public class Weapon : MonoBehaviour
     [SerializeField] LayerMask layersThatShouldBeHit;
     [SerializeField] private int maxAmmo;
     [SerializeField] private int currentAmmo;
-    private AudioClip clip;
-
     private float shotCooldown = 0f;
     public bool IsShooting { get; set; }
 
+    [Header("Weapon effects")]
+    [SerializeField] private Animator animator;
     [SerializeField] private AudioSource sourceOne;
     public AudioClip[] shot;
+
+    [Header("Inventory")]
+    [SerializeField] private bool useInventory = false;
+    [SerializeField] private InventorySystem inventory;
+    [SerializeField] private int greenGooCost = 1;
 
     void Update()
     {
         Cooldown();
         Shoot();
+        sourceOne.volume = Random.Range(0.8f, 2);
+        sourceOne.pitch = Random.Range(0.8f, 1.4f);
     }
 
     void Start()
     {
         sourceOne = GetComponent<AudioSource>();
+        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
+        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
+        sourceOne.volume = Random.Range(1.8f, 2.5f);
+        sourceOne.pitch = Random.Range(0.8f, 1.2f);
     }
 
     private void Cooldown()
@@ -49,40 +65,76 @@ public class Weapon : MonoBehaviour
         return shotCooldown >= 0;
     }
 
+    /// <summary>
+    /// Searches a GameObject for a specific child using "childName"
+    /// </summary>
+    private Transform GetChildWithName(GameObject objectToSearch, string childName)
+    {
+        Transform child = null;
+        foreach (Transform t in objectToSearch.GetComponentsInChildren<Transform>())
+        {
+            if (t.name == childName)
+            {
+                child = t;
+                break;
+            }
+        }
+        return child;
+    }
+
     public void Shoot()
     {
         if(OnCoolDown() == false && IsShooting == true)
         {
+            muzzlePosition.Play();
+            animator.CrossFadeInFixedTime("Shooting", 0.1f);
+
+            if (useInventory)
+            {
+                inventory.Remove<GreenGoo>(greenGooCost);
+            }
+
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,
                 out RaycastHit hitInfo, weaponRange, layersThatShouldBeHit))
             {
                 HealthHandler healthHandler = hitInfo.transform.GetComponent<HealthHandler>();
-                Debug.Log("Hit the enemy?");
-                if (healthHandler)
+                if (healthHandler != null)
                 {
-                    Debug.Log("Hit the enemy.");
-                    
                     healthHandler.TakeDamage(weaponDamage);
                 }
+                // Plays VFX where the bullet hits
+                //Instantiate(hitPosition, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                Destroy(Instantiate(hitPosition, hitInfo.point, Quaternion.LookRotation(hitInfo.normal)), 10f);
 
                 AIBaseLogic ai = hitInfo.transform.GetComponent<AIBaseLogic>();
                 if (ai)
                 {
-                    Debug.Log(ai.transform.name);
                     ai.FindAttackingTarget(transform);
                 }
                 
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;
-            clip = GetAudioClip();
-            sourceOne.PlayOneShot(clip);
+            sourceOne.PlayOneShot(GetAudioClip());
         }
     }
 
     private AudioClip GetAudioClip()
     {
         int index = Random.Range(0, shot.Length - 1);
+        sourceOne.volume = Random.Range(1.8f, 2.5f);
+        sourceOne.pitch = Random.Range(0.4f, 1.6f);
         return shot[index];
+       
+    }
+
+    public void UpgradeDamage(GunDamageUpgradeEvent damageUpgradeEvent)
+    {
+        weaponDamage += damageUpgradeEvent.UpgradeAmount;
+    }
+
+    public void FireRateUpgrade(GunFireRateUpgradeEvent gunRateUpgradeEvent)
+    {
+        delayBetweenShots *= (1 - gunRateUpgradeEvent.UpgradePercent);
     }
 }

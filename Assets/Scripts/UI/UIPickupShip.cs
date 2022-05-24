@@ -23,4 +23,13 @@ public class UIPickupShip : MonoBehaviour
         
         }
     }
+
+     void OnTriggerExit(Collider player)
+    {
+        if (player.CompareTag("Player"))
+        {
+          StopCoroutine(dialogs.type);
+          dialogs.gameObject.SetActive(false);
+        }
+    }
 }

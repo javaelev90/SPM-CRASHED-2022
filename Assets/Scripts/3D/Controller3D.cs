@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
-
+using EventCallbacksSystem;
 public class Controller3D : MonoBehaviourPunCallbacks
 {
     [Header("Multiplayer")]
@@ -19,7 +19,16 @@ public class Controller3D : MonoBehaviourPunCallbacks
     [Header("Player")]
     [SerializeField] private float skinWidth = 0.5f;
     [SerializeField] private float groundCheckDistance;
+    [SerializeField] private GameObject playerGUI;
     private HealthHandler healthHandler;
+
+    [Header("Engineer")]
+    public Turret turretObjRef;
+    public Engineer engineerRef;
+    public Transform turretBodyTransform;
+    [SerializeField] private LayerMask enemyLayer;
+    public bool isShootingTurret { get; set; }
+
 
     [Header("Camera settings")]
     [SerializeField] private bool isFPS;
@@ -70,6 +79,9 @@ public class Controller3D : MonoBehaviourPunCallbacks
     AudioSource source;
     public AudioClip clip;
 
+    [Header("FPS Visuals")]
+    [SerializeField] GameObject weaponVisuals;
+    [SerializeField] GameObject bodyMesh;
 
     protected virtual void Awake()
     {
@@ -84,23 +96,40 @@ public class Controller3D : MonoBehaviourPunCallbacks
         capsuleCollider = GetComponent<CapsuleCollider>();
         body = GetComponent<PhysicsBody>();
 
-        mainCam = Camera.main;
+       
+        //weaponPrefab.transform.SetParent(mainCam.transform);
         isMine = photonView.IsMine;
         Cursor.lockState = CursorLockMode.Locked;
         healthHandler = GetComponent<HealthHandler>();
         source = GetComponent<AudioSource>();
+        playerGUI.SetActive(isMine);
+
+        if (isMine)
+        {
+            mainCam = Camera.main;
+            mainCam.transform.position = camPositionFPS.transform.position;
+            mainCam.transform.SetParent(camPositionFPS.transform);
+            camPositionFPS.transform.rotation = Quaternion.LookRotation(bodyMesh.transform.position, Vector3.up);
+            mainCam.transform.rotation = camPositionFPS.transform.rotation;
+        }
 
 
+        //bodyMesh.SetActive(isMine == false);
     }
 
     private void OnEnable()
     {
         playerActions.Player.Enable();
+    
     }
 
     private void OnDisable()
     {
         playerActions.Player.Disable();
+        if (isMine)
+        {
+            //mainCam.transform.SetParent(null);
+        }
     }
 
     // Update is called once per frame
@@ -118,6 +147,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
                     break;
                 case 2:
                     RoatateCamera();
+                    //EngineerUseTurretHandling();
                     break;
             }
         }
@@ -135,19 +165,15 @@ public class Controller3D : MonoBehaviourPunCallbacks
         */
     }
 
-    public void Jump()
+    public void Jump(InputAction.CallbackContext ctx)
     {
         float jumpForce = 5f;
-        
-        
-        //groundHit = IsGrounded();
-        if (playerActions.Player.Jump.IsPressed() && Body.Grounded)
+
+        if (ctx.performed && Body.Grounded)
         {
             Vector3 jumpMovement = Vector3.up * jumpForce;
             source.PlayOneShot(clip);
             Body.Velocity += jumpMovement;
-
-
         }
     }
 
@@ -161,8 +187,8 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
             input = mainCam.transform.rotation * input;
             input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
-            
-     
+
+
 
             //Body.Velocity += input;
 
@@ -179,6 +205,38 @@ public class Controller3D : MonoBehaviourPunCallbacks
                 isFPS = !isFPS;
             }
             */
+        }
+    }
+
+    public void EngineerUseTurretHandling(InputAction.CallbackContext ctx)
+    {
+        RoatateCamera();
+        PlayerRotation();
+
+        if (engineerRef.GetComponent<Engineer>().isUsingTurret == true)
+        {
+            if (ctx.performed) 
+            {
+                isShootingTurret = true;
+            }
+            if (ctx.canceled)
+            {
+                isShootingTurret = false;
+            }
+            //Debug.Log("isShootingTurret " + isShootingTurret);
+        }
+    }
+
+    public void EngineerUseTurretLooking()
+    {
+        if (engineerRef.GetComponent<Engineer>().isUsingTurret == true)
+        {
+            // Rotate the turret towards where the player is looking
+            Physics.Raycast(muzzlePoint.transform.position, muzzlePoint.transform.forward, out RaycastHit hit, 20f, enemyLayer);
+            // skapa nytt obj framför muzzle som direction, origin är muzzlepoint
+            Vector3 lookDirection = (muzzlePoint.transform.position - transform.position).normalized;
+            Quaternion rotateTo = Quaternion.LookRotation(lookDirection, turretBodyTransform.transform.up);
+            turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
         }
     }
 
@@ -204,8 +262,8 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
         cameraRotation.x = Mathf.Clamp(cameraRotation.x, minXrotation, maxXrotation);
 
-        mainCam.transform.localRotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f);
-
+        //mainCam.transform.localRotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f);
+        camPositionFPS.transform.localRotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0f);
         transform.rotation = Quaternion.Euler(0f, cameraRotation.y, 0f);
     }
 
@@ -242,11 +300,14 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
     private void UpdateCamera()
     {
-        mainCam.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0.0f);
+        //mainCam.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0.0f);
+        camPositionFPS.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0.0f);
 
         if (isFPS)
         {
-            mainCam.transform.position = camPositionFPS.transform.position;
+            //mainCam.transform.position = camPositionFPS.transform.position;
+            camPositionFPS.transform.position = camPositionFPS.transform.position;
+
         }
         else
         {
@@ -351,5 +412,10 @@ public class Controller3D : MonoBehaviourPunCallbacks
         if (mainCam)
             Gizmos.DrawWireSphere(mainCam.transform.position, radius);
     }
-
+#if (UNITY_EDITOR)
+    public void Immortal()
+    {
+        EventSystem.Instance.FireEvent(new ImmortalEvent());
+    }
+#endif
 }

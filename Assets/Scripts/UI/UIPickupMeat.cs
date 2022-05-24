@@ -23,4 +23,8 @@ public class UIPickupMeat : MonoBehaviour
         
         }
     }
+
+    void OnTriggerExit(){
+        StopCoroutine(dialogs.type);
+    }
 }

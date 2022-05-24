@@ -57,7 +57,7 @@ namespace EventCallbacksSystem
         public void FireEvent(Event e)
         {
             Type eventType = e.GetType();
-            if (eventListeners[eventType] == null)
+            if (eventListeners.ContainsKey(eventType) == false)
             {
                 return;
             }

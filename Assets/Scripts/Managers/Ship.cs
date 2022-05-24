@@ -4,19 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using EventCallbacksSystem;
 using System.Linq;
+using UnityEngine.UI;
+using Photon.Pun;
+using UnityEngine.InputSystem;
 
-public class Ship : MonoBehaviour
+public class Ship : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private UpgradePanel Panel;
+    [SerializeField] private ShipUpgradePanel shipUpgradePanel;
+    [SerializeField] private Button shipUpgradeButton;
+    [SerializeField] private GameObject playerUpgradePanal;
     [SerializeField] private float radius = 10f;
     private bool triggerActive = false;
     [SerializeField] Engineer player;
-    private int nextUpgrade;
+    public int nextUpgrade;
     public bool allShipPartsCollected = false;
     public List<ShipUpgradeCost> shipUpgradeCost;
     AudioSource source;
     public AudioClip connect;
     public float minTimeUntilDaw = 120f;
+    private InventorySystem inventory;
+
+
 
     [Serializable]
     public class ShipUpgradeCost
@@ -28,45 +36,17 @@ public class Ship : MonoBehaviour
         public GameObject partAttached;
     }
 
-    void Start()
+    private void Start()
     {
+        Minimap.Instance.Ship = gameObject;
         EventSystem.Instance.RegisterListener<AttachPartEvent>(newPartObtained);
+        EventSystem.Instance.RegisterListener<ShipUppgradPanelEvent>(OpenShipUpgradePanel);
         nextUpgrade = 0;
-        StartCoroutine(Wait(5));
-        //Wait(5);
+
         source = GetComponent<AudioSource>();
-
     }
 
-    IEnumerator Wait(float sec)
-    {
-        while (player == null)
-        {
-            yield return new WaitForSeconds(sec);
-            player = FindObjectOfType<Engineer>();
-        }
-
-    }
-
-    private void Update()
-    {
-        if(player != null)
-        {
-            Collider[] colliderHits = Physics.OverlapSphere(transform.position, radius);
-
-            foreach (Collider col in colliderHits)
-            {
-                if (col.transform.gameObject.GetComponent<Engineer>())
-                {
-                    if (player && player.playerActions.Player.PickUp.IsPressed() && Panel != null && Panel.gameObject.activeSelf == false && shipUpgradeCost[nextUpgrade].partAvalibul)
-                    {
-                        OpenUpgradePanel();
-                    }
-                }
-            }
-        }
-
-    }
+  
 
     public void newPartObtained(AttachPartEvent attachPartEvent)
     {
@@ -83,47 +63,48 @@ public class Ship : MonoBehaviour
         EventSystem.Instance.FireEvent(new ShipPartEvent(minTimeUntilDaw));
     }
 
-    
+
 
     public bool UppgradeShip()
     {
-        if (shipUpgradeCost[nextUpgrade].partAvalibul)
+        if (TakeResources())
         {
-            shipUpgradeCost[nextUpgrade].partMissing.SetActive(false);
-            shipUpgradeCost[nextUpgrade].partAttached.SetActive(true);
-            nextUpgrade++;           
-            source.PlayOneShot(connect);
-            OpenUpgradePanel();
-            allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
+            photonView.RPC(nameof(UpgradeShipRPC), RpcTarget.All);
             return true;
         }
         return false;
     }
 
+    [PunRPC]
+    private void UpgradeShipRPC()
+    {
+        shipUpgradeCost[nextUpgrade].partMissing.SetActive(false);
+        shipUpgradeCost[nextUpgrade].partAttached.SetActive(true);
+        nextUpgrade++;
+        source.PlayOneShot(connect);
+        shipUpgradePanel.gameObject.SetActive(false);
+        OpenPlayerUpgradePanel();
+        allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
+    }
+
     private bool TakeResources()
     {
-        if (player != null)
+        if (inventory.Amount<GreenGoo>() >= shipUpgradeCost[nextUpgrade].gooCost && inventory.Amount<Metal>() >= shipUpgradeCost[nextUpgrade].metalCost && shipUpgradeCost[nextUpgrade].partAvalibul)
         {
-            Inventory inventory = player.gameObject.GetComponent<Inventory>();
-            if (inventory.GreenGoo >= shipUpgradeCost[nextUpgrade].gooCost && inventory.Metal >= shipUpgradeCost[nextUpgrade].metalCost)
-            {
-                return inventory.removeMetalAndGreenGoo(shipUpgradeCost[nextUpgrade].metalCost, shipUpgradeCost[nextUpgrade].gooCost);
-            }
+            inventory.Remove<Metal>(shipUpgradeCost[nextUpgrade].metalCost);
+            inventory.Remove<GreenGoo>(shipUpgradeCost[nextUpgrade].gooCost);
+            return true;
         }
+
         return false;
     }
 
     public void TestUpgrade()
     {
-        if (TakeResources() == false)
+        if (!UppgradeShip())
         {
-            Panel.ToggleErrorMessage(true);
-            Panel.SetErrorMessage($"Too few resources to upgrade.\n Requires metal: {shipUpgradeCost[nextUpgrade].metalCost}, green goo: {shipUpgradeCost[nextUpgrade].gooCost}");
-        }
-        else
-        {
-            UppgradeShip();
-            Panel.ClosePanel();
+            shipUpgradePanel.ToggleErrorMessage(true);
+            shipUpgradePanel.SetErrorMessage("Something fucked up!");
         }
     }
 
@@ -132,14 +113,54 @@ public class Ship : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 
-    public void OpenUpgradePanel()
+    private void OpenShipUpgradePanel()
     {
-        if(Panel != null)
+        if (shipUpgradePanel != null)
         {
-            bool isActive = Panel.gameObject.activeSelf;
-            Panel.gameObject.SetActive(!isActive);
-            Panel.ToggleErrorMessage(false);
+            inventory = GameManager.playerObject.GetComponent<InventorySystem>();
+            shipUpgradePanel.gameObject.SetActive(true);
+            if (!shipUpgradeCost[nextUpgrade].partAvalibul)
+            {
+                shipUpgradeButton.interactable = false;
+                shipUpgradePanel.SetCostInfo("No new ship part obtained for upgrade");
+            }
+            else if (inventory.Amount<Metal>() < shipUpgradeCost[nextUpgrade].metalCost || inventory.Amount<GreenGoo>() < shipUpgradeCost[nextUpgrade].gooCost)
+            {
+                shipUpgradeButton.interactable = false;
+                shipUpgradePanel.SetCostInfo($"Not enough resources \n Metal: {shipUpgradeCost[nextUpgrade].metalCost} \n Green Goo: {shipUpgradeCost[nextUpgrade].gooCost}");
+            }
+            else
+            {
+                shipUpgradeButton.interactable = true;
+                shipUpgradePanel.SetCostInfo($"Do you want to upgrade? \n Metal: {shipUpgradeCost[nextUpgrade].metalCost} \n Green Goo: {shipUpgradeCost[nextUpgrade].gooCost}");
+            }
+            shipUpgradePanel.ToggleErrorMessage(false);
             Cursor.lockState = CursorLockMode.None;
+            GameManager.playerObject.GetComponent<PlayerInput>().enabled = false;
+
         }
     }
+
+    public void OpenShipUpgradePanel(ShipUppgradPanelEvent shipUppgradPanelEvent)
+    {
+        OpenShipUpgradePanel();
+    }
+
+    private void OpenPlayerUpgradePanel()
+    {
+        //photonView.RPC(nameof(OpenUpgradePanelRPC), RpcTarget.All);
+        playerUpgradePanal.SetActive(true);
+    }
+    //[PunRPC]
+    //private void OpenUpgradePanelRPC()
+    //{
+    //    //EventSystem.Instance.FireEvent(new OpenPlayerUpgradePanelEvent());
+    //    //OpenPlayerUpgradePanel();
+    //    playerUpgradePanal.SetActive(true);
+    //}
+
+    /*public void OpenPlayerUpgradePanel()
+    {
+        playerUpgradePanal.SetActive(true);
+    }*/
 }

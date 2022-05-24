@@ -4,24 +4,28 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
 
+[RequireComponent(typeof(PhotonView))]
 public class GameManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Ship ship; 
-    [SerializeField] private GameObject objectPool;
     [SerializeField] private GameObject soldierPrefab;
     [SerializeField] private GameObject engineerPrefab;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private ObjectInstantiater objectInstantiater;
+    [SerializeField] private ObjectCulling objectCulling;
     public static GameObject playerObject;
 
-    private Character character;
+    public static Character character;
 
     private bool IsMine { get { return photonView.IsMine; } }
     private bool gameIsOver = false;
+    
     private void Awake()
     {
         character = (Character)PlayerPrefs.GetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName);
         Initialize();
+        Debug.Log($"Oh no, you chose the {character} charater");
+
     }
 
     private void Update()
@@ -34,19 +38,25 @@ public class GameManager : MonoBehaviourPunCallbacks
                 PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.WinSceneName);
             }
         }
-
-    }
-
-    void Start()
-    {
-        Debug.Log($"Oh no, you chose the {character} charater");
     }
 
     private void Initialize()
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            //PhotonNetwork.SetInterestGroups(1, true);
+            //PhotonNetwork.SetInterestGroups(2, true);
+            //PhotonNetwork.SetSendingEnabled(0, true);
+            //PhotonNetwork.SetSendingEnabled(1, true);
+            //PhotonNetwork.SetSendingEnabled(2, true);
+
             objectInstantiater.InitializeWorld();
+        }
+        else
+        {
+            //PhotonNetwork.SetInterestGroups(1, false);
+            //PhotonNetwork.SetInterestGroups(2, true);
+            //PhotonNetwork.SetInterestGroups(new byte[] { 1 }, new byte[] { 2 });
         }
 
         if (character == Character.SOLDIER)
@@ -58,6 +68,10 @@ public class GameManager : MonoBehaviourPunCallbacks
             playerObject = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
 
-    }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            objectCulling.Initialize(playerObject, character);
+        }
 
+    }
 }

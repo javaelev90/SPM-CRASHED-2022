@@ -141,21 +141,75 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Num1",
+                    "name": "PreviousItem",
                     "type": "Button",
                     "id": "b7a26e25-a584-4b61-9b9a-e09b6e526e70",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextItem",
+                    "type": "Button",
+                    "id": "52b60ef3-0c7c-4a42-acbf-d725d31dedd9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Num2",
+                    "name": "Immortal",
                     "type": "Button",
-                    "id": "52b60ef3-0c7c-4a42-acbf-d725d31dedd9",
+                    "id": "817f9463-a47f-4810-a8e8-b907d9393ce4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Tap",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GreenGoo",
+                    "type": "Button",
+                    "id": "318a7f1e-df3a-4d27-b7a4-a6aa454ee991",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Metal",
+                    "type": "Button",
+                    "id": "c77aa0ab-75b0-4018-ac19-2a1b783b64c1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Beef",
+                    "type": "Button",
+                    "id": "a2465578-b245-43de-aafa-a1a06f7cbd47",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RepairTurret",
+                    "type": "Button",
+                    "id": "414c7bf4-a997-48a6-ba58-e005e22bdc62",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ObjectiveShow",
+                    "type": "Button",
+                    "id": "3d573a5b-7bfd-4e3c-90f0-688599068280",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -394,7 +448,7 @@
                 {
                     "name": "",
                     "id": "6c0229ac-433a-4dee-a18e-11df8c8e6a09",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -427,7 +481,7 @@
                 {
                     "name": "",
                     "id": "ee5c1173-afbe-4b70-8d0b-14e8e162ca01",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -536,6 +590,17 @@
                 },
                 {
                     "name": "",
+                    "id": "f58f9a00-2883-4759-877e-b78e636cdb6b",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "DeleteTurret",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d95bfbe7-1f3a-4bee-afa8-d74661568da9",
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
@@ -559,7 +624,7 @@
                 {
                     "name": "",
                     "id": "a8b4bb53-0364-4913-a425-5ad50020c792",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -585,7 +650,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Num1",
+                    "action": "PreviousItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "68b0e18f-92ba-4f58-8a81-ccc8df889b66",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "PreviousItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -596,7 +672,95 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Num2",
+                    "action": "NextItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18645ca7-e35e-4d2e-acdf-69618806327c",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "NextItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2669431-3ed6-407e-b7dc-a6e329d165b2",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Immortal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea93892e-1451-4100-b47b-ba003b52008c",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "GreenGoo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "96df7258-566f-4500-85e3-5e79a4c00211",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Metal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5fdd88f8-93f5-4c5f-a70e-b5a45b6e24b9",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Beef",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a445ffe2-035e-425e-92dd-ec60f4b5eb86",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "RepairTurret",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ab5754a-2775-4baf-be5b-04afc8221b88",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RepairTurret",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94856e67-8d97-41a6-bb54-e96c751d0fab",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ObjectiveShow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

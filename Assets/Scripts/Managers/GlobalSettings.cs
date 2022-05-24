@@ -7,6 +7,7 @@ using System;
 public class GlobalSettings : SingletonScriptableObject<GlobalSettings>
 {
 
+    [SerializeField] private string resourcesPath;
     [SerializeField] private string prefabsPickupPath;
     [SerializeField] private string prefabsEnemiesPath;
     [SerializeField] private string prefabsUIPath;
@@ -15,6 +16,7 @@ public class GlobalSettings : SingletonScriptableObject<GlobalSettings>
     [SerializeField] private string prefabsMiscPath;
     [SerializeField] private GameSettings gameSettings;
 
+    public static string ResourcesPath { get { return Instance.resourcesPath; } }
     public static string PickupsPath { get { return Instance.prefabsPickupPath; } }
     public static string EnemiesPath { get { return Instance.prefabsEnemiesPath; } }
     public static string UIPath { get { return Instance.prefabsUIPath; } }

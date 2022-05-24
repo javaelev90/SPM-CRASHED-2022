@@ -2,11 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using EventCallbacksSystem;
 
 public class PlayerHealthHandler : HealthHandler
 {
+    private bool immortal = false;
+    [SerializeField] private GameObject deathParticles;
+
+
+    private void Start()
+    {
+        EventSystem.Instance.RegisterListener<ImmortalEvent>(SetImmortal);
+        EventSystem.Instance.RegisterListener<HealthUpgradeEvent>(UpgradeHealth);
+    }
+
+    public void SetImmortal(ImmortalEvent immortalEvent)
+    {
+        immortal = !immortal;
+    }
+
     public override void TakeDamage(int amount)
     {
+        if (immortal)
+        {
+            amount = 0;
+        }
         photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);
     }
 
@@ -29,6 +49,7 @@ public class PlayerHealthHandler : HealthHandler
             DropItem();
         }
         CurrentHealth = 0;
+        Destroy(Instantiate(deathParticles, transform.position, transform.rotation), 10f);
         UpdateActiveState(false);
     }
 
@@ -65,5 +86,11 @@ public class PlayerHealthHandler : HealthHandler
     private void UpdateActiveStateRPC(bool active)
     {
         transform.root.gameObject.SetActive(active);
+    }
+
+    public void UpgradeHealth(HealthUpgradeEvent healthUpgradeEvent)
+    {
+        MaxHealth += healthUpgradeEvent.UpgradeAmount;
+        CurrentHealth += healthUpgradeEvent.UpgradeAmount;
     }
 }

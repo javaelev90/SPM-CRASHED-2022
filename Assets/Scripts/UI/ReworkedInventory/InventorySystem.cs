@@ -6,7 +6,6 @@ using EventCallbacksSystem;
 
 public class InventorySystem : MonoBehaviour
 {
-  
     // dictionary for prefabs
     private Dictionary<Type, GameObject> prefabs;
 
@@ -16,10 +15,7 @@ public class InventorySystem : MonoBehaviour
 
     private void Awake()
     {
-        if (prefabs != null)
-        {
-            Debug.Log("prefabs " + prefabs.Count);
-        }
+        LoadPrefabs();
     }
 
     // add item
@@ -36,6 +32,7 @@ public class InventorySystem : MonoBehaviour
             amounts[keyType] += amount;
             uiEvent.Amounts = amounts;
             EventSystem.Instance.FireEvent(uiEvent);
+            //Debug.LogErrorFormat("Amount of {0} is : {1}", keyType, amounts[keyType]);
             return true;
         }
         return false;
@@ -56,6 +53,7 @@ public class InventorySystem : MonoBehaviour
             amounts[keyType] -= amount;
             uiEvent.Amounts = amounts;
             EventSystem.Instance.FireEvent(uiEvent);
+            //Debug.LogErrorFormat("Amount of {0} is : {1}", keyType, amounts[keyType]);
             return true;
         }
         return false;
@@ -88,26 +86,22 @@ public class InventorySystem : MonoBehaviour
         return new GameObject("EmptyObject");
     }
 
-    [ContextMenu("LoadPrefabsToInventory")]
+    // load prefabs into dictionary
     public void LoadPrefabs()
     {
-
-
         if (prefabs == null)
         {
             prefabs = new Dictionary<Type, GameObject>();
         }
 
-        if (Directory.Exists("Assets/Resources/Prefabs/Pickups"))
+        //Debug.LogError("Folder exists " + Directory.Exists("Assets/Resources/Prefabs/Pickups"));
+        if (Directory.Exists(Application.dataPath + GlobalSettings.ResourcesPath))
         {
-            Debug.Log("Folder exists");
-            //Item[] items = Resources.FindObjectsOfTypeAll<Item>();
-            System.Object[] os = Resources.LoadAll("Prefabs/Pickups", typeof(Item));
+
+            System.Object[] os = Resources.LoadAll(GlobalSettings.PickupsPath, typeof(Item));
 
             if (os.Length > 0)
             {
-                Debug.Log("Number of items: " + os.Length);
-
                 foreach (System.Object i in os)
                 {
                     Item item = (Item)i;
@@ -128,13 +122,12 @@ public class InventorySystem : MonoBehaviour
 
                 if (!amounts.ContainsKey(keyType))
                 {
-                    amounts.Add(keyType, 5);
+                    amounts.Add(keyType, 0);
                 }
             }
         }
 
         uiEvent.Amounts = amounts;
         EventSystem.Instance.FireEvent(uiEvent);
-
     }
 }

@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using EventCallbacksSystem;
+using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
@@ -15,14 +16,17 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI sekundEtt; 
     [SerializeField]
-    private TextMeshProUGUI sekundTwo; 
-    [SerializeField]
-    private TextMeshProUGUI day; 
-    [SerializeField]
-    private TextMeshProUGUI night;
+    private TextMeshProUGUI sekundTwo;
+    //[SerializeField]
+    //private TextMeshProUGUI day; 
+    //[SerializeField]
+    //private TextMeshProUGUI night;
+
+    [SerializeField] private GameObject day;
+    [SerializeField] private GameObject night;
 
     [Header("Other stuff")]
-    [SerializeField] private LightingManager lightingManager;
+    //[SerializeField] private LightingManager lightingManager;
 
     private float timeLeft = 0;
     private float flashTimer = 0;
@@ -30,10 +34,20 @@ public class Timer : MonoBehaviour
     private bool flashing = false;
 
     private AudioSource source;
+    private LightingManager lightingManager;
 
     public AudioClip clip;
 
-    // Start is called before the first frame update
+    private void OnEnable()
+    {
+        StartCoroutine(SearchForLightManager());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     void Start()
     {
         EventSystem.Instance.RegisterListener<EventEvent>(DisplayingTime);
@@ -50,8 +64,23 @@ public class Timer : MonoBehaviour
         {
             day.gameObject.SetActive(false);
             night.gameObject.SetActive(true);
+            
         }
         timeLeft = lightingManager.TimeUntilCycle;
+    }
+
+    IEnumerator SearchForLightManager()
+    {
+        while (true)
+        {
+            lightingManager = FindObjectOfType<LightingManager>();
+            if (lightingManager != null)
+            {
+                break;
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     // Update is called once per frame
@@ -97,6 +126,13 @@ public class Timer : MonoBehaviour
         sekundTwo.enabled = enabled;
     }
 
+    public void Show(bool enabled){
+        //day.enabled = enabled;
+        //night.enabled = enabled;
+        day.SetActive(enabled);
+        night.SetActive(enabled);
+    }
+
     private IEnumerator Flash3()
     {
         flashing = true;
@@ -118,10 +154,15 @@ public class Timer : MonoBehaviour
 
     public void DisplayingTime(EventEvent eventEvent)
     {
-        minutEtt.enabled = !eventEvent.Start;
-        minutTwo.enabled = !eventEvent.Start;
-        separate.enabled = !eventEvent.Start;
-        sekundEtt.enabled = !eventEvent.Start;
-        sekundTwo.enabled = !eventEvent.Start;
+        DisplayingTime(!eventEvent.Start);
+    }
+
+    public void DisplayingTime(bool on)
+    {
+        minutEtt.enabled = on;
+        minutTwo.enabled = on;
+        separate.enabled = on;
+        sekundEtt.enabled = on;
+        sekundTwo.enabled = on;
     }
 }

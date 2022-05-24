@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class SlugEnemy : AIBaseLogic
 {
@@ -10,10 +11,15 @@ public class SlugEnemy : AIBaseLogic
     [SerializeField] private float timeToWayPoint;
     [SerializeField] private float timeToExplosion;
     [SerializeField] private int explosionDamage;
+    [SerializeField] private GameObject explosionEffects;
+    [SerializeField] private LayerMask AttackableTargets;
+    private G_SnailExplosion snailEffects;
 
     private float timeCounterWaypoint;
     private float timeCounterExplosion;
+    private float timeCounterChainReaction;
     private Vector3 wayPoint;
+    private bool isBlowingUp;
 
     AudioSource source;
     public AudioClip walk;
@@ -27,9 +33,7 @@ public class SlugEnemy : AIBaseLogic
         maxBlowUpRadius = viewRadius / 1.5f;
         wayPoint = wayPointSystem.GetNewPosition;
         timeCounterExplosion = timeToExplosion;
-        Debug.Log("root " + root.name);
         source = GetComponent<AudioSource>();
-
     }
 
     // Update is called once per frame
@@ -139,15 +143,15 @@ public class SlugEnemy : AIBaseLogic
 
     private void Move()
     {
-        
-        if (distanceToTarget < maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
+
+        if (distanceToTarget <= maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
         {
-            agent.isStopped = true;
-            BlowUp();
+            if (agent.isOnNavMesh) agent.isStopped = true;
+            BlowUp(false);
         }
         else
         {
-            agent.isStopped = false;
+            if (agent.isOnNavMesh) agent.isStopped = false;
             source.Play();
         }
 
@@ -158,24 +162,57 @@ public class SlugEnemy : AIBaseLogic
         }
     }
 
-    public void BlowUp()
+    public void BlowUp(bool canBlowUp)
     {
+
         timeCounterExplosion -= Time.deltaTime;
-        if (timeCounterExplosion <= 0f)
+        if ((canBlowUp || timeCounterExplosion <= 0f)  && isBlowingUp == false)
         {
-            Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, targetMask);
+            isBlowingUp = true;
+            Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, AttackableTargets);
             if (targets.Length > 0)
             {
                 foreach (Collider coll in targets)
                 {
-                    coll.transform.GetComponent<HealthHandler>().TakeDamage(explosionDamage);
+                    HealthHandler healthHandler = coll.transform.GetComponent<HealthHandler>();
+                    SlugEnemy enemy;
+                    if (healthHandler != null)
+                    {
+                        enemy = coll.GetComponent<SlugEnemy>();
+                        if (enemy && !(enemy.gameObject.GetInstanceID() == gameObject.GetInstanceID()))
+                        {
+                            enemy.BlowUp(true);
+                        }
+
+                        if (!enemy)
+                        {
+                            healthHandler.TakeDamage(explosionDamage);
+                        }
+                    }
                 }
             }
+            photonView.RPC(nameof(Explode), RpcTarget.All);
             root.DeSpawn();
             source.PlayOneShot(explode);
             timeCounterExplosion = timeToExplosion;
         }
     }
+
+    [PunRPC]
+    private void Explode()
+    {
+        GameObject explosion = Instantiate(explosionEffects, transform.position, Quaternion.identity);
+        snailEffects = explosion.GetComponent<G_SnailExplosion>();
+        snailEffects.snail = gameObject;
+        snailEffects.Explode();
+    }
+
+    //[PunRPC]
+    //private void ReadyToExplode()
+    //{
+
+    //    snailEffects.ReadyToExplode();
+    //}
 
     private void Rotate()
     {

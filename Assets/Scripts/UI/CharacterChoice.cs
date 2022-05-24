@@ -12,7 +12,7 @@ public class CharacterChoice : MonoBehaviourPunCallbacks
 
     public Toggle choiceButton;
 
-    private void Start()
+    private void Awake()
     {
         choiceButton = GetComponent<Toggle>();
         lobbyManager = FindObjectOfType<LobbyManager>();
@@ -43,7 +43,7 @@ public class CharacterChoice : MonoBehaviourPunCallbacks
         }
 
         PlayerPrefs.SetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName, (int)lobbyManager.PlayerChoice);
-        photonView.RPC("SendPlayerChoice", RpcTarget.OthersBuffered, lobbyManager.PlayerChoice != Character.NONE, PhotonNetwork.LocalPlayer.UserId);
+        photonView.RPC(nameof(SendPlayerChoice), RpcTarget.OthersBuffered, lobbyManager.PlayerChoice != Character.NONE, PhotonNetwork.LocalPlayer.UserId);
         lobbyManager.SetPlayerReady(lobbyManager.PlayerChoice != Character.NONE, PhotonNetwork.LocalPlayer.UserId);
     }
 

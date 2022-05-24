@@ -4,7 +4,6 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Weapon))]
 public class SoldierCharacter : Controller3D
 {
     [SerializeField] private LayerMask fireLayer;
@@ -19,10 +18,34 @@ public class SoldierCharacter : Controller3D
 
     private float shotCooldown = 0f;
 
+    private void Start()
+    {
+        if (photonView.IsMine)
+            Minimap.Instance.Player = gameObject;
+
+        StartCoroutine(SearchOtherPlayer());
+    }
+
+
+    IEnumerator SearchOtherPlayer()
+    {
+        while (true)
+        {
+            Minimap.Instance.OtherPlayer = FindObjectOfType<Engineer>()?.gameObject;
+            if (Minimap.Instance.OtherPlayer != null)
+            {
+                break;
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
-        weapon = GetComponent<Weapon>();
+        //weapon = GetComponent<Weapon>();
+       
     }
 
     protected override void Update()
@@ -42,7 +65,6 @@ public class SoldierCharacter : Controller3D
         {
             weapon.IsShooting = false;
         }
-
     }
 
     private void Cooldown()
@@ -66,10 +88,8 @@ public class SoldierCharacter : Controller3D
                 out RaycastHit hitInfo, punchRange, layersThatShouldBeHit))
             {
                 HealthHandler healthHandler = hitInfo.transform.GetComponent<HealthHandler>();
-                Debug.Log("Hit the enemy?");
                 if (healthHandler)
                 {
-                    Debug.Log("Hit the enemy.");
                     healthHandler.TakeDamage(punchDamage);
                 }
 

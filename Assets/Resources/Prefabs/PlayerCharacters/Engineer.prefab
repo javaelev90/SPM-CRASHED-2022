@@ -291,7 +291,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5125041606094569842}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.56, z: 0.408}
+  m_LocalPosition: {x: 0, y: 0.56, z: 0.017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5125041606170365177}
@@ -463,7 +463,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5125041606170365157}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a247f7e707f8a6498fce19d1ba19a56, type: 3}
   m_Name: 
@@ -471,14 +471,13 @@ MonoBehaviour:
   pickupLayer:
     serializedVersion: 2
     m_Bits: 150528
-  fireLayer:
-    serializedVersion: 2
-    m_Bits: 0
   spaceShipLayer:
     serializedVersion: 2
     m_Bits: 256
+  shipPartLayer:
+    serializedVersion: 2
+    m_Bits: 0
   pickUpDistance: 3
-  inventory: {fileID: 2433093780270635284}
   source: {fileID: 0}
   Goo: {fileID: 0}
   Metal: {fileID: 0}
@@ -555,6 +554,13 @@ MonoBehaviour:
   bulletSpeed: 0
   skinWidth: 0.01
   groundCheckDistance: 0.1
+  playerGUI: {fileID: 0}
+  turretObjRef: {fileID: 2438785178254165550, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
+  engineerRef: {fileID: 1484468382420821516}
+  turretBodyTransform: {fileID: 3067970174018886807, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
   isFPS: 1
   camPositionFPS: {fileID: 5125041606094569842}
   cameraOffsetTPS: {x: 0, y: 0, z: 0}
@@ -580,13 +586,13 @@ MonoBehaviour:
   inventory: {fileID: 2433093780270635284}
   playerInput: {fileID: 5344456586567406286}
   clip: {fileID: 0}
+  weaponVisuals: {fileID: 5125041606170365157}
+  bodyMesh: {fileID: 5125041606170365157}
   turret: {fileID: 2411392565204665798, guid: 3358d40555310ec4d8266bc256c4335e, type: 3}
   turretPos: {fileID: 2520650330550881837}
   maxTurretToSpawn: 3
   turretCount: 0
   turretOffset: {x: 0, y: 0, z: 0}
-  gooCostTurret: 0
-  metalCostTurret: 0
   turretPrefab: {fileID: 2438785178254165549, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
   greenGooPrefab: {fileID: 5563257113643808014, guid: e91eaeefca1cf6b44a325df71e90cc48, type: 3}
   metalPrefab: {fileID: 5648485573748196395, guid: 8d9299097781d6a4cbbca1a773979f70, type: 3}
@@ -594,8 +600,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65536
   outlinedTurretPrefab: {fileID: 8025784739738023711, guid: 84205b8d5a2c8a644a97fa040e65db20, type: 3}
+  turretObj: {fileID: 2438785178254165550, guid: 7333ef77bc42a1e44ae0a10cc0519ec4, type: 3}
+  turretRepairCosts:
+    metalCost: 0
+    gooCost: 0
+  healthToAdd: 10
+  healthToAddIfDead: 6
+  atFullHealthText: {fileID: 0}
+  notEnoughResourcesToRepair: {fileID: 0}
+  notEnoughResourcesToBuild: {fileID: 0}
+  turretBuildCosts:
+    metalCost: 0
+    gooCost: 0
   destination: {fileID: 431206142263564548}
-  player: {fileID: 5125041606170365177}
   muzzlePosition: {fileID: 1099855166}
   weaponRange: 15
   delayBetweenShots: 0.5
@@ -693,6 +710,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1484468382420821516}
+        m_TargetAssemblyTypeName: Controller3D, Assembly-CSharp
+        m_MethodName: EngineerUseTurretLooking
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f08da3b2-7b73-4f97-94b7-d20b71f6c166
     m_ActionName: Player/Look[/XInputControllerWindows/rightStick,/Mouse/delta]
   - m_PersistentCalls:
@@ -717,6 +746,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: Engineer, Assembly-CSharp
         m_MethodName: StunEnemy
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1484468382420821516}
+        m_TargetAssemblyTypeName: Controller3D, Assembly-CSharp
+        m_MethodName: EngineerUseTurretHandling
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -903,6 +944,42 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 52b60ef3-0c7c-4a42-acbf-d725d31dedd9
     m_ActionName: Player/Num2[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1484468382420821516}
+        m_TargetAssemblyTypeName: Controller3D, Assembly-CSharp
+        m_MethodName: DevTool
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 817f9463-a47f-4810-a8e8-b907d9393ce4
+    m_ActionName: Player/test[/Keyboard/rightBracket]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 318a7f1e-df3a-4d27-b7a4-a6aa454ee991
+    m_ActionName: Player/GreenGoo[/Keyboard/g]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c77aa0ab-75b0-4018-ac19-2a1b783b64c1
+    m_ActionName: Player/Metal[/Keyboard/m]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a2465578-b245-43de-aafa-a1a06f7cbd47
+    m_ActionName: Player/Beef[/Keyboard/b]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 414c7bf4-a997-48a6-ba58-e005e22bdc62
+    m_ActionName: Player/RepairTurret[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d573a5b-7bfd-4e3c-90f0-688599068280
+    m_ActionName: Player/ObjectiveShow[/Keyboard/3]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -946,6 +1023,7 @@ MonoBehaviour:
   MaxHealth: 40
   CurrentHealth: 40
   isAlive: 1
+  deathParticles: {fileID: 7687256951814429033, guid: 09b9bf7d2cccb804c982ab89b4bd8c20, type: 3}
 --- !u!1 &5882971585194565831
 GameObject:
   m_ObjectHideFlags: 0
