@@ -73,21 +73,14 @@ public class QuadTree<T>
         southWest = new QuadTree<T>(southWestBoundary, quadCapacity, minWidth, minHeight);
         Quad southEastBoundary = new Quad(x + quadWidth, y + quadHeight, halfWidth, halfHeight);
         southEast = new QuadTree<T>(southEastBoundary, quadCapacity, minWidth, minHeight);
-        bool inserted;
-        int counter = 0;
+
         foreach (Point<T> point in points)
         {
-            inserted = northWest.Insert(point);
-            inserted = northEast.Insert(point);
-            inserted = southWest.Insert(point);
-            inserted = southEast.Insert(point);
-            if (inserted)
-            {
-                counter++;
-            }
-            inserted = false;
+            northWest.Insert(point);
+            northEast.Insert(point);
+            southWest.Insert(point);
+            southEast.Insert(point);
         }
-        //Debug.Log("Could insert all points " + (counter == points.Count) + $" {counter} points out of {points.Count} " );
         points.Clear();
         divided = true;
     }
@@ -144,33 +137,33 @@ public class QuadTree<T>
         return typeof(T);
     }
 
-    public void OnDrawGizmos()
+    public void OnDrawGizmos(float positionYValue)
     {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawWireCube(new Vector3(boundary.x, 0f, boundary.y), new Vector3(boundary.width, 0f, boundary.height));
+        Gizmos.DrawWireCube(new Vector3(boundary.x, positionYValue, boundary.y), new Vector3(boundary.width, 0f, boundary.height));
 
 #if UNITY_EDITOR
-        if (points.Count > 0)
-        {
-            Handles.color = Color.red;
-            Handles.Label(new Vector3(boundary.x, 0f, boundary.y), "" + points.Count);
-        }
+        //if (divided == false)
+        //{
+        //    Handles.color = Color.red;
+        //    Handles.Label(new Vector3(boundary.x, positionYValue, boundary.y), "" + points.Count);
+        //}
 #endif
         if (northWest is object)
         {
-            northWest.OnDrawGizmos();
+            northWest.OnDrawGizmos(positionYValue);
         }
         if (northEast is object)
         {
-            northEast.OnDrawGizmos();
+            northEast.OnDrawGizmos(positionYValue);
         }
         if (southWest is object)
         {
-            southWest.OnDrawGizmos();
+            southWest.OnDrawGizmos(positionYValue);
         }
         if (southEast is object)
         {
-            southEast.OnDrawGizmos();
+            southEast.OnDrawGizmos(positionYValue);
         }
     }
 }

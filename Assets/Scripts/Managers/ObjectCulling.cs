@@ -10,7 +10,7 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
     [Range(5, 200)]
     [SerializeField] private int cullingBoundarySideLength = 100;
     [Range(0.1f, 2f)]
-    [SerializeField] private float cullingUpdateDelay = 0.3f;
+    [SerializeField] private float cullingUpdateDelay = 0.1f;
     [Tooltip("The distance the player has to move before culled objects are updated")]
     [Range(0.1f, 5f)]
     [SerializeField] private float minMovementDistance = 1f;
@@ -131,7 +131,7 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
 
     private void AssignOtherPlayer()
     {
-        if (foundOtherPlayer == false)
+        if (PhotonNetwork.IsMasterClient && foundOtherPlayer == false)
         {
             if (GameManager.otherPlayer != null)
             {
@@ -192,10 +192,15 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
 
     private void OnDrawGizmos()
     {
-        quadTree.OnDrawGizmos();
+        quadTree.OnDrawGizmos(transform.position.y);
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(
             new Vector3(player.PlayerObject.transform.position.x, player.PlayerObject.transform.position.y, player.PlayerObject.transform.position.z),
+            new Vector3(cullingBoundarySideLength, 0f, cullingBoundarySideLength)
+        );
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(
+            new Vector3(otherPlayer.PlayerObject.transform.position.x, otherPlayer.PlayerObject.transform.position.y, otherPlayer.PlayerObject.transform.position.z),
             new Vector3(cullingBoundarySideLength, 0f, cullingBoundarySideLength)
         );
     }
