@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         character = (Character)PlayerPrefs.GetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName);
         Initialize();
         Debug.Log($"Oh no, you chose the {character} charater");
-
+        StartCoroutine(FindOtherPlayer(character));
     }
 
     private void Update()
@@ -38,6 +38,19 @@ public class GameManager : MonoBehaviourPunCallbacks
                 gameIsOver = true;
                 PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.WinSceneName);
             }
+        }
+    }
+
+    IEnumerator FindOtherPlayer(Character character)
+    {
+        while (otherPlayer == null)
+        {
+            if (character == Character.SOLDIER)
+                otherPlayer = FindObjectOfType<Engineer>()?.gameObject;
+            else
+                otherPlayer = FindObjectOfType<SoldierCharacter>()?.gameObject;
+
+            yield return new WaitForSeconds(0.2f);
         }
     }
 

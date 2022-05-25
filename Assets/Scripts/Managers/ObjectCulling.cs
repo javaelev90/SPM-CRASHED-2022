@@ -60,23 +60,7 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
         pools = FindObjectsOfType<PhotonObjectPool>().ToList();
         quadTree = new QuadTree<PooledObject>(mapBoundary, minQuadTreeCapacity, minCullingSquareSide, minCullingSquareSide);
 
-        StartCoroutine(FindOtherPlayer(character));
         isInitialized = true;
-    }
-
-    IEnumerator FindOtherPlayer(Character character)
-    {
-        while (otherPlayer.PlayerObject == null)
-        {
-            if (character == Character.SOLDIER)
-                otherPlayer.PlayerObject = FindObjectOfType<Engineer>()?.gameObject;
-            else
-                otherPlayer.PlayerObject = FindObjectOfType<SoldierCharacter>()?.gameObject;
-
-            yield return new WaitForSeconds(0.2f);
-        }
-        GameManager.otherPlayer = otherPlayer.PlayerObject;
-        foundOtherPlayer = true;
     }
 
     public void UpdateQuadTree()
@@ -139,17 +123,29 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
         }
     }
 
-    //WIP
-    private void Update()
+    private void FixedUpdate()
     {
         CullEnemyObjects();
+        AssignOtherPlayer();
+    }
+
+    private void AssignOtherPlayer()
+    {
+        if (foundOtherPlayer == false)
+        {
+            if (GameManager.otherPlayer != null)
+            {
+                otherPlayer.PlayerObject = GameManager.otherPlayer;
+                foundOtherPlayer = true;
+            }
+        }
     }
 
     private void CullEnemyObjects()
     {
         if (PhotonNetwork.IsMasterClient && isInitialized == true)
         {
-            updateTimer += Time.deltaTime;
+            updateTimer += Time.fixedDeltaTime;
             if (updateTimer > cullingUpdateDelay)
             {
                 updateTimer = 0f;
