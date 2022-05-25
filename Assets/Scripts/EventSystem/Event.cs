@@ -105,7 +105,7 @@ namespace EventCallbacksSystem
     {
         private Dictionary<System.Type, int> amounts;
         private int amount;
-        private Pickup_Typs.Pickup type;
+        public System.Type type;
         public Dictionary<System.Type, int> Amounts { get { return amounts; } set { amounts = value; } }
 
         public UpdateUIAmountsEvent(Dictionary<System.Type, int> amounts)

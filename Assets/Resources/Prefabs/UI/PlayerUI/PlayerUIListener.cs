@@ -45,19 +45,40 @@ public class PlayerUIListener : MonoBehaviour
             if (keyValuePair.Key == typeof(AlienMeat))
             {
                 slots[Pickup_Typs.Pickup.AlienMeat].UpdateNumberOfItems(keyValuePair.Value);
-                //particleEffectAmount = Instantiate(amountEffect);
-                //particleEffectAmount.transform.position = slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition.anchoredPosition;
-                //Destroy(particleEffectAmount, 1f);
+                //Destroy(Instantiate(amountEffect, slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition.position, Quaternion.identity), 3f);
+                
             }
             if (keyValuePair.Key == typeof(Metal))
             {
                 slots[Pickup_Typs.Pickup.Metal].UpdateNumberOfItems(keyValuePair.Value);
+                //Destroy(Instantiate(amountEffect, slots[Pickup_Typs.Pickup.Metal].EffectPosition.position, Quaternion.identity), 3f);
+                
             }
             if (keyValuePair.Key == typeof(GreenGoo))
             {
                 slots[Pickup_Typs.Pickup.GreenGoo].UpdateNumberOfItems(keyValuePair.Value);
+                //Destroy(Instantiate(amountEffect, slots[Pickup_Typs.Pickup.GreenGoo].EffectPosition.position, Quaternion.identity), 3f);
+                
             }
         }
+        Transform effectTransform = null;
+        if (e.type == typeof(GreenGoo))
+        {
+            effectTransform = slots[Pickup_Typs.Pickup.GreenGoo].EffectPosition;
+        } 
+        else if (e.type == typeof(Metal))
+        {
+            effectTransform = slots[Pickup_Typs.Pickup.Metal].EffectPosition;
+        }
+        else if (e.type == typeof(AlienMeat))
+        {
+            effectTransform = slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition;
+        }
+        var vfx = Instantiate(amountEffect, effectTransform.position, Quaternion.identity) as GameObject;
+        Debug.Log(vfx.name);
+        vfx.transform.SetParent(effectTransform);
+        var ps = vfx.GetComponent<ParticleSystem>();
+        Destroy(vfx, ps.main.duration + ps.main.startLifetime.constantMax);
     }
 
     public void PreviousItem(InputAction.CallbackContext ctx) // use as previous
