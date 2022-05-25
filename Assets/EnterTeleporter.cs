@@ -12,7 +12,7 @@ public class EnterTeleporter : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
             playerOnTeleport++;
-        if(((playerOnTeleport > 0 && !(GameManager.otherPlayer != null && GameManager.otherPlayer.activeSelf)) || playerOnTeleport > 1) && (PhotonNetwork.IsMasterClient))
+        if((playerOnTeleport > 0 && !(GameManager.otherPlayer != null && GameManager.otherPlayer.activeSelf)) || playerOnTeleport > 1))
         {
             eventStarter.Teleport(true);
         }
