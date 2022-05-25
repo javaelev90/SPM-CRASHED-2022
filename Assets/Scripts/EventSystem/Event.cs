@@ -212,6 +212,7 @@ namespace EventCallbacksSystem
     {
         public int AmmunitionAmount { get; set; }
         public int MaxAmmunitionAmount { get; private set; }
+        public int GreenGooAmount { get; set; }
 
         public WeaponAmmunitionUpdateEvent(int ammunitionAmount, int maxAmmunitionAmount)
         {
