@@ -87,7 +87,7 @@ public class QuadTree<T>
             }
             inserted = false;
         }
-        Debug.Log("Could insert all points " + (counter == points.Count) + $" {counter} points out of {points.Count} " );
+        //Debug.Log("Could insert all points " + (counter == points.Count) + $" {counter} points out of {points.Count} " );
         points.Clear();
         divided = true;
     }
