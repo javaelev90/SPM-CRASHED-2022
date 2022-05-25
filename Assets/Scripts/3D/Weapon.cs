@@ -46,7 +46,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     {
         sourceOne = GetComponent<AudioSource>();
         EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
-        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
+        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage); // behövs två rader av samma?
         sourceOne.volume = Random.Range(1.8f, 2.5f);
         sourceOne.pitch = Random.Range(0.8f, 1.2f);
 
@@ -70,11 +70,11 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     public void Shoot()
     {
-        if(OnCoolDown() == false && IsShooting == true && currentAmmo > 0)
+        if (OnCoolDown() == false && IsShooting == true && currentAmmo > 0)
         {
             muzzlePosition.Play();
             animator.CrossFadeInFixedTime("Shooting", 0.1f);
-                      
+
             currentAmmo--;
             ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
             EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
@@ -96,7 +96,6 @@ public class Weapon : MonoBehaviourPunCallbacks
                 {
                     ai.FindAttackingTarget(transform);
                 }
-                
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;
@@ -104,14 +103,20 @@ public class Weapon : MonoBehaviourPunCallbacks
         }
         else
         {
-            if(inventory.Amount<GreenGoo>() > 0 && currentAmmo <= 0)
+            if (currentAmmo == 0 && inventory.Amount<GreenGoo>() > 0)
             {
                 currentAmmo = maxAmmo;
                 inventory.Remove<GreenGoo>();
                 ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
                 EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
             }
+            else if (currentAmmo == 0 && inventory.Amount<GreenGoo>() == 0)
+            {
+                ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
+                EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
+            }
         }
+
     }
 
     private void PlayShotEffects()
@@ -131,7 +136,7 @@ public class Weapon : MonoBehaviourPunCallbacks
         sourceOne.volume = Random.Range(1.8f, 2.5f);
         sourceOne.pitch = Random.Range(0.4f, 1.6f);
         return shot[index];
-       
+
     }
 
     public void UpgradeDamage(GunDamageUpgradeEvent damageUpgradeEvent)
