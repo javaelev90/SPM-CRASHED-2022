@@ -10,7 +10,7 @@ public class ShowUiDialogue : MonoBehaviour
     [SerializeField] private bool canSoldierPickup;
     [SerializeField] private bool canEngineerPickup;
 
-    public DialoguePickups dialog;
+   // public DialoguePickups dialog;
     
 
     // Start is called before the first frame update

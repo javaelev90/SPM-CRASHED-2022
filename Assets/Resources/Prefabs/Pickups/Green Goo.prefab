@@ -343,7 +343,6 @@ GameObject:
   - component: {fileID: 1967331016576670329}
   - component: {fileID: 4212936442790702085}
   - component: {fileID: 6879163325106232804}
-  - component: {fileID: 5473246519387904737}
   - component: {fileID: 5035904410362736748}
   m_Layer: 0
   m_Name: Collider
@@ -395,24 +394,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5473246519387904737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4612918486299786566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8abac46d3108df4fb19ed73f983c84e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogs:
-  - {fileID: 3841394467579001525}
-  - {fileID: 1980443996925738998}
-  uiObject: {fileID: 5761930508130197477}
-  canSoldierPickup: 1
-  canEngineerPickup: 1
 --- !u!114 &5035904410362736748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,7 +409,6 @@ MonoBehaviour:
   uiObject: {fileID: 5761930508130197477}
   canSoldierPickup: 1
   canEngineerPickup: 1
-  dialog: {fileID: 3841394467579001525}
 --- !u!1 &5563257113643808014
 GameObject:
   m_ObjectHideFlags: 0
