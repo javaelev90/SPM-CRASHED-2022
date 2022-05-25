@@ -137,7 +137,7 @@ public class QuadTree<T>
         return typeof(T);
     }
 
-    public void OnDrawGizmos(float positionYValue)
+    public void OnDrawGizmos(float positionYValue = 30)
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube(new Vector3(boundary.x, positionYValue, boundary.y), new Vector3(boundary.width, 0f, boundary.height));

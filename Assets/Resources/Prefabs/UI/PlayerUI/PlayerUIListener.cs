@@ -8,8 +8,7 @@ public class PlayerUIListener : MonoBehaviour
 {
     [SerializeField] private List<SlotItem> slotItems;
     [SerializeField] private ObjectiveViewer objectiveViewer;
-    [SerializeField] private GameObject amountEffect; // stoppa in partikeleffekten här
-    private GameObject particleEffectAmount;
+    [SerializeField] private GameObject amountEffect;
     private Dictionary<Pickup_Typs.Pickup, SlotItem> slots;
     private int selectedIndex;
     private bool isShowingObjective = true;
@@ -45,22 +44,17 @@ public class PlayerUIListener : MonoBehaviour
             if (keyValuePair.Key == typeof(AlienMeat))
             {
                 slots[Pickup_Typs.Pickup.AlienMeat].UpdateNumberOfItems(keyValuePair.Value);
-                //Destroy(Instantiate(amountEffect, slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition.position, Quaternion.identity), 3f);
-                
             }
             if (keyValuePair.Key == typeof(Metal))
             {
                 slots[Pickup_Typs.Pickup.Metal].UpdateNumberOfItems(keyValuePair.Value);
-                //Destroy(Instantiate(amountEffect, slots[Pickup_Typs.Pickup.Metal].EffectPosition.position, Quaternion.identity), 3f);
-                
             }
             if (keyValuePair.Key == typeof(GreenGoo))
             {
                 slots[Pickup_Typs.Pickup.GreenGoo].UpdateNumberOfItems(keyValuePair.Value);
-                //Destroy(Instantiate(amountEffect, slots[Pickup_Typs.Pickup.GreenGoo].EffectPosition.position, Quaternion.identity), 3f);
-                
             }
         }
+
         Transform effectTransform = null;
         if (e.type == typeof(GreenGoo))
         {
@@ -74,8 +68,8 @@ public class PlayerUIListener : MonoBehaviour
         {
             effectTransform = slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition;
         }
+
         var vfx = Instantiate(amountEffect, effectTransform.position, Quaternion.identity) as GameObject;
-        Debug.Log(vfx.name);
         vfx.transform.SetParent(effectTransform);
         var ps = vfx.GetComponent<ParticleSystem>();
         Destroy(vfx, ps.main.duration + ps.main.startLifetime.constantMax);
