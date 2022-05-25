@@ -180,10 +180,44 @@ namespace EventCallbacksSystem
         }
     }
 
-    public class PlayerHealthUpdate : Event
+    public class ShipUpgradeProgressionEvent : Event
     {
+        public int UpgradeNumber { get; set; }
+        public int TotalNumberOfParts { get; private set; }
 
+        public ShipUpgradeProgressionEvent(int upgradeNumber, int totalParts)
+        {
+            UpgradeNumber = upgradeNumber;
+            TotalNumberOfParts = totalParts;
+        }
+
+        public ShipUpgradeProgressionEvent(int upgradeNumber)
+        {
+            UpgradeNumber = upgradeNumber;
+        }
     }
 
+    public class StungunCoolDownEvent : Event
+    {
+        public float CoolDownTime { get; private set; }
+        public bool IsCoolingDown { get; set; }
+
+        public StungunCoolDownEvent(float coolDownTime)
+        {
+            CoolDownTime = coolDownTime;
+        }
+    }
+
+    public class WeaponAmmunitionUpdateEvent : Event
+    {
+        public int AmmunitionAmount { get; set; }
+        public int MaxAmmunitionAmount { get; private set; }
+
+        WeaponAmmunitionUpdateEvent(int ammunitionAmount, int maxAmmunitionAmount)
+        {
+            AmmunitionAmount = ammunitionAmount;
+            MaxAmmunitionAmount = maxAmmunitionAmount;
+        }
+    }
 
 }

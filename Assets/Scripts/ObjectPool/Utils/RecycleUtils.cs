@@ -4,9 +4,15 @@ using UnityEngine;
 using Photon.Pun;
 using System.Reflection;
 using System;
+using UnityEngine.UI;
 
 public class RecycleUtils
 {
+    private static List<Type> types = new List<Type>()
+    {
+        typeof(Color)
+    };
+
     public static void ResetGameObjectComponents(Transform prefab, Transform instantiation)
     {
         ResetComponents(prefab.gameObject, instantiation.gameObject);
@@ -38,7 +44,7 @@ public class RecycleUtils
                 ((ParticleSystem)destinationComponents[componentIndex]).Stop();
                 ((ParticleSystem)destinationComponents[componentIndex]).Clear();
             }
-            ResetPublicValues(
+            ResetValues(
                     prefabComponents[componentIndex],
                     destinationComponents[componentIndex]
             );
@@ -46,15 +52,42 @@ public class RecycleUtils
         }
     }
 
-    public static void ResetPublicValues(Component source, Component destination)
+    public static void ResetValues(Component prefab, Component instantiation)
     {
-        Type type = source.GetType();
-        FieldInfo[] fields = type.GetFields();
+        Type type = prefab.GetType();
+        FieldInfo[] fields;
+        if (type == typeof(Image))
+        {
+            fields = type.BaseType.BaseType.GetFields(
+                         BindingFlags.NonPublic |
+                         BindingFlags.Instance);
+            ResetSpecificFields(fields, prefab, instantiation);
+        }
+        else
+        {
+            fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            ResetPublicFields(fields, prefab, instantiation);
+        }
+    }
+
+    private static void ResetSpecificFields(FieldInfo[] fields, Component prefab, Component instantiation)
+    {
         foreach (FieldInfo field in fields)
         {
-            if (field.IsPublic && field.FieldType.IsValueType)
+            if (types.Contains(field.FieldType))
             {
-                field.SetValue(destination, field.GetValue(source));
+                field.SetValue(instantiation, field.GetValue(prefab));
+            }
+        }
+    }
+
+    private static void ResetPublicFields(FieldInfo[] fields, Component prefab, Component instantiation)
+    {
+        foreach (FieldInfo field in fields)
+        {
+            if (field.FieldType.IsPublic && field.FieldType.IsValueType)
+            {
+                field.SetValue(instantiation, field.GetValue(prefab));
             }
         }
     }

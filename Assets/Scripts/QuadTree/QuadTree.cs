@@ -73,14 +73,21 @@ public class QuadTree<T>
         southWest = new QuadTree<T>(southWestBoundary, quadCapacity, minWidth, minHeight);
         Quad southEastBoundary = new Quad(x + quadWidth, y + quadHeight, halfWidth, halfHeight);
         southEast = new QuadTree<T>(southEastBoundary, quadCapacity, minWidth, minHeight);
-
+        bool inserted;
+        int counter = 0;
         foreach (Point<T> point in points)
         {
-            northWest.Insert(point);
-            northEast.Insert(point);
-            southWest.Insert(point);
-            southEast.Insert(point);
+            inserted = northWest.Insert(point);
+            inserted = northEast.Insert(point);
+            inserted = southWest.Insert(point);
+            inserted = southEast.Insert(point);
+            if (inserted)
+            {
+                counter++;
+            }
+            inserted = false;
         }
+        //Debug.Log("Could insert all points " + (counter == points.Count) + $" {counter} points out of {points.Count} " );
         points.Clear();
         divided = true;
     }
@@ -95,7 +102,7 @@ public class QuadTree<T>
         {
             foreach (Point<T> point in points)
             {
-                if (range.Contains(point))
+                if (point.data != null && range.Contains(point))
                 {
                     pointsFound.Add(point);
                 }

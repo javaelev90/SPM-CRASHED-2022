@@ -29,50 +29,38 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
     private Quad mapBoundary;
     private float worldWidth;
     private float worldHeigth;
-    private GameObject player;
-    public GameObject otherPlayer;
-    private Quad playerQuad;
-    private Quad otherPlayerQuad;
-    private Vector3 playerPrevPosition;
-    private Vector3 otherPlayerPrevPosition;
+
+    private PlayerInfo player;
+    private PlayerInfo otherPlayer;
 
     private float updateTimer = 0f;
     private bool positionChanged = false;
     private bool foundOtherPlayer = false;
+    private bool isInitialized = false;
 
-    private void Start()
+    private int[] activeObjectKeys;
+    private Transform childTransform;
+
+    private void Awake()
     {
         worldWidth = Terrain.activeTerrain.terrainData.size.x;
         worldHeigth = Terrain.activeTerrain.terrainData.size.z;
         mapBoundary = new Quad((worldWidth / 2f), (worldHeigth / 2f), worldWidth, worldHeigth);
+
     }
 
-    public void Initialize(GameObject player, Character character)
+    public void Initialize(GameObject playerObject, Character character)
     {
-        this.player = player;
-        playerPrevPosition = player.transform.position;
-        otherPlayerPrevPosition = player.transform.position;
+        player = new PlayerInfo();
+        otherPlayer = new PlayerInfo();
+        player.PlayerObject = playerObject;
+        player.PreviousPosition = playerObject.transform.position;
+        otherPlayer.PreviousPosition = playerObject.transform.position;
 
         pools = FindObjectsOfType<PhotonObjectPool>().ToList();
         quadTree = new QuadTree<PooledObject>(mapBoundary, minQuadTreeCapacity, minCullingSquareSide, minCullingSquareSide);
 
-        //startedCulling = true;
-        StartCoroutine(FindOtherPlayer(character));
-    }
-
-    IEnumerator FindOtherPlayer(Character character)
-    {
-        while (otherPlayer == null)
-        {
-            if (character == Character.SOLDIER)
-                otherPlayer = FindObjectOfType<Engineer>()?.gameObject;
-            else
-                otherPlayer = FindObjectOfType<SoldierCharacter>()?.gameObject;
-
-            yield return new WaitForSeconds(0.2f);
-        }
-        GameManager.otherPlayer = otherPlayer;
-        foundOtherPlayer = true;
+        isInitialized = true;
     }
 
     public void UpdateQuadTree()
@@ -87,24 +75,22 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
 
     private void AddActiveObjectsToQuadTree(Dictionary<int,PooledObject> pool)
     {
-        int[] keys = pool.Keys.ToArray();
-        Point<PooledObject> point;
-        Transform childTransform;
+        activeObjectKeys = pool.Keys.ToArray();
 
-        for (int index = 0; index < keys.Length; index++)
+        for (int index = 0; index < activeObjectKeys.Length; index++)
         {
-            if (pool.TryGetValue(keys[index], out PooledObject pooledObject))
+            if (pool.TryGetValue(activeObjectKeys[index], out PooledObject pooledObject))
             {
                 if (pooledObject.shouldBeCulled == false)
                     continue;
                 
                 childTransform = FindChildWithTag(pooledObject.gameObject, "EnemyMainBody");
-                point = new Point<PooledObject>(
+                quadTree.Insert(
+                    new Point<PooledObject>(
                     childTransform.position.x,
                     childTransform.position.z,
-                    pooledObject);
-
-                quadTree.Insert(point);
+                    pooledObject)
+                );
             }
         }
     }
@@ -129,11 +115,6 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
         );
     }
 
-    private void SetInterestGroup(byte group, List<Point<PooledObject>> previousActiveObjects)
-    {
-        previousActiveObjects.ForEach(activeObject => activeObject.data.photonView.Group = group);
-    }
-
     private void SetActiveState(bool active, HashSet<Point<PooledObject>> pointsToUpdate)
     {
         foreach (Point<PooledObject> point in pointsToUpdate)
@@ -142,31 +123,48 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
         }
     }
 
-    //WIP
-    private void Update()
+    private void FixedUpdate()
     {
         CullEnemyObjects();
+        AssignOtherPlayer();
+    }
+
+    private void AssignOtherPlayer()
+    {
+        if (foundOtherPlayer == false)
+        {
+            if (GameManager.otherPlayer != null)
+            {
+                otherPlayer.PlayerObject = GameManager.otherPlayer;
+                foundOtherPlayer = true;
+            }
+        }
     }
 
     private void CullEnemyObjects()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && isInitialized == true)
         {
-            updateTimer += Time.deltaTime;
+            updateTimer += Time.fixedDeltaTime;
             if (updateTimer > cullingUpdateDelay)
             {
                 updateTimer = 0f;
 
-                if ((player.transform.position - playerPrevPosition).sqrMagnitude > minMovementDistance)
+                if ((player.PlayerObject.transform.position - player.PreviousPosition).sqrMagnitude > minMovementDistance)
                 {
-                    UpdateCulling(ref player, ref playerQuad, ref playerPrevPosition);
+                    player.PositionChanged = true;
                 }
-                if (foundOtherPlayer && (otherPlayer.transform.position - otherPlayerPrevPosition).sqrMagnitude > minMovementDistance)
+                if (foundOtherPlayer && (otherPlayer.PlayerObject.transform.position - otherPlayer.PreviousPosition).sqrMagnitude > minMovementDistance)
                 {
-                    UpdateCulling(ref otherPlayer, ref otherPlayerQuad, ref otherPlayerPrevPosition);
+                    otherPlayer.PositionChanged = true;
                 }
-                if (positionChanged)
+
+                if (player.PositionChanged || otherPlayer.PositionChanged)
                 {
+                    UpdateQuadTree();
+                    UpdateCulling(ref player);
+                    UpdateCulling(ref otherPlayer);
+
                     inActiveObjects.ExceptWith(activeObjects);
                     SetActiveState(false, inActiveObjects);
                     SetActiveState(true, activeObjects);
@@ -181,19 +179,32 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
         }
     }
 
-    private void UpdateCulling(ref GameObject playerObject, ref Quad playerQuad, ref Vector3 previousPosition)
+    private void UpdateCulling(ref PlayerInfo playerInfo)
     {
-        UpdateQuadTree();
-        playerQuad = UpdatePlayerQuad(playerObject.transform);
-        activeObjects = quadTree.Query(playerQuad, activeObjects);
-        previousPosition = playerObject.transform.position;
-        positionChanged = true;
+        if (playerInfo.PositionChanged)
+        {
+            playerInfo.Bounds = UpdatePlayerQuad(playerInfo.PlayerObject.transform);
+            activeObjects = quadTree.Query(playerInfo.Bounds, activeObjects);
+            playerInfo.PreviousPosition = playerInfo.PlayerObject.transform.position;
+            playerInfo.PositionChanged = false;
+        }
     }
 
     private void OnDrawGizmos()
     {
         quadTree.OnDrawGizmos();
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z), new Vector3(cullingBoundarySideLength, 0f, cullingBoundarySideLength));
+        Gizmos.DrawWireCube(
+            new Vector3(player.PlayerObject.transform.position.x, player.PlayerObject.transform.position.y, player.PlayerObject.transform.position.z),
+            new Vector3(cullingBoundarySideLength, 0f, cullingBoundarySideLength)
+        );
+    }
+
+    private class PlayerInfo
+    {
+        public GameObject PlayerObject { get; set; }
+        public Quad Bounds { get; set; }
+        public Vector3 PreviousPosition { get; set; }
+        public bool PositionChanged { get; set; }
     }
 }

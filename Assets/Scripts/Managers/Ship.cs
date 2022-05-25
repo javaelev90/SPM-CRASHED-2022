@@ -23,7 +23,7 @@ public class Ship : MonoBehaviourPunCallbacks
     public AudioClip connect;
     public float minTimeUntilDaw = 120f;
     private InventorySystem inventory;
-
+    private ShipUpgradeProgressionEvent progressionEvent;
 
 
     [Serializable]
@@ -42,8 +42,9 @@ public class Ship : MonoBehaviourPunCallbacks
         EventSystem.Instance.RegisterListener<AttachPartEvent>(newPartObtained);
         EventSystem.Instance.RegisterListener<ShipUppgradPanelEvent>(OpenShipUpgradePanel);
         nextUpgrade = 0;
-
+        progressionEvent = new ShipUpgradeProgressionEvent(nextUpgrade, shipUpgradeCost.Count);
         source = GetComponent<AudioSource>();
+        EventSystem.Instance.FireEvent(progressionEvent);
     }
 
   
@@ -70,6 +71,8 @@ public class Ship : MonoBehaviourPunCallbacks
         if (TakeResources())
         {
             photonView.RPC(nameof(UpgradeShipRPC), RpcTarget.All);
+            progressionEvent.UpgradeNumber = nextUpgrade;
+            EventSystem.Instance.FireEvent(progressionEvent);
             return true;
         }
         return false;
