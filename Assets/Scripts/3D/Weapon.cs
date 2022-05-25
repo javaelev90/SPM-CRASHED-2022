@@ -87,16 +87,11 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     public void Shoot()
     {
-        if(OnCoolDown() == false && IsShooting == true)
+        if(OnCoolDown() == false && IsShooting == true && currentAmmo > 0)
         {
             muzzlePosition.Play();
             animator.CrossFadeInFixedTime("Shooting", 0.1f);
-
-            if (useInventory)
-            {
-                inventory.Remove<GreenGoo>(greenGooCost);
-            }
-
+                      
             currentAmmo--;
             ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
             EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
@@ -123,6 +118,16 @@ public class Weapon : MonoBehaviourPunCallbacks
             // Add cooldown time
             shotCooldown = delayBetweenShots;
             PlayShotEffects();
+        }
+        else
+        {
+            if(inventory.Amount<GreenGoo>() > 0 && currentAmmo <= 0)
+            {
+                currentAmmo = maxAmmo;
+                inventory.Remove<GreenGoo>();
+                ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
+                EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
+            }
         }
     }
 
