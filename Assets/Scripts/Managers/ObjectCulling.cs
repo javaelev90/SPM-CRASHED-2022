@@ -192,20 +192,23 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
 
     private void OnDrawGizmos()
     {
-        quadTree.OnDrawGizmos(30);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(
-            new Vector3(player.PlayerObject.transform.position.x, player.PlayerObject.transform.position.y, player.PlayerObject.transform.position.z),
-            new Vector3(cullingBoundarySideLength, 0f, cullingBoundarySideLength)
-        );
-
-        if (foundOtherPlayer)
+        if (quadTree != null)
         {
-            Gizmos.color = Color.blue;
+            quadTree.OnDrawGizmos(30);
+            Gizmos.color = Color.red;
             Gizmos.DrawWireCube(
-                new Vector3(otherPlayer.PlayerObject.transform.position.x, otherPlayer.PlayerObject.transform.position.y, otherPlayer.PlayerObject.transform.position.z),
+                new Vector3(player.PlayerObject.transform.position.x, player.PlayerObject.transform.position.y, player.PlayerObject.transform.position.z),
                 new Vector3(cullingBoundarySideLength, 0f, cullingBoundarySideLength)
             );
+
+            if (foundOtherPlayer)
+            {
+                Gizmos.color = Color.blue;
+                Gizmos.DrawWireCube(
+                    new Vector3(otherPlayer.PlayerObject.transform.position.x, otherPlayer.PlayerObject.transform.position.y, otherPlayer.PlayerObject.transform.position.z),
+                    new Vector3(cullingBoundarySideLength, 0f, cullingBoundarySideLength)
+                );
+            }
         }
     }
 
