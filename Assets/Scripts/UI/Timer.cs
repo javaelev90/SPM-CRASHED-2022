@@ -8,13 +8,13 @@ public class Timer : MonoBehaviour
 {
     [Header("GUI stuff")]
     [SerializeField]
-    private TextMeshProUGUI minutEtt; 
+    private TextMeshProUGUI minutEtt;
     [SerializeField]
-    private TextMeshProUGUI minutTwo; 
+    private TextMeshProUGUI minutTwo;
     [SerializeField]
-    private TextMeshProUGUI separate; 
+    private TextMeshProUGUI separate;
     [SerializeField]
-    private TextMeshProUGUI sekundEtt; 
+    private TextMeshProUGUI sekundEtt;
     [SerializeField]
     private TextMeshProUGUI sekundTwo;
     //[SerializeField]
@@ -22,8 +22,11 @@ public class Timer : MonoBehaviour
     //[SerializeField]
     //private TextMeshProUGUI night;
 
+    [Header("DayNight")]
     [SerializeField] private GameObject day;
     [SerializeField] private GameObject night;
+    private Image dayImage;
+    private Image nightImage;
 
     [Header("Other stuff")]
     //[SerializeField] private LightingManager lightingManager;
@@ -45,26 +48,30 @@ public class Timer : MonoBehaviour
 
     private void OnDisable()
     {
-        StopAllCoroutines();
+        StopCoroutine(SearchForLightManager());
     }
 
     void Start()
     {
         EventSystem.Instance.RegisterListener<EventEvent>(DisplayingTime);
         source = GetComponent<AudioSource>();
-
-
+        dayImage = day.GetComponent<Image>();
+        nightImage = night.GetComponent<Image>();
+          
         if (!lightingManager.IsNight)
         {
-            day.gameObject.SetActive(true);
-            night.gameObject.SetActive(false);
-            
+            //day.gameObject.SetActive(true);
+            //night.gameObject.SetActive(false);
+            Color color = new Color(1, 1, 1, 0);
+            nightImage.color = color;
+
         }
         else
         {
-            day.gameObject.SetActive(false);
-            night.gameObject.SetActive(true);
-            
+            //day.gameObject.SetActive(false);
+            //night.gameObject.SetActive(true);
+            Color color = new Color(1, 1, 1, 0);
+            dayImage.color = color;
         }
         timeLeft = lightingManager.TimeUntilCycle;
     }
@@ -94,10 +101,33 @@ public class Timer : MonoBehaviour
             StartCoroutine(Flash3());
             source.PlayOneShot(clip);
         }
+
+        if (lightingManager.IsNight == true)
+        {
+            Color dayColor = dayImage.color;
+            dayColor.a = Mathf.Lerp(dayColor.a, 0, 2f * Time.deltaTime);
+            dayImage.color = dayColor;
+
+            Color nightColor = nightImage.color;
+            nightColor.a = Mathf.Lerp(nightColor.a, 1f, 2f * Time.deltaTime);
+            nightImage.color = nightColor;
+        }
+
+        if(lightingManager.IsNight == false)
+        {
+            Color dayColor = dayImage.color;
+            dayColor.a = Mathf.Lerp(dayColor.a, 1f, 2f * Time.deltaTime);
+            dayImage.color = dayColor;
+
+            Color nightColor = nightImage.color;
+            nightColor.a = Mathf.Lerp(nightColor.a, 0f, 2f * Time.deltaTime);
+            nightImage.color = nightColor;
+        }
     }
 
-    private void updateTimer(float time){
-        float minutes = Mathf.FloorToInt(time/60);
+    private void updateTimer(float time)
+    {
+        float minutes = Mathf.FloorToInt(time / 60);
         float seconds = Mathf.FloorToInt(time % 60);
 
         string currentTime = string.Format("{00:00}{1:00}", minutes, seconds, day);
@@ -118,7 +148,8 @@ public class Timer : MonoBehaviour
         night.gameObject.SetActive(!night.gameObject.activeSelf);
     }*/
 
-    private void setTextDisplay(bool enabled){
+    private void setTextDisplay(bool enabled)
+    {
         minutEtt.enabled = enabled;
         minutTwo.enabled = enabled;
         separate.enabled = enabled;
@@ -126,11 +157,12 @@ public class Timer : MonoBehaviour
         sekundTwo.enabled = enabled;
     }
 
-    public void Show(bool enabled){
+    public void Show(bool enabled)
+    {
         //day.enabled = enabled;
         //night.enabled = enabled;
-        day.SetActive(enabled);
-        night.SetActive(enabled);
+        //day.SetActive(enabled);
+        //night.SetActive(enabled);
     }
 
     private IEnumerator Flash3()
@@ -141,15 +173,15 @@ public class Timer : MonoBehaviour
         {
             setTextDisplay(!minutEtt.enabled);
             yield return new WaitForSeconds(flashduration);
-            if(timeLeft > 5)
+            if (timeLeft > 5)
             {
                 flashing = false;
             }
         }
 
         setTextDisplay(true);
-        day.gameObject.SetActive(!day.gameObject.activeSelf);
-        night.gameObject.SetActive(!night.gameObject.activeSelf);
+        //day.gameObject.SetActive(!day.gameObject.activeSelf);
+        //night.gameObject.SetActive(!night.gameObject.activeSelf);
     }
 
     public void DisplayingTime(EventEvent eventEvent)
