@@ -125,18 +125,29 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        CullEnemyObjects();
         AssignOtherPlayer();
+        CullEnemyObjects();
     }
 
     private void AssignOtherPlayer()
     {
-        if (PhotonNetwork.IsMasterClient && foundOtherPlayer == false)
+        if (PhotonNetwork.IsMasterClient)
         {
-            if (GameManager.otherPlayer != null)
+            if (foundOtherPlayer == false)
             {
-                otherPlayer.PlayerObject = GameManager.otherPlayer;
-                foundOtherPlayer = true;
+                if (GameManager.otherPlayer != null)
+                {
+                    otherPlayer.PlayerObject = GameManager.otherPlayer;
+                    foundOtherPlayer = true;
+                }
+            }
+            else
+            {
+                if (GameManager.otherPlayer == null)
+                {
+                    otherPlayer.PlayerObject = null;
+                    foundOtherPlayer = false;
+                }
             }
         }
     }
