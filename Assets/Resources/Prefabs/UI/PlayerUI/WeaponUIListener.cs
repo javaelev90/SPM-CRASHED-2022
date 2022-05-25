@@ -18,17 +18,27 @@ public class WeaponUIListener : MonoBehaviour
     private SoldierCharacter soldier;
     private Engineer engineer;
 
+    private void OnEnable()
+    {
+        EventSystem.Instance.RegisterListener<WeaponAmmunitionUpdateEvent>(UpdateAmmo);
+        EventSystem.Instance.RegisterListener<StungunCoolDownEvent>(UpdateStunGun);
+    }
+
+    private void OnDisable()
+    {
+        EventSystem.Instance.UnregisterListener<WeaponAmmunitionUpdateEvent>(UpdateAmmo);
+        EventSystem.Instance.UnregisterListener<StungunCoolDownEvent>(UpdateStunGun);
+    }
+
     private void Start()
     {
         if (GameManager.player.GetComponent<SoldierCharacter>() == true) // maybe the player refences should be cached at the gamemanager class instead
         {
             gunSlot.SetActive(true);
-            EventSystem.Instance.RegisterListener<WeaponAmmunitionUpdateEvent>(UpdateAmmo);
         }
         else
         {
             stunGunSlot.SetActive(true);
-            EventSystem.Instance.RegisterListener<StungunCoolDownEvent>(UpdateStunGun);
         }
     }
 
