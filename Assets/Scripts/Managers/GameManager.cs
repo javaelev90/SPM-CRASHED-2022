@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             objectInstantiater.InitializeWorld();
         }
 
-
         if (character == Character.SOLDIER)
         {
             player = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + soldierPrefab.name, spawnPoint.position, spawnPoint.rotation);
