@@ -5,6 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using EventCallbacksSystem;
 
 public class Engineer : Controller3D
 {
@@ -72,6 +73,7 @@ public class Engineer : Controller3D
     [SerializeField] public LayerMask stunLayer;
     [SerializeField] private ParticleActivator shootingEffect;
     [SerializeField] GameObject hitPosition;
+    private StungunCoolDownEvent stunGunEvent;
 
     private float shotCooldown = 0f;
 
@@ -82,7 +84,8 @@ public class Engineer : Controller3D
         StartCoroutine(Wait(5));
         isUsingTurret = false;
         //playerActions = new PlayerInputActions();
-    
+        stunGunEvent = new StungunCoolDownEvent(delayBetweenShots);
+        EventSystem.Instance.FireEvent(stunGunEvent);
     }
 
     protected override void Awake()
@@ -140,8 +143,13 @@ public class Engineer : Controller3D
             // Add cooldown time
             shotCooldown = delayBetweenShots;
             shootingEffect.PlayParticles();
+            EventSystem.Instance.FireEvent(stunGunEvent);
         }
 
+        if(OnCoolDown() == false)
+        {
+            EventSystem.Instance.FireEvent(stunGunEvent);
+        }
     }
 
     public void OnPlacementStarted()

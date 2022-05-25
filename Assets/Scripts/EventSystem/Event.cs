@@ -200,7 +200,6 @@ namespace EventCallbacksSystem
     public class StungunCoolDownEvent : Event
     {
         public float CoolDownTime { get; private set; }
-        public bool IsCoolingDown { get; set; }
 
         public StungunCoolDownEvent(float coolDownTime)
         {

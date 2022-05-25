@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EventCallbacksSystem;
 using TMPro;
+using UnityEngine.UI;
 
 public class WeaponUIListener : MonoBehaviour
 {
@@ -19,9 +20,9 @@ public class WeaponUIListener : MonoBehaviour
 
     [Header("Stungun settings")]
     [SerializeField] private GameObject stunGunSlot;
-    private float coolDownTime;
+    [SerializeField] private Image reloadBar;
+    private float coolDownTime = 0.5f;
     private bool isCoolinDown;
-    private Engineer engineer;
 
 
     private void OnEnable()
@@ -49,21 +50,39 @@ public class WeaponUIListener : MonoBehaviour
         }
 
         reloadTextColor = reloadText.color;
+        reloadBar.fillAmount = 1f;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (hasAmmunition == false && hasGreenGoo == false)
+        if (gunSlot.activeSelf)
         {
-            if (reloadText.gameObject.activeSelf == false)
-                reloadText.gameObject.SetActive(true);
+            if (hasAmmunition == false && hasGreenGoo == false)
+            {
+                if (reloadText.gameObject.activeSelf == false)
+                    reloadText.gameObject.SetActive(true);
 
-            reloadTextColor.a = Mathf.Clamp(Mathf.PingPong(Time.time * pingPongMultplier, pingPongValue), 0, pingPongValue);
-            reloadText.color = reloadTextColor;
+                reloadTextColor.a = Mathf.Clamp(Mathf.PingPong(Time.time * pingPongMultplier, pingPongValue), 0, pingPongValue);
+                reloadText.color = reloadTextColor;
+            }
         }
-         
+
+        if (stunGunSlot.activeSelf)
+        {
+            if (isCoolinDown)
+            {
+                reloadBar.fillAmount = 0f;
+                isCoolinDown = false;
+            }
+            else
+            {
+                reloadBar.fillAmount += (Time.deltaTime * (1f/ coolDownTime));
+                reloadBar.fillAmount = Mathf.Clamp(reloadBar.fillAmount, 0f, 1f);
+            }
+        }
+
     }
 
     public void UpdateAmmo(WeaponAmmunitionUpdateEvent ev)
@@ -109,6 +128,11 @@ public class WeaponUIListener : MonoBehaviour
 
     public void UpdateStunGun(StungunCoolDownEvent ev)
     {
+        if(coolDownTime == 0)
+        {
+            coolDownTime = ev.CoolDownTime;
+        }
 
+        isCoolinDown = true;
     }
 }

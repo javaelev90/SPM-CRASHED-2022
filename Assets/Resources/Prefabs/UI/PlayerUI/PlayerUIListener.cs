@@ -111,7 +111,6 @@ public class PlayerUIListener : MonoBehaviour
                 selectedIndex = 0;
                 slotItems[selectedIndex].SelectItem();
             }
-
         }
 
         TypeToInventoryEvent te = new TypeToInventoryEvent(slotItems[selectedIndex].PickupType);
