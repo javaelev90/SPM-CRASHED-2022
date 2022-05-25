@@ -52,7 +52,6 @@ public class Minimap : MonoBehaviour
             {
                 break;
             }
-
             yield return new WaitForSeconds(0.2f);
         }
     }

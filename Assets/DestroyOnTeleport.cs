@@ -15,7 +15,8 @@ public class DestroyOnTeleport : MonoBehaviourPunCallbacks
 
     public void DestroyOnTP(TeleportToShipEvent teleportToShipEvent)
     {
-        photonView.RPC(nameof(DestroyOnTPRPC), RpcTarget.All);
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC(nameof(DestroyOnTPRPC), RpcTarget.All);
     }
 
     [PunRPC]
