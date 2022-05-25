@@ -68,23 +68,6 @@ public class Weapon : MonoBehaviourPunCallbacks
         return shotCooldown >= 0;
     }
 
-    /// <summary>
-    /// Searches a GameObject for a specific child using "childName"
-    /// </summary>
-    private Transform GetChildWithName(GameObject objectToSearch, string childName)
-    {
-        Transform child = null;
-        foreach (Transform t in objectToSearch.GetComponentsInChildren<Transform>())
-        {
-            if (t.name == childName)
-            {
-                child = t;
-                break;
-            }
-        }
-        return child;
-    }
-
     public void Shoot()
     {
         if(OnCoolDown() == false && IsShooting == true && currentAmmo > 0)

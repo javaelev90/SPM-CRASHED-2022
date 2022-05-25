@@ -40,7 +40,21 @@ public class Minimap : MonoBehaviour
     private void Start()
     {
         Player = GameManager.player;
-        OtherPlayer = GameManager.otherPlayer;
+        StartCoroutine(FindOtherPlayer());
+    }
+
+    IEnumerator FindOtherPlayer()
+    {
+        while (OtherPlayer == null)
+        {
+            OtherPlayer = GameManager.otherPlayer;
+            if (OtherPlayer != null)
+            {
+                break;
+            }
+
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     // Update is called once per frame

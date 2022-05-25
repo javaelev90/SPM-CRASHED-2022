@@ -236,7 +236,10 @@ public class Controller3D : MonoBehaviourPunCallbacks
             // skapa nytt obj framf�r muzzle som direction, origin �r muzzlepoint
             Vector3 lookDirection = (muzzlePoint.transform.position - transform.position).normalized;
             Quaternion rotateTo = Quaternion.LookRotation(lookDirection, turretBodyTransform.transform.up);
-            turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
+
+            turretBodyTransform = turretBodyTransform.transform;
+            turretBodyTransform.LookAt(lookDirection, Vector3.up);
+            //turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
         }
     }
 
