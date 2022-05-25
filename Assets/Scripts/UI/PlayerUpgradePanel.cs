@@ -39,7 +39,7 @@ public class PlayerUpgradePanel : MonoBehaviour
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.None;
-        GameManager.playerObject.GetComponent<PlayerInput>().enabled = false;
+        GameManager.player.GetComponent<PlayerInput>().enabled = false;
     }
 
     public void HealthUpgrade()
@@ -75,7 +75,7 @@ public class PlayerUpgradePanel : MonoBehaviour
     private void Exit()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        GameManager.playerObject.GetComponent<PlayerInput>().enabled = true;
+        GameManager.player.GetComponent<PlayerInput>().enabled = true;
         gameObject.SetActive(false);
     }
 }

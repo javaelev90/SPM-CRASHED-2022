@@ -6,10 +6,7 @@ using EventCallbacksSystem;
 
 public class InventorySystem : MonoBehaviour
 {
-    // dictionary for prefabs
     private Dictionary<Type, GameObject> prefabs;
-
-    // dictionary for amounts
     private Dictionary<Type, int> amounts = new Dictionary<Type, int>();
     private UpdateUIAmountsEvent uiEvent = new UpdateUIAmountsEvent();
 
@@ -31,8 +28,8 @@ public class InventorySystem : MonoBehaviour
         {
             amounts[keyType] += amount;
             uiEvent.Amounts = amounts;
+            uiEvent.type = keyType;
             EventSystem.Instance.FireEvent(uiEvent);
-            //Debug.LogErrorFormat("Amount of {0} is : {1}", keyType, amounts[keyType]);
             return true;
         }
         return false;
@@ -52,8 +49,8 @@ public class InventorySystem : MonoBehaviour
         {
             amounts[keyType] -= amount;
             uiEvent.Amounts = amounts;
+            uiEvent.type = keyType;
             EventSystem.Instance.FireEvent(uiEvent);
-            //Debug.LogErrorFormat("Amount of {0} is : {1}", keyType, amounts[keyType]);
             return true;
         }
         return false;
@@ -94,10 +91,8 @@ public class InventorySystem : MonoBehaviour
             prefabs = new Dictionary<Type, GameObject>();
         }
 
-        //Debug.LogError("Folder exists " + Directory.Exists("Assets/Resources/Prefabs/Pickups"));
         if (Directory.Exists(Application.dataPath + GlobalSettings.ResourcesPath))
         {
-
             System.Object[] os = Resources.LoadAll(GlobalSettings.PickupsPath, typeof(Item));
 
             if (os.Length > 0)

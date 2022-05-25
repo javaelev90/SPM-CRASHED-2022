@@ -12,8 +12,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject engineerPrefab;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private ObjectInstantiater objectInstantiater;
-    [SerializeField] private ObjectCulling objectCulling;
-    public static GameObject playerObject;
+    [SerializeField] public ObjectCulling objectCulling;
+    public static GameObject player;
+    public static GameObject otherPlayer;
 
     public static Character character;
 
@@ -25,7 +26,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         character = (Character)PlayerPrefs.GetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName);
         Initialize();
         Debug.Log($"Oh no, you chose the {character} charater");
-
+        StartCoroutine(FindOtherPlayer(character));
     }
 
     private void Update()
@@ -40,37 +41,38 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    IEnumerator FindOtherPlayer(Character character)
+    {
+        while (otherPlayer == null)
+        {
+            if (character == Character.SOLDIER)
+                otherPlayer = FindObjectOfType<Engineer>()?.gameObject;
+            else
+                otherPlayer = FindObjectOfType<SoldierCharacter>()?.gameObject;
+
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
     private void Initialize()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            //PhotonNetwork.SetInterestGroups(1, true);
-            //PhotonNetwork.SetInterestGroups(2, true);
-            //PhotonNetwork.SetSendingEnabled(0, true);
-            //PhotonNetwork.SetSendingEnabled(1, true);
-            //PhotonNetwork.SetSendingEnabled(2, true);
-
             objectInstantiater.InitializeWorld();
-        }
-        else
-        {
-            //PhotonNetwork.SetInterestGroups(1, false);
-            //PhotonNetwork.SetInterestGroups(2, true);
-            //PhotonNetwork.SetInterestGroups(new byte[] { 1 }, new byte[] { 2 });
         }
 
         if (character == Character.SOLDIER)
         {
-            playerObject = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + soldierPrefab.name, spawnPoint.position, spawnPoint.rotation);
+            player = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + soldierPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
         else
         {
-            playerObject = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
+            player = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
 
         if (PhotonNetwork.IsMasterClient)
         {
-            objectCulling.Initialize(playerObject, character);
+            objectCulling.Initialize(player, character);
         }
 
     }

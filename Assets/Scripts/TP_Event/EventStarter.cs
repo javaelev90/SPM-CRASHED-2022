@@ -3,13 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using EventCallbacksSystem;
 using Photon.Pun;
+using System;
 
 public class EventStarter : MonoBehaviourPunCallbacks
 {
-    public float eventTime = 30f;
+    [Header("Teleporter (Don't touch)")]
+    public GameObject teleporter;
+    public Material emissionFill;
+    public ParticleSystem swirl;
+    public ParticleSystem beam;
+    public bool teleportTimeDone;
+    public bool teleporPositionRight;
+
+    [Header("Dome (Don't touch)")]
     public GameObject dome;
+
+    [Header("Event")]
+    public float eventTime = 30f;
+
+    [Header("Ship Part")]
     public GameObject missingPart;
     public GameObject attachedPart;
+    
 
 
     public List<ObjectSpawner> eventSpawners;
@@ -40,6 +55,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
             EventSystem.Instance.FireEvent(new EventEvent(true));
 
             dome.SetActive(true);
+            teleporter.SetActive(true);
 
             foreach (ObjectSpawner objectSpawner in eventSpawners)
             {
@@ -70,16 +86,50 @@ public class EventStarter : MonoBehaviourPunCallbacks
 
     private IEnumerator TeleportIn(float eventTime)
     {
-        yield return new WaitForSeconds(eventTime);
-        EndEvent();  
+        float timer = 0;
+
+        while (timer < eventTime)
+        {
+            timer += Time.deltaTime;
+            emissionFill.SetFloat("EmissionFill", timer / eventTime);
+            yield return null;
+        }
+        ActivatTeleport();
+        
+        //EndEvent();  
     }
 
-    
+    private void ActivatTeleport()
+    {
+        swirl.Play();
+        beam.Play();
+        teleportTimeDone = true;
+        Teleport();
+        
+    }
+
+    public void Teleport(bool teleporPositionRight)
+    {
+        this.teleporPositionRight = teleporPositionRight;
+        Teleport();
+    }
+
+    private void Teleport()
+    {
+        if (teleportTimeDone && teleporPositionRight)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                EventSystem.Instance.FireEvent(new TeleportToShipEvent());
+            }
+            EndEvent();
+        }
+    }
+
     public void EndEvent()
     {
         EventSystem.Instance.FireEvent(new EventEvent(false));
         EventSystem.Instance.FireEvent(new AttachPartEvent(attachedPart, missingPart));
-        EventSystem.Instance.FireEvent(new TeleportToShipEvent());
         Destroy(gameObject);
     }
 }

@@ -134,7 +134,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
         if (parameters.Length > 0)
         {
             wayPointSystem.spreadRadius = (float)parameters[0];
-            wayPointSystem.PositionWayPoints(wayPointSystem.AssignLocalPosition);
+            //wayPointSystem.PositionWayPoints(wayPointSystem.AssignLocalPosition);
         }
         if (parameters.Length > 1)
         {

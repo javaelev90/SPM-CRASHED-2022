@@ -7,7 +7,7 @@ using EventCallbacksSystem;
 public class Controller3D : MonoBehaviourPunCallbacks
 {
     [Header("Multiplayer")]
-    private bool isMine;
+    public bool isMine;
 
     [Header("Weapon")]
     [SerializeField] public GameObject weaponRotation;
@@ -233,10 +233,13 @@ public class Controller3D : MonoBehaviourPunCallbacks
         {
             // Rotate the turret towards where the player is looking
             Physics.Raycast(muzzlePoint.transform.position, muzzlePoint.transform.forward, out RaycastHit hit, 20f, enemyLayer);
-            // skapa nytt obj framför muzzle som direction, origin är muzzlepoint
+            // skapa nytt obj framfï¿½r muzzle som direction, origin ï¿½r muzzlepoint
             Vector3 lookDirection = (muzzlePoint.transform.position - transform.position).normalized;
             Quaternion rotateTo = Quaternion.LookRotation(lookDirection, turretBodyTransform.transform.up);
-            turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
+
+            turretBodyTransform = turretBodyTransform.transform;
+            turretBodyTransform.LookAt(lookDirection, Vector3.up);
+            //turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
         }
     }
 

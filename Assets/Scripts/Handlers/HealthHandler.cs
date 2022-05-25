@@ -5,7 +5,7 @@ using Photon.Pun;
 using EventCallbacksSystem;
 using System;
 
-public class HealthHandler : MonoBehaviourPunCallbacks
+public abstract class HealthHandler : MonoBehaviourPunCallbacks
 {
     [Header("Required components")]
     [SerializeField] private HealthBarHandler healthBarHandler;
@@ -28,8 +28,9 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     public float intervale = 1.5f;
 
 
-    public virtual void TakeDamage(int amount) {}
-    public virtual void Die() {}
+    public abstract void TakeDamage(int amount);
+    public abstract void Die();
+
     public virtual void DropItem() {}
 
     public override void OnEnable()

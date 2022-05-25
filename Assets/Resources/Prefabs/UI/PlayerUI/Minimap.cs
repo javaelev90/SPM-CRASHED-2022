@@ -37,6 +37,26 @@ public class Minimap : MonoBehaviour
         outerMarkerOtherPlayerParent.gameObject.SetActive(false);
     }
 
+    private void Start()
+    {
+        Player = GameManager.player;
+        StartCoroutine(FindOtherPlayer());
+    }
+
+    IEnumerator FindOtherPlayer()
+    {
+        while (OtherPlayer == null)
+        {
+            OtherPlayer = GameManager.otherPlayer;
+            if (OtherPlayer != null)
+            {
+                break;
+            }
+
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -55,7 +75,6 @@ public class Minimap : MonoBehaviour
             }
         }
     }
-
 
     private void ActivateOuterMarker(RectTransform objectMarker, Transform parent)
     {
