@@ -7,7 +7,7 @@ using Photon.Pun;
 public class TeleportToShip : MonoBehaviourPunCallbacks
 {
     public GameObject playerObject;
-    private PlayerHealthHandler playerHealth;
+    public PlayerHealthHandler playerHealth;
 
     public Transform soldierTPPosition;
     public Transform engenerTPPosition;
@@ -15,6 +15,7 @@ public class TeleportToShip : MonoBehaviourPunCallbacks
     private void Start()
     {
         EventSystem.Instance.RegisterListener<TeleportToShipEvent>(Teleport);
+        playerObject = GameManager.player;
         playerHealth = playerObject.GetComponent<PlayerHealthHandler>();
     }
 
@@ -28,7 +29,7 @@ public class TeleportToShip : MonoBehaviourPunCallbacks
     private void TeleportRPC()
     {
         //soldier.transform.position = soldierTPPosition.transform.position;
-        playerObject = GameManager.player;
+        
 
         if (playerObject.GetComponent<Engineer>())
         {
