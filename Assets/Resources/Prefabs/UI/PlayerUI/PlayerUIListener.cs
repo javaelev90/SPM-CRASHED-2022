@@ -12,13 +12,14 @@ public class PlayerUIListener : MonoBehaviour
     private GameObject particleEffectAmount;
     private Dictionary<Pickup_Typs.Pickup, SlotItem> slots;
     private int selectedIndex;
-    private bool isShowingObjective;
+    private bool isShowingObjective = true;
 
     private void OnEnable()
     {
         EventSystem.Instance.RegisterListener<UpdateUIAmountsEvent>(UpdateAmounts);
         EventSystem.Instance.RegisterListener<ShipUpgradeProgressionEvent>(UpdateShipPartCompleted);
         EventSystem.Instance.RegisterListener<ShipUpgradeProgressionEvent>(InitializeShipParts);
+
         slots = new Dictionary<Pickup_Typs.Pickup, SlotItem>();
         if (slotItems != null)
         {
@@ -33,6 +34,7 @@ public class PlayerUIListener : MonoBehaviour
     private void OnDisable()
     {
         EventSystem.Instance.UnregisterListener<UpdateUIAmountsEvent>(UpdateAmounts);
+        EventSystem.Instance.UnregisterListener<ShipUpgradeProgressionEvent>(UpdateShipPartCompleted);
     }
 
 

@@ -213,7 +213,7 @@ namespace EventCallbacksSystem
         public int AmmunitionAmount { get; set; }
         public int MaxAmmunitionAmount { get; private set; }
 
-        WeaponAmmunitionUpdateEvent(int ammunitionAmount, int maxAmmunitionAmount)
+        public WeaponAmmunitionUpdateEvent(int ammunitionAmount, int maxAmmunitionAmount)
         {
             AmmunitionAmount = ammunitionAmount;
             MaxAmmunitionAmount = maxAmmunitionAmount;

@@ -2,18 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EventCallbacksSystem;
+using TMPro;
 
 public class WeaponUIListener : MonoBehaviour
 {
+    [Header("Rifle settings")]
     [SerializeField] private GameObject gunSlot;
+    [SerializeField] private TMP_Text ammunitionText;
+
+    [Header("Stungun settings")]
     [SerializeField] private GameObject stunGunSlot;
+    private float coolDownTime;
+    private bool isCoolinDown;
 
-    private float stunGunCooldown;
-    private int ammunition;
+    private SoldierCharacter soldier;
+    private Engineer engineer;
 
-    void Start()
+    private void Start()
     {
-        if (Minimap.Instance.Player.GetComponent<SoldierCharacter>() == true)
+        if (GameManager.player.GetComponent<SoldierCharacter>() == true) // maybe the player refences should be cached at the gamemanager class instead
         {
             gunSlot.SetActive(true);
             EventSystem.Instance.RegisterListener<WeaponAmmunitionUpdateEvent>(UpdateAmmo);
@@ -25,6 +32,7 @@ public class WeaponUIListener : MonoBehaviour
         }
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -33,7 +41,7 @@ public class WeaponUIListener : MonoBehaviour
 
     public void UpdateAmmo(WeaponAmmunitionUpdateEvent ev)
     {
-
+        ammunitionText.text = ev.AmmunitionAmount.ToString();
     }
 
     public void UpdateStunGun(StungunCoolDownEvent ev)
