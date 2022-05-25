@@ -22,6 +22,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     [SerializeField] private int currentAmmo;
     private float shotCooldown = 0f;
     public bool IsShooting { get; set; }
+    private WeaponAmmunitionUpdateEvent ammunitionUpdateEvent;
 
     [Header("Weapon effects")]
     [SerializeField] private Animator animator;
@@ -48,6 +49,10 @@ public class Weapon : MonoBehaviourPunCallbacks
         EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
         sourceOne.volume = Random.Range(1.8f, 2.5f);
         sourceOne.pitch = Random.Range(0.8f, 1.2f);
+
+        currentAmmo = maxAmmo;
+        ammunitionUpdateEvent = new WeaponAmmunitionUpdateEvent(currentAmmo, maxAmmo);
+        EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
     }
 
     private void Cooldown()
@@ -91,6 +96,10 @@ public class Weapon : MonoBehaviourPunCallbacks
             {
                 inventory.Remove<GreenGoo>(greenGooCost);
             }
+
+            currentAmmo--;
+            ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
+            EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
 
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,
                 out RaycastHit hitInfo, weaponRange, layersThatShouldBeHit))
@@ -146,4 +155,5 @@ public class Weapon : MonoBehaviourPunCallbacks
     {
         delayBetweenShots *= (1 - gunRateUpgradeEvent.UpgradePercent);
     }
+
 }

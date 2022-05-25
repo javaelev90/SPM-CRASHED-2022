@@ -82,24 +82,7 @@ public class Engineer : Controller3D
         StartCoroutine(Wait(5));
         isUsingTurret = false;
         //playerActions = new PlayerInputActions();
-        if (photonView.IsMine)
-            Minimap.Instance.Player = gameObject;
-
-        StartCoroutine(SearchOtherPlayer());
-    }
-
-    IEnumerator SearchOtherPlayer()
-    {
-        while (true)
-        {
-            Minimap.Instance.OtherPlayer = FindObjectOfType<SoldierCharacter>()?.gameObject;
-            if (Minimap.Instance.OtherPlayer != null)
-            {
-                break;
-            }
-
-            yield return new WaitForSeconds(0.1f);
-        }
+    
     }
 
     protected override void Awake()
