@@ -192,7 +192,7 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
 
     private void OnDrawGizmos()
     {
-        quadTree.OnDrawGizmos();
+        quadTree.OnDrawGizmos(30);
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(
             new Vector3(player.PlayerObject.transform.position.x, player.PlayerObject.transform.position.y, player.PlayerObject.transform.position.z),
