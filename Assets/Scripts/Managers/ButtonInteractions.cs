@@ -112,7 +112,7 @@ public class ButtonInteractions : MonoBehaviour
     {
       popUpPause.SetActive(false);
       pause.gameObject.SetActive(true);
-      Cursor.lockState = CursorLockMode.Locked;
+      //Cursor.lockState = CursorLockMode.Locked;
     }
 
      public void Pause()
