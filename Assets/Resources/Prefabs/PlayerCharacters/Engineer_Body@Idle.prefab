@@ -12136,7 +12136,19 @@ MonoBehaviour:
     m_ActionId: 414c7bf4-a997-48a6-ba58-e005e22bdc62
     m_ActionName: Player/RepairTurret[/Keyboard/r]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2278181761138372919}
+        m_TargetAssemblyTypeName: PlayerUIListener, Assembly-CSharp
+        m_MethodName: ObjectiveShow
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 3d573a5b-7bfd-4e3c-90f0-688599068280
     m_ActionName: Player/ObjectiveShow[/Keyboard/3]
   m_NeverAutoSwitchControlSchemes: 0
@@ -12198,7 +12210,7 @@ MonoBehaviour:
   weaponVisuals: {fileID: 1754763009703354470}
   bodyMesh: {fileID: 2886942805654159710}
   turret: {fileID: 2411392565204665798, guid: 3358d40555310ec4d8266bc256c4335e, type: 3}
-  turretPos: {fileID: 0}
+  turretPos: {fileID: 6610916776976175376}
   maxTurretToSpawn: 3
   turretCount: 0
   turretOffset: {x: 0, y: 0, z: 0}
@@ -28778,7 +28790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6221183236331591348, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6277701515353605146, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
       propertyPath: m_Layer
