@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LabyrinthReader : MonoBehaviour
 {
@@ -70,12 +71,17 @@ public class LabyrinthReader : MonoBehaviour
         {
             combine[i].mesh = meshFilters[i].sharedMesh;
             combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
-            meshFilters[i].gameObject.SetActive(false);
         }
 
         GetComponent<MeshFilter>().mesh = new Mesh();
         GetComponent<MeshFilter>().mesh.CombineMeshes(combine, true);
+        GetComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().mesh;
+        transform.DetachChildren();
         transform.SetPositionAndRotation(new Vector3(0, 0, 0), Quaternion.identity);
+        foreach(MeshFilter mf in meshFilters)
+        {
+            mf.transform.parent = gameObject.transform;
+        }
         gameObject.SetActive(true);
     }
 }
