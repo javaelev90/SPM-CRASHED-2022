@@ -103,8 +103,11 @@ public class EventStarter : MonoBehaviourPunCallbacks
     {
         swirl.Play();
         beam.Play();
-        teleportTimeDone = true;
-        Teleport();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            teleportTimeDone = true;
+            Teleport();
+        }
     }
 
     public void Teleport(bool teleporPositionRight)

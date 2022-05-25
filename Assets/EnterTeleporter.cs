@@ -1,4 +1,5 @@
- using System.Collections;
+using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class EnterTeleporter : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
             playerOnTeleport++;
-        if((playerOnTeleport > 0 && !(GameManager.otherPlayer != null && GameManager.otherPlayer.activeSelf)) || playerOnTeleport > 1)
+        if(((playerOnTeleport > 0 && !(GameManager.otherPlayer != null && GameManager.otherPlayer.activeSelf)) || playerOnTeleport > 1) && (PhotonNetwork.IsMasterClient))
         {
             eventStarter.Teleport(true);
         }
