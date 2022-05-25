@@ -103,9 +103,11 @@ public class EventStarter : MonoBehaviourPunCallbacks
     {
         swirl.Play();
         beam.Play();
-        teleportTimeDone = true;
-        Teleport();
-        
+        if (PhotonNetwork.IsMasterClient)
+        {
+            teleportTimeDone = true;
+            Teleport();
+        }
     }
 
     public void Teleport(bool teleporPositionRight)
@@ -117,19 +119,20 @@ public class EventStarter : MonoBehaviourPunCallbacks
     private void Teleport()
     {
         if (teleportTimeDone && teleporPositionRight)
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                EventSystem.Instance.FireEvent(new TeleportToShipEvent());
-            }
             EndEvent();
-        }
     }
 
-    public void EndEvent()
+    private void EndEvent()
+    {
+        photonView.RPC(nameof(EndEventRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void EndEventRPC()
     {
         EventSystem.Instance.FireEvent(new EventEvent(false));
         EventSystem.Instance.FireEvent(new AttachPartEvent(attachedPart, missingPart));
+        EventSystem.Instance.FireEvent(new TeleportToShipEvent());
         Destroy(gameObject);
     }
 }
