@@ -31,6 +31,7 @@ public class InventorySystem : MonoBehaviour
         {
             amounts[keyType] += amount;
             uiEvent.Amounts = amounts;
+            uiEvent.type = keyType;
             EventSystem.Instance.FireEvent(uiEvent);
             //Debug.LogErrorFormat("Amount of {0} is : {1}", keyType, amounts[keyType]);
             return true;
@@ -52,6 +53,7 @@ public class InventorySystem : MonoBehaviour
         {
             amounts[keyType] -= amount;
             uiEvent.Amounts = amounts;
+            uiEvent.type = keyType;
             EventSystem.Instance.FireEvent(uiEvent);
             //Debug.LogErrorFormat("Amount of {0} is : {1}", keyType, amounts[keyType]);
             return true;

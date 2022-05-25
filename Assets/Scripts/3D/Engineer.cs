@@ -70,6 +70,9 @@ public class Engineer : Controller3D
     [SerializeField] float weaponRange = 15f;
     [SerializeField] float delayBetweenShots = 0.5f;
     [SerializeField] public LayerMask stunLayer;
+    [SerializeField] private ParticleActivator shootingEffect;
+    [SerializeField] GameObject hitPosition;
+
     private float shotCooldown = 0f;
 
 
@@ -79,24 +82,7 @@ public class Engineer : Controller3D
         StartCoroutine(Wait(5));
         isUsingTurret = false;
         //playerActions = new PlayerInputActions();
-        if (photonView.IsMine)
-            Minimap.Instance.Player = gameObject;
-
-        StartCoroutine(SearchOtherPlayer());
-    }
-
-    IEnumerator SearchOtherPlayer()
-    {
-        while (true)
-        {
-            Minimap.Instance.OtherPlayer = FindObjectOfType<SoldierCharacter>()?.gameObject;
-            if (Minimap.Instance.OtherPlayer != null)
-            {
-                break;
-            }
-
-            yield return new WaitForSeconds(0.1f);
-        }
+    
     }
 
     protected override void Awake()
@@ -148,10 +134,12 @@ public class Engineer : Controller3D
                 {
                     //Debug.Log("Enemy stunned");
                     aIBaseLogic.StunnedBy(transform);
+                    Destroy(Instantiate(hitPosition, hit.point, Quaternion.LookRotation(hit.normal)), 10f);
                 }
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;
+            shootingEffect.PlayParticles();
         }
 
     }

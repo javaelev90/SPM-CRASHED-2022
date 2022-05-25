@@ -506,9 +506,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
---- !u!2083052967 &1705318520377597787 stripped
-VisualEffect:
-  m_CorrespondingSourceObject: {fileID: 8142577327115194881, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+--- !u!1 &5257048803477580168 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3341238609498203346, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+  m_PrefabInstance: {fileID: 7397932976741911898}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6328141570850858070 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3564792497713129740, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_PrefabInstance: {fileID: 7397932976741911898}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2688128606751488051 stripped
@@ -532,9 +537,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5510816813930139584, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_PrefabInstance: {fileID: 7397932976741911898}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6328141570850858070 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3564792497713129740, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+--- !u!2083052967 &1705318520377597787 stripped
+VisualEffect:
+  m_CorrespondingSourceObject: {fileID: 8142577327115194881, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_PrefabInstance: {fileID: 7397932976741911898}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8300025102502602808
@@ -1228,8 +1233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae72c0c5b312a804ab3a21336dfca8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzlePosition: {fileID: 6522658275698048355, guid: e3583a0419e68ed4f925ac2059a80dc9, type: 3}
-  hitPosition: {fileID: 0}
+  muzzlePosition: {fileID: 1705318520377597787}
+  hitPosition: {fileID: 5257048803477580168}
   weaponRange: 30
   weaponDamage: 1
   delayBetweenShots: 0.3
@@ -1239,7 +1244,7 @@ MonoBehaviour:
     m_Bits: 512
   maxAmmo: 0
   currentAmmo: 0
-  animator: {fileID: 0}
+  animator: {fileID: 2469390360455845289}
   sourceOne: {fileID: 4094734280040030718}
   shot:
   - {fileID: 8300000, guid: 89257c298f999d340bee66f3cd650291, type: 3}
@@ -1584,7 +1589,7 @@ MonoBehaviour:
   bulletSpeed: 0
   skinWidth: 0.5
   groundCheckDistance: 0
-  playerGUI: {fileID: 0}
+  playerGUI: {fileID: 8647488912514564008}
   turretObjRef: {fileID: 0}
   engineerRef: {fileID: 0}
   turretBodyTransform: {fileID: 0}
@@ -1683,6 +1688,8 @@ MonoBehaviour:
   MaxHealth: 40
   CurrentHealth: 40
   isAlive: 1
+  damage: 5
+  intervale: 1.5
   deathParticles: {fileID: 7687256951814429033, guid: 09b9bf7d2cccb804c982ab89b4bd8c20, type: 3}
 --- !u!114 &7178814830326724090
 MonoBehaviour:
