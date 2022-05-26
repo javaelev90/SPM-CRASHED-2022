@@ -18,6 +18,8 @@ public class Minimap : MonoBehaviour
     [SerializeField] private Transform outerMarkerShipParent;
     [SerializeField] private Transform outerMarkerOtherPlayerParent;
     [SerializeField] private float scale = 1f;
+    [SerializeField] private Sprite soldierSprite;
+    [SerializeField] private Sprite engineerSprite;
 
     private float radius;
     private Vector2 shipMarkerPos;
@@ -40,6 +42,14 @@ public class Minimap : MonoBehaviour
     private void Start()
     {
         Player = GameManager.player;
+        if (Player.GetComponent<SoldierCharacter>() == true)
+        {
+            otherPlayerMarker.GetComponent<Image>().sprite = engineerSprite;
+        }
+        else
+        {
+            otherPlayerMarker.GetComponent<Image>().sprite = soldierSprite;
+        }
         StartCoroutine(FindOtherPlayer());
     }
 
@@ -79,7 +89,7 @@ public class Minimap : MonoBehaviour
     {
         if (!IsInsideUnitCircle(objectMarker))
         {
-            objectMarker.GetComponent<RawImage>().enabled = false;
+            objectMarker.GetComponent<Image>().enabled = false;
             parent.gameObject.SetActive(true);
             Vector2 direction = objectMarker.anchoredPosition - playerMarker.anchoredPosition;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -88,7 +98,7 @@ public class Minimap : MonoBehaviour
         else
         {
             parent.gameObject.SetActive(false);
-            objectMarker.GetComponent<RawImage>().enabled = true;
+            objectMarker.GetComponent<Image>().enabled = true;
         }
     }
 
