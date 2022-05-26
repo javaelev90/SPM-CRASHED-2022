@@ -19,7 +19,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
     [Header("Player")]
     [SerializeField] private float skinWidth = 0.5f;
     [SerializeField] private float groundCheckDistance;
-    [SerializeField] private GameObject playerGUI;
+    [SerializeField] public GameObject playerGUI;
     private HealthHandler healthHandler;
 
     [Header("Engineer")]
@@ -113,7 +113,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
             mainCam.transform.rotation = camPositionFPS.transform.rotation;
         }
 
-
+        playerGUI.gameObject.SetActive(false);
         bodyMesh.SetActive(isMine == false);
     }
 

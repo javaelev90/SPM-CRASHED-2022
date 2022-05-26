@@ -74,10 +74,12 @@ public class ButtonInteractions : MonoBehaviour
      public void CloseExitWindow()
     {
         popUpExit.SetActive(false);
+        pause.gameObject.SetActive(true);
     }
     public void OpenExitWindow()
     {
         popUpExit.SetActive(true);
+        pause.gameObject.SetActive(false);
         Debug.Log("quit");
     
     }
