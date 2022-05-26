@@ -13,7 +13,7 @@ public class EnemyHealthHandler : HealthHandler
     GameObject vfx;
 
     private bool hasBeenHurt = false;
-    [SerializeField]private Animator anim;
+    [SerializeField] private Animator anim;
 
     public override void TakeDamage(int amount)
     {

@@ -43,6 +43,9 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     public bool IsWithinSight { get; set; }
     public bool IsAggresive { get; set; }
 
+    [Header("Animator")]
+    protected Animator animator;
+
     private void OnEnable()
     {
         root.CustomInitializeFunction = Initialize;
