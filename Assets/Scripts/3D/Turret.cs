@@ -99,6 +99,8 @@ public class Turret : MonoBehaviourPunCallbacks
         turretBody.transform.eulerAngles = pivotRotation;
     }
 
+
+
     void Update()
     {
         if (transform.GetComponent<HealthHandler>().isAlive == true)
