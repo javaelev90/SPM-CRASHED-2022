@@ -73,7 +73,9 @@ public class Engineer : Controller3D
     [SerializeField] public LayerMask stunLayer;
     [SerializeField] private ParticleActivator shootingEffect;
     [SerializeField] GameObject hitPosition;
+    [SerializeField] private AudioClip stunSound;
     private StungunCoolDownEvent stunGunEvent;
+    private AudioSource audioSource;
 
     private float shotCooldown = 0f;
 
@@ -86,6 +88,7 @@ public class Engineer : Controller3D
         //playerActions = new PlayerInputActions();
         stunGunEvent = new StungunCoolDownEvent(delayBetweenShots);
         EventSystem.Instance.FireEvent(stunGunEvent);
+        audioSource = GetComponent<AudioSource>();
     }
 
     protected override void Awake()
@@ -143,10 +146,11 @@ public class Engineer : Controller3D
             // Add cooldown time
             shotCooldown = delayBetweenShots;
             shootingEffect.PlayParticles();
+            audioSource.PlayOneShot(stunSound);
             EventSystem.Instance.FireEvent(stunGunEvent);
         }
 
-        if(OnCoolDown() == false)
+        if (OnCoolDown() == false)
         {
             EventSystem.Instance.FireEvent(stunGunEvent);
         }
@@ -325,7 +329,7 @@ public class Engineer : Controller3D
             {
                 // Make sure the turret doesn't alreday have full health
                 TurretHealthHandler obj = hit.collider.gameObject.GetComponent<TurretHealthHandler>();
-                
+
                 if (obj.CurrentHealth == obj.MaxHealth)
                 {
                     // Text to explain why repair not activating
@@ -334,7 +338,7 @@ public class Engineer : Controller3D
                     StartCoroutine(ExecuteAfterTime(2f));
                     return;
                 }
-                
+
 
                 // Check if resources needed is in inventory
                 InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
@@ -383,7 +387,7 @@ public class Engineer : Controller3D
         notEnoughResourcesToBuild.gameObject.SetActive(false);
     }
 
-    
+
     Engineer player;
 
     IEnumerator Wait(float sec)

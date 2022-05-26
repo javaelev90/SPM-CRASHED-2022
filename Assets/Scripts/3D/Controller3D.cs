@@ -114,7 +114,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
         }
 
 
-        //bodyMesh.SetActive(isMine == false);
+        bodyMesh.SetActive(isMine == false);
     }
 
     private void OnEnable()
