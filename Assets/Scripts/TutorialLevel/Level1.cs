@@ -36,7 +36,7 @@ public class Level1 : MonoBehaviour
     }
 
     public void TutorialOver(){
-        if((PlacedTurret() && pool.activeObjects.Count == 0 && ship.nextUpgrade>0))
+        if((ship.nextUpgrade>0))
         {
             DisableColliders();
             uiObject.SetActive(true);

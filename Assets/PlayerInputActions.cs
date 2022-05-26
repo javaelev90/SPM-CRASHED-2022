@@ -233,6 +233,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShowPauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""5a047d9e-d3c0-4e94-94d0-75c6c0d6ec24"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -785,6 +794,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""ObjectiveShow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dbb65f2b-8493-4e8e-8e96-d6123f9e71ac"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""ShowPauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1217,6 +1237,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Beef = m_Player.FindAction("Beef", throwIfNotFound: true);
         m_Player_RepairTurret = m_Player.FindAction("RepairTurret", throwIfNotFound: true);
         m_Player_ObjectiveShow = m_Player.FindAction("ObjectiveShow", throwIfNotFound: true);
+        m_Player_ShowPauseMenu = m_Player.FindAction("ShowPauseMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1311,6 +1332,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Beef;
     private readonly InputAction m_Player_RepairTurret;
     private readonly InputAction m_Player_ObjectiveShow;
+    private readonly InputAction m_Player_ShowPauseMenu;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1338,6 +1360,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Beef => m_Wrapper.m_Player_Beef;
         public InputAction @RepairTurret => m_Wrapper.m_Player_RepairTurret;
         public InputAction @ObjectiveShow => m_Wrapper.m_Player_ObjectiveShow;
+        public InputAction @ShowPauseMenu => m_Wrapper.m_Player_ShowPauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1416,6 +1439,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @ObjectiveShow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnObjectiveShow;
                 @ObjectiveShow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnObjectiveShow;
                 @ObjectiveShow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnObjectiveShow;
+                @ShowPauseMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPauseMenu;
+                @ShowPauseMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPauseMenu;
+                @ShowPauseMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPauseMenu;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1489,6 +1515,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @ObjectiveShow.started += instance.OnObjectiveShow;
                 @ObjectiveShow.performed += instance.OnObjectiveShow;
                 @ObjectiveShow.canceled += instance.OnObjectiveShow;
+                @ShowPauseMenu.started += instance.OnShowPauseMenu;
+                @ShowPauseMenu.performed += instance.OnShowPauseMenu;
+                @ShowPauseMenu.canceled += instance.OnShowPauseMenu;
             }
         }
     }
@@ -1641,6 +1670,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnBeef(InputAction.CallbackContext context);
         void OnRepairTurret(InputAction.CallbackContext context);
         void OnObjectiveShow(InputAction.CallbackContext context);
+        void OnShowPauseMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

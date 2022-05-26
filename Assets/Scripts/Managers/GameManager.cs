@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public static Character character;
 
+    public GameObject loadScene;
+
     private bool IsMine { get { return photonView.IsMine; } }
     private bool gameIsOver = false;
     
@@ -27,6 +29,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         Initialize();
         Debug.Log($"Oh no, you chose the {character} charater");
         StartCoroutine(FindOtherPlayer(character));
+        Destroy(loadScene, 10);
+
     }
 
     private void Update()
