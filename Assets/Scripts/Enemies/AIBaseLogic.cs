@@ -44,7 +44,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     public bool IsAggresive { get; set; }
 
     [Header("Animator")]
-    protected Animator animator;
+    [SerializeField] protected Animator animator;
 
     private void OnEnable()
     {
