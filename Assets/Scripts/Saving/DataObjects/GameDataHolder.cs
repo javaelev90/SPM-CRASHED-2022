@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameDataHolder
 {
     public PlayerData playerData;
+    public PlayerData otherPlayerData;
     public ProgressData progressData;
     public PickupData pickupData;
 

@@ -25,7 +25,7 @@ public class LightingManager : MonoBehaviour
     private bool cycleOngoing = true;
 
     public bool IsNight { get; private set; }
-
+    public float TimeOfDay { get { return timeOfDay; } set { timeOfDay = value; } }
     public float DayLength { get { return dayLength; } }
     public float NightLength { get { return nightLength; } }
 
