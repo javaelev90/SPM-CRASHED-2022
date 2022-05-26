@@ -50,6 +50,10 @@ public class EnemyHealthHandler : HealthHandler
         {
             DropItem();
         }
+        if(TryGetComponent<SlugEnemy>(out SlugEnemy slugEnemy))
+        {
+            slugEnemy.BlowUp();
+        }
         rootObject?.DeSpawn();
     }
 
