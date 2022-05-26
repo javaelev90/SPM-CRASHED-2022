@@ -59,7 +59,7 @@ public class PlayerUIListener : MonoBehaviour
         if (e.type == typeof(GreenGoo))
         {
             effectTransform = slots[Pickup_Typs.Pickup.GreenGoo].EffectPosition;
-        } 
+        }
         else if (e.type == typeof(Metal))
         {
             effectTransform = slots[Pickup_Typs.Pickup.Metal].EffectPosition;
@@ -71,8 +71,8 @@ public class PlayerUIListener : MonoBehaviour
 
         var vfx = Instantiate(amountEffect, effectTransform.position, Quaternion.identity) as GameObject;
         vfx.transform.SetParent(effectTransform);
-        var ps = vfx.GetComponent<ParticleSystem>();
-        Destroy(vfx, ps.main.duration + ps.main.startLifetime.constantMax);
+        var ps = vfx.GetComponent<ParticleDestroyer>();
+        Destroy(vfx, ps.DestroyDelay);
     }
 
     public void PreviousItem(InputAction.CallbackContext ctx) // use as previous
