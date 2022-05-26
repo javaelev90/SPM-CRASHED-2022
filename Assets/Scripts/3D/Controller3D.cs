@@ -32,7 +32,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
     [Header("Camera settings")]
     [SerializeField] private bool isFPS;
-    [SerializeField] private GameObject camPositionFPS;
+    [SerializeField] protected GameObject camPositionFPS;
     [SerializeField] Vector3 cameraOffsetTPS;
     [SerializeField] Vector3 cameraOffsetFPS;
     [SerializeField] float smoothFactorQuick = 0.23f;
@@ -113,7 +113,6 @@ public class Controller3D : MonoBehaviourPunCallbacks
             mainCam.transform.rotation = camPositionFPS.transform.rotation;
         }
 
-        playerGUI.gameObject.SetActive(false);
         bodyMesh.SetActive(isMine == false);
     }
 

@@ -79,7 +79,6 @@ public class Engineer : Controller3D
 
     private float shotCooldown = 0f;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -258,7 +257,7 @@ public class Engineer : Controller3D
     /// </summary>
     public void OnTurretDestroy()
     {
-        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
+        if (isUsingTurret == false && Physics.Raycast(camPositionFPS.transform.position, camPositionFPS.transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
             hit.collider.GetComponent<TurretHealthHandler>().SalvageDrop();
             GameObject GTG = hit.collider.gameObject;
@@ -288,7 +287,7 @@ public class Engineer : Controller3D
 
     public void OnTurretUse()
     {
-        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
+        if (isUsingTurret == false && Physics.Raycast(camPositionFPS.transform.position, camPositionFPS.transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
             if (hit.collider.GetComponent<HealthHandler>().isAlive)
             {
@@ -323,7 +322,7 @@ public class Engineer : Controller3D
 
     public void OnTurretRepair(InputAction.CallbackContext ctx)
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
+        if (Physics.Raycast(camPositionFPS.transform.position, camPositionFPS.transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
             if (ctx.performed)
             {

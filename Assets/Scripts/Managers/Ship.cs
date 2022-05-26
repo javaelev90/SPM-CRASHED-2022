@@ -25,7 +25,6 @@ public class Ship : MonoBehaviourPunCallbacks
     private InventorySystem inventory;
     private ShipUpgradeProgressionEvent progressionEvent;
 
-
     [Serializable]
     public class ShipUpgradeCost
     {
@@ -47,8 +46,6 @@ public class Ship : MonoBehaviourPunCallbacks
         EventSystem.Instance.FireEvent(progressionEvent);
     }
 
-  
-
     public void newPartObtained(AttachPartEvent attachPartEvent)
     {
         foreach (ShipUpgradeCost shipUpgradeCost in shipUpgradeCost)
@@ -63,8 +60,6 @@ public class Ship : MonoBehaviourPunCallbacks
         }
         EventSystem.Instance.FireEvent(new ShipPartEvent(minTimeUntilDaw));
     }
-
-
 
     public bool UppgradeShip()
     {
