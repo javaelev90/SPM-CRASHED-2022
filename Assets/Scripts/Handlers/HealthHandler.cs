@@ -102,7 +102,7 @@ public abstract class HealthHandler : MonoBehaviourPunCallbacks
         PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + itemDropPrefab.name, spawnPosition, Quaternion.identity, 0, parameters);
     }
 
-    public void IsInLava(bool inLava)
+    public virtual void IsInLava(bool inLava)
     {
         this.inLava = inLava;
         if (inLava)

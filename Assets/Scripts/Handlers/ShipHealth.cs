@@ -43,4 +43,6 @@ public class ShipHealth : HealthHandler
     {
         EventSystem.Instance.FireEvent(new GameOverEvent("Ship has been destroyed"));
     }
+
+    public override void IsInLava(bool inLava) { }
 }
