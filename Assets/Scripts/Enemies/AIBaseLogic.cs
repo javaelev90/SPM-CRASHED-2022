@@ -89,7 +89,6 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     private void FindVisibleTargets()
     {
         Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-        IsWithinSight = targetInViewRadius.Length > 0;
 
         for (int i = 0; i < targetInViewRadius.Length; i++)
         {
@@ -102,6 +101,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
                 {
                     visibleTargets.Add(tempTarget);
                     target = tempTarget;
+                    IsWithinSight = targetInViewRadius.Length > 0;
                 }
             }
         }
