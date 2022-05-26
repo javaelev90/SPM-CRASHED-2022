@@ -1008,11 +1008,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad3bc6d38afeaa94bab24a0eba95af3e, type: 3}
---- !u!1 &6678609612806397676 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7161322274641787221, guid: ad3bc6d38afeaa94bab24a0eba95af3e, type: 3}
-  m_PrefabInstance: {fileID: 4597349092296239033}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6333433963560158294 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7505794162628617199, guid: ad3bc6d38afeaa94bab24a0eba95af3e, type: 3}
@@ -1026,6 +1021,11 @@ ParticleSystem:
 --- !u!198 &4597349093177559949 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 899165236, guid: ad3bc6d38afeaa94bab24a0eba95af3e, type: 3}
+  m_PrefabInstance: {fileID: 4597349092296239033}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6678609612806397676 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7161322274641787221, guid: ad3bc6d38afeaa94bab24a0eba95af3e, type: 3}
   m_PrefabInstance: {fileID: 4597349092296239033}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &6536205995317482924
@@ -1042,3 +1042,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerOnTeleport: 0
   eventStarter: {fileID: 9179345938377622927}
+--- !u!114 &6962879374597412403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6678609612806397676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac006fc47055dd3489ee0acd87f3b529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theMesh: {fileID: 7805922687870464065, guid: 517c86df3a7cc164cb54fa5d3ca4a68d, type: 3}
