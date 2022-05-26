@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4417561990126742436}
   - component: {fileID: 784064682960528385}
   - component: {fileID: 3244133131696623819}
+  - component: {fileID: 1597948153161838344}
   m_Layer: 0
   m_Name: SlugLord
   m_TagString: Untagged
@@ -81,6 +82,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &1597948153161838344
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892664328204448030}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7415c9349c5c5134e8d2d4d4d1d39ebf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5216314101117746397
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +383,7 @@ MonoBehaviour:
   timeToAggro: 1
   timeToCoolWhenAttacked: 5
   timeStunned: 3
+  animator: {fileID: 0}
   minBlowUpRadius: 0
   maxBlowUpRadius: 0
   rotationSpeed: 4
@@ -502,7 +523,8 @@ MonoBehaviour:
   damage: 5
   intervale: 1.5
   rootObject: {fileID: 6261632589528798244}
-  hitVFX: {fileID: 1644440166643503569, guid: 560b2ad335432e4438a787f03e419393, type: 3}
+  hitVFX: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!82 &1468582639811695412
 AudioSource:
   m_ObjectHideFlags: 0

@@ -79,29 +79,28 @@ public class PickingUp : MonoBehaviourPunCallbacks
             if (typ == Pickup_Typs.Pickup.Metal)
             {
                 inventorySystem.Add<Metal>(pickUpComponent.amount);
-                pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+                pickUpPhotonView.RPC(nameof(pickUpComponent.ObjectDestroy), RpcTarget.All);
                 source.PlayOneShot(Metal);
             }
             else if (typ == Pickup_Typs.Pickup.GreenGoo)
             {
                 inventorySystem.Add<GreenGoo>(pickUpComponent.amount);
-                pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+                pickUpPhotonView.RPC(nameof(pickUpComponent.ObjectDestroy), RpcTarget.All);
                 source.PlayOneShot(Goo);
             }
             else if (typ == Pickup_Typs.Pickup.AlienMeat)
             {
                 inventorySystem.Add<AlienMeat>(pickUpComponent.amount);
-                pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+                pickUpPhotonView.RPC(nameof(pickUpComponent.ObjectDestroy), RpcTarget.All);
                 source.PlayOneShot(Meat);
             }
             else if (typ == Pickup_Typs.Pickup.Revive)
             {
                 inventorySystem.Add<ReviveBadge>();
                 otherPlayer = pickUpComponent.getPlayerToRevive();
-                pickUpPhotonView.RPC("ObjectDestory", RpcTarget.All);
+                pickUpPhotonView.RPC(nameof(pickUpComponent.ObjectDestroy), RpcTarget.All);
             }
         }
-
         else if (PickUpHitCheck(spaceShipLayer))
         {
             EventSystem.Instance.FireEvent(new ShipUppgradPanelEvent());

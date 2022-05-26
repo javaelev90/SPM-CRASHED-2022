@@ -211,6 +211,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ShowPauseMenu",
+                    "type": "Button",
+                    "id": "5a047d9e-d3c0-4e94-94d0-75c6c0d6ec24",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -761,6 +770,16 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "ObjectiveShow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "id": "dbb65f2b-8493-4e8e-8e96-d6123f9e71ac",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ShowPauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -18,11 +18,6 @@ public class Pickup : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public Pickup_Typs.Pickup getTyp()
     {
         return typ;
@@ -39,7 +34,7 @@ public class Pickup : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     }
 
     [PunRPC]
-    public void ObjectDestory()
+    public void ObjectDestroy()
     {
         if (PhotonNetwork.IsMasterClient)
         {
