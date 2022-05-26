@@ -310,6 +310,7 @@ public class Engineer : Controller3D
                 // Put Engineer behind the turret that was hit
                 usePositionPos = GetChildWithName(hit.collider.gameObject, "UsePosition");
             }
+            Body.enabled = false;
         }
 
         else if (isUsingTurret == true)
@@ -317,6 +318,7 @@ public class Engineer : Controller3D
             //Debug.Log("You are no longer using turret");
             isUsingTurret = false;
             ChangeControlls.ControlType = 1;
+            Body.enabled = true;
         }
     }
 

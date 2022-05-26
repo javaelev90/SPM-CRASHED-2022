@@ -233,13 +233,51 @@ public class Controller3D : MonoBehaviourPunCallbacks
             // Rotate the turret towards where the player is looking
             Physics.Raycast(muzzlePoint.transform.position, muzzlePoint.transform.forward, out RaycastHit hit, 20f, enemyLayer);
             // skapa nytt obj framf�r muzzle som direction, origin �r muzzlepoint
-            Vector3 lookDirection = (muzzlePoint.transform.position - transform.position).normalized;
+            Vector3 lookDirection = Camera.main.transform.forward;//(muzzlePoint.transform.position - camPositionFPS.transform.position).normalized;
             Quaternion rotateTo = Quaternion.LookRotation(lookDirection, turretBodyTransform.transform.up);
 
-            turretBodyTransform = turretBodyTransform.transform;
-            turretBodyTransform.LookAt(lookDirection, Vector3.up);
-            //turretBodyTransform.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
+            //turretBodyTransform = turretBodyTransform.transform;
+            //turretBodyTransform.LookAt(lookDirection, Vector3.up);
+            turretBodyTransform.transform.rotation = Quaternion.Slerp(turretBodyTransform.transform.rotation, rotateTo, 1f);
+            ClampRotBody();
+            //ClampRotBodyPlayer();
+            //Body.enabled = false;
+
         }
+    }
+
+    public void ClampRotBody()
+    {
+        // Clamp rotation so it doesn't go all over the place and end up upside down
+        Vector3 pivotRotation = turretBodyTransform.transform.eulerAngles;
+        //pivotRotation.x = Mathf.Clamp(pivotRotation.x, -30f, 30f);
+        
+        // Need to clamp rotation in a different way around 0
+        if (pivotRotation.x > 180f)
+        {
+            pivotRotation.x -= 360f;
+        }
+        if (pivotRotation.x < -180f)
+        {
+            pivotRotation.x += 360f;
+        }
+
+        if (pivotRotation.x > 30f)
+            pivotRotation.x = 30f;
+        if (pivotRotation.x < -30f)
+            pivotRotation.x = -30f;
+
+        pivotRotation.z = Mathf.Clamp(pivotRotation.z, 0f, 0f);
+        turretBodyTransform.transform.eulerAngles = pivotRotation;
+    }
+
+    public void ClampRotBodyPlayer()
+    {
+        // Clamp rotation so it doesn't go all over the place and end up upside down
+        Vector3 pivotRotation = camPositionFPS.transform.eulerAngles;
+        pivotRotation.x = Mathf.Clamp(pivotRotation.x, -60f, 60f);
+        pivotRotation.z = Mathf.Clamp(pivotRotation.z, 0f, 0f);
+        camPositionFPS.transform.eulerAngles = pivotRotation;
     }
 
     public void MoveCamera(InputAction.CallbackContext obj)
