@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 5603274226023981931}
   - component: {fileID: 48894276342774882}
   - component: {fileID: 1468582639811695412}
+  - component: {fileID: 5067552651485044976}
   m_Layer: 9
   m_Name: SlugPrefab
   m_TagString: EnemyMainBody
@@ -365,16 +366,16 @@ MonoBehaviour:
   minBlowUpRadius: 0
   maxBlowUpRadius: 0
   rotationSpeed: 4
-  timeToWayPoint: 3
+  timeToWayPoint: 4
   timeToExplosion: 2
-  explosionDamage: 5
+  explosionDamage: 14
   explosionEffects: {fileID: 2407786938042907698, guid: b128d91ce84906846917e367f2981f8a, type: 3}
   AttackableTargets:
     serializedVersion: 2
     m_Bits: 33600
   walk: {fileID: 8300000, guid: 0f32544d5f474714982c400523c9336d, type: 3}
   explode: {fileID: 8300000, guid: e7fd944783ec92b40988052f8baee34e, type: 3}
-  attack: {fileID: 0}
+  attack: {fileID: 8300000, guid: 0f32544d5f474714982c400523c9336d, type: 3}
 --- !u!114 &281888583855016732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,7 +502,7 @@ MonoBehaviour:
   damage: 5
   intervale: 1.5
   rootObject: {fileID: 6261632589528798244}
-  hitVFX: {fileID: 0}
+  hitVFX: {fileID: 1644440166643503569, guid: 560b2ad335432e4438a787f03e419393, type: 3}
 --- !u!82 &1468582639811695412
 AudioSource:
   m_ObjectHideFlags: 0
@@ -511,10 +512,10 @@ AudioSource:
   m_GameObject: {fileID: 5603274226023981941}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3502601922304438056, guid: 8082db654c41ecd4d87706bd7ecc5950, type: 2}
+  OutputAudioMixerGroup: {fileID: -5849267243179087080, guid: c0459e00c8941e54a8af4829105e60c4, type: 2}
   m_audioClip: {fileID: 8300000, guid: 0f32544d5f474714982c400523c9336d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.269
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -523,9 +524,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 5
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -558,7 +559,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.455
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -588,7 +589,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 1.1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -598,6 +599,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5067552651485044976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5603274226023981941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0deea46f2a84efd4e80ff2dbac80e19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snail: {fileID: 5603274226023981941}
+  explosionEffect: {fileID: 3095588006312428209, guid: 47116fd2e39311344888a9862c31e2bd, type: 3}
+  readyToExplodeEffect: {fileID: 948836587826390393, guid: 6a1e1b12518a3f44a98c86a15e5c4df9, type: 3}
+  SnailGooDecalPrefab: {fileID: 2713433594693982627, guid: 0e512d4ed6c872643a57df4658a9ce0e, type: 3}
+  timeTillExplode: 10
 --- !u!1 &5603274226446826173
 GameObject:
   m_ObjectHideFlags: 0

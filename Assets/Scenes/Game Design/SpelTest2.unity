@@ -27516,7 +27516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1564130930}
   objectsCanBeCulled: 1
-  numberToSpawn: 4
+  numberToSpawn: 2
   delayBetweenSpawns: 1
   spawnRadius: 2
   spawnWithinRadius: 0
@@ -97818,6 +97818,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1266666132028859875, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: healthUpgradeAmount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266666132028859875, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: fireRateUpgradePercent
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266666132028859875, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: gunDamageUpgradeAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266666132028859875, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: turretDamageUpgradeAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266666132028859875, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: turretHealthUpgradeAmount
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 1328868974914991582, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -97838,6 +97858,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 61de166ac7cfa284b9f52a520daa2b54, type: 2}
+    - target: {fileID: 1613823205771917659, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1720241810709306476, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
