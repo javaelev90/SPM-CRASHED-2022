@@ -20,6 +20,9 @@ public class Minimap : MonoBehaviour
     [SerializeField] private float scale = 1f;
     [SerializeField] private Sprite soldierSprite;
     [SerializeField] private Sprite engineerSprite;
+    [SerializeField] private Color color;
+    [SerializeField] private RawImage otherPlayerOuterImage;
+
 
     private float radius;
     private Vector2 shipMarkerPos;
@@ -45,10 +48,12 @@ public class Minimap : MonoBehaviour
         if (Player.GetComponent<SoldierCharacter>() == true)
         {
             otherPlayerMarker.GetComponent<Image>().sprite = engineerSprite;
+            otherPlayerOuterImage.color = Color.blue;
         }
         else
         {
             otherPlayerMarker.GetComponent<Image>().sprite = soldierSprite;
+            otherPlayerOuterImage.color = Color.red;
         }
         StartCoroutine(FindOtherPlayer());
     }
