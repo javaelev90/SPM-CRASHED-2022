@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Photon.Pun;
 using UnityEngine.InputSystem;
 using System.Linq;
@@ -102,8 +103,10 @@ public class ObjectSpawner : MonoBehaviour
         if (!PhotonNetwork.IsMasterClient) return;
 
         Vector3 xzPosition = Random.insideUnitCircle * spawnRadius;
-        float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x + xzPosition.x, 0f, transform.position.z + xzPosition.z));
-        Vector3 spawnPosition = new Vector3(transform.position.x + xzPosition.x, y + yOffset, transform.position.z + xzPosition.z);
+        //float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x + xzPosition.x, 0f, transform.position.z + xzPosition.z));
+        //Vector3 spawnPosition = new Vector3(transform.position.x + xzPosition.x, y + yOffset, transform.position.z + xzPosition.z);
+        NavMesh.SamplePosition(transform.position + xzPosition, out NavMeshHit hit, 10f, NavMesh.AllAreas);
+        Vector3 spawnPosition = new Vector3(transform.position.x + xzPosition.x, hit.position.y + yOffset, transform.position.z + xzPosition.z);
         SpawnAtPosition(spawnPosition);
     }
 
@@ -111,8 +114,10 @@ public class ObjectSpawner : MonoBehaviour
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x, 0f, transform.position.z));
-        Vector3 spawnPosition = new Vector3(transform.position.x, y + yOffset, transform.position.z);
+        //float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x, 0f, transform.position.z));
+        //Vector3 spawnPosition = new Vector3(transform.position.x, y + yOffset, transform.position.z);
+        NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 10f, NavMesh.AllAreas);
+        Vector3 spawnPosition = new Vector3(transform.position.x, hit.position.y + yOffset, transform.position.z);
         SpawnAtPosition(spawnPosition);
     }
 
