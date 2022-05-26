@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.3882353, g: 0.5734869, b: 0.8235294, a: 1}
+  m_FogColor: {r: 0.19784619, g: 0.29382867, b: 0.4245283, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.006
   m_LinearFogStart: 0
@@ -1391,14 +1391,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 2099704548}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 2
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &27341154
 GameObject:
@@ -1922,14 +1923,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 3
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 2
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &50469183
 GameObject:
@@ -2271,15 +2273,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1216998435}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints:
   - {fileID: 1693933025}
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &53864187
 GameObject:
@@ -2804,7 +2807,7 @@ Transform:
   m_LocalScale: {x: 33.10108, y: 9.491236, z: 1.504543}
   m_Children: []
   m_Father: {fileID: 1270028196}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 39.413, z: 0}
 --- !u!65 &63331361
 BoxCollider:
@@ -6258,14 +6261,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 4
   delayBetweenSpawns: 1
   spawnRadius: 2
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 2
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &151883323
 GameObject:
@@ -6696,7 +6700,7 @@ Transform:
   m_LocalScale: {x: 40.40787, y: 6.05, z: 3.110849}
   m_Children: []
   m_Father: {fileID: 1270028196}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 42.776, z: 0}
 --- !u!1 &154348071
 GameObject:
@@ -9075,14 +9079,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 10
   delayBetweenSpawns: 16.2
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1 &215712771
 GameObject:
@@ -9895,7 +9900,7 @@ Transform:
   - {fileID: 25821205}
   - {fileID: 1512605405}
   m_Father: {fileID: 1270028196}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &231520622
 GameObject:
@@ -11343,14 +11348,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 4
   delayBetweenSpawns: 1
   spawnRadius: 5
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &263658809
 GameObject:
@@ -11605,7 +11611,7 @@ Transform:
   m_LocalScale: {x: 4.31, y: 4.61, z: 2.76}
   m_Children: []
   m_Father: {fileID: 1270028196}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &268415177
 MonoBehaviour:
@@ -11619,8 +11625,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f943661dbd679b49ba372e739468d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventTime: 5
+  teleporter: {fileID: 0}
+  emissionFill: {fileID: 0}
+  swirl: {fileID: 0}
+  beam: {fileID: 0}
+  teleportTimeDone: 0
+  teleporPositionRight: 0
   dome: {fileID: 2050582872}
+  eventTime: 5
   missingPart: {fileID: 1189109717}
   attachedPart: {fileID: 1189109724}
   eventSpawners: []
@@ -14086,14 +14098,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &317328212
 GameObject:
@@ -19510,14 +19523,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 10
   delayBetweenSpawns: 16.2
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1001 &335756867
 PrefabInstance:
@@ -21015,10 +21029,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 910296736}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints:
   - {fileID: 404866088}
@@ -21026,7 +21042,6 @@ MonoBehaviour:
   - {fileID: 1708135590}
   - {fileID: 1371722843}
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &371269548
 GameObject:
@@ -21185,101 +21200,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &374568531
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 374568536}
-  - component: {fileID: 374568535}
-  - component: {fileID: 374568534}
-  - component: {fileID: 374568533}
-  m_Layer: 7
-  m_Name: ColliderLevel1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!65 &374568533
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 374568531}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &374568534
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 374568531}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &374568535
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 374568531}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &374568536
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 374568531}
-  m_LocalRotation: {x: -0, y: -0.27883, z: -0, w: 0.9603405}
-  m_LocalPosition: {x: 39.34, y: 0, z: -111.76}
-  m_LocalScale: {x: 52.095726, y: 5.21, z: 8.230653}
-  m_Children: []
-  m_Father: {fileID: 1270028196}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -32.381, z: 0}
 --- !u!1 &375624394
 GameObject:
   m_ObjectHideFlags: 0
@@ -21324,14 +21244,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 2
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &378735124
 GameObject:
@@ -21377,15 +21298,111 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 1
-  yOffset: 1
   spawnerIsTriggered: 1
+--- !u!1 &378873512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 378873516}
+  - component: {fileID: 378873515}
+  - component: {fileID: 378873514}
+  - component: {fileID: 378873513}
+  m_Layer: 7
+  m_Name: ColliderLevel1 (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &378873513
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378873512}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &378873514
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378873512}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &378873515
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378873512}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &378873516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378873512}
+  m_LocalRotation: {x: -0, y: 0.6709043, z: -0, w: 0.74154407}
+  m_LocalPosition: {x: 41.2, y: 0.88, z: -50.5}
+  m_LocalScale: {x: 28.169254, y: 20.150843, z: 1.504543}
+  m_Children: []
+  m_Father: {fileID: 1270028196}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 84.274, z: 0}
 --- !u!1 &380241499
 GameObject:
   m_ObjectHideFlags: 0
@@ -21616,14 +21633,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 3
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &391569583
 GameObject:
@@ -21746,7 +21764,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1236898795652084781, guid: 4de5798c58a725e45b59a64a9cbae3d8, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1236898795652084781, guid: 4de5798c58a725e45b59a64a9cbae3d8, type: 3}
       propertyPath: m_LocalScale.x
@@ -22671,14 +22689,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1173354081}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &420618395
 GameObject:
@@ -22724,14 +22743,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 4
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &429140388
 GameObject:
@@ -22777,14 +22797,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 3
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &431474904
 GameObject:
@@ -28057,7 +28078,7 @@ Transform:
   m_LocalScale: {x: 40.40787, y: 6.05, z: 2.59}
   m_Children: []
   m_Father: {fileID: 1270028196}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 31.651, z: 0}
 --- !u!65 &438018655
 BoxCollider:
@@ -35724,6 +35745,101 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 506298687}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &506449101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 506449105}
+  - component: {fileID: 506449104}
+  - component: {fileID: 506449103}
+  - component: {fileID: 506449102}
+  m_Layer: 7
+  m_Name: ColliderLevel1 (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &506449102
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506449101}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &506449103
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506449101}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &506449104
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506449101}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &506449105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506449101}
+  m_LocalRotation: {x: -0, y: 0.96109366, z: -0, w: 0.2762229}
+  m_LocalPosition: {x: 30.25, y: 0.88, z: -70.58}
+  m_LocalScale: {x: 30.473745, y: 20.150843, z: 1.504543}
+  m_Children: []
+  m_Father: {fileID: 1270028196}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 147.93, z: 0}
 --- !u!1 &507086486
 GameObject:
   m_ObjectHideFlags: 0
@@ -37068,14 +37184,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1173354081}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 54
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1 &535811908
 GameObject:
@@ -39864,14 +39981,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 5
   delayBetweenSpawns: 1
   spawnRadius: 5
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1001 &628880843
 PrefabInstance:
@@ -40070,6 +40188,7 @@ GameObject:
   - component: {fileID: 636725638}
   - component: {fileID: 636725637}
   - component: {fileID: 636725639}
+  - component: {fileID: 636725640}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -40091,10 +40210,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship: {fileID: 1189109714}
   soldierPrefab: {fileID: 4717172599527124038, guid: 27324ed1ee365a5449c5e0f3b3c3d0e3, type: 3}
-  engineerPrefab: {fileID: 2924166598192640433, guid: c18e97eacc7951544aa0bac7a9b25940, type: 3}
+  engineerPrefab: {fileID: 6304995607689286988, guid: 1a40ebcc7d35b4144b8e2b05638b3658, type: 3}
   spawnPoint: {fileID: 1512786314}
   objectInstantiater: {fileID: 1673283707}
-  objectCulling: {fileID: 0}
+  objectCulling: {fileID: 636725640}
   loadScene: {fileID: 2001590173}
 --- !u!4 &636725638
 Transform:
@@ -40132,6 +40251,23 @@ MonoBehaviour:
   sceneViewId: 16
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &636725640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636725636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29cb42ed8b845bb4786db2c0dd20d7fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cullingBoundarySideLength: 100
+  cullingUpdateDelay: 0.1
+  minMovementDistance: 1
+  minQuadTreeCapacity: 5
+  minCullingSquareSide: 5
 --- !u!1 &638850235
 GameObject:
   m_ObjectHideFlags: 0
@@ -40176,14 +40312,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 7
   delayBetweenSpawns: 23.142857
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1 &639835568
 GameObject:
@@ -40639,14 +40776,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 10
   delayBetweenSpawns: 16.2
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1 &646004630
 GameObject:
@@ -41783,14 +41921,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &678727862
 GameObject:
@@ -43508,14 +43647,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 2
   delayBetweenSpawns: 1
   spawnRadius: 2
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 1
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1001 &731637214
 PrefabInstance:
@@ -44346,7 +44486,7 @@ Transform:
   m_LocalScale: {x: 25.786037, y: 4.93, z: 1.504543}
   m_Children: []
   m_Father: {fileID: 1270028196}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 18.757, z: 0}
 --- !u!65 &748244706
 BoxCollider:
@@ -45143,14 +45283,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 2
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &763455189
 GameObject:
@@ -47585,14 +47726,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 10
   delayBetweenSpawns: 16.2
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1 &820071305
 GameObject:
@@ -49168,7 +49310,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1270028196}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -49392,14 +49534,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 2
   delayBetweenSpawns: 1
   spawnRadius: 2
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 2
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &855792150
 GameObject:
@@ -55298,14 +55441,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1173354081}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 5
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &891649524
 GameObject:
@@ -56901,10 +57045,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 185908063}
+  objectsCanBeCulled: 1
   numberToSpawn: 4
   delayBetweenSpawns: 1
   spawnRadius: 2
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints:
   - {fileID: 1708135590}
@@ -56912,7 +57058,6 @@ MonoBehaviour:
   - {fileID: 404866088}
   - {fileID: 1753275279}
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &933529222
 GameObject:
@@ -73188,14 +73333,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 3
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &982838076
 GameObject:
@@ -73801,14 +73947,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 3
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1006900868
 GameObject:
@@ -74221,14 +74368,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 2
   delayBetweenSpawns: 1
   spawnRadius: 2
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1027428210
 GameObject:
@@ -75166,14 +75314,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 10
   delayBetweenSpawns: 16.2
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1 &1059061338
 GameObject:
@@ -79036,14 +79185,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 7
   delayBetweenSpawns: 23.142857
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1001 &1149653938
 PrefabInstance:
@@ -80446,14 +80596,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 2
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1001 &1183165983
 PrefabInstance:
@@ -83774,9 +83925,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colliders:
-  - {fileID: 374568531}
   - {fileID: 153809836}
   - {fileID: 1640736424}
+  - {fileID: 438018653}
+  - {fileID: 1477550350}
+  - {fileID: 748244704}
+  - {fileID: 63331359}
+  - {fileID: 2102654231}
+  - {fileID: 378873512}
+  - {fileID: 506449101}
+  - {fileID: 1720306016}
   turretPlaced: 0
   pool: {fileID: 2099704548}
   ship: {fileID: 1189109714}
@@ -83795,7 +83953,6 @@ Transform:
   m_LocalPosition: {x: 348.2, y: 31.2, z: 343.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 374568536}
   - {fileID: 393908521}
   - {fileID: 153809841}
   - {fileID: 1640736429}
@@ -83808,6 +83965,10 @@ Transform:
   - {fileID: 1477550351}
   - {fileID: 748244705}
   - {fileID: 63331360}
+  - {fileID: 2102654235}
+  - {fileID: 378873516}
+  - {fileID: 506449105}
+  - {fileID: 1720306020}
   m_Father: {fileID: 0}
   m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84434,14 +84595,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 7
   delayBetweenSpawns: 23.142857
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1 &1287885500
 GameObject:
@@ -86756,16 +86918,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 185908063}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints:
   - {fileID: 598160402}
   - {fileID: 1952526677}
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!4 &1339700782
 Transform:
@@ -86986,7 +87149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1343858039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89227,14 +89390,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1383557129
 GameObject:
@@ -91495,14 +91659,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 2
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1001 &1426429310
 PrefabInstance:
@@ -92092,14 +92257,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1173354081}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1443870926
 GameObject:
@@ -93735,7 +93901,7 @@ Transform:
   m_LocalScale: {x: 22.138416, y: 6.05, z: 2.59}
   m_Children: []
   m_Father: {fileID: 1270028196}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 4.542, z: 0}
 --- !u!65 &1477550352
 BoxCollider:
@@ -94196,14 +94362,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1173354081}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1479973060
 GameObject:
@@ -94744,14 +94911,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1173354081}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 1
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1001 &1504858134
 PrefabInstance:
@@ -95093,14 +95261,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 2099704548}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 2
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1512786313
 GameObject:
@@ -101796,14 +101965,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 10
   delayBetweenSpawns: 16.2
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1 &1554157066
 GameObject:
@@ -104754,14 +104924,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 3
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1604112959
 GameObject:
@@ -105433,14 +105604,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 2
   delayBetweenSpawns: 1
   spawnRadius: 2
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 2
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1622545136
 GameObject:
@@ -105488,16 +105660,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 185908063}
+  objectsCanBeCulled: 1
   numberToSpawn: 4
   delayBetweenSpawns: 1
   spawnRadius: 2
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints:
   - {fileID: 1453225118}
   - {fileID: 897562248}
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1623766761
 GameObject:
@@ -105655,14 +105828,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1627770286
 GameObject:
@@ -105712,14 +105886,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 910296736}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 2
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1631185203
 GameObject:
@@ -105765,14 +105940,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 7
   delayBetweenSpawns: 23.142857
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1 &1632589348
 GameObject:
@@ -106222,7 +106398,7 @@ Transform:
   m_LocalScale: {x: 38.21966, y: 4.93, z: 4.9418244}
   m_Children: []
   m_Father: {fileID: 1270028196}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -28.996, z: 0}
 --- !u!1 &1642929088
 GameObject:
@@ -106380,16 +106556,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 910296736}
+  objectsCanBeCulled: 1
   numberToSpawn: 4
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints:
   - {fileID: 1453225118}
   - {fileID: 897562248}
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1644219558
 GameObject:
@@ -107512,14 +107689,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1173354081}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 54
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1 &1684814095
 GameObject:
@@ -108751,10 +108929,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1216998435}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints:
   - {fileID: 404866088}
@@ -108762,7 +108942,6 @@ MonoBehaviour:
   - {fileID: 1708135590}
   - {fileID: 1371722843}
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1709093951
 GameObject:
@@ -109132,6 +109311,101 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714383744}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1720306016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1720306020}
+  - component: {fileID: 1720306019}
+  - component: {fileID: 1720306018}
+  - component: {fileID: 1720306017}
+  m_Layer: 7
+  m_Name: ColliderLevel1 (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1720306017
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720306016}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1720306018
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720306016}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1720306019
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720306016}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1720306020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720306016}
+  m_LocalRotation: {x: -0, y: 0.72774357, z: -0, w: 0.6858493}
+  m_LocalPosition: {x: -53.36, y: 0.92, z: -18.92}
+  m_LocalScale: {x: 40.40787, y: 6.05, z: 3.110849}
+  m_Children: []
+  m_Father: {fileID: 1270028196}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 93.395, z: 0}
 --- !u!1001 &1720594795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -109586,14 +109860,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1726956354
 GameObject:
@@ -113991,14 +114266,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 4
   delayBetweenSpawns: 1
   spawnRadius: 5
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1828585800
 GameObject:
@@ -115505,14 +115781,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 4
   delayBetweenSpawns: 1
   spawnRadius: 4
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1873207624
 GameObject:
@@ -115558,14 +115835,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 2
   delayBetweenSpawns: 1
   spawnRadius: 2
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1874055039
 GameObject:
@@ -118402,14 +118680,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 2
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 1
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1938218142
 GameObject:
@@ -118779,14 +119058,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 2
   delayBetweenSpawns: 1
   spawnRadius: 2
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1945306607
 GameObject:
@@ -119399,16 +119679,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 185908063}
+  objectsCanBeCulled: 1
   numberToSpawn: 2
   delayBetweenSpawns: 2
   spawnRadius: 2
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints:
   - {fileID: 981950806}
   - {fileID: 2078974538}
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1962841002
 GameObject:
@@ -119678,14 +119959,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1173354081}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1967775640
 GameObject:
@@ -119843,14 +120125,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 3
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1978060060
 GameObject:
@@ -119896,14 +120179,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 7
   delayBetweenSpawns: 23.142857
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 0
 --- !u!1 &1978108968
 GameObject:
@@ -120282,14 +120566,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1173354081}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1984479718
 GameObject:
@@ -120335,14 +120620,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1445058270}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &1985162669
 GameObject:
@@ -120746,14 +121032,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 3
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &2001035935
 GameObject:
@@ -123176,7 +123463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9179345938088293237, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9179345938088293237, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -124059,14 +124346,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 1173354081}
+  objectsCanBeCulled: 1
   numberToSpawn: 1
   delayBetweenSpawns: 1
   spawnRadius: 1
   spawnWithinRadius: 0
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 2
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &2054054791
 GameObject:
@@ -130807,6 +131095,101 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102048507}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2102654231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2102654235}
+  - component: {fileID: 2102654234}
+  - component: {fileID: 2102654233}
+  - component: {fileID: 2102654232}
+  m_Layer: 7
+  m_Name: ColliderLevel1 (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &2102654232
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102654231}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &2102654233
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102654231}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &2102654234
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102654231}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &2102654235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102654231}
+  m_LocalRotation: {x: -0, y: 0.33720228, z: -0, w: 0.94143224}
+  m_LocalPosition: {x: 25.8, y: 0.88, z: -26.4}
+  m_LocalScale: {x: 33.10108, y: 20.150843, z: 1.504543}
+  m_Children: []
+  m_Father: {fileID: 1270028196}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 39.413, z: 0}
 --- !u!1 &2112049521
 GameObject:
   m_ObjectHideFlags: 0
@@ -132168,14 +132551,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool: {fileID: 689289697}
+  objectsCanBeCulled: 1
   numberToSpawn: 3
   delayBetweenSpawns: 1
   spawnRadius: 3
   spawnWithinRadius: 1
+  yOffset: 1
   initialTarget: {fileID: 0}
   wayPoints: []
   wayPointSpawnRadius: 4
-  yOffset: 1
   spawnerIsTriggered: 1
 --- !u!1 &2143675599
 GameObject:
@@ -132359,7 +132743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 213226040555631716, guid: 6c19911b681800644b8d65e17691da56, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 213226040555631716, guid: 6c19911b681800644b8d65e17691da56, type: 3}
       propertyPath: m_AnchorMax.x

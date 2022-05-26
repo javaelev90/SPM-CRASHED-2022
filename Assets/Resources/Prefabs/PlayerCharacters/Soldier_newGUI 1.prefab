@@ -1719,6 +1719,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3d573a5b-7bfd-4e3c-90f0-688599068280
     m_ActionName: Player/ObjectiveShow[/Keyboard/3]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6804580692490852847}
+        m_TargetAssemblyTypeName: ButtonInteractions, Assembly-CSharp
+        m_MethodName: Show
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5a047d9e-d3c0-4e94-94d0-75c6c0d6ec24
+    m_ActionName: Player/ShowPauseMenu[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -3696,9 +3712,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
---- !u!4 &3602808342538235335 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5510816813930139584, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+--- !u!1 &5547672003020540683 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3564792497713129740, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_PrefabInstance: {fileID: 9044887938546033159}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &8446593080147799763 stripped
@@ -3712,13 +3728,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae72c0c5b312a804ab3a21336dfca8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &5547672003020540683 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3564792497713129740, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
-  m_PrefabInstance: {fileID: 9044887938546033159}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4495014406897604462 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4892204836988482921, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+  m_PrefabInstance: {fileID: 9044887938546033159}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3602808342538235335 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5510816813930139584, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_PrefabInstance: {fileID: 9044887938546033159}
   m_PrefabAsset: {fileID: 0}
