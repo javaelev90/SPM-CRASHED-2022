@@ -192,10 +192,14 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
 
     private void UpdateCulling(ref PlayerInfo playerInfo)
     {
-        playerInfo.Bounds = UpdatePlayerQuad(playerInfo.PlayerObject.transform);
-        activeObjects = quadTree.Query(playerInfo.Bounds, activeObjects);
-        playerInfo.PreviousPosition = playerInfo.PlayerObject.transform.position;
-        playerInfo.PositionChanged = false;
+        if (playerInfo.PlayerObject != null)
+        {
+            playerInfo.Bounds = UpdatePlayerQuad(playerInfo.PlayerObject.transform);
+            activeObjects = quadTree.Query(playerInfo.Bounds, activeObjects);
+            playerInfo.PreviousPosition = playerInfo.PlayerObject.transform.position;
+            playerInfo.PositionChanged = false;
+        }
+
     }
 
     private void OnDrawGizmos()

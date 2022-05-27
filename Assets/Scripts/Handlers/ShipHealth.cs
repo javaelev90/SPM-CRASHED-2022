@@ -12,11 +12,6 @@ public class ShipHealth : HealthHandler
         EventSystem.Instance.RegisterListener<ImmortalEvent>(SetImmortal);
     }
 
-    private void Update()
-    {
-        Debug.Log(CurrentHealth);
-    }
-
     public void SetImmortal(ImmortalEvent immortalEvent)
     {
         immortal = !immortal;

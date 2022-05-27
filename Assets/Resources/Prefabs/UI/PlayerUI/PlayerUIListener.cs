@@ -15,10 +15,6 @@ public class PlayerUIListener : MonoBehaviour
 
     private void OnEnable()
     {
-        EventSystem.Instance.RegisterListener<UpdateUIAmountsEvent>(UpdateAmounts);
-        EventSystem.Instance.RegisterListener<ShipUpgradeProgressionEvent>(UpdateShipPartCompleted);
-        EventSystem.Instance.RegisterListener<ShipUpgradeProgressionEvent>(InitializeShipParts);
-
         slots = new Dictionary<Pickup_Typs.Pickup, SlotItem>();
         if (slotItems != null)
         {
@@ -28,6 +24,10 @@ public class PlayerUIListener : MonoBehaviour
             }
         }
         slotItems[selectedIndex].SelectItem();
+
+        EventSystem.Instance.RegisterListener<UpdateUIAmountsEvent>(UpdateAmounts);
+        EventSystem.Instance.RegisterListener<ShipUpgradeProgressionEvent>(UpdateShipPartCompleted);
+        EventSystem.Instance.RegisterListener<ShipUpgradeProgressionEvent>(InitializeShipParts);
     }
 
     private void OnDisable()
@@ -55,24 +55,28 @@ public class PlayerUIListener : MonoBehaviour
             }
         }
 
-        //Transform effectTransform = null;
-        //if (e.type == typeof(GreenGoo))
-        //{
-        //    effectTransform = slots[Pickup_Typs.Pickup.GreenGoo].EffectPosition;
-        //}
-        //else if (e.type == typeof(Metal))
-        //{
-        //    effectTransform = slots[Pickup_Typs.Pickup.Metal].EffectPosition;
-        //}
-        //else if (e.type == typeof(AlienMeat))
-        //{
-        //    effectTransform = slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition;
-        //}
+        Transform effectTransform = null;
+        if (e.type == typeof(GreenGoo))
+        {
+            effectTransform = slots[Pickup_Typs.Pickup.GreenGoo].EffectPosition;
+        }
+        else if (e.type == typeof(Metal))
+        {
+            effectTransform = slots[Pickup_Typs.Pickup.Metal].EffectPosition;
+        }
+        else if (e.type == typeof(AlienMeat))
+        {
+            effectTransform = slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition;
+        }
 
-        //var vfx = Instantiate(amountEffect, effectTransform.position, Quaternion.identity) as GameObject;
-        //vfx.transform.SetParent(effectTransform);
-        ////var ps = vfx.GetComponent<ParticleDestroyer>();
-        //Destroy(vfx, 3);
+        if (effectTransform != null)
+        {
+            var vfx = Instantiate(amountEffect, effectTransform.position, Quaternion.identity) as GameObject;
+            vfx.transform.SetParent(effectTransform);
+            var ps = vfx.GetComponent<ParticleDestroyer>();
+            Destroy(vfx, ps.DestroyDelay);
+        }
+
     }
 
     public void PreviousItem(InputAction.CallbackContext ctx) // use as previous
