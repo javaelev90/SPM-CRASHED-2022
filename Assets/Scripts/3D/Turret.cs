@@ -19,6 +19,7 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private PhotonView bullet;
     [SerializeField] private float fireTimer = 1f;
     [SerializeField] private int turretDamage;
+    [SerializeField] private int turretDamageWhenUsing;
     [SerializeField] private int turretHealthIncreaseAtUpgrade;
     [SerializeField] public Transform useTurretPosition;
     [SerializeField] public Transform useTurretBody;
@@ -56,6 +57,7 @@ public class Turret : MonoBehaviourPunCallbacks
     public void DamageUpgrade(TurretDamageUpgradeEvent turretDamageUpgrade)
     {
         turretDamage += turretDamageUpgrade.UpgradeAmount;
+        turretDamageWhenUsing += turretDamageUpgrade.UpgradeAmount;
     }
 
     private void FindTargets()
@@ -139,6 +141,7 @@ public class Turret : MonoBehaviourPunCallbacks
         if (counter <= 0f)
         {
             /*
+            // Shoot projectile
             GameObject bullet = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + "Bullet", turretMuzzlePoint.transform.position, turretBody.transform.rotation);
             Projectile projectile = bullet.GetComponent<Projectile>();
             projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
@@ -150,26 +153,35 @@ public class Turret : MonoBehaviourPunCallbacks
             source.pitch = Random.Range(0.8f, 1.4f);
             Debug.Log("Is shooting");
             */
-
-            float range = 15f;
-            Debug.Log("fuckedy fucked");
+            float range;
+            if (engineerRef.isUsingTurret)
+            {
+                range = 50f;
+            }
+            else
+            {
+                range = 15f;
+            }
 
             if(Physics.Raycast(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward, out RaycastHit hitInfo, range, enemyLayer))
             {
-                Debug.Log("duck");
-                Debug.Log(hitInfo.collider.name);
-
                 HealthHandler healthHandler = hitInfo.transform.GetComponent<HealthHandler>();
                 if (healthHandler)
                 {
-                    Debug.Log("Damage");
-                    healthHandler.TakeDamage(turretDamage);
+                    if (engineerRef.isUsingTurret)
+                    {
+                        healthHandler.TakeDamage(turretDamageWhenUsing);
+                    }
+                    else
+                    {
+                        healthHandler.TakeDamage(turretDamage);
+                    }
+                    
                 }
 
                 AIBaseLogic ai = hitInfo.transform.GetComponent<AIBaseLogic>();
                 if (ai)
                 {
-                    Debug.Log("findTarget");
                     ai.FindAttackingTarget(transform);
                 }
             }
