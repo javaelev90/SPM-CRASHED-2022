@@ -506,9 +506,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
---- !u!2083052967 &1705318520377597787 stripped
-VisualEffect:
-  m_CorrespondingSourceObject: {fileID: 8142577327115194881, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+--- !u!1 &5257048803477580168 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3341238609498203346, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+  m_PrefabInstance: {fileID: 7397932976741911898}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6328141570850858070 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3564792497713129740, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_PrefabInstance: {fileID: 7397932976741911898}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2688128606751488051 stripped
@@ -532,9 +537,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5510816813930139584, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_PrefabInstance: {fileID: 7397932976741911898}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6328141570850858070 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3564792497713129740, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+--- !u!2083052967 &1705318520377597787 stripped
+VisualEffect:
+  m_CorrespondingSourceObject: {fileID: 8142577327115194881, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_PrefabInstance: {fileID: 7397932976741911898}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8300025102502602808
@@ -1228,21 +1233,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae72c0c5b312a804ab3a21336dfca8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzlePosition: {fileID: 6522658275698048355, guid: e3583a0419e68ed4f925ac2059a80dc9, type: 3}
+  muzzlePosition: {fileID: 1705318520377597787}
+  hitPosition: {fileID: 5257048803477580168}
   weaponRange: 30
   weaponDamage: 1
   delayBetweenShots: 0.3
-  automaticWeapon: 0
   layersThatShouldBeHit:
     serializedVersion: 2
     m_Bits: 512
   maxAmmo: 0
   currentAmmo: 0
+  animator: {fileID: 2469390360455845289}
   sourceOne: {fileID: 4094734280040030718}
   shot:
   - {fileID: 8300000, guid: 89257c298f999d340bee66f3cd650291, type: 3}
   - {fileID: 8300000, guid: c91a1aa0190039b4b8584460bb85fad6, type: 3}
   - {fileID: 8300000, guid: 8a83f95494f351542b4fde9eaba0df3b, type: 3}
+  useInventory: 0
+  inventory: {fileID: 0}
+  greenGooCost: 1
 --- !u!114 &616013412962292102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1536,6 +1545,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 817f9463-a47f-4810-a8e8-b907d9393ce4
     m_ActionName: Player/test[/Keyboard/rightBracket]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 318a7f1e-df3a-4d27-b7a4-a6aa454ee991
+    m_ActionName: Player/GreenGoo[/Keyboard/g]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c77aa0ab-75b0-4018-ac19-2a1b783b64c1
+    m_ActionName: Player/Metal[/Keyboard/m]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a2465578-b245-43de-aafa-a1a06f7cbd47
+    m_ActionName: Player/Beef[/Keyboard/b]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 414c7bf4-a997-48a6-ba58-e005e22bdc62
+    m_ActionName: Player/RepairTurret[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d573a5b-7bfd-4e3c-90f0-688599068280
+    m_ActionName: Player/ObjectiveShow[/Keyboard/3]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1553,13 +1582,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11a628ad4f33d1247a3d1fcae6437deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMine: 0
   weaponRotation: {fileID: 968001777}
   muzzlePoint: {fileID: 6328141570850858070}
   bullet: {fileID: 0}
   bulletSpeed: 0
   skinWidth: 0.5
   groundCheckDistance: 0
-  playerGUI: {fileID: 0}
+  playerGUI: {fileID: 8647488912514564008}
+  turretObjRef: {fileID: 0}
+  engineerRef: {fileID: 0}
+  turretBodyTransform: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isFPS: 1
   camPositionFPS: {fileID: 968001777}
   cameraOffsetTPS: {x: 0, y: 0, z: 0}
@@ -1587,12 +1623,6 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: e7383899d40cf4c4f9eaedab6b73c84d, type: 3}
   weaponVisuals: {fileID: 2688128606751488051}
   bodyMesh: {fileID: 8616768125131441400}
-  turretObjRef: {fileID: 0}
-  engineerRef: {fileID: 0}
-  turretBodyTransform: {fileID: 0}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
   fireLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -1655,9 +1685,12 @@ MonoBehaviour:
   hit: {fileID: 8300000, guid: 052fb3581f4bd374593eea9794280424, type: 3}
   itemDropPrefab: {fileID: 4836580809429015468, guid: d8087c4365e421a44a2bd9232c841e50, type: 3}
   dropOffsetY: 1
-  MaxHealth: 40
-  CurrentHealth: 40
+  MaxHealth: 400
+  CurrentHealth: 400
   isAlive: 1
+  damage: 20
+  intervale: 1.5
+  deathParticles: {fileID: 7687256951814429033, guid: 09b9bf7d2cccb804c982ab89b4bd8c20, type: 3}
 --- !u!114 &7178814830326724090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1673,14 +1706,13 @@ MonoBehaviour:
   pickupLayer:
     serializedVersion: 2
     m_Bits: 136192
-  fireLayer:
-    serializedVersion: 2
-    m_Bits: 0
   spaceShipLayer:
     serializedVersion: 2
     m_Bits: 256
+  shipPartLayer:
+    serializedVersion: 2
+    m_Bits: 0
   pickUpDistance: 3
-  inventory: {fileID: 3833389567724244086}
   source: {fileID: 4094734280040030718}
   Goo: {fileID: 8300000, guid: 01d10acac1a458342915320b1129643c, type: 3}
   Metal: {fileID: 8300000, guid: fbca46004b203dd43b21d54f5572f431, type: 3}

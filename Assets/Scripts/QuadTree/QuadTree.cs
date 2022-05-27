@@ -4,7 +4,7 @@ using UnityEditor;
 
 public class QuadTree<T>
 {
-    private Quad<T> boundary;
+    private Quad boundary;
     private int quadCapacity;
     private List<Point<T>> points;
     private bool divided;
@@ -16,7 +16,7 @@ public class QuadTree<T>
     private QuadTree<T> southWest;
     private QuadTree<T> southEast;
 
-    public QuadTree(Quad<T> boundary, int capacity, int minWidth, int minHeight)
+    public QuadTree(Quad boundary, int capacity, int minWidth, int minHeight)
     {
         this.boundary = boundary;
         quadCapacity = capacity;
@@ -65,13 +65,13 @@ public class QuadTree<T>
         float quadWidth = boundary.width / 4;
         float quadHeight = boundary.height / 4;
 
-        Quad<T> northWestBoundary = new Quad<T>(x - quadWidth, y - quadHeight, halfWidth, halfHeight);
+        Quad northWestBoundary = new Quad(x - quadWidth, y - quadHeight, halfWidth, halfHeight);
         northWest = new QuadTree<T>(northWestBoundary, quadCapacity, minWidth, minHeight);
-        Quad<T> northEastBoundary = new Quad<T>(x + quadWidth, y - quadHeight, halfWidth, halfHeight);
+        Quad northEastBoundary = new Quad(x + quadWidth, y - quadHeight, halfWidth, halfHeight);
         northEast = new QuadTree<T>(northEastBoundary, quadCapacity, minWidth, minHeight);
-        Quad<T> southWestBoundary = new Quad<T>(x - quadWidth, y + quadHeight, halfWidth, halfHeight);
+        Quad southWestBoundary = new Quad(x - quadWidth, y + quadHeight, halfWidth, halfHeight);
         southWest = new QuadTree<T>(southWestBoundary, quadCapacity, minWidth, minHeight);
-        Quad<T> southEastBoundary = new Quad<T>(x + quadWidth, y + quadHeight, halfWidth, halfHeight);
+        Quad southEastBoundary = new Quad(x + quadWidth, y + quadHeight, halfWidth, halfHeight);
         southEast = new QuadTree<T>(southEastBoundary, quadCapacity, minWidth, minHeight);
 
         foreach (Point<T> point in points)
@@ -85,7 +85,7 @@ public class QuadTree<T>
         divided = true;
     }
     
-    public List<Point<T>> Query(Quad<T> range, List<Point<T>> pointsFound)
+    public HashSet<Point<T>> Query(Quad range, HashSet<Point<T>> pointsFound)
     {
         if(boundary.Intersects(range) == false)
         {
@@ -95,7 +95,7 @@ public class QuadTree<T>
         {
             foreach (Point<T> point in points)
             {
-                if (range.Contains(point))
+                if (point.data != null && range.Contains(point))
                 {
                     pointsFound.Add(point);
                 }
@@ -137,31 +137,33 @@ public class QuadTree<T>
         return typeof(T);
     }
 
-    public void OnDrawGizmos()
+    public void OnDrawGizmos(float positionYValue = 30)
     {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawWireCube(new Vector3(boundary.x, 0f, boundary.y), new Vector3(boundary.width, 0f, boundary.height));
-        if (points.Count > 0)
-        {
-            Handles.color = Color.red;
-            Handles.Label(new Vector3(boundary.x, 0f, boundary.y), "" + points.Count);
-        }
+        Gizmos.DrawWireCube(new Vector3(boundary.x, positionYValue, boundary.y), new Vector3(boundary.width, 0f, boundary.height));
 
+#if UNITY_EDITOR
+        //if (divided == false)
+        //{
+        //    Handles.color = Color.red;
+        //    Handles.Label(new Vector3(boundary.x, positionYValue, boundary.y), "" + points.Count);
+        //}
+#endif
         if (northWest is object)
         {
-            northWest.OnDrawGizmos();
+            northWest.OnDrawGizmos(positionYValue);
         }
         if (northEast is object)
         {
-            northEast.OnDrawGizmos();
+            northEast.OnDrawGizmos(positionYValue);
         }
         if (southWest is object)
         {
-            southWest.OnDrawGizmos();
+            southWest.OnDrawGizmos(positionYValue);
         }
         if (southEast is object)
         {
-            southEast.OnDrawGizmos();
+            southEast.OnDrawGizmos(positionYValue);
         }
     }
 }

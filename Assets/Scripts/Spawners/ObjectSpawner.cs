@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Photon.Pun;
 using UnityEngine.InputSystem;
 using System.Linq;
@@ -10,12 +11,16 @@ public class ObjectSpawner : MonoBehaviour
     [Header("Object pool")]
     [Tooltip("The spawner will use this pool to get objects to spawn")]
     [SerializeField] private PhotonObjectPool objectPool;
+    [SerializeField] private bool objectsCanBeCulled = true;
+
     [Header("Spawner settings")]
     [Range(0, 80)] [SerializeField] int numberToSpawn = 0;
     [SerializeField] private float delayBetweenSpawns = 1f;
     [Range(0, 60)] [SerializeField] private float spawnRadius = 1f;
     [Tooltip("If checked objects will be spawned in radius, otherwise they will be spawned on position.")]
     [SerializeField] private bool spawnWithinRadius = true;
+    [SerializeField] private float yOffset = 1f;
+
     [Header("Initial Target")]
     [SerializeField] PhotonView initialTarget;
 
@@ -24,7 +29,6 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] float wayPointSpawnRadius = 4f;
 
     private float cooldownCounter = 0f;
-    [SerializeField] private float yOffset = 1f;
     private int spawnedObjects = 0;
     public bool spawnerIsTriggered = true;
     private int photonViewTargetId = -1;
@@ -45,11 +49,8 @@ public class ObjectSpawner : MonoBehaviour
         if (PhotonNetwork.IsMasterClient && spawnerIsTriggered)
         {
             SpawnObjects();
-            
         }
     }
-
-    
 
     public void ResetSpawner()
     {
@@ -102,8 +103,10 @@ public class ObjectSpawner : MonoBehaviour
         if (!PhotonNetwork.IsMasterClient) return;
 
         Vector3 xzPosition = Random.insideUnitCircle * spawnRadius;
-        float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x + xzPosition.x, 0f, transform.position.z + xzPosition.z));
-        Vector3 spawnPosition = new Vector3(transform.position.x + xzPosition.x, y + yOffset, transform.position.z + xzPosition.z);
+        //float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x + xzPosition.x, 0f, transform.position.z + xzPosition.z));
+        //Vector3 spawnPosition = new Vector3(transform.position.x + xzPosition.x, y + yOffset, transform.position.z + xzPosition.z);
+        NavMesh.SamplePosition(transform.position + xzPosition, out NavMeshHit hit, 10f, NavMesh.AllAreas);
+        Vector3 spawnPosition = new Vector3(transform.position.x + xzPosition.x, hit.position.y + yOffset, transform.position.z + xzPosition.z);
         SpawnAtPosition(spawnPosition);
     }
 
@@ -111,8 +114,10 @@ public class ObjectSpawner : MonoBehaviour
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x, 0f, transform.position.z));
-        Vector3 spawnPosition = new Vector3(transform.position.x, y + yOffset, transform.position.z);
+        //float y = Terrain.activeTerrain.SampleHeight(new Vector3(transform.position.x, 0f, transform.position.z));
+        //Vector3 spawnPosition = new Vector3(transform.position.x, y + yOffset, transform.position.z);
+        NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 10f, NavMesh.AllAreas);
+        Vector3 spawnPosition = new Vector3(transform.position.x, hit.position.y + yOffset, transform.position.z);
         SpawnAtPosition(spawnPosition);
     }
 
@@ -120,21 +125,21 @@ public class ObjectSpawner : MonoBehaviour
     {
         if (wayPoints.Count > 0)
         {
-            objectPool.SpawnWithParameters(position, transform.rotation, photonViewTargetId, new object[] { wayPointSpawnRadius, GetWayPointPositions().ToArray() });
+            objectPool.SpawnWithParameters(position, transform.rotation, photonViewTargetId, new object[] { wayPointSpawnRadius, objectsCanBeCulled, GetWayPointPositions() });
         }
         else
         {
-            objectPool.SpawnWithParameters(position, transform.rotation, photonViewTargetId, new object[] { wayPointSpawnRadius });
+            objectPool.SpawnWithParameters(position, transform.rotation, photonViewTargetId, new object[] { wayPointSpawnRadius, objectsCanBeCulled });
             //objectPool.Spawn(position, transform.rotation, photonViewTargetId);
         }
     }
 
-    private List<object> GetWayPointPositions()
+    private Vector3[] GetWayPointPositions()
     {
-        List<object> wayPointPositions = new List<object>();
-        foreach (Transform wayPoint in wayPoints)
+        Vector3[] wayPointPositions = new Vector3[wayPoints.Count];
+        for (int index = 0; index < wayPoints.Count; index++)
         {
-            wayPointPositions.Add(wayPoint.position);
+            wayPointPositions[index] = wayPoints[index].position;
         }
         return wayPointPositions;
     }

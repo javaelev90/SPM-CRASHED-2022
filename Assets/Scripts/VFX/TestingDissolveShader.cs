@@ -21,7 +21,7 @@ public class TestingDissolveShader : MonoBehaviour
     {
         /*
             health -= 0.1f;
-            dissolveMat.SetFloat("DISSOLVEVALUE", health / maxHealth);*/
+            dissolveMat.SetFloat("EmissionFill", health / maxHealth);*/
     }
    
  

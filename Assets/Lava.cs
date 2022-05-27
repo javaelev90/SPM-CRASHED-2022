@@ -4,34 +4,33 @@ using UnityEngine;
 
 public class Lava : MonoBehaviour
 {
-    private HealthHandler health;
-    private bool takeDamage;
-    [SerializeField] private int damageAmount;
-    [SerializeField] private float timeBetweenDamage;
+    /* void OnCollisionEnter(Collision collision)
+     {
+         Debug.Log(1);
+         foreach (ContactPoint contact in collision.contacts)
+         {
+             Debug.DrawRay(contact.point, Vector3.up, Color.red);
+         }
+     }*/
 
     private void OnTriggerEnter(Collider other)
     {
-        
-        health = other.gameObject.GetComponent<HealthHandler>();
+        HealthHandler health = other.gameObject.GetComponent<HealthHandler>();
         if (health != null)
         {
-            Debug.Log(1);
-            takeDamage = true;
+            health.IsInLava(true);
         }
+        
     }
+
     private void OnTriggerExit(Collider other)
     {
-        if(health == other.gameObject.GetComponent<HealthHandler>())
+        HealthHandler health = other.gameObject.GetComponent<HealthHandler>();
+        if (health != null)
         {
-            takeDamage = false;
+            health.IsInLava(false);
         }
     }
 
-    private IEnumerator LavaDamage()
-    {
-        health.TakeDamage(damageAmount);
-        yield return new WaitForSeconds(timeBetweenDamage);
-        if (takeDamage)
-            LavaDamage();
-    }
+
 }

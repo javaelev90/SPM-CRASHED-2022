@@ -76,16 +76,31 @@ public class WayPointSystem : MonoBehaviour
             point.name = string.Format("Point ({0})", i + 1);
             point.transform.SetParent(transform);
         }
-
-        foreach (Transform t in transform)
-        {
-            position.x = Random.Range(-spreadRadius, spreadRadius) + 1;
-            position.z = Random.Range(-spreadRadius, spreadRadius) + 1;
-            position.y = 1f;
-            t.position = position;
-        }
+        PositionWayPoints(AssignPosition);
 
         nextPosition = transform.GetChild(0).position;
+    }
+
+    public void PositionWayPoints(System.Action<Vector3, Transform> positionAssigning)
+    {
+        foreach (Transform t in transform)
+        {
+            position.x = Random.Range(-spreadRadius, spreadRadius);
+            position.z = Random.Range(-spreadRadius, spreadRadius);
+            position.y = 1f;
+            //t.position = position;
+            positionAssigning.Invoke(position, t);
+        }
+    }
+
+    private void AssignPosition(Vector3 newPosition, Transform childTransform)
+    {
+        childTransform.position = newPosition;
+    }
+
+    public void AssignLocalPosition(Vector3 newPosition, Transform childTransform)
+    {
+        childTransform.localPosition = newPosition;
     }
 
     public void AssignWayPoints(List<Vector3> wayPoints)

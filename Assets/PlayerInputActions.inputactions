@@ -202,6 +202,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ObjectiveShow",
+                    "type": "Button",
+                    "id": "3d573a5b-7bfd-4e3c-90f0-688599068280",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShowPauseMenu",
+                    "type": "Button",
+                    "id": "5a047d9e-d3c0-4e94-94d0-75c6c0d6ec24",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -571,7 +589,7 @@
                 {
                     "name": "",
                     "id": "c072fa55-4d93-49c3-a385-79a35bcf5e13",
-                    "path": "<Keyboard>/p",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -741,6 +759,27 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "RepairTurret",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94856e67-8d97-41a6-bb54-e96c751d0fab",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ObjectiveShow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "id": "dbb65f2b-8493-4e8e-8e96-d6123f9e71ac",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ShowPauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

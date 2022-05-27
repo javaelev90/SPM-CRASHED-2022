@@ -140,16 +140,16 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         
         // Activate object
         activeObjects.Add(pooledObject.photonView.ViewID, pooledObject);
-        
+
         // This will be used when culling is fully implemented
-        //if (pooledObject.shouldBeCulled == false)
-        //{
-        //    pooledObject.UpdateActiveState(true);
-        //}
-        if (pooledObject.shouldBeCulled == true)
+        if (pooledObject.shouldBeCulled == false)
         {
             pooledObject.UpdateActiveState(true);
         }
+        //if (pooledObject.shouldBeCulled == true)
+        //{
+        //    pooledObject.UpdateActiveState(true);
+        //}
     }
 
     private void SpawnOnNavMesh(Vector3 spawnPosition, NavMeshAgent navMeshAgent)

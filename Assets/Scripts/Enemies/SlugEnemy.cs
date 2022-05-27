@@ -144,7 +144,7 @@ public class SlugEnemy : AIBaseLogic
     private void Move()
     {
 
-        if (distanceToTarget < maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
+        if (distanceToTarget <= maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
         {
             if (agent.isOnNavMesh) agent.isStopped = true;
             BlowUp(false);
@@ -196,6 +196,29 @@ public class SlugEnemy : AIBaseLogic
             source.PlayOneShot(explode);
             timeCounterExplosion = timeToExplosion;
         }
+    }
+
+    // Blows up immediately, called on death. Deals damage to other slugs. Despawn happens in EnemyHealthHandler.Die()
+    public void BlowUp()
+    {
+        Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, AttackableTargets);
+        if (targets.Length > 0)
+        {
+            foreach (Collider coll in targets)
+            {
+                HealthHandler healthHandler = coll.transform.GetComponent<HealthHandler>();
+                if (coll.gameObject.GetInstanceID() == gameObject.GetInstanceID())
+                {
+                    continue;
+                }
+                if (healthHandler != null)
+                {
+                    healthHandler.TakeDamage(explosionDamage);
+                }
+            }
+        }
+        photonView.RPC(nameof(Explode), RpcTarget.All);
+        source.PlayOneShot(explode);
     }
 
     [PunRPC]
