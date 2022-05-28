@@ -197,6 +197,11 @@ namespace EventCallbacksSystem
         }
     }
 
+    public class ObjectiveUpdateEvent : Event
+    {
+        public bool IsNight { get; set; }
+    }
+
     public class StungunCoolDownEvent : Event
     {
         public float CoolDownTime { get; private set; }

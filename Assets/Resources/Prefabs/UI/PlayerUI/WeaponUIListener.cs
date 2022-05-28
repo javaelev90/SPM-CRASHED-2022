@@ -54,7 +54,6 @@ public class WeaponUIListener : MonoBehaviour
     }
 
 
-    // Update is called once per frame
     void Update()
     {
         if (gunSlot.activeSelf)

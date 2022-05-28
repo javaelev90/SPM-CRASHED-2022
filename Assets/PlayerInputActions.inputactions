@@ -141,7 +141,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PreviousItem",
+                    "name": "FirstSlot",
                     "type": "Button",
                     "id": "b7a26e25-a584-4b61-9b9a-e09b6e526e70",
                     "expectedControlType": "Button",
@@ -150,12 +150,21 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "NextItem",
+                    "name": "SecondSlot",
                     "type": "Button",
                     "id": "52b60ef3-0c7c-4a42-acbf-d725d31dedd9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ThirdSlot",
+                    "type": "Button",
+                    "id": "2a0fb828-426a-463f-b725-21a383991ad1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -654,50 +663,6 @@
                 },
                 {
                     "name": "",
-                    "id": "2beb8f4f-de4f-4f2c-af06-f2cb6b362532",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PreviousItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "68b0e18f-92ba-4f58-8a81-ccc8df889b66",
-                    "path": "<Gamepad>/dpad/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "PreviousItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8b3bf921-aa77-4e0e-99f4-928a8cfa12ff",
-                    "path": "<Keyboard>/2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "NextItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "18645ca7-e35e-4d2e-acdf-69618806327c",
-                    "path": "<Gamepad>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "NextItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d2669431-3ed6-407e-b7dc-a6e329d165b2",
                     "path": "<Keyboard>/i",
                     "interactions": "",
@@ -765,7 +730,7 @@
                 {
                     "name": "",
                     "id": "94856e67-8d97-41a6-bb54-e96c751d0fab",
-                    "path": "<Keyboard>/3",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -774,12 +739,79 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
                     "id": "dbb65f2b-8493-4e8e-8e96-d6123f9e71ac",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "ShowPauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aca01580-6e86-4e6e-bf24-c4d1c29571e8",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThirdSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5f6060b8-a754-44f0-a0d3-3778874404ae",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ThirdSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b3bf921-aa77-4e0e-99f4-928a8cfa12ff",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SecondSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18645ca7-e35e-4d2e-acdf-69618806327c",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SecondSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2beb8f4f-de4f-4f2c-af06-f2cb6b362532",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FirstSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "68b0e18f-92ba-4f58-8a81-ccc8df889b66",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "FirstSlot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
