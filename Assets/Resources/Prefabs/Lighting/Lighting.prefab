@@ -46,7 +46,10 @@ MonoBehaviour:
   DirectionalLight: {fileID: 6720404845272908004}
   MoonLight: {fileID: 6720404845810669631}
   Preset: {fileID: 11400000, guid: 3ec98d280cb282940bf9fa73f6c5b713, type: 2}
-  TimeOfDay: 68.7
+  dayLength: 0
+  nightLength: 0
+  timeOfDay: 0
+  nightSpawnersHandler: {fileID: 0}
 --- !u!1 &6720404844502520519
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +127,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0.14663151, g: 0.14663151, b: 0.14663151, a: 1}
-  m_Intensity: 4.61
+  m_Intensity: 100
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -216,8 +219,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.895702, g: 0.895702, b: 0.895702, a: 1}
-  m_Intensity: 0.88
+  m_Color: {r: 0, g: 0.8235297, b: 1, a: 1}
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
