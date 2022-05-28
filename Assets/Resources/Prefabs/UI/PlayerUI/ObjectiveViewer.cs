@@ -51,14 +51,14 @@ public class ObjectiveViewer : MonoBehaviour
         {
             dayObjective.SetActive(false);
             nightObjective.SetActive(true);
-            shipObjective.SetActive(true);
+            shipObjective.SetActive(false);
         }
 
         if (ev.IsNight == false)
         {
             dayObjective.SetActive(true);
             nightObjective.SetActive(false);
-            shipObjective.SetActive(false);
+            shipObjective.SetActive(true);
         }
     }
 
