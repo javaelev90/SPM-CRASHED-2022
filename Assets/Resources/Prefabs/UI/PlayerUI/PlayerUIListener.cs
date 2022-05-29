@@ -79,42 +79,54 @@ public class PlayerUIListener : MonoBehaviour
 
     }
 
-    public void PreviousItem(InputAction.CallbackContext ctx) // use as previous
+    
+
+    public void FirstSlot(InputAction.CallbackContext ctx) // use as previous
     {
+
         if (ctx.started)
         {
+            //slotItems[selectedIndex].DeselectItem();
+            //selectedIndex--;
+
+            //if (selectedIndex >= 0)
+            //    slotItems[selectedIndex].SelectItem();
+
+            //if (selectedIndex < 0)
+            //{
+            //    selectedIndex = slotItems.Count - 1;
+            //    slotItems[selectedIndex].SelectItem();
+            //}
+
             slotItems[selectedIndex].DeselectItem();
-            selectedIndex--;
-
-            if (selectedIndex >= 0)
-                slotItems[selectedIndex].SelectItem();
-
-            if (selectedIndex < 0)
-            {
-                selectedIndex = slotItems.Count - 1;
-                slotItems[selectedIndex].SelectItem();
-            }
+            selectedIndex = 0;
+            slotItems[selectedIndex].SelectItem();
         }
 
         TypeToInventoryEvent te = new TypeToInventoryEvent(slotItems[selectedIndex].PickupType);
         EventSystem.Instance.FireEvent(te);
     }
 
-    public void NextItem(InputAction.CallbackContext ctx) // use as next selected
+    public void SecondSlot(InputAction.CallbackContext ctx) // use as next selected
     {
         if (ctx.started)
         {
             slotItems[selectedIndex].DeselectItem();
-            selectedIndex++;
+            selectedIndex = 1;
+            slotItems[selectedIndex].SelectItem();
+        }
 
-            if (selectedIndex <= slotItems.Count - 1)
-                slotItems[selectedIndex].SelectItem();
+        TypeToInventoryEvent te = new TypeToInventoryEvent(slotItems[selectedIndex].PickupType);
+        EventSystem.Instance.FireEvent(te);
+    }
 
-            if (selectedIndex > slotItems.Count - 1)
-            {
-                selectedIndex = 0;
-                slotItems[selectedIndex].SelectItem();
-            }
+    public void ThirdSlot(InputAction.CallbackContext ctx) // use as next selected
+    {
+        if (ctx.started)
+        {
+            slotItems[selectedIndex].DeselectItem();
+            selectedIndex = 2;
+            slotItems[selectedIndex].SelectItem();
         }
 
         TypeToInventoryEvent te = new TypeToInventoryEvent(slotItems[selectedIndex].PickupType);
