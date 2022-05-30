@@ -78,8 +78,12 @@ public class PlayerHealthHandler : HealthHandler
     {
         UpdateDeathCamera(transform, false);
         playerUI.transform.SetParent(transform);
-        transform.root.gameObject.SetActive(true);
         transform.position = revivePosition;
+        transform.root.gameObject.SetActive(true);
+        if (gameObject.GetComponent<Engineer>())
+        {
+            ChangeControlls.ControlType = 1;
+        }
         ResetHealth();
     }
 
