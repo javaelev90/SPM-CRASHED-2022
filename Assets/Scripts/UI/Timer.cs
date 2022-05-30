@@ -24,9 +24,12 @@ public class Timer : MonoBehaviour
     [SerializeField] private TMP_Text nightText;
     [SerializeField] private GameObject day;
     [SerializeField] private GameObject night;
+    [SerializeField] private RectTransform effectTransform;
+    [SerializeField] private GameObject nightAlarmEffect;
     private Image dayImage;
     private Image nightImage;
     private ObjectiveUpdateEvent ev;
+
     public bool IsNight { get; private set; }
 
     [Header("Other stuff")]
@@ -108,6 +111,14 @@ public class Timer : MonoBehaviour
         {
             StartCoroutine(Flash3());
             source.PlayOneShot(clip);
+
+            if (effectTransform != null)
+            {
+                var vfx = Instantiate(nightAlarmEffect, effectTransform.position, Quaternion.identity) as GameObject;
+                vfx.transform.SetParent(effectTransform);
+                var ps = vfx.GetComponent<ParticleDestroyer>();
+                Destroy(vfx, ps.DestroyDelay);
+            }
         }
 
         NightTime();
