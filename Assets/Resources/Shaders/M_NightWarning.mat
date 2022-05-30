@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_TeleporterEmission
-  m_Shader: {fileID: -6465566751694194690, guid: 24ae85edf93d12e49b0d727130b55c9e, type: 3}
+  m_Name: M_NightWarning
+  m_Shader: {fileID: -6465566751694194690, guid: 6ade4c9b33de17c418427f95cbc4419f, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,12 +19,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_8ab6c9c362914bd0a4a5b6e9bc869328:
-        m_Texture: {fileID: 2800000, guid: 1a39814347f5946459622b89daa58e95, type: 3}
+    - Texture2D_d58b11281400437bacdc9f9c3a0c6a13:
+        m_Texture: {fileID: 2800000, guid: b5bca1f52b88189469c4686355b32ccd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_631b09647b174eb3b854df9347189a39_Texture_1:
-        m_Texture: {fileID: 0}
+    - _Texture2DAsset_110b59549120447eabe2e574789abe49_Out_0:
+        m_Texture: {fileID: 2800000, guid: 91089d95124a77b48b521fb581b85878, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -40,13 +40,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - EmissionFill: 0.4
-    - Vector1_5b07b26a90df4ea7904129d9e0f057ce: 0.09
-    - Vector1_689c21530f354548bd52098bac5cee87: 0.17
-    - Vector1_7c60dacb8104488aab00509ae5283dbf: 1
-    - Vector1_8d1d7c2798664c3994d191ab5ec268b1: -1.3
-    - Vector1_f4f2622f6b9d49b7830e818ca05e1c78: 2
-    - _ObjectHeight: 2
+    - FresnelPower: 2
+    - GlowTime: 3
     m_Colors:
-    - Color_29678f9a47d345888c4449e78732e27b: {r: 0, g: 16.690197, b: 23.968628, a: 0}
+    - Color_eb556236e6b74f2a9190faabc360cffe: {r: 11.181761, g: 0, b: 0.3512595, a: 0}
+    - GlowMinMax: {r: -1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
