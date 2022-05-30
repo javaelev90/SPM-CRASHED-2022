@@ -47,7 +47,7 @@ public class PhysicsBody : MonoBehaviourPunCallbacks
         get => isGravityOn;
     }
 
-    public bool Grounded => groundHit.collider != null;
+    public bool Grounded => groundHit./*collider != null*/distance <= groundCheckDistance + skinWidth;
     public RaycastHit GroundHit => groundHit;
 
     private void Awake()
@@ -162,7 +162,7 @@ public class PhysicsBody : MonoBehaviourPunCallbacks
 
     private RaycastHit IsGrounded()
     {
-        Physics.CapsuleCast(upperPoint, lowerPoint, capsuleCollider.radius, Vector3.down, out RaycastHit hit, groundCheckDistance + skinWidth, obstacleLayer);
+        Physics.CapsuleCast(upperPoint, lowerPoint, capsuleCollider.radius, Vector3.down, out RaycastHit hit,/* groundCheckDistance + skinWidth,*/ obstacleLayer);
         return hit;
     }
 

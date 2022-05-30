@@ -168,7 +168,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
     {
         float jumpForce = 5f;
 
-        if (ctx.performed && Body.Grounded)
+        if (ctx.performed && Body.Grounded && Body.GroundHit.normal.normalized.y > .7f)
         {
             Vector3 jumpMovement = Vector3.up * jumpForce;
             source.PlayOneShot(clip);
@@ -186,13 +186,13 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
             input = /*mainCam.*/transform.rotation * input;
 
-            if (Body.GroundHit.normal.normalized.y > .7f || !Body.Grounded)
+            if (Body.GroundHit.normal.normalized.y > .7f)
             {
                 input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
             }
             else
             {
-                input = Vector3.ProjectOnPlane(Body.GroundHit.normal, Body.GroundHit.normal).normalized;
+                input = (Vector3.ProjectOnPlane(Body.GroundHit.normal, Body.GroundHit.normal).normalized);
             }
 
 
