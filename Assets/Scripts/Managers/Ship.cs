@@ -25,6 +25,7 @@ public class Ship : MonoBehaviourPunCallbacks
     private InventorySystem inventory;
     private ShipUpgradeProgressionEvent progressionEvent;
 
+
     [Serializable]
     public class ShipUpgradeCost
     {

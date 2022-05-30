@@ -34,6 +34,9 @@ public class Weapon : MonoBehaviourPunCallbacks
     [SerializeField] private InventorySystem inventory;
     [SerializeField] private int greenGooCost = 1;
 
+    private  static bool textShown; 
+
+    public GameObject uiObject;
     void Update()
     {
         Cooldown();
@@ -66,6 +69,19 @@ public class Weapon : MonoBehaviourPunCallbacks
     private bool OnCoolDown()
     {
         return shotCooldown >= 0;
+    }
+
+    private void ShowAmmo(){
+        InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
+        if(inventorySystem.Amount<GreenGoo>() == 0 && !textShown){
+            uiObject.SetActive(true);
+            textShown = true;
+        }
+        
+        if(IsShooting == true){
+            uiObject.SetActive(false);
+            textShown = true;
+        }
     }
 
     public void Shoot()

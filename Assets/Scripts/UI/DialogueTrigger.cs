@@ -4,48 +4,21 @@ using UnityEngine;
 using TMPro;
 using EventCallbacksSystem;
 
-public class Dialogue : MonoBehaviour
+public class DialogueTrigger : MonoBehaviour
 {
 
     private int index;
     public float textSpeed;
     public string[] numberOfLines;
     public TextMeshProUGUI textComponent;
-    public Dialogue players;
+    public DialogueTrigger players;
     public bool isFirst;
-    private bool isDone;
+    private bool isDone ;
     private bool isTyping;
 
-    public bool startOfGame = true;
+    private bool startOfGame = true;
     // Start is called before the first frame update
-    void Start()
-    {
-
-        
-      // EventSystem.Instance.RegisterListener<EventEvent>();
-        if (isFirst && startOfGame)
-        {
-            textComponent.text = string.Empty;
-            startOfGame = false;
-            //beginDialogue();
-            StartCoroutine(StartOfGame());
-        }
-        else if(isFirst && !startOfGame){
-            textComponent.text = string.Empty;
-            beginDialogue();
-        }
-    }
-
-    // Update is called once per frame
-
-    private IEnumerator StartOfGame(){
   
-
-            yield return new WaitForSeconds(10);
-            beginDialogue();
-        
-    }
-    
        void OnTriggerEnter(Collider player)
     {
         Debug.Log("hej");
@@ -63,11 +36,31 @@ public class Dialogue : MonoBehaviour
            textComponent.enabled = false;
         }
     }
+
    public void beginDialogue()
     {
         index = 0;
-        StartCoroutine(Type());
+        StartCoroutine(Types());
         
+    }
+
+    IEnumerator Types()
+    {
+        for (int index = 0; index < numberOfLines.Length - 1; index++) {
+            textComponent.text = string.Empty;
+
+            char[] line = numberOfLines[index].ToCharArray();
+            Debug.Log(numberOfLines[index]);
+            for (int c = 0; c < line.Length; c++) {
+                textComponent.text += line[c];
+                yield return new WaitForSeconds(textSpeed);
+            }
+                yield return new WaitForSeconds(1);
+
+        }
+                yield return new WaitForSeconds(1);
+
+        gameObject.SetActive(false);
     }
 
     IEnumerator Type()
@@ -79,6 +72,7 @@ public class Dialogue : MonoBehaviour
             yield return new WaitForSeconds(textSpeed);
             if (isDone)
             {
+                Debug.Log("SAAAAAAAAAAAAAAAAVE ME");
                 textComponent.text = numberOfLines[index];
                 break;
             }
@@ -94,7 +88,8 @@ public class Dialogue : MonoBehaviour
             players.Next();
         }
     }
-    void Next()
+
+    public void Next()
     {
         if (index < numberOfLines.Length - 1)
         {

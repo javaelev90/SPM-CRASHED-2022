@@ -7,6 +7,8 @@ using EventCallbacksSystem;
 public class ShowUiDialogue : MonoBehaviour
 {
     public GameObject uiObject;
+
+    [SerializeField] DialogueTrigger[]  dialogs;
     [SerializeField] private bool canSoldierPickup;
     [SerializeField] private bool canEngineerPickup;
 
@@ -20,9 +22,17 @@ public class ShowUiDialogue : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider player){
-        if((canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>()) || (canEngineerPickup && player.gameObject.GetComponent<Engineer>()))
+        if(((canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>())) || ((canEngineerPickup && player.gameObject.GetComponent<Engineer>())))
         {
+            Debug.Log("kolliderar");
+            
             uiObject.SetActive(true);
+            foreach (DialogueTrigger dialogue in dialogs)
+            {
+                
+                dialogue.beginDialogue();
+                Debug.Log("skriver ut");
+            }
         }
     }
 
@@ -30,7 +40,11 @@ public class ShowUiDialogue : MonoBehaviour
         if(uiObject.activeSelf)
         {
            uiObject.SetActive(false);
-          
+           //StopCoroutine(dialogs.type);
+           foreach (var d in dialogs)
+                {
+                    d.gameObject.SetActive(false);
+                }
         }
     }
 }

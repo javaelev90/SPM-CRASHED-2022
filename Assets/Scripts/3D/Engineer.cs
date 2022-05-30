@@ -37,6 +37,10 @@ public class Engineer : Controller3D
     List<GameObject> objects = new List<GameObject>();
     private bool isTryingToPlaceTurret;
 
+    private  static bool textShown; 
+
+    public GameObject uiObject;
+
     [Header("TurretRepair")]
     public TurretCost turretRepairCosts;
     [SerializeField] private int healthToAdd = 10;
@@ -88,11 +92,13 @@ public class Engineer : Controller3D
         stunGunEvent = new StungunCoolDownEvent(delayBetweenShots);
         EventSystem.Instance.FireEvent(stunGunEvent);
         audioSource = GetComponent<AudioSource>();
+        uiObject.SetActive(false);
     }
 
     protected override void Awake()
     {
         base.Awake();
+        textShown = false;
     }
 
     // Update is called once per frame
@@ -111,6 +117,8 @@ public class Engineer : Controller3D
         {
             transform.position = usePositionPos.transform.position;
         }
+        ShowTurret();
+        
         //TurretHandling();
         //Debug.Log(targetTime);
     }
@@ -405,5 +413,20 @@ public class Engineer : Controller3D
     {
         Gizmos.DrawWireSphere(transform.position, checkRadius);
         //Gizmos.DrawRay(transform.position, hit.transform.position);
+    }
+
+    private void ShowTurret(){
+        InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
+        if(inventorySystem.Amount<GreenGoo>() >= 2 && inventorySystem.Amount<Metal>() >= 2 && !textShown){
+            uiObject.SetActive(true);
+            textShown = true;
+        }
+
+        if(isTryingToPlaceTurret == true){
+            uiObject.SetActive(false);
+            textShown = true;
+        }
+
+        
     }
 }
