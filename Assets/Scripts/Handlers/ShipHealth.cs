@@ -23,9 +23,20 @@ public class ShipHealth : HealthHandler
             amount = 0;
         }
         photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);
-        if(amount < 95){
+
+        //if (amount < 95)
+        //{
+            //Debug.Log("debug");
+            //source.PlayOneShot(hit);
+        //}
+
+
+        if (CurrentHealth <= 950 || CurrentHealth <= 500 || CurrentHealth <= 100)
+        {
+            Debug.Log("Playing warning about ship health dropping");
             source.PlayOneShot(hit);
         }
+
     }
 
     [PunRPC]
@@ -43,4 +54,6 @@ public class ShipHealth : HealthHandler
     {
         EventSystem.Instance.FireEvent(new GameOverEvent("Ship has been destroyed"));
     }
+
+    public override void IsInLava(bool inLava) { }
 }

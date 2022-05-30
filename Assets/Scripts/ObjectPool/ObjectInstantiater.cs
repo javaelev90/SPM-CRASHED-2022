@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Photon.Pun;
 
 public class ObjectInstantiater : MonoBehaviourPunCallbacks
@@ -32,8 +33,11 @@ public class ObjectInstantiater : MonoBehaviourPunCallbacks
     {
         foreach (Transform location in positions)
         {
-            float y = Terrain.activeTerrain.SampleHeight(new Vector3(location.position.x, 10f, location.position.z));
-            Vector3 newLocation = new Vector3(location.position.x, y + yOffset, location.position.z);
+            //float y = Terrain.activeTerrain.SampleHeight(new Vector3(location.position.x, 10f, location.position.z));
+            //Vector3 newLocation = new Vector3(location.position.x, y + yOffset, location.position.z);
+            //PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + prefab.name, newLocation, location.rotation);
+            NavMesh.SamplePosition(location.position, out NavMeshHit hit, 5.0f, NavMesh.AllAreas);
+            Vector3 newLocation = new Vector3(location.position.x, hit.position.y + yOffset, location.position.z);
             PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + prefab.name, newLocation, location.rotation);
         }
     }

@@ -23,8 +23,7 @@ public class Ship : MonoBehaviourPunCallbacks
     public AudioClip connect;
     public float minTimeUntilDaw = 120f;
     private InventorySystem inventory;
-
-
+    private ShipUpgradeProgressionEvent progressionEvent;
 
     [Serializable]
     public class ShipUpgradeCost
@@ -42,11 +41,10 @@ public class Ship : MonoBehaviourPunCallbacks
         EventSystem.Instance.RegisterListener<AttachPartEvent>(newPartObtained);
         EventSystem.Instance.RegisterListener<ShipUppgradPanelEvent>(OpenShipUpgradePanel);
         nextUpgrade = 0;
-
+        progressionEvent = new ShipUpgradeProgressionEvent(nextUpgrade, shipUpgradeCost.Count);
         source = GetComponent<AudioSource>();
+        EventSystem.Instance.FireEvent(progressionEvent);
     }
-
-  
 
     public void newPartObtained(AttachPartEvent attachPartEvent)
     {
@@ -63,13 +61,13 @@ public class Ship : MonoBehaviourPunCallbacks
         EventSystem.Instance.FireEvent(new ShipPartEvent(minTimeUntilDaw));
     }
 
-
-
     public bool UppgradeShip()
     {
         if (TakeResources())
         {
             photonView.RPC(nameof(UpgradeShipRPC), RpcTarget.All);
+            progressionEvent.UpgradeNumber = nextUpgrade;
+            EventSystem.Instance.FireEvent(progressionEvent);
             return true;
         }
         return false;
@@ -117,7 +115,7 @@ public class Ship : MonoBehaviourPunCallbacks
     {
         if (shipUpgradePanel != null)
         {
-            inventory = GameManager.playerObject.GetComponent<InventorySystem>();
+            inventory = GameManager.player.GetComponent<InventorySystem>();
             shipUpgradePanel.gameObject.SetActive(true);
             if (!shipUpgradeCost[nextUpgrade].partAvalibul)
             {
@@ -136,7 +134,7 @@ public class Ship : MonoBehaviourPunCallbacks
             }
             shipUpgradePanel.ToggleErrorMessage(false);
             Cursor.lockState = CursorLockMode.None;
-            GameManager.playerObject.GetComponent<PlayerInput>().enabled = false;
+            GameManager.player.GetComponent<PlayerInput>().enabled = false;
 
         }
     }

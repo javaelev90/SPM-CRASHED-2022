@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using EventCallbacksSystem;
+using UnityEngine.VFX;
 
 public class Turret : MonoBehaviourPunCallbacks
 {
@@ -18,12 +19,12 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private PhotonView bullet;
     [SerializeField] private float fireTimer = 1f;
     [SerializeField] private int turretDamage;
+    [SerializeField] private int turretDamageWhenUsing;
     [SerializeField] private int turretHealthIncreaseAtUpgrade;
     [SerializeField] public Transform useTurretPosition;
     [SerializeField] public Transform useTurretBody;
 
     public AudioSource source;
-
     public AudioClip clip;
 
     private GameObject emptyTarget;
@@ -56,6 +57,7 @@ public class Turret : MonoBehaviourPunCallbacks
     public void DamageUpgrade(TurretDamageUpgradeEvent turretDamageUpgrade)
     {
         turretDamage += turretDamageUpgrade.UpgradeAmount;
+        turretDamageWhenUsing += turretDamageUpgrade.UpgradeAmount;
     }
 
     private void FindTargets()
@@ -77,7 +79,9 @@ public class Turret : MonoBehaviourPunCallbacks
 
             Vector3 direction = (currentTarget.position - transform.position).normalized;
             Quaternion rotateTo = Quaternion.LookRotation(direction, turretBody.transform.up);
-            turretBody.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
+            Transform turretBodyTransform = turretBody.transform;
+            turretBodyTransform.LookAt(currentTarget, Vector3.up);
+            //turretBody.transform.rotation = Quaternion.Slerp(transform.rotation, rotateTo, 1f);
 
             ClampRotBody();
         }
@@ -92,10 +96,12 @@ public class Turret : MonoBehaviourPunCallbacks
     {
         // Clamp rotation so it doesn't go all over the place and end up upside down
         Vector3 pivotRotation = turretBody.transform.eulerAngles;
-        pivotRotation.x = Mathf.Clamp(pivotRotation.x, -30f, 30f);
+        pivotRotation.x = Mathf.Clamp(pivotRotation.x, -60f, 80f);
         pivotRotation.z = Mathf.Clamp(pivotRotation.z, 0f, 0f);
         turretBody.transform.eulerAngles = pivotRotation;
     }
+
+
 
     void Update()
     {
@@ -123,20 +129,64 @@ public class Turret : MonoBehaviourPunCallbacks
                 }
             }
         }
-        
+
 
         Debug.DrawRay(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward * 8f);
     }
 
+
+    [SerializeField] VisualEffect muzzlePosition;
     public void TurretShoot()
     {
         if (counter <= 0f)
         {
+            /*
+            // Shoot projectile
             GameObject bullet = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + "Bullet", turretMuzzlePoint.transform.position, turretBody.transform.rotation);
             Projectile projectile = bullet.GetComponent<Projectile>();
             projectile.Velocity = turretBody.transform.rotation * Vector3.forward * 100f;
             projectile.DamageDealer = turretDamage;
             projectile.IsShot = true;
+            counter = fireTimer;
+            source.PlayOneShot(clip);
+            source.volume = Random.Range(0.8f, 2);
+            source.pitch = Random.Range(0.8f, 1.4f);
+            Debug.Log("Is shooting");
+            */
+            float range;
+            if (engineerRef.isUsingTurret)
+            {
+                range = 50f;
+            }
+            else
+            {
+                range = 15f;
+            }
+
+            if(Physics.Raycast(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward, out RaycastHit hitInfo, range, enemyLayer))
+            {
+                HealthHandler healthHandler = hitInfo.transform.GetComponent<HealthHandler>();
+                if (healthHandler)
+                {
+                    if (engineerRef.isUsingTurret)
+                    {
+                        healthHandler.TakeDamage(turretDamageWhenUsing);
+                    }
+                    else
+                    {
+                        healthHandler.TakeDamage(turretDamage);
+                    }
+                    
+                }
+
+                AIBaseLogic ai = hitInfo.transform.GetComponent<AIBaseLogic>();
+                if (ai)
+                {
+                    ai.FindAttackingTarget(transform);
+                }
+            }
+
+            muzzlePosition.Play();
             counter = fireTimer;
             source.PlayOneShot(clip);
             source.volume = Random.Range(0.8f, 2);

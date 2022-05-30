@@ -14,11 +14,7 @@ public class Level1 : MonoBehaviour
 
     public Ship ship;
 
-    public GameObject uiObject;
-    
-    public GameObject panel;
-
-    public GameObject found;
+ 
 
     public Timer time;
 
@@ -26,9 +22,7 @@ public class Level1 : MonoBehaviour
     
     void Start()
     {
-        uiObject.SetActive(false);
-        panel.SetActive(true);
-        found.SetActive(false);
+      
        
         //time.DisplayingTime(false);
         //time.Show(false);
@@ -39,11 +33,10 @@ public class Level1 : MonoBehaviour
         if((ship.nextUpgrade>0))
         {
             DisableColliders();
-            uiObject.SetActive(true);
-            panel.SetActive(false);
+            
             time.DisplayingTime(true);
             time.Show(true);
-            found.SetActive(true);
+            
         }
     }
 

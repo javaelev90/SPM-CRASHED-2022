@@ -6053,8 +6053,8 @@ MonoBehaviour:
   rotationSpeed: 3
   timeToMelee: 3
   timeToGas: 5
-  poisonDamage: 1
-  hitDamage: 5
+  poisonDamage: 10
+  hitDamage: 50
   timeToWayPoint: 5
   walk: {fileID: 8300000, guid: ba7d7ea8f02f75545ab9859dfbfe1962, type: 3}
   angry: {fileID: 8300000, guid: a8a2498ccccd4cf4796f4bd11a991b7a, type: 3}
@@ -6156,7 +6156,10 @@ MonoBehaviour:
   MaxHealth: 150
   CurrentHealth: 150
   isAlive: 1
+  damage: 5
+  intervale: 1.5
   rootObject: {fileID: 3536792488537908558}
+  hitVFX: {fileID: 1917380589763821211, guid: 6c1694d813a06d2499f97c14978d8376, type: 3}
 --- !u!82 &7753290823584008450
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6166,21 +6169,21 @@ AudioSource:
   m_GameObject: {fileID: 4455291304399106642}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3502601922304438056, guid: 8082db654c41ecd4d87706bd7ecc5950, type: 2}
+  OutputAudioMixerGroup: {fileID: -5849267243179087080, guid: c0459e00c8941e54a8af4829105e60c4, type: 2}
   m_audioClip: {fileID: 8300000, guid: ba7d7ea8f02f75545ab9859dfbfe1962, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.534
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -6213,7 +6216,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

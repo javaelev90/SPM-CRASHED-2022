@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using EventCallbacksSystem;
+using System;
 
-public class HealthHandler : MonoBehaviourPunCallbacks
+public abstract class HealthHandler : MonoBehaviourPunCallbacks
 {
     [Header("Required components")]
     [SerializeField] private HealthBarHandler healthBarHandler;
@@ -21,8 +22,15 @@ public class HealthHandler : MonoBehaviourPunCallbacks
     public int CurrentHealth;
     public bool isAlive = true;
 
-    public virtual void TakeDamage(int amount) {}
-    public virtual void Die() {}
+    [Header("Lava Damage")]
+    private bool inLava;
+    public int damage = 5;
+    public float intervale = 1.5f;
+
+
+    public abstract void TakeDamage(int amount);
+    public abstract void Die();
+
     public virtual void DropItem() {}
 
     public override void OnEnable()
@@ -30,6 +38,7 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         base.OnEnable();
         ResetHealth();
         source = GetComponent<AudioSource>();
+        inLava = false;
     }
 
     protected void ResetHealth()
@@ -93,4 +102,18 @@ public class HealthHandler : MonoBehaviourPunCallbacks
         PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + itemDropPrefab.name, spawnPosition, Quaternion.identity, 0, parameters);
     }
 
+    public virtual void IsInLava(bool inLava)
+    {
+        this.inLava = inLava;
+        if (inLava)
+            StartCoroutine(IsInLava());
+    }
+
+    private IEnumerator IsInLava()
+    {
+        TakeDamage(damage);
+        yield return new WaitForSeconds(intervale);
+        if (inLava)
+            StartCoroutine(IsInLava());
+    }
 }

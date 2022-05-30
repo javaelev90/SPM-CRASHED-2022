@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -7,6 +8,12 @@ public class EnemyHealthHandler : HealthHandler
 {
     [Header("If part of pooled object")]
     [SerializeField] private PooledObject rootObject;
+
+    [SerializeField] private GameObject hitVFX;
+    GameObject vfx;
+
+    private bool hasBeenHurt = false;
+    [SerializeField] private Animator anim;
 
     public override void TakeDamage(int amount)
     {
@@ -18,7 +25,23 @@ public class EnemyHealthHandler : HealthHandler
     {
         if (isAlive == true)
         {
+            // Plays VFX where the bullet hits on enemy
             RemoveHealth(amount);
+            Destroy(Instantiate(hitVFX, transform.position, transform.rotation), 2f);
+            //if (!hasBeenHurt)
+            //{
+            //    hasBeenHurt = true;
+            //    anim = GetComponentInChildren<Animator>();
+            //    if(anim != null)
+            //    {
+            //        //hurtAnimator.SetTrigger("Hurt");
+            //        anim = GetComponentInChildren<Animator>();
+            //        anim.SetTrigger("Hurt");
+            //        //gameObject.GetComponentInChildren<EnemyHurtAnimation>().PlayEnemyHurtAnim();
+            //    }
+            //}
+            if (anim != null)
+                anim.CrossFade("TakeDamage.EnemyMoreHurt", 0f);
         }
     }
 
@@ -27,6 +50,10 @@ public class EnemyHealthHandler : HealthHandler
         if (itemDropPrefab != null)
         {
             DropItem();
+        }
+        if(TryGetComponent<SlugEnemy>(out SlugEnemy slugEnemy))
+        {
+            slugEnemy.BlowUp();
         }
         rootObject?.DeSpawn();
     }

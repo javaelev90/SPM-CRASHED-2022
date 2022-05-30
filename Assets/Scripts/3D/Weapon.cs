@@ -11,17 +11,18 @@ public class Weapon : MonoBehaviourPunCallbacks
     [Tooltip("Position where the gun barrel ends")]
     [SerializeField] VisualEffect muzzlePosition;
 
+    [SerializeField] GameObject hitPosition;
+
     [Header("Weapon settings")]
     [SerializeField] float weaponRange = 15f;
     [SerializeField] int weaponDamage = 1;
     [SerializeField] float delayBetweenShots = 0.5f;
-    [Tooltip("If gun will shoot continuously when shoot button is pressed vs one shot per click.")]
-    [SerializeField] public bool automaticWeapon = false;
     [SerializeField] LayerMask layersThatShouldBeHit;
     [SerializeField] private int maxAmmo;
     [SerializeField] private int currentAmmo;
     private float shotCooldown = 0f;
     public bool IsShooting { get; set; }
+    private WeaponAmmunitionUpdateEvent ammunitionUpdateEvent;
 
     [Header("Weapon effects")]
     [SerializeField] private Animator animator;
@@ -45,9 +46,13 @@ public class Weapon : MonoBehaviourPunCallbacks
     {
         sourceOne = GetComponent<AudioSource>();
         EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
-        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
+        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage); // behövs två rader av samma?
         sourceOne.volume = Random.Range(1.8f, 2.5f);
         sourceOne.pitch = Random.Range(0.8f, 1.2f);
+
+        currentAmmo = maxAmmo;
+        ammunitionUpdateEvent = new WeaponAmmunitionUpdateEvent(currentAmmo, maxAmmo);
+        EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
     }
 
     private void Cooldown()
@@ -65,36 +70,64 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     public void Shoot()
     {
-        if(OnCoolDown() == false && IsShooting == true)
+        if (OnCoolDown() == false && IsShooting == true && currentAmmo > 0)
         {
             muzzlePosition.Play();
             animator.CrossFadeInFixedTime("Shooting", 0.1f);
 
-            if (useInventory)
-            {
-                inventory.Remove<GreenGoo>(greenGooCost);
-            }
+            currentAmmo--;
+            ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
+            EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
 
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,
                 out RaycastHit hitInfo, weaponRange, layersThatShouldBeHit))
             {
                 HealthHandler healthHandler = hitInfo.transform.GetComponent<HealthHandler>();
-                if (healthHandler)
+                if (healthHandler != null)
                 {
                     healthHandler.TakeDamage(weaponDamage);
                 }
+                // Plays VFX where the bullet hits
+                //Instantiate(hitPosition, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                Destroy(Instantiate(hitPosition, hitInfo.point, Quaternion.LookRotation(hitInfo.normal)), 10f);
 
                 AIBaseLogic ai = hitInfo.transform.GetComponent<AIBaseLogic>();
                 if (ai)
                 {
                     ai.FindAttackingTarget(transform);
                 }
-                
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;
-            sourceOne.PlayOneShot(GetAudioClip());
+            PlayShotEffects();
         }
+        else
+        {
+            if (currentAmmo == 0 && inventory.Amount<GreenGoo>() > 0)
+            {
+                currentAmmo = maxAmmo;
+                inventory.Remove<GreenGoo>();
+                ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
+                EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
+            }
+            else if (currentAmmo == 0 && inventory.Amount<GreenGoo>() == 0)
+            {
+                ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
+                EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
+            }
+        }
+
+    }
+
+    private void PlayShotEffects()
+    {
+        photonView.RPC(nameof(PlayShotEffectsRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void PlayShotEffectsRPC()
+    {
+        sourceOne.PlayOneShot(GetAudioClip());
     }
 
     private AudioClip GetAudioClip()
@@ -103,7 +136,7 @@ public class Weapon : MonoBehaviourPunCallbacks
         sourceOne.volume = Random.Range(1.8f, 2.5f);
         sourceOne.pitch = Random.Range(0.4f, 1.6f);
         return shot[index];
-       
+
     }
 
     public void UpgradeDamage(GunDamageUpgradeEvent damageUpgradeEvent)
@@ -115,4 +148,5 @@ public class Weapon : MonoBehaviourPunCallbacks
     {
         delayBetweenShots *= (1 - gunRateUpgradeEvent.UpgradePercent);
     }
+
 }

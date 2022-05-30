@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 4417561990126742436}
   - component: {fileID: 784064682960528385}
   - component: {fileID: 3244133131696623819}
+  - component: {fileID: 569968507432479661}
   m_Layer: 0
   m_Name: SlugLord
   m_TagString: Untagged
@@ -173,6 +174,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 1225b77ffb628ce4a9e2bfa927e55a10, type: 2}
+  - {fileID: 2100000, guid: bad506e0a56f9c041ae3ed4d897ce67d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -194,6 +196,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &569968507432479661
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892664328204448030}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d0b9535279488c14b9e11c3d7f3c2531, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5603274226023981941
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,12 +297,13 @@ MonoBehaviour:
   timeToAggro: 1
   timeToCoolWhenAttacked: 5
   timeStunned: 3
+  animator: {fileID: 0}
   minBlowUpRadius: 0
   maxBlowUpRadius: 0
   rotationSpeed: 4
-  timeToWayPoint: 3
+  timeToWayPoint: 4
   timeToExplosion: 2
-  explosionDamage: 4
+  explosionDamage: 14
   explosionEffects: {fileID: 2407786938042907698, guid: b128d91ce84906846917e367f2981f8a, type: 3}
   AttackableTargets:
     serializedVersion: 2
@@ -412,7 +434,11 @@ MonoBehaviour:
   MaxHealth: 30
   CurrentHealth: 30
   isAlive: 1
+  damage: 5
+  intervale: 1.5
   rootObject: {fileID: 6261632589528798244}
+  hitVFX: {fileID: 1644440166643503569, guid: 560b2ad335432e4438a787f03e419393, type: 3}
+  anim: {fileID: 569968507432479661}
 --- !u!82 &2553267416189683229
 AudioSource:
   m_ObjectHideFlags: 0
@@ -523,7 +549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snail: {fileID: 5603274226023981941}
   explosionEffect: {fileID: 3095588006312428209, guid: 47116fd2e39311344888a9862c31e2bd, type: 3}
-  readyToExplodeEffect: {fileID: 0}
+  readyToExplodeEffect: {fileID: 948836587826390393, guid: 6a1e1b12518a3f44a98c86a15e5c4df9, type: 3}
   SnailGooDecalPrefab: {fileID: 2713433594693982627, guid: 0e512d4ed6c872643a57df4658a9ce0e, type: 3}
   timeTillExplode: 10
 --- !u!54 &5720213624663781142

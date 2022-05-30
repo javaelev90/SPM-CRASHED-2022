@@ -18,7 +18,6 @@ public class DialoguePickups : MonoBehaviour
 
     ShowUiDialogue dialog;
 
-    [SerializeField] 
   
    public void beginDialogue()
     {

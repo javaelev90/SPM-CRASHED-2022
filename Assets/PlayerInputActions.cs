@@ -163,7 +163,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PreviousItem"",
+                    ""name"": ""FirstSlot"",
                     ""type"": ""Button"",
                     ""id"": ""b7a26e25-a584-4b61-9b9a-e09b6e526e70"",
                     ""expectedControlType"": ""Button"",
@@ -172,12 +172,21 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""NextItem"",
+                    ""name"": ""SecondSlot"",
                     ""type"": ""Button"",
                     ""id"": ""52b60ef3-0c7c-4a42-acbf-d725d31dedd9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ThirdSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""2a0fb828-426a-463f-b725-21a383991ad1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -220,6 +229,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""RepairTurret"",
                     ""type"": ""Button"",
                     ""id"": ""414c7bf4-a997-48a6-ba58-e005e22bdc62"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ObjectiveShow"",
+                    ""type"": ""Button"",
+                    ""id"": ""3d573a5b-7bfd-4e3c-90f0-688599068280"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -602,7 +620,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c072fa55-4d93-49c3-a385-79a35bcf5e13"",
-                    ""path"": ""<Keyboard>/p"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
@@ -662,50 +680,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""UseTurret"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2beb8f4f-de4f-4f2c-af06-f2cb6b362532"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PreviousItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""68b0e18f-92ba-4f58-8a81-ccc8df889b66"",
-                    ""path"": ""<Gamepad>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""PreviousItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8b3bf921-aa77-4e0e-99f4-928a8cfa12ff"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NextItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""18645ca7-e35e-4d2e-acdf-69618806327c"",
-                    ""path"": ""<Gamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""NextItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -777,12 +751,89 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""94856e67-8d97-41a6-bb54-e96c751d0fab"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""ObjectiveShow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""dbb65f2b-8493-4e8e-8e96-d6123f9e71ac"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""ShowPauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aca01580-6e86-4e6e-bf24-c4d1c29571e8"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThirdSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5f6060b8-a754-44f0-a0d3-3778874404ae"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""ThirdSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b3bf921-aa77-4e0e-99f4-928a8cfa12ff"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18645ca7-e35e-4d2e-acdf-69618806327c"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SecondSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2beb8f4f-de4f-4f2c-af06-f2cb6b362532"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FirstSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""68b0e18f-92ba-4f58-8a81-ccc8df889b66"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""FirstSlot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1209,13 +1260,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_ShipPickUp = m_Player.FindAction("ShipPickUp", throwIfNotFound: true);
         m_Player_DeleteTurret = m_Player.FindAction("DeleteTurret", throwIfNotFound: true);
         m_Player_UseTurret = m_Player.FindAction("UseTurret", throwIfNotFound: true);
-        m_Player_PreviousItem = m_Player.FindAction("PreviousItem", throwIfNotFound: true);
-        m_Player_NextItem = m_Player.FindAction("NextItem", throwIfNotFound: true);
+        m_Player_FirstSlot = m_Player.FindAction("FirstSlot", throwIfNotFound: true);
+        m_Player_SecondSlot = m_Player.FindAction("SecondSlot", throwIfNotFound: true);
+        m_Player_ThirdSlot = m_Player.FindAction("ThirdSlot", throwIfNotFound: true);
         m_Player_Immortal = m_Player.FindAction("Immortal", throwIfNotFound: true);
         m_Player_GreenGoo = m_Player.FindAction("GreenGoo", throwIfNotFound: true);
         m_Player_Metal = m_Player.FindAction("Metal", throwIfNotFound: true);
         m_Player_Beef = m_Player.FindAction("Beef", throwIfNotFound: true);
         m_Player_RepairTurret = m_Player.FindAction("RepairTurret", throwIfNotFound: true);
+        m_Player_ObjectiveShow = m_Player.FindAction("ObjectiveShow", throwIfNotFound: true);
         m_Player_ShowPauseMenu = m_Player.FindAction("ShowPauseMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1303,13 +1356,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ShipPickUp;
     private readonly InputAction m_Player_DeleteTurret;
     private readonly InputAction m_Player_UseTurret;
-    private readonly InputAction m_Player_PreviousItem;
-    private readonly InputAction m_Player_NextItem;
+    private readonly InputAction m_Player_FirstSlot;
+    private readonly InputAction m_Player_SecondSlot;
+    private readonly InputAction m_Player_ThirdSlot;
     private readonly InputAction m_Player_Immortal;
     private readonly InputAction m_Player_GreenGoo;
     private readonly InputAction m_Player_Metal;
     private readonly InputAction m_Player_Beef;
     private readonly InputAction m_Player_RepairTurret;
+    private readonly InputAction m_Player_ObjectiveShow;
     private readonly InputAction m_Player_ShowPauseMenu;
     public struct PlayerActions
     {
@@ -1330,13 +1385,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @ShipPickUp => m_Wrapper.m_Player_ShipPickUp;
         public InputAction @DeleteTurret => m_Wrapper.m_Player_DeleteTurret;
         public InputAction @UseTurret => m_Wrapper.m_Player_UseTurret;
-        public InputAction @PreviousItem => m_Wrapper.m_Player_PreviousItem;
-        public InputAction @NextItem => m_Wrapper.m_Player_NextItem;
+        public InputAction @FirstSlot => m_Wrapper.m_Player_FirstSlot;
+        public InputAction @SecondSlot => m_Wrapper.m_Player_SecondSlot;
+        public InputAction @ThirdSlot => m_Wrapper.m_Player_ThirdSlot;
         public InputAction @Immortal => m_Wrapper.m_Player_Immortal;
         public InputAction @GreenGoo => m_Wrapper.m_Player_GreenGoo;
         public InputAction @Metal => m_Wrapper.m_Player_Metal;
         public InputAction @Beef => m_Wrapper.m_Player_Beef;
         public InputAction @RepairTurret => m_Wrapper.m_Player_RepairTurret;
+        public InputAction @ObjectiveShow => m_Wrapper.m_Player_ObjectiveShow;
         public InputAction @ShowPauseMenu => m_Wrapper.m_Player_ShowPauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -1392,12 +1449,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @UseTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
                 @UseTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
                 @UseTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseTurret;
-                @PreviousItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousItem;
-                @PreviousItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousItem;
-                @PreviousItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousItem;
-                @NextItem.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextItem;
-                @NextItem.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextItem;
-                @NextItem.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextItem;
+                @FirstSlot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFirstSlot;
+                @FirstSlot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFirstSlot;
+                @FirstSlot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFirstSlot;
+                @SecondSlot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondSlot;
+                @SecondSlot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondSlot;
+                @SecondSlot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondSlot;
+                @ThirdSlot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThirdSlot;
+                @ThirdSlot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThirdSlot;
+                @ThirdSlot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThirdSlot;
                 @Immortal.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnImmortal;
                 @Immortal.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnImmortal;
                 @Immortal.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnImmortal;
@@ -1413,6 +1473,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @RepairTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRepairTurret;
                 @RepairTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRepairTurret;
                 @RepairTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRepairTurret;
+                @ObjectiveShow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnObjectiveShow;
+                @ObjectiveShow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnObjectiveShow;
+                @ObjectiveShow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnObjectiveShow;
                 @ShowPauseMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPauseMenu;
                 @ShowPauseMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPauseMenu;
                 @ShowPauseMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPauseMenu;
@@ -1465,12 +1528,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @UseTurret.started += instance.OnUseTurret;
                 @UseTurret.performed += instance.OnUseTurret;
                 @UseTurret.canceled += instance.OnUseTurret;
-                @PreviousItem.started += instance.OnPreviousItem;
-                @PreviousItem.performed += instance.OnPreviousItem;
-                @PreviousItem.canceled += instance.OnPreviousItem;
-                @NextItem.started += instance.OnNextItem;
-                @NextItem.performed += instance.OnNextItem;
-                @NextItem.canceled += instance.OnNextItem;
+                @FirstSlot.started += instance.OnFirstSlot;
+                @FirstSlot.performed += instance.OnFirstSlot;
+                @FirstSlot.canceled += instance.OnFirstSlot;
+                @SecondSlot.started += instance.OnSecondSlot;
+                @SecondSlot.performed += instance.OnSecondSlot;
+                @SecondSlot.canceled += instance.OnSecondSlot;
+                @ThirdSlot.started += instance.OnThirdSlot;
+                @ThirdSlot.performed += instance.OnThirdSlot;
+                @ThirdSlot.canceled += instance.OnThirdSlot;
                 @Immortal.started += instance.OnImmortal;
                 @Immortal.performed += instance.OnImmortal;
                 @Immortal.canceled += instance.OnImmortal;
@@ -1486,6 +1552,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @RepairTurret.started += instance.OnRepairTurret;
                 @RepairTurret.performed += instance.OnRepairTurret;
                 @RepairTurret.canceled += instance.OnRepairTurret;
+                @ObjectiveShow.started += instance.OnObjectiveShow;
+                @ObjectiveShow.performed += instance.OnObjectiveShow;
+                @ObjectiveShow.canceled += instance.OnObjectiveShow;
                 @ShowPauseMenu.started += instance.OnShowPauseMenu;
                 @ShowPauseMenu.performed += instance.OnShowPauseMenu;
                 @ShowPauseMenu.canceled += instance.OnShowPauseMenu;
@@ -1633,13 +1702,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnShipPickUp(InputAction.CallbackContext context);
         void OnDeleteTurret(InputAction.CallbackContext context);
         void OnUseTurret(InputAction.CallbackContext context);
-        void OnPreviousItem(InputAction.CallbackContext context);
-        void OnNextItem(InputAction.CallbackContext context);
+        void OnFirstSlot(InputAction.CallbackContext context);
+        void OnSecondSlot(InputAction.CallbackContext context);
+        void OnThirdSlot(InputAction.CallbackContext context);
         void OnImmortal(InputAction.CallbackContext context);
         void OnGreenGoo(InputAction.CallbackContext context);
         void OnMetal(InputAction.CallbackContext context);
         void OnBeef(InputAction.CallbackContext context);
         void OnRepairTurret(InputAction.CallbackContext context);
+        void OnObjectiveShow(InputAction.CallbackContext context);
         void OnShowPauseMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions

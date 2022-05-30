@@ -52,6 +52,7 @@ public class PlayerWalkState : State
     {
         base.Exit();
         player.animator.SetBool("isRunning", false);
+        player.animator.CrossFadeInFixedTime("Idle", 0.1f);
     }
 
 

@@ -25,7 +25,7 @@ public class LightingManager : MonoBehaviour
     private bool cycleOngoing = true;
 
     public bool IsNight { get; private set; }
-
+    public float TimeOfDay { get { return timeOfDay; } set { timeOfDay = value; } }
     public float DayLength { get { return dayLength; } }
     public float NightLength { get { return nightLength; } }
 
@@ -63,22 +63,16 @@ public class LightingManager : MonoBehaviour
             if (timeOfDay > dayLength && timeOfDay < totalTimeWholeCycle - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER) && !IsNight)
             {
                 IsNight = true;
-                nightSpawnersHandler.StartNightSpawning();
-                //MoonLight.intensity = 0.2f;
-                //MoonLight.gameObject.SetActive(false);
+                nightSpawnersHandler.StartNightSpawning();              
             }
             else if (timeOfDay >= totalTimeWholeCycle - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER) && IsNight)
             {
                 IsNight = false;
                 timeOfDay -= totalTimeWholeCycle;
                 nightSpawnersHandler.StopNightSpawning();
-                //MoonLight.intensity = 3f;
-                //MoonLight.gameObject.SetActive(true);
             }
 
-            UpdateLighting((timeOfDay + timeOfSunrise) / (dayLength * 2));
-            //MoonLight.intensity = (TimeOfDay / 150f);
-            
+            UpdateLighting((timeOfDay + timeOfSunrise) / (dayLength * 2));            
         }
         else
         {
@@ -89,15 +83,19 @@ public class LightingManager : MonoBehaviour
     private void UpdateLighting(float timePercent)
     {
         RenderSettings.ambientLight = Preset.AmbientColor.Evaluate(timePercent);
-       //RenderSettings. = Preset.AmbientColor.Evaluate(timePercent);
         RenderSettings.fogColor = Preset.FogColor.Evaluate(timePercent);
         MoonLight.color = Preset.MoonLightColor.Evaluate(timePercent);
 
         if (DirectionalLight != null)
         {
-            //DirectionalLight.color = Preset.DirectionalColor.Evaluate(timePercent);
             DirectionalLight.transform.localRotation = Quaternion.Euler(new Vector3((timePercent * 360f) - 90f, -170, 0));
         }
+
+        /*Testing moonlight rotation
+        if (MoonLight != null)
+        {
+            MoonLight.transform.localRotation = Quaternion.Euler(new Vector3((timePercent * 360f) - 90f, -170, 0));
+        }*/
     }
 
     private void OnValidate()

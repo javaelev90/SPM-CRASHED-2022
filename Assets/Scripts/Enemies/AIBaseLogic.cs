@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
+using System.Linq;
 
 public class AIBaseLogic : MonoBehaviourPunCallbacks
 {
@@ -38,10 +39,12 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
 
     protected bool IsMasterClient { get; set; }
     private Coroutine findTargets;
-    public float TimeToAggro
-    { get { return timeToAggro; } }
+    public float TimeToAggro { get { return timeToAggro; } }
     public bool IsWithinSight { get; set; }
     public bool IsAggresive { get; set; }
+
+    [Header("Animator")]
+    [SerializeField] protected Animator animator;
 
     private void OnEnable()
     {
@@ -57,10 +60,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
         StopCoroutine(findTargets);
     }
 
-    protected virtual void Update()
-    {
-
-    }
+    protected virtual void Update() { }
 
     public void StunnedBy(Transform target)
     {
@@ -91,9 +91,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
 
     private void FindVisibleTargets()
     {
-
         Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-        IsWithinSight = targetInViewRadius.Length > 0;
 
         for (int i = 0; i < targetInViewRadius.Length; i++)
         {
@@ -106,6 +104,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
                 {
                     visibleTargets.Add(tempTarget);
                     target = tempTarget;
+                    IsWithinSight = targetInViewRadius.Length > 0;
                 }
             }
         }
@@ -114,13 +113,12 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
         {
             visibleTargets.Clear();
         }
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Projectile projectile;
-        if((projectile = other.transform.GetComponent<Projectile>()) != null)
+        if ((projectile = other.transform.GetComponent<Projectile>()) != null)
         {
             GetComponent<HealthHandler>().TakeDamage(projectile.DamageDealer);
         }
@@ -138,18 +136,16 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     {
         if (parameters.Length > 0)
         {
-            float spreadRadius = (float)parameters[0];
-            wayPointSystem.spreadRadius = spreadRadius;
+            wayPointSystem.spreadRadius = (float)parameters[0];
+            wayPointSystem.PositionWayPoints(wayPointSystem.AssignLocalPosition);
         }
         if (parameters.Length > 1)
         {
-            List<Vector3> wayPointPositions = new List<Vector3>();
-            object[] parameterList = (object[])parameters[1];
-            for (int index = 0; index < parameterList.Length; index++)
-            {
-                wayPointPositions.Add((Vector3)parameterList[index]);
-            }
-            wayPointSystem.AssignWayPoints(wayPointPositions);
+            root.shouldBeCulled = (bool)parameters[1];
+        }
+        if (parameters.Length > 2)
+        {
+            wayPointSystem.AssignWayPoints(((Vector3[])parameters[2]).ToList());
         }
     }
 }
