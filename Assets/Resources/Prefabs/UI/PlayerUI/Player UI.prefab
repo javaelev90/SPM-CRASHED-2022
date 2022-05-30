@@ -5403,7 +5403,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 690320898167012131, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
       propertyPath: m_fontSize
-      value: 85
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 690320898167012131, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
       propertyPath: m_fontAsset
@@ -5411,7 +5411,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 67f637521f86bc4459e130f4b802d9e2, type: 2}
     - target: {fileID: 690320898167012131, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
       propertyPath: m_fontSizeBase
-      value: 85
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 690320898167012131, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
       propertyPath: m_sharedMaterial
@@ -5447,7 +5447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 690320898743430130, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 467
+      value: 518
       objectReference: {fileID: 0}
     - target: {fileID: 690320899198878219, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
       propertyPath: m_Pivot.y
@@ -5479,7 +5479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 690320899198878219, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 356
+      value: 475
       objectReference: {fileID: 0}
     - target: {fileID: 690320899291289505, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
       propertyPath: m_Name
@@ -5586,6 +5586,10 @@ PrefabInstance:
       value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 690320899494930584, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
+      propertyPath: m_margin.z
+      value: -53.848053
+      objectReference: {fileID: 0}
+    - target: {fileID: 690320899494930584, guid: ef3183abdb90b08429e4c82ce9c0cc64, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 67f637521f86bc4459e130f4b802d9e2, type: 2}
@@ -5656,10 +5660,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textSpeed: 0.04
   numberOfLines:
-  - I'm fine.. The ship doesn't seem to be though..
-  - It's a part of the ship. Let's go and bring it back to the ship. I'll bring my
-    portal
-  - Maybe I could use something here to build my turrets.... Just in case..
+  - 'Engineer: I''m fine.. The ship doesn''t seem to be though..'
+  - 'Engineer: It''s a part of the ship. Let''s go and bring it back to the ship.
+    I''ll bring my portal'
+  - 'Engineer: Maybe I could use something here to build my turrets.... Just in case..'
   textComponent: {fileID: 332409009183232619}
   players: {fileID: 8382309639614832456}
   isFirst: 0
@@ -5678,9 +5682,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textSpeed: 0.04
   numberOfLines:
-  - That was a rough landing... Are you okay?
-  - You're right. I think I see something over there on the beach though...
-  - I see you're still as lazy as ever... Let's hope we can find some ammo
+  - 'Soldier: That was a rough landing... Are you okay?'
+  - 'Soldier: You''re right. I think I see something over there on the beach though...'
+  - 'Soldier: I see you''re still as lazy as ever... Let''s hope we can find some
+    ammo'
   - 
   textComponent: {fileID: 332409010108498384}
   players: {fileID: 8965978724221831481}
