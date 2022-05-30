@@ -19,6 +19,7 @@ public class PhysicsBody : MonoBehaviourPunCallbacks
 
     [Header("Physics")]
     [SerializeField] private float mass = 1f;
+    [SerializeField] private bool isGravityOn = true;
     [SerializeField] private float gravity = 9.81f;
     [SerializeField] private float airResistance = 0.3f;
     [SerializeField] private float decelerationFactor = 1f;
@@ -38,6 +39,12 @@ public class PhysicsBody : MonoBehaviourPunCallbacks
     {
         set => velocity = value;
         get => velocity;
+    }
+
+    public bool IsGravityOn
+    {
+        set => isGravityOn = value;
+        get => isGravityOn;
     }
 
     public bool Grounded => groundHit.collider != null;
@@ -129,8 +136,11 @@ public class PhysicsBody : MonoBehaviourPunCallbacks
 
     private void ApplyGravity()
     {
-        gravitationForce = Vector3.down * gravity * Time.deltaTime;
-        velocity += gravitationForce;
+        if (isGravityOn == true)
+        {
+            gravitationForce = Vector3.down * gravity * Time.deltaTime;
+            velocity += gravitationForce;
+        }
     }
 
     private void ApplyFriction(Vector3 normalForce)

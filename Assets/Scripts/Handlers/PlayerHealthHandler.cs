@@ -78,12 +78,13 @@ public class PlayerHealthHandler : HealthHandler
     {
         UpdateDeathCamera(transform, false);
         playerUI.transform.SetParent(transform);
-        transform.position = revivePosition;
         transform.root.gameObject.SetActive(true);
-        if (gameObject.GetComponent<Engineer>())
+        Engineer engineer = gameObject.GetComponent<Engineer>();
+        if (engineer)
         {
-            ChangeControlls.ControlType = 1;
+            engineer.UpdateTurretControlSettings(1, true, false);
         }
+        transform.position = revivePosition;
         ResetHealth();
     }
 
