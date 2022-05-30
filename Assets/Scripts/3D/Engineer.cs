@@ -5,6 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using EventCallbacksSystem;
 
 public class Engineer : Controller3D
 {
@@ -70,8 +71,13 @@ public class Engineer : Controller3D
     [SerializeField] float weaponRange = 15f;
     [SerializeField] float delayBetweenShots = 0.5f;
     [SerializeField] public LayerMask stunLayer;
-    private float shotCooldown = 0f;
+    [SerializeField] private ParticleActivator shootingEffect;
+    [SerializeField] GameObject hitPosition;
+    [SerializeField] private AudioClip stunSound;
+    private StungunCoolDownEvent stunGunEvent;
+    private AudioSource audioSource;
 
+    private float shotCooldown = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -79,24 +85,9 @@ public class Engineer : Controller3D
         StartCoroutine(Wait(5));
         isUsingTurret = false;
         //playerActions = new PlayerInputActions();
-        if (photonView.IsMine)
-            Minimap.Instance.Player = gameObject;
-
-        StartCoroutine(SearchOtherPlayer());
-    }
-
-    IEnumerator SearchOtherPlayer()
-    {
-        while (true)
-        {
-            Minimap.Instance.OtherPlayer = FindObjectOfType<SoldierCharacter>()?.gameObject;
-            if (Minimap.Instance.OtherPlayer != null)
-            {
-                break;
-            }
-
-            yield return new WaitForSeconds(0.1f);
-        }
+        stunGunEvent = new StungunCoolDownEvent(delayBetweenShots);
+        EventSystem.Instance.FireEvent(stunGunEvent);
+        audioSource = GetComponent<AudioSource>();
     }
 
     protected override void Awake()
@@ -148,12 +139,20 @@ public class Engineer : Controller3D
                 {
                     //Debug.Log("Enemy stunned");
                     aIBaseLogic.StunnedBy(transform);
+                    Destroy(Instantiate(hitPosition, hit.point, Quaternion.LookRotation(hit.normal)), 10f);
                 }
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;
+            shootingEffect.PlayParticles();
+            audioSource.PlayOneShot(stunSound);
+            EventSystem.Instance.FireEvent(stunGunEvent);
         }
 
+        if (OnCoolDown() == false)
+        {
+            EventSystem.Instance.FireEvent(stunGunEvent);
+        }
     }
 
     public void OnPlacementStarted()
@@ -258,7 +257,7 @@ public class Engineer : Controller3D
     /// </summary>
     public void OnTurretDestroy()
     {
-        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
+        if (isUsingTurret == false && Physics.Raycast(camPositionFPS.transform.position, camPositionFPS.transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
             hit.collider.GetComponent<TurretHealthHandler>().SalvageDrop();
             GameObject GTG = hit.collider.gameObject;
@@ -288,7 +287,7 @@ public class Engineer : Controller3D
 
     public void OnTurretUse()
     {
-        if (isUsingTurret == false && Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
+        if (isUsingTurret == false && Physics.Raycast(camPositionFPS.transform.position, camPositionFPS.transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
             if (hit.collider.GetComponent<HealthHandler>().isAlive)
             {
@@ -311,6 +310,7 @@ public class Engineer : Controller3D
                 // Put Engineer behind the turret that was hit
                 usePositionPos = GetChildWithName(hit.collider.gameObject, "UsePosition");
             }
+            Body.enabled = false;
         }
 
         else if (isUsingTurret == true)
@@ -318,18 +318,19 @@ public class Engineer : Controller3D
             //Debug.Log("You are no longer using turret");
             isUsingTurret = false;
             ChangeControlls.ControlType = 1;
+            Body.enabled = true;
         }
     }
 
     public void OnTurretRepair(InputAction.CallbackContext ctx)
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
+        if (Physics.Raycast(camPositionFPS.transform.position, camPositionFPS.transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
             if (ctx.performed)
             {
                 // Make sure the turret doesn't alreday have full health
                 TurretHealthHandler obj = hit.collider.gameObject.GetComponent<TurretHealthHandler>();
-                
+
                 if (obj.CurrentHealth == obj.MaxHealth)
                 {
                     // Text to explain why repair not activating
@@ -338,7 +339,7 @@ public class Engineer : Controller3D
                     StartCoroutine(ExecuteAfterTime(2f));
                     return;
                 }
-                
+
 
                 // Check if resources needed is in inventory
                 InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
@@ -387,7 +388,7 @@ public class Engineer : Controller3D
         notEnoughResourcesToBuild.gameObject.SetActive(false);
     }
 
-    
+
     Engineer player;
 
     IEnumerator Wait(float sec)

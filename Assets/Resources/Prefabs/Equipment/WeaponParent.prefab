@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 5510816813930139584}
   - component: {fileID: 629859698614144212}
   - component: {fileID: 6439488438869481671}
+  - component: {fileID: 1858093721381274435}
   m_Layer: 6
   m_Name: WeaponParent
   m_TagString: Untagged
@@ -400,12 +401,12 @@ MonoBehaviour:
   weaponRange: 30
   weaponDamage: 10
   delayBetweenShots: 0.3
-  automaticWeapon: 0
   layersThatShouldBeHit:
     serializedVersion: 2
     m_Bits: 896
   maxAmmo: 0
   currentAmmo: 0
+  hitAreaSize: 0.5
   animator: {fileID: 262598540950441525}
   sourceOne: {fileID: 6439488438869481671}
   shot:
@@ -436,9 +437,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 25
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -471,7 +472,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -486,7 +487,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -511,3 +512,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1858093721381274435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8200289179978387460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

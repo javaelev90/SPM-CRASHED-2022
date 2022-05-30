@@ -18,6 +18,11 @@ public class Minimap : MonoBehaviour
     [SerializeField] private Transform outerMarkerShipParent;
     [SerializeField] private Transform outerMarkerOtherPlayerParent;
     [SerializeField] private float scale = 1f;
+    [SerializeField] private Sprite soldierSprite;
+    [SerializeField] private Sprite engineerSprite;
+    [SerializeField] private Color color;
+    [SerializeField] private RawImage otherPlayerOuterImage;
+
 
     private float radius;
     private Vector2 shipMarkerPos;
@@ -35,6 +40,35 @@ public class Minimap : MonoBehaviour
         radius = minimapCircle.sizeDelta.x / 2f;
         outerMarkerShipParent.gameObject.SetActive(false);
         outerMarkerOtherPlayerParent.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        Player = GameManager.player;
+        if (Player.GetComponent<SoldierCharacter>() == true)
+        {
+            otherPlayerMarker.GetComponent<Image>().sprite = engineerSprite;
+            otherPlayerOuterImage.color = Color.blue;
+        }
+        else
+        {
+            otherPlayerMarker.GetComponent<Image>().sprite = soldierSprite;
+            otherPlayerOuterImage.color = Color.red;
+        }
+        StartCoroutine(FindOtherPlayer());
+    }
+
+    IEnumerator FindOtherPlayer()
+    {
+        while (OtherPlayer == null)
+        {
+            OtherPlayer = GameManager.otherPlayer;
+            if (OtherPlayer != null)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     // Update is called once per frame
@@ -56,12 +90,11 @@ public class Minimap : MonoBehaviour
         }
     }
 
-
     private void ActivateOuterMarker(RectTransform objectMarker, Transform parent)
     {
         if (!IsInsideUnitCircle(objectMarker))
         {
-            objectMarker.GetComponent<RawImage>().enabled = false;
+            objectMarker.GetComponent<Image>().enabled = false;
             parent.gameObject.SetActive(true);
             Vector2 direction = objectMarker.anchoredPosition - playerMarker.anchoredPosition;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -70,7 +103,7 @@ public class Minimap : MonoBehaviour
         else
         {
             parent.gameObject.SetActive(false);
-            objectMarker.GetComponent<RawImage>().enabled = true;
+            objectMarker.GetComponent<Image>().enabled = true;
         }
     }
 

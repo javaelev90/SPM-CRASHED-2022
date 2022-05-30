@@ -105,7 +105,7 @@ namespace EventCallbacksSystem
     {
         private Dictionary<System.Type, int> amounts;
         private int amount;
-        private Pickup_Typs.Pickup type;
+        public System.Type type;
         public Dictionary<System.Type, int> Amounts { get { return amounts; } set { amounts = value; } }
 
         public UpdateUIAmountsEvent(Dictionary<System.Type, int> amounts)
@@ -180,10 +180,49 @@ namespace EventCallbacksSystem
         }
     }
 
-    public class PlayerHealthUpdate : Event
+    public class ShipUpgradeProgressionEvent : Event
     {
+        public int UpgradeNumber { get; set; }
+        public int TotalNumberOfParts { get; private set; }
 
+        public ShipUpgradeProgressionEvent(int upgradeNumber, int totalParts)
+        {
+            UpgradeNumber = upgradeNumber;
+            TotalNumberOfParts = totalParts;
+        }
+
+        public ShipUpgradeProgressionEvent(int upgradeNumber)
+        {
+            UpgradeNumber = upgradeNumber;
+        }
     }
 
+    public class ObjectiveUpdateEvent : Event
+    {
+        public bool IsNight { get; set; }
+    }
+
+    public class StungunCoolDownEvent : Event
+    {
+        public float CoolDownTime { get; private set; }
+
+        public StungunCoolDownEvent(float coolDownTime)
+        {
+            CoolDownTime = coolDownTime;
+        }
+    }
+
+    public class WeaponAmmunitionUpdateEvent : Event
+    {
+        public int AmmunitionAmount { get; set; }
+        public int MaxAmmunitionAmount { get; private set; }
+        public int GreenGooAmount { get; set; }
+
+        public WeaponAmmunitionUpdateEvent(int ammunitionAmount, int maxAmmunitionAmount)
+        {
+            AmmunitionAmount = ammunitionAmount;
+            MaxAmmunitionAmount = maxAmmunitionAmount;
+        }
+    }
 
 }

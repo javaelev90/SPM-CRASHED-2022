@@ -43,6 +43,9 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     public bool IsWithinSight { get; set; }
     public bool IsAggresive { get; set; }
 
+    [Header("Animator")]
+    [SerializeField] protected Animator animator;
+
     private void OnEnable()
     {
         root.CustomInitializeFunction = Initialize;
@@ -89,7 +92,6 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     private void FindVisibleTargets()
     {
         Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-        IsWithinSight = targetInViewRadius.Length > 0;
 
         for (int i = 0; i < targetInViewRadius.Length; i++)
         {
@@ -102,6 +104,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
                 {
                     visibleTargets.Add(tempTarget);
                     target = tempTarget;
+                    IsWithinSight = targetInViewRadius.Length > 0;
                 }
             }
         }

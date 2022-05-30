@@ -1,23 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System;
 using EventCallbacksSystem;
 using UnityEngine.InputSystem;
-using TMPro;
 
 public class PlayerUIListener : MonoBehaviour
 {
     [SerializeField] private List<SlotItem> slotItems;
-    [SerializeField] private Animation animations;
+    [SerializeField] private ObjectiveViewer objectiveViewer;
+    [SerializeField] private GameObject amountEffect;
     private Dictionary<Pickup_Typs.Pickup, SlotItem> slots;
     private int selectedIndex;
-    private bool isShowingObjective;
+    private bool isShowingObjective = true;
 
     private void OnEnable()
     {
-        EventSystem.Instance.RegisterListener<UpdateUIAmountsEvent>(UpdateAmounts);
         slots = new Dictionary<Pickup_Typs.Pickup, SlotItem>();
         if (slotItems != null)
         {
@@ -27,12 +24,18 @@ public class PlayerUIListener : MonoBehaviour
             }
         }
         slotItems[selectedIndex].SelectItem();
+
+        EventSystem.Instance.RegisterListener<UpdateUIAmountsEvent>(UpdateAmounts);
+        EventSystem.Instance.RegisterListener<ShipUpgradeProgressionEvent>(UpdateShipPartCompleted);
+        EventSystem.Instance.RegisterListener<ShipUpgradeProgressionEvent>(InitializeShipParts);
     }
 
     private void OnDisable()
     {
         EventSystem.Instance.UnregisterListener<UpdateUIAmountsEvent>(UpdateAmounts);
+        EventSystem.Instance.UnregisterListener<ShipUpgradeProgressionEvent>(UpdateShipPartCompleted);
     }
+
 
     public void UpdateAmounts(UpdateUIAmountsEvent e)
     {
@@ -51,45 +54,79 @@ public class PlayerUIListener : MonoBehaviour
                 slots[Pickup_Typs.Pickup.GreenGoo].UpdateNumberOfItems(keyValuePair.Value);
             }
         }
+
+        Transform effectTransform = null;
+        if (e.type == typeof(GreenGoo))
+        {
+            effectTransform = slots[Pickup_Typs.Pickup.GreenGoo].EffectPosition;
+        }
+        else if (e.type == typeof(Metal))
+        {
+            effectTransform = slots[Pickup_Typs.Pickup.Metal].EffectPosition;
+        }
+        else if (e.type == typeof(AlienMeat))
+        {
+            effectTransform = slots[Pickup_Typs.Pickup.AlienMeat].EffectPosition;
+        }
+
+        if (effectTransform != null)
+        {
+            var vfx = Instantiate(amountEffect, effectTransform.position, Quaternion.identity) as GameObject;
+            vfx.transform.SetParent(effectTransform);
+            var ps = vfx.GetComponent<ParticleDestroyer>();
+            Destroy(vfx, ps.DestroyDelay);
+        }
+
     }
 
-    public void PreviousItem(InputAction.CallbackContext ctx) // use as previous
+    
+
+    public void FirstSlot(InputAction.CallbackContext ctx) // use as previous
     {
+
         if (ctx.started)
         {
+            //slotItems[selectedIndex].DeselectItem();
+            //selectedIndex--;
+
+            //if (selectedIndex >= 0)
+            //    slotItems[selectedIndex].SelectItem();
+
+            //if (selectedIndex < 0)
+            //{
+            //    selectedIndex = slotItems.Count - 1;
+            //    slotItems[selectedIndex].SelectItem();
+            //}
+
             slotItems[selectedIndex].DeselectItem();
-            selectedIndex--;
-
-            if (selectedIndex >= 0)
-                slotItems[selectedIndex].SelectItem();
-
-            if (selectedIndex < 0)
-            {
-                selectedIndex = slotItems.Count - 1;
-                slotItems[selectedIndex].SelectItem();
-            }
+            selectedIndex = 0;
+            slotItems[selectedIndex].SelectItem();
         }
 
         TypeToInventoryEvent te = new TypeToInventoryEvent(slotItems[selectedIndex].PickupType);
         EventSystem.Instance.FireEvent(te);
     }
 
-    public void NextItem(InputAction.CallbackContext ctx) // use as next selected
+    public void SecondSlot(InputAction.CallbackContext ctx) // use as next selected
     {
         if (ctx.started)
         {
             slotItems[selectedIndex].DeselectItem();
-            selectedIndex++;
+            selectedIndex = 1;
+            slotItems[selectedIndex].SelectItem();
+        }
 
-            if (selectedIndex <= slotItems.Count - 1)
-                slotItems[selectedIndex].SelectItem();
+        TypeToInventoryEvent te = new TypeToInventoryEvent(slotItems[selectedIndex].PickupType);
+        EventSystem.Instance.FireEvent(te);
+    }
 
-            if (selectedIndex > slotItems.Count - 1)
-            {
-                selectedIndex = 0;
-                slotItems[selectedIndex].SelectItem();
-            }
-
+    public void ThirdSlot(InputAction.CallbackContext ctx) // use as next selected
+    {
+        if (ctx.started)
+        {
+            slotItems[selectedIndex].DeselectItem();
+            selectedIndex = 2;
+            slotItems[selectedIndex].SelectItem();
         }
 
         TypeToInventoryEvent te = new TypeToInventoryEvent(slotItems[selectedIndex].PickupType);
@@ -100,18 +137,36 @@ public class PlayerUIListener : MonoBehaviour
     {
         if(ctx.started && isShowingObjective == false)
         {
-            isShowingObjective = true;
-            Debug.Log("Show dropdown");
-            animations.Play("ObjectiveViewerDown");
+            DisplayObjectivePanel(true);
             return;
         }
 
         if (ctx.started && isShowingObjective == true)
         {
-            isShowingObjective = false;
-            animations.Play("ObjectiveViewerUp");
-            Debug.Log("No dropdown");
+            DisplayObjectivePanel(false);
             return;
         }
+    }
+
+    private void DisplayObjectivePanel(bool canShow)
+    {
+        isShowingObjective = canShow;
+        objectiveViewer.enabled = true;
+        objectiveViewer.IsDisplayingPanel = isShowingObjective;
+    }
+
+    public void UpdateShipPartCompleted(ShipUpgradeProgressionEvent ev)
+    {
+        objectiveViewer.enabled = true;
+        objectiveViewer.UpdateUpgradedShipParts(ev.UpgradeNumber);
+        objectiveViewer.enabled = false;
+    }
+
+    public void InitializeShipParts(ShipUpgradeProgressionEvent ev)
+    {
+        objectiveViewer.enabled = true;
+        objectiveViewer.InitializeShipPartsAmount(ev.UpgradeNumber, ev.TotalNumberOfParts);
+        objectiveViewer.enabled = false;
+        EventSystem.Instance.UnregisterListener<ShipUpgradeProgressionEvent>(InitializeShipParts);
     }
 }

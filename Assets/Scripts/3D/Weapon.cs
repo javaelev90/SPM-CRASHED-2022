@@ -17,13 +17,12 @@ public class Weapon : MonoBehaviourPunCallbacks
     [SerializeField] float weaponRange = 15f;
     [SerializeField] int weaponDamage = 1;
     [SerializeField] float delayBetweenShots = 0.5f;
-    [Tooltip("If gun will shoot continuously when shoot button is pressed vs one shot per click.")]
-    [SerializeField] public bool automaticWeapon = false;
     [SerializeField] LayerMask layersThatShouldBeHit;
     [SerializeField] private int maxAmmo;
     [SerializeField] private int currentAmmo;
     private float shotCooldown = 0f;
     public bool IsShooting { get; set; }
+    private WeaponAmmunitionUpdateEvent ammunitionUpdateEvent;
 
     [Header("Weapon effects")]
     [SerializeField] private Animator animator;
@@ -47,9 +46,13 @@ public class Weapon : MonoBehaviourPunCallbacks
     {
         sourceOne = GetComponent<AudioSource>();
         EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
-        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
+        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage); // behövs två rader av samma?
         sourceOne.volume = Random.Range(1.8f, 2.5f);
         sourceOne.pitch = Random.Range(0.8f, 1.2f);
+
+        currentAmmo = maxAmmo;
+        ammunitionUpdateEvent = new WeaponAmmunitionUpdateEvent(currentAmmo, maxAmmo);
+        EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
     }
 
     private void Cooldown()
@@ -65,34 +68,16 @@ public class Weapon : MonoBehaviourPunCallbacks
         return shotCooldown >= 0;
     }
 
-    /// <summary>
-    /// Searches a GameObject for a specific child using "childName"
-    /// </summary>
-    private Transform GetChildWithName(GameObject objectToSearch, string childName)
-    {
-        Transform child = null;
-        foreach (Transform t in objectToSearch.GetComponentsInChildren<Transform>())
-        {
-            if (t.name == childName)
-            {
-                child = t;
-                break;
-            }
-        }
-        return child;
-    }
-
     public void Shoot()
     {
-        if(OnCoolDown() == false && IsShooting == true)
+        if (OnCoolDown() == false && IsShooting == true && currentAmmo > 0)
         {
             muzzlePosition.Play();
             animator.CrossFadeInFixedTime("Shooting", 0.1f);
 
-            if (useInventory)
-            {
-                inventory.Remove<GreenGoo>(greenGooCost);
-            }
+            currentAmmo--;
+            ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
+            EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
 
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,
                 out RaycastHit hitInfo, weaponRange, layersThatShouldBeHit))
@@ -111,12 +96,38 @@ public class Weapon : MonoBehaviourPunCallbacks
                 {
                     ai.FindAttackingTarget(transform);
                 }
-                
             }
             // Add cooldown time
             shotCooldown = delayBetweenShots;
-            sourceOne.PlayOneShot(GetAudioClip());
+            PlayShotEffects();
         }
+        else
+        {
+            if (currentAmmo == 0 && inventory.Amount<GreenGoo>() > 0)
+            {
+                currentAmmo = maxAmmo;
+                inventory.Remove<GreenGoo>();
+                ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
+                EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
+            }
+            else if (currentAmmo == 0 && inventory.Amount<GreenGoo>() == 0)
+            {
+                ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
+                EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
+            }
+        }
+
+    }
+
+    private void PlayShotEffects()
+    {
+        photonView.RPC(nameof(PlayShotEffectsRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void PlayShotEffectsRPC()
+    {
+        sourceOne.PlayOneShot(GetAudioClip());
     }
 
     private AudioClip GetAudioClip()
@@ -125,7 +136,7 @@ public class Weapon : MonoBehaviourPunCallbacks
         sourceOne.volume = Random.Range(1.8f, 2.5f);
         sourceOne.pitch = Random.Range(0.4f, 1.6f);
         return shot[index];
-       
+
     }
 
     public void UpgradeDamage(GunDamageUpgradeEvent damageUpgradeEvent)
@@ -137,4 +148,5 @@ public class Weapon : MonoBehaviourPunCallbacks
     {
         delayBetweenShots *= (1 - gunRateUpgradeEvent.UpgradePercent);
     }
+
 }

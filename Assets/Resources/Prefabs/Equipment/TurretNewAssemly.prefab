@@ -426,6 +426,7 @@ MonoBehaviour:
   bullet: {fileID: 668565094928829969, guid: 857bb64d64c9b32479e40ac65bca18f3, type: 3}
   fireTimer: 1
   turretDamage: 10
+  turretDamageWhenUsing: 20
   turretHealthIncreaseAtUpgrade: 0
   useTurretPosition: {fileID: 4438309778369196255}
   useTurretBody: {fileID: 5906233175066621719}
@@ -489,9 +490,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 25
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -524,7 +525,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -539,7 +540,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -580,9 +581,11 @@ MonoBehaviour:
   hit: {fileID: 0}
   itemDropPrefab: {fileID: 0}
   dropOffsetY: 1
-  MaxHealth: 20
-  CurrentHealth: 20
+  MaxHealth: 200
+  CurrentHealth: 200
   isAlive: 1
+  damage: 5
+  intervale: 1.5
   pickupPrefabs:
   - {fileID: 5563257113643808014, guid: e91eaeefca1cf6b44a325df71e90cc48, type: 3}
   - {fileID: 5648485573748196395, guid: 8d9299097781d6a4cbbca1a773979f70, type: 3}
@@ -816,7 +819,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6083227631821183784}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.0979996, z: -1.2000122}
+  m_LocalPosition: {x: 0, y: 0.345, z: -1.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5906233175066621719}

@@ -28,7 +28,7 @@ public class ShipUpgradePanel : MonoBehaviour
     {
         ErrorMsg.SetActive(false);
         gameObject.SetActive(false);
-        GameManager.playerObject.GetComponent<PlayerInput>().enabled = true;
+        GameManager.player.GetComponent<PlayerInput>().enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
     }
 

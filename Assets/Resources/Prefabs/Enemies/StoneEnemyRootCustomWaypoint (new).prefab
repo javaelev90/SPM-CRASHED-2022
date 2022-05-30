@@ -1023,7 +1023,7 @@ MonoBehaviour:
   stoppingDistance: 0.5
   bullet: {fileID: 2720492583708200014, guid: 857bb64d64c9b32479e40ac65bca18f3, type: 3}
   timeToThrow: 2
-  stoneDamage: 2
+  stoneDamage: 20
   timeToWayPoint: 5
   walk: {fileID: 8300000, guid: cfbe109ff897e8845b183d89a6bf9c5a, type: 3}
   angry: {fileID: 0}
@@ -1105,7 +1105,7 @@ MonoBehaviour:
   damage: 5
   intervale: 1.5
   rootObject: {fileID: 4946720192697130266}
-  hitVFX: {fileID: 0}
+  hitVFX: {fileID: 93286574758319187, guid: 2fc03014b7e994d45ba6455b7f316fa6, type: 3}
 --- !u!82 &3812025207251281290
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1115,21 +1115,21 @@ AudioSource:
   m_GameObject: {fileID: 5495731618562740639}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3502601922304438056, guid: 8082db654c41ecd4d87706bd7ecc5950, type: 2}
-  m_audioClip: {fileID: 8300000, guid: cfbe109ff897e8845b183d89a6bf9c5a, type: 3}
+  OutputAudioMixerGroup: {fileID: -5849267243179087080, guid: c0459e00c8941e54a8af4829105e60c4, type: 2}
+  m_audioClip: {fileID: 8300000, guid: b604b4d8329994741b72d1701a18a8ce, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.346
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 113
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1162,7 +1162,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1655,7 +1655,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: 22b0f3be837b6f2458ddf551f66ffea1, type: 3}
+  - {fileID: 2100000, guid: b800475adfddd1c43bdc89ca56f42713, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

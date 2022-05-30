@@ -95,7 +95,7 @@ public class QuadTree<T>
         {
             foreach (Point<T> point in points)
             {
-                if (range.Contains(point))
+                if (point.data != null && range.Contains(point))
                 {
                     pointsFound.Add(point);
                 }
@@ -137,33 +137,33 @@ public class QuadTree<T>
         return typeof(T);
     }
 
-    public void OnDrawGizmos()
+    public void OnDrawGizmos(float positionYValue = 30)
     {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawWireCube(new Vector3(boundary.x, 0f, boundary.y), new Vector3(boundary.width, 0f, boundary.height));
+        Gizmos.DrawWireCube(new Vector3(boundary.x, positionYValue, boundary.y), new Vector3(boundary.width, 0f, boundary.height));
 
 #if UNITY_EDITOR
-        if (points.Count > 0)
-        {
-            Handles.color = Color.red;
-            Handles.Label(new Vector3(boundary.x, 0f, boundary.y), "" + points.Count);
-        }
+        //if (divided == false)
+        //{
+        //    Handles.color = Color.red;
+        //    Handles.Label(new Vector3(boundary.x, positionYValue, boundary.y), "" + points.Count);
+        //}
 #endif
         if (northWest is object)
         {
-            northWest.OnDrawGizmos();
+            northWest.OnDrawGizmos(positionYValue);
         }
         if (northEast is object)
         {
-            northEast.OnDrawGizmos();
+            northEast.OnDrawGizmos(positionYValue);
         }
         if (southWest is object)
         {
-            southWest.OnDrawGizmos();
+            southWest.OnDrawGizmos(positionYValue);
         }
         if (southEast is object)
         {
-            southEast.OnDrawGizmos();
+            southEast.OnDrawGizmos(positionYValue);
         }
     }
 }

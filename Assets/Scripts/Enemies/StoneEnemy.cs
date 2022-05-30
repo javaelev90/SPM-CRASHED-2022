@@ -82,6 +82,10 @@ public class StoneEnemy : AIBaseLogic
         if (eventTarget)
         {
             agent.SetDestination(eventTarget.position);
+            if(animator != null)
+            {
+                animator.CrossFade("Walking", 0f);
+            }
         }
         else
         {

@@ -85,8 +85,8 @@ public class WayPointSystem : MonoBehaviour
     {
         foreach (Transform t in transform)
         {
-            position.x = Random.Range(-spreadRadius, spreadRadius) + 1;
-            position.z = Random.Range(-spreadRadius, spreadRadius) + 1;
+            position.x = Random.Range(-spreadRadius, spreadRadius);
+            position.z = Random.Range(-spreadRadius, spreadRadius);
             position.y = 1f;
             //t.position = position;
             positionAssigning.Invoke(position, t);
