@@ -72,13 +72,13 @@ public abstract class HealthHandler : MonoBehaviourPunCallbacks
     public void RemoveHealth(int amount)
     {
         CurrentHealth -= amount;
-        UpdateHealthBar();
-
+        
         if (CurrentHealth <= 0)
         {
             isAlive = false;
             Die();
         }
+        UpdateHealthBar();
     }
 
     protected void UpdateHealthBar()
