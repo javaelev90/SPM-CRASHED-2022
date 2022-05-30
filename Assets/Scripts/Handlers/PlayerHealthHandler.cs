@@ -10,6 +10,8 @@ public class PlayerHealthHandler : HealthHandler
     [SerializeField] private GameObject deathParticles;
     [SerializeField] private Camera deathCamera;
     [SerializeField] private GameObject playerUI;
+    [SerializeField] private RectTransform effectTransform;
+    [SerializeField] private GameObject playerHurtEffect;
 
     private void Start()
     {
@@ -28,6 +30,17 @@ public class PlayerHealthHandler : HealthHandler
         {
             amount = 0;
         }
+        else
+        {
+            if (effectTransform != null)
+            {
+                var vfx = Instantiate(playerHurtEffect, effectTransform.position, Quaternion.identity) as GameObject;
+                vfx.transform.SetParent(effectTransform);
+                var ps = vfx.GetComponent<ParticleDestroyer>();
+                Destroy(vfx, ps.DestroyDelay);
+            }
+        }
+
         photonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, amount);
     }
 
