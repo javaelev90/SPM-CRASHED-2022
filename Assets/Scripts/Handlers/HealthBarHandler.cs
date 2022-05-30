@@ -20,10 +20,10 @@ public class HealthBarHandler : MonoBehaviour
         {
             healthBarImage.color = Color.yellow;
         }
-        //else
-        //{
-        //    healthBarImage.color = Color.green;
-        //}
+        else if(value >= 0.4f)
+        {
+            healthBarImage.color = Color.white;
+        }
     }
 
     void AssignHealthBarImage()

@@ -8,7 +8,8 @@ public class PlayerHealthHandler : HealthHandler
 {
     private bool immortal = false;
     [SerializeField] private GameObject deathParticles;
-
+    [SerializeField] private Camera deathCamera;
+    [SerializeField] private GameObject playerUI;
 
     private void Start()
     {
@@ -49,8 +50,11 @@ public class PlayerHealthHandler : HealthHandler
             DropItem();
         }
         CurrentHealth = 0;
-        Destroy(Instantiate(deathParticles, transform.position, transform.rotation), 10f);
+        
         UpdateActiveState(false);
+        UpdateDeathCamera(null, true);
+        playerUI.transform.SetParent(deathCamera.transform);
+        Destroy(Instantiate(deathParticles, transform.position, transform.rotation), 10f);
     }
 
     public override void DropItem()
@@ -72,9 +76,11 @@ public class PlayerHealthHandler : HealthHandler
     [PunRPC]
     private void ReviveRPC(Vector3 revivePosition)
     {
+        UpdateDeathCamera(transform, false);
+        playerUI.transform.SetParent(transform);
         transform.root.gameObject.SetActive(true);
-        ResetHealth();
         transform.position = revivePosition;
+        ResetHealth();
     }
 
     private void UpdateActiveState(bool active)
@@ -92,5 +98,12 @@ public class PlayerHealthHandler : HealthHandler
     {
         MaxHealth += healthUpgradeEvent.UpgradeAmount;
         CurrentHealth += healthUpgradeEvent.UpgradeAmount;
+    }
+
+    private void UpdateDeathCamera(Transform parent, bool active)
+    {
+        deathCamera.gameObject.SetActive(active);
+        deathCamera.enabled = active;
+        deathCamera.transform.SetParent(parent);
     }
 }
