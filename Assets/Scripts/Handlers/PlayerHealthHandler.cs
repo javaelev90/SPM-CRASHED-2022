@@ -32,7 +32,7 @@ public class PlayerHealthHandler : HealthHandler
         }
         else
         {
-            if (effectTransform != null)
+            if (effectTransform != null && isAlive)
             {
                 var vfx = Instantiate(playerHurtEffect, effectTransform.position, Quaternion.identity) as GameObject;
                 vfx.transform.SetParent(effectTransform);
