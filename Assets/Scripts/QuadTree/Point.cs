@@ -16,6 +16,9 @@ public class Point<T>
 
     public override bool Equals(object obj)
     {
+        if (this == null) return false;
+        if (obj == null) return false;
+
         return obj is Point<T> point &&
                EqualityComparer<T>.Default.Equals(data, point.data);
     }
