@@ -184,7 +184,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
             Vector3 movementInput = playerActions.Player.Move.ReadValue<Vector2>();
             input = new Vector3(movementInput.x, 0, movementInput.y);
 
-            input = mainCam.transform.rotation * input;
+            input = /*mainCam.*/transform.rotation * input;
             input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
 
 
