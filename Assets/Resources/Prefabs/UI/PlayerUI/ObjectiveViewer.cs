@@ -15,6 +15,9 @@ public class ObjectiveViewer : MonoBehaviour
     [SerializeField] private TMP_Text upgradedPartsText;
     [SerializeField] private TMP_Text totalNumberText;
     [SerializeField] private Timer timer;
+    [SerializeField] private GameObject objectiveUpdatedEffect;
+    [SerializeField] private RectTransform effectTransform;
+
 
     public bool IsDisplayingPanel { get; set; }
 
@@ -64,6 +67,14 @@ public class ObjectiveViewer : MonoBehaviour
         {
             objective.text = ev.ObjectiveDescription;
             shipObjective.SetActive(true);
+        }
+        
+        if (effectTransform != null)
+        {
+            var vfx = Instantiate(objectiveUpdatedEffect, effectTransform.position, Quaternion.identity) as GameObject;
+            vfx.transform.SetParent(effectTransform);
+            var ps = vfx.GetComponent<ParticleDestroyer>();
+            Destroy(vfx, ps.DestroyDelay);
         }
     }
 
