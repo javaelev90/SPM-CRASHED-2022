@@ -71,7 +71,6 @@ public class ObjectiveViewer : MonoBehaviour
         
         if (effectTransform != null)
         {
-            Debug.Log("I go here");
             var vfx = Instantiate(objectiveUpdatedEffect, effectTransform.position, Quaternion.identity) as GameObject;
             vfx.transform.SetParent(effectTransform);
             var ps = vfx.GetComponent<ParticleDestroyer>();
