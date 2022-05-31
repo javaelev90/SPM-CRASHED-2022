@@ -10,14 +10,20 @@ public class StoneEnemy : AIBaseLogic
     [SerializeField] private float deadZoneRange;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float stoppingDistance;
+    [SerializeField] private GameObject stone;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private Transform throwTransform;
     [SerializeField] private float timeToThrow;
     [SerializeField] private int stoneDamage;
     [SerializeField] private float timeToWayPoint;
+    [SerializeField] private float stoneProjectileAngle = 45f;
+    [SerializeField] private float throwingMultiplier = 20f;
     private float timeCounterWaypoint;
     private Vector3 wayPoint;
     private float timer;
     private GameObject fleePos;
+    private StoneProjectile stoneProjectile;
+    private bool isThrowing;
 
     private bool isFleeing;
 
@@ -75,6 +81,10 @@ public class StoneEnemy : AIBaseLogic
             }
         }
 
+        //if (agent.isOnNavMesh)
+        //    animator.SetBool("IsWalking", (Mathf.Abs(agent.velocity.x) > 0f || Mathf.Abs(agent.velocity.z) > 0f));
+
+
     }
 
     private void MoveToWayPoint()
@@ -82,10 +92,6 @@ public class StoneEnemy : AIBaseLogic
         if (eventTarget)
         {
             agent.SetDestination(eventTarget.position);
-            if(animator != null)
-            {
-                animator.CrossFade("Walking", 0f);
-            }
         }
         else
         {
@@ -171,17 +177,52 @@ public class StoneEnemy : AIBaseLogic
 
     private void Throw()
     {
+        //Rotate();
+        //animator.SetBool("IsThrowing", true);
+        //isThrowing = true;
         timer -= Time.deltaTime;
+
+        //if (stoneProjectile != null && stoneProjectile.IsThrown == false)
+        //{
+        //    stoneProjectile.transform.position = throwTransform.position;
+        //    stoneProjectile.transform.forward = directionToTarget.normalized;
+        //}
+
         if (timer <= 0f)
         {
-            timer = timeToThrow;
             GameObject bull = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + bullet.name, transform.position, Quaternion.identity);
             Projectile proj = bull.GetComponent<Projectile>();
             proj.DamageDealer = stoneDamage;
             proj.Velocity += directionToTarget * 10f;
             proj.IsShot = true;
             source.PlayOneShot(attack);
+            //animator.SetBool("IsThrowing", false);
+            timer = timeToThrow;
         }
+    }
+
+    private void ThrowStone()
+    {
+        Vector3 directionOfProjectile = target.transform.position - transform.position;
+        //float height = directionOfProjectile.y;
+        directionOfProjectile.y = 0f;
+
+        float angleToRadians = stoneProjectileAngle * Mathf.Deg2Rad;
+        directionOfProjectile.y = throwingMultiplier * Mathf.Tan(angleToRadians);
+        //throwingMultiplier += height / Mathf.Tan(angleToRadians);
+        float velocity = Mathf.Sqrt(throwingMultiplier * Physics.gravity.magnitude / Mathf.Sin(2 * angleToRadians));
+
+        stoneProjectile.IsThrown = true;
+        stoneProjectile.transform.forward = directionOfProjectile.normalized;
+        stoneProjectile.GetComponent<Rigidbody>().velocity = velocity * directionToTarget.normalized;
+        animator.SetBool("IsThrowing", false);
+        isThrowing = false;
+    }
+
+    private void PickupStone()
+    {
+        GameObject stoneObject = Instantiate(stone, throwTransform.position, Quaternion.identity);
+        stoneProjectile = stoneObject.GetComponent<StoneProjectile>();
     }
 
     private void FleeToPosition()
