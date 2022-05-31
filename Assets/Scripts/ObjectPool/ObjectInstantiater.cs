@@ -49,4 +49,9 @@ public class ObjectInstantiater : MonoBehaviourPunCallbacks
             PhotonNetwork.InstantiateRoomObject("Prefabs/" + pool.name, transform.position, Quaternion.identity);
         }
     }
+
+    public GameObject InstantiatePhotonObject(string prefabPath)
+    {
+        return PhotonNetwork.Instantiate(prefabPath, transform.position, Quaternion.identity);
+    }
 }

@@ -213,7 +213,7 @@ public class Engineer : Controller3D
                     }
 
 
-                    turretObject = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPos.position, Quaternion.identity);
+                    turretObject = CreateTurret();
 
                     if (turretObject != null)
                     {
@@ -230,8 +230,8 @@ public class Engineer : Controller3D
                         inventorySystem.Remove<GreenGoo>(turretBuildCosts.gooCost);
 
                         // Add another turret to the queue and increase count of turrets
-                        turretCount++;
-                        objects.Add(turretObject);
+                        //turretCount++;
+                        //objects.Add(turretObject);
 
                         // Destroy the outlined turret (for both players)
                         isPressed = false;
@@ -274,6 +274,16 @@ public class Engineer : Controller3D
         }
     }
 
+    public GameObject CreateTurret()
+    {
+        GameObject turret = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPos.position, Quaternion.identity);
+        if (turret != null)
+        {
+            turretCount++;
+            objects.Add(turret);
+        }
+        return turret;
+    }
 
     /// <summary>
     /// Searches a GameObject for a specific child using "childName"
