@@ -99,6 +99,7 @@ public class Engineer : Controller3D
     protected override void Update()
     {
         base.Update();
+        if (PlayerControlsAreOn() == false) return;
         Cooldown();
         placeTimer -= Time.deltaTime;
         //PickUpShipPart();
@@ -130,6 +131,8 @@ public class Engineer : Controller3D
 
     public void StunEnemy()
     {
+        if (PlayerControlsAreOn() == false) return;
+
         if (OnCoolDown() == false && isUsingTurret == false)
         {
             if (Physics.Raycast(muzzlePoint.transform.position, weaponRotation.transform.rotation * Vector3.forward * 10f, out hit, weaponRange, stunLayer))
@@ -176,6 +179,8 @@ public class Engineer : Controller3D
 
     public void OnPlaceTurret(InputAction.CallbackContext ctx)
     {
+        if (PlayerControlsAreOn() == false) return;
+
         GameObject turretObject;
         isTryingToPlaceTurret = true;
 
@@ -257,6 +262,8 @@ public class Engineer : Controller3D
     /// </summary>
     public void OnTurretDestroy()
     {
+        if (PlayerControlsAreOn() == false) return;
+
         if (isUsingTurret == false && Physics.Raycast(camPositionFPS.transform.position, camPositionFPS.transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
             hit.collider.GetComponent<TurretHealthHandler>().SalvageDrop();
@@ -287,6 +294,8 @@ public class Engineer : Controller3D
 
     public void OnTurretUse()
     {
+        if (PlayerControlsAreOn() == false) return;
+
         if (isUsingTurret == false && Physics.Raycast(camPositionFPS.transform.position, camPositionFPS.transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
             if (hit.collider.GetComponent<HealthHandler>().isAlive)
@@ -326,6 +335,8 @@ public class Engineer : Controller3D
 
     public void OnTurretRepair(InputAction.CallbackContext ctx)
     {
+        if (PlayerControlsAreOn() == false) return;
+
         if (Physics.Raycast(camPositionFPS.transform.position, camPositionFPS.transform.forward, out hit, 5f) && hit.collider.gameObject.CompareTag("Turret"))
         {
             if (ctx.performed)

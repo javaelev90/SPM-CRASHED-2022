@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
+using EventCallbacksSystem;
 
 [RequireComponent(typeof(PhotonView))]
 public class GameManager : MonoBehaviourPunCallbacks
@@ -15,16 +16,20 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] public ObjectCulling objectCulling;
     public static GameObject player;
     public static GameObject otherPlayer;
+    public static bool gameIsPaused = false;
 
     public static Character character;
-
+    public static GameManager Instance { get { return instance; } }
+    private static GameManager instance;
     public GameObject loadScene;
 
     private bool IsMine { get { return photonView.IsMine; } }
     private bool gameIsOver = false;
+   
     
     private void Awake()
     {
+        instance = this;
         character = (Character)PlayerPrefs.GetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName);
         Initialize();
         Debug.Log($"Oh no, you chose the {character} charater");
@@ -77,6 +82,19 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             objectCulling.Initialize(player, character);
         }
+        PhotonNetwork.MinimalTimeScaleToDispatchInFixedUpdate = 0;
+    }
 
+    public void PauseGame(bool paused)
+    {
+        photonView.RPC(nameof(PauseGameRPC), RpcTarget.All, paused);
+    }
+
+    [PunRPC]
+    public void PauseGameRPC(bool paused)
+    {
+        Debug.Log($"Paused state for {character} is {paused}");
+        gameIsPaused = paused;
+        Time.timeScale = paused ? 0f : 1f;
     }
 }

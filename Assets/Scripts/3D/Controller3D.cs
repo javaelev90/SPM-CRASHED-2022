@@ -20,6 +20,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
     [SerializeField] private float skinWidth = 0.5f;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] public GameObject playerGUI;
+    [SerializeField] public GameObject pauseMenu;
     private HealthHandler healthHandler;
 
     [Header("Engineer")]
@@ -85,6 +86,9 @@ public class Controller3D : MonoBehaviourPunCallbacks
     [SerializeField] GameObject weaponVisuals;
     [SerializeField] GameObject bodyMesh;
 
+    protected bool PlayerPaused { get; set; }
+    protected bool ControlsAreLocked { get; set; }
+
     protected virtual void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -105,6 +109,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
         healthHandler = GetComponent<HealthHandler>();
         source = GetComponent<AudioSource>();
         playerGUI.SetActive(isMine);
+        pauseMenu.SetActive(isMine);
 
         if (isMine)
         {
@@ -113,9 +118,11 @@ public class Controller3D : MonoBehaviourPunCallbacks
             mainCam.transform.SetParent(camPositionFPS.transform);
             camPositionFPS.transform.rotation = Quaternion.LookRotation(bodyMesh.transform.position, Vector3.up);
             mainCam.transform.rotation = camPositionFPS.transform.rotation;
+            EventSystem.Instance.RegisterListener<LockControlsEvent>(LockControlsEventHandler);
         }
 
         bodyMesh.SetActive(isMine == false);
+        weaponVisuals.SetActive(isMine);
 
         minYOnUnitCircle = Mathf.Sin(maxClimbableAngel / 180 * Mathf.PI) ;
     }
@@ -129,10 +136,11 @@ public class Controller3D : MonoBehaviourPunCallbacks
     private void OnDisable()
     {
         playerActions.Player.Disable();
-        if (isMine)
-        {
-            //mainCam.transform.SetParent(null);
-        }
+    }
+
+    private void LockControlsEventHandler(LockControlsEvent lockEvent)
+    {
+        ControlsAreLocked = lockEvent.AreControlsLocked;
     }
 
     // Update is called once per frame
@@ -140,6 +148,8 @@ public class Controller3D : MonoBehaviourPunCallbacks
     {
         if (isMine)
         {
+            if (PlayerControlsAreOn() == false) return;
+
             switch (ChangeControlls.ControlType)
             {
                 case 1:
@@ -307,6 +317,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
 
     private void RoatateCamera()
     {
+
         if (currentControlScheme == "Gamepad")
         {
             cameraRotation.x -= cameraLooking.y * gamepadSensitivity * Time.deltaTime;
@@ -464,6 +475,11 @@ public class Controller3D : MonoBehaviourPunCallbacks
     void RemoveAllBindingOverrides()
     {
         InputActionRebindingExtensions.RemoveAllBindingOverrides(playerInput.currentActionMap);
+    }
+
+    protected bool PlayerControlsAreOn()
+    {
+        return (GameManager.gameIsPaused == false) && (ControlsAreLocked == false);
     }
 
     private void OnDrawGizmos()

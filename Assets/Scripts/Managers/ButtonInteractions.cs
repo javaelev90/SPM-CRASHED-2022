@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-public class ButtonInteractions : MonoBehaviour
+using EventCallbacksSystem;
+using Photon.Pun;
+
+public class ButtonInteractions : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject mainPanel;
@@ -24,6 +27,11 @@ public class ButtonInteractions : MonoBehaviour
     [SerializeField] private GameObject popUpImage;
 
     [SerializeField] private Image controls;
+
+    [SerializeField] private GameObject pausedText;
+
+
+
     private bool isSaved;
 
     public ShowPauseMenu pause;
@@ -36,13 +44,48 @@ public class ButtonInteractions : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+
+    private void Update()
+    {
+        if (pause != null)
+        {
+            if (GameManager.gameIsPaused)
+            {
+                //Game is paused and menu is not showing
+                pausedText.SetActive(MenuIsOpen() == false);
+            }
+            else if (GameManager.gameIsPaused == false && pausedText.activeSelf == true)
+            {
+                //Game is not paused
+                pausedText.SetActive(false);
+            }
+
+            if (MenuIsOpen() == false)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
+        
+    }
+
     public void Show(InputAction.CallbackContext ctx){
         if(ctx.performed){
-            Debug.Log("bajs");
             pause.gameObject.SetActive(!pause.gameObject.activeSelf);
             Cursor.lockState = CursorLockMode.None;
+            EventSystem.Instance.FireEvent(new LockControlsEvent(pause.gameObject.activeSelf));
         }
-        Debug.Log("korv");
+    }
+
+    private bool MenuIsOpen()
+    {
+        return settingsPanel.activeSelf || mainPanel.activeSelf || popUpExit.activeSelf || pause.gameObject.activeSelf ||
+            popUpPause.activeSelf || popUpSave.activeSelf || popUpSaveInfo.activeSelf ||
+            popUpResume.activeSelf || popUpSound.activeSelf || popUpImage.activeSelf;
     }
 
     public void doExitGame()
@@ -96,12 +139,12 @@ public class ButtonInteractions : MonoBehaviour
 
     }
 
-      public void Resume()
+    public void Resume()
     {
-       popUpResume.SetActive(false);
-       pause.gameObject.SetActive(false);
-       Cursor.lockState = CursorLockMode.Locked;
-
+        popUpResume.SetActive(false);
+        pause.gameObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        EventSystem.Instance.FireEvent(new LockControlsEvent(pause.gameObject.activeSelf));
     }
 
     public void OpenPauseWindow()
@@ -117,11 +160,12 @@ public class ButtonInteractions : MonoBehaviour
       //Cursor.lockState = CursorLockMode.Locked;
     }
 
-     public void Pause()
+    public void Pause()
     {
-      popUpPause.SetActive(false);
-      //länka till pausgrej som kommer
-      Debug.Log("Väntar på att göras klart");
+        popUpPause.SetActive(false);
+        //länka till pausgrej som kommer
+        GameManager.Instance.PauseGame(!GameManager.gameIsPaused);
+        EventSystem.Instance.FireEvent(new LockControlsEvent(pause.gameObject.activeSelf));
     }
 
     public void OpenSaveWindow()
@@ -137,15 +181,17 @@ public class ButtonInteractions : MonoBehaviour
       isSaved = false;
     }
 
-     public void Save()
+    public void Save()
     {
-       popUpSave.SetActive(false);
-      isSaved = true;
-      //länka till spargrej som kommer
-      Debug.Log("Väntar på att göras klart");
+        popUpSave.SetActive(false);
+        isSaved = true;
+        //länka till spargrej som kommer
+        Debug.Log("Väntar på att göras klart");
+        EventSystem.Instance.FireEvent(new LockControlsEvent(pause.gameObject.activeSelf));
+
     }
 
-     public void SaveInfo()
+    public void SaveInfo()
     {
       if(isSaved == true){
       popUpSaveInfo.SetActive(true);

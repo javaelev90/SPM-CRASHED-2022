@@ -27,12 +27,16 @@ public class SoldierCharacter : Controller3D
     protected override void Update()
     {
         base.Update();
+        if (PlayerControlsAreOn() == false) return;
+
         WeaponRotation();
         Cooldown();
     }
 
     public void Shoot(InputAction.CallbackContext context)
     {
+        if (PlayerControlsAreOn() == false) return;
+
         if (context.started)
         {
             weapon.IsShooting = true;
@@ -58,6 +62,8 @@ public class SoldierCharacter : Controller3D
 
     public void Punch()
     {
+        if (PlayerControlsAreOn() == false) return;
+
         if (OnCoolDown() == false)
         {
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,

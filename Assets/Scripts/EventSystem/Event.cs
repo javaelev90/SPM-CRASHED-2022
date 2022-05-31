@@ -230,4 +230,13 @@ namespace EventCallbacksSystem
         }
     }
 
+    public class LockControlsEvent : Event
+    {
+        public bool AreControlsLocked { get; private set; }
+
+        public LockControlsEvent(bool lockControls)
+        {
+            AreControlsLocked = lockControls;
+        }
+    }
 }
