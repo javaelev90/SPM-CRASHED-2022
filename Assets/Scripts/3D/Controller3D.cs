@@ -189,6 +189,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
             input = new Vector3(movementInput.x, 0, movementInput.y);
             input = /*mainCam.*/transform.rotation * input;
             Debug.Log(Body.GroundHit.normal.normalized.x);
+            
             if (Body.GroundHit.normal.normalized.y > minYOnUnitCircle)
             {
                 input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
@@ -196,7 +197,6 @@ public class Controller3D : MonoBehaviourPunCallbacks
             else
             {
                 input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
-                Debug.Log(input.y + Body.GroundHit.point.y);
                 if (input.y + Body.GroundHit.point.y > 0)
                 {
                     Debug.Log(input);
