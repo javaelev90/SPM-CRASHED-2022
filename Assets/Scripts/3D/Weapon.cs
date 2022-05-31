@@ -19,7 +19,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     [SerializeField] float delayBetweenShots = 0.5f;
     [SerializeField] LayerMask layersThatShouldBeHit;
     [SerializeField] private int maxAmmo;
-    [SerializeField] private int currentAmmo;
+    [SerializeField] public int currentAmmo;
     private float shotCooldown = 0f;
     public bool IsShooting { get; set; }
     private WeaponAmmunitionUpdateEvent ammunitionUpdateEvent;

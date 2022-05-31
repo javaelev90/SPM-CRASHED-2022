@@ -29,20 +29,9 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     [Header("Initialization preferences")]
     public int photonViewTargetId = -1;
-    public int photonGroup = 0;
 
     [Header("Performance settings")]
     public bool shouldBeCulled = true;
-    
-    private void Start()
-    {
-        photonGroup = photonView.Group;
-    }
-
-    private void Update()
-    {
-        photonGroup = photonView.Group;
-    }
 
     public void Initialize(object[] parameters)
     {
@@ -111,15 +100,20 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     public override bool Equals(object obj)
     {
+        if (this == null) return false;
+        if (obj == null) return false;
+
         return obj is PooledObject @object &&
                photonView.GetInstanceID() == @object.photonView.GetInstanceID();
     }
 
     public override int GetHashCode()
     {
+        if(this == null) return 0;
+
         int hashCode = -164824088;
         hashCode = hashCode * -1521134295 + base.GetHashCode();
-        hashCode = hashCode * -1521134295 + photonView.GetHashCode();
+        hashCode = hashCode * -1521134295 + (photonView != null ? photonView.GetHashCode() : 1);
         return hashCode;
     }
 }

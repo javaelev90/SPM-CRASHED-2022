@@ -14,13 +14,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject lobbyPlayerPrefab;
     [SerializeField] List<CharacterChoice> choices;
 
-   
-
     private ArrayList currentRoomList = new ArrayList();
     public Character PlayerChoice { get; set; }
     public bool IsMaster { get { return PhotonNetwork.IsMasterClient; } }
     private bool isStarted = false;
-
+    private bool connectedToMaster = false;
     // Joined server
     // Click character
     // Send RPC, choose character
@@ -35,26 +33,33 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     
         if (PhotonNetwork.LocalPlayer.NickName == "")
         {
-            PhotonNetwork.LocalPlayer.NickName = "Player";
+            PhotonNetwork.LocalPlayer.NickName = "Player"+GetInstanceID();
         }
     }
 
     public override void OnConnectedToMaster()
     {
+        Debug.Log("Connected to master successfully!");
+        connectedToMaster = true;
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
     public void JoinOrCreateRoom()
     {
+        if (connectedToMaster == false)
+            return;
+
         bool inputIsLongEnough = false;
         if (lobbyNameInput.text.Trim().Length > 2)
         {
-            RoomOptions roomOptions = new RoomOptions();
-            roomOptions.MaxPlayers = 2;
-            roomOptions.PlayerTtl = 50;
-            roomOptions.PublishUserId = true;
+            RoomOptions roomOptions = new RoomOptions
+            {
+                MaxPlayers = 2,
+                PlayerTtl = 50,
+                PublishUserId = true
+            };
 
-            PhotonNetwork.JoinOrCreateRoom(lobbyNameInput.text, roomOptions, null, null);
+            PhotonNetwork.JoinOrCreateRoom(lobbyNameInput.text, roomOptions, TypedLobby.Default, null);
             inputIsLongEnough = true;
         }
         EventSystem.Instance.FireEvent(new EnterLobbyEvent(inputIsLongEnough));

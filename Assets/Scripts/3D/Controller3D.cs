@@ -56,6 +56,8 @@ public class Controller3D : MonoBehaviourPunCallbacks
     [SerializeField] private float gamepadSensitivity = 2f;
     [SerializeField] private float minXrotation = 1f;
     [SerializeField] private float maxXrotation = 1f;
+    [SerializeField] private float maxClimbableAngel = 50f;
+    private float minYOnUnitCircle;
     private Vector3 input;
 
     [Header("States")]
@@ -114,6 +116,8 @@ public class Controller3D : MonoBehaviourPunCallbacks
         }
 
         bodyMesh.SetActive(isMine == false);
+
+        minYOnUnitCircle = Mathf.Sin(maxClimbableAngel / 180 * Mathf.PI) ;
     }
 
     private void OnEnable()
@@ -168,7 +172,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
     {
         float jumpForce = 5f;
 
-        if (ctx.performed && Body.Grounded)
+        if (ctx.performed && Body.Grounded && Body.GroundHit.normal.normalized.y > minYOnUnitCircle)
         {
             Vector3 jumpMovement = Vector3.up * jumpForce;
             source.PlayOneShot(clip);
@@ -183,9 +187,24 @@ public class Controller3D : MonoBehaviourPunCallbacks
         {
             Vector3 movementInput = playerActions.Player.Move.ReadValue<Vector2>();
             input = new Vector3(movementInput.x, 0, movementInput.y);
+            input = /*mainCam.*/transform.rotation * input;
+            Debug.Log(Body.GroundHit.normal.normalized.x);
+            if (Body.GroundHit.normal.normalized.y > minYOnUnitCircle)
+            {
+                input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
+            }
+            else
+            {
+                input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
+                Debug.Log(input.y + Body.GroundHit.point.y);
+                if (input.y + Body.GroundHit.point.y > 0)
+                {
+                    Debug.Log(input);
+                    input.y = 0;
+                }
+                input = Vector3.ProjectOnPlane(Body.GroundHit.normal, Body.GroundHit.normal).normalized + input;
 
-            input = mainCam.transform.rotation * input;
-            input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
+            }
 
 
 

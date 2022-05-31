@@ -918,7 +918,7 @@ Animator:
   m_GameObject: {fileID: 5495731618562740639}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 22b0f3be837b6f2458ddf551f66ffea1, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e5988d37a43efc741bc6467f1df25831, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -958,6 +958,7 @@ MonoBehaviour:
   skinWidth: 0.01
   groundCheckDistance: 0.1
   mass: 1
+  isGravityOn: 1
   gravity: 9.81
   airResistance: 0.3
   decelerationFactor: 1
@@ -1016,7 +1017,7 @@ MonoBehaviour:
   timeToAggro: 1
   timeToCoolWhenAttacked: 10
   timeStunned: 3
-  animator: {fileID: 0}
+  animator: {fileID: 1292320552414679391}
   minThrowRange: 0
   maxThrowRange: 0
   deadZoneRange: 0

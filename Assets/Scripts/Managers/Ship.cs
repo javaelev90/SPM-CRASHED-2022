@@ -66,8 +66,7 @@ public class Ship : MonoBehaviourPunCallbacks
         if (TakeResources())
         {
             photonView.RPC(nameof(UpgradeShipRPC), RpcTarget.All);
-            progressionEvent.UpgradeNumber = nextUpgrade;
-            EventSystem.Instance.FireEvent(progressionEvent);
+            
             return true;
         }
         return false;
@@ -83,6 +82,8 @@ public class Ship : MonoBehaviourPunCallbacks
         shipUpgradePanel.gameObject.SetActive(false);
         OpenPlayerUpgradePanel();
         allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
+        progressionEvent.UpgradeNumber = nextUpgrade;
+        EventSystem.Instance.FireEvent(progressionEvent);
     }
 
     private bool TakeResources()
