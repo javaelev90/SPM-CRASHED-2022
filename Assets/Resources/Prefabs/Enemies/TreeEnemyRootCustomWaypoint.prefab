@@ -6047,6 +6047,7 @@ MonoBehaviour:
   timeToAggro: 1
   timeToCoolWhenAttacked: 10
   timeStunned: 3
+  animator: {fileID: 0}
   gasRadius: 10
   minMeleeRadius: 0
   maxMeleeRadius: 0
@@ -6054,7 +6055,7 @@ MonoBehaviour:
   timeToMelee: 3
   timeToGas: 5
   poisonDamage: 10
-  hitDamage: 50
+  hitDamage: 70
   timeToWayPoint: 5
   walk: {fileID: 8300000, guid: ba7d7ea8f02f75545ab9859dfbfe1962, type: 3}
   angry: {fileID: 8300000, guid: a8a2498ccccd4cf4796f4bd11a991b7a, type: 3}
@@ -6153,13 +6154,14 @@ MonoBehaviour:
   hit: {fileID: 0}
   itemDropPrefab: {fileID: 0}
   dropOffsetY: 1
-  MaxHealth: 150
-  CurrentHealth: 150
+  MaxHealth: 200
+  CurrentHealth: 200
   isAlive: 1
   damage: 5
   intervale: 1.5
   rootObject: {fileID: 3536792488537908558}
   hitVFX: {fileID: 1917380589763821211, guid: 6c1694d813a06d2499f97c14978d8376, type: 3}
+  anim: {fileID: 0}
 --- !u!82 &7753290823584008450
 AudioSource:
   m_ObjectHideFlags: 0
