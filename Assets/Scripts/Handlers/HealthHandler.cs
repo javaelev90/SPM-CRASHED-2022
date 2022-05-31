@@ -72,13 +72,13 @@ public abstract class HealthHandler : MonoBehaviourPunCallbacks
     public void RemoveHealth(int amount)
     {
         CurrentHealth -= amount;
-        UpdateHealthBar();
-
+        
         if (CurrentHealth <= 0)
         {
             isAlive = false;
             Die();
         }
+        UpdateHealthBar();
     }
 
     protected void UpdateHealthBar()
@@ -99,7 +99,7 @@ public abstract class HealthHandler : MonoBehaviourPunCallbacks
     protected void InstantiateRoomObject(object[] parameters)
     {
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + dropOffsetY, transform.position.z);
-        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + itemDropPrefab.name, spawnPosition, Quaternion.identity, 0, parameters);
+        PhotonNetwork.InstantiateRoomObject(GlobalSettings.PickupsPath + itemDropPrefab.name, spawnPosition, transform.rotation, 0, parameters);
     }
 
     public virtual void IsInLava(bool inLava)

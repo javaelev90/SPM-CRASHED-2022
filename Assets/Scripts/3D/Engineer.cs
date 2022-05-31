@@ -303,9 +303,7 @@ public class Engineer : Controller3D
             if (hit.collider.GetComponent<HealthHandler>().isAlive)
             {
                 //Debug.Log("You are using the turret");
-                isUsingTurret = true;
-                ChangeControlls.ControlType = 2;
-
+                UpdateTurretControlSettings(2, false, true);
                 // Put Engineer behind the turret that was hit
                 foreach (Transform child in hit.transform)
                 {
@@ -321,16 +319,20 @@ public class Engineer : Controller3D
                 // Put Engineer behind the turret that was hit
                 usePositionPos = GetChildWithName(hit.collider.gameObject, "UsePosition");
             }
-            Body.enabled = false;
         }
 
         else if (isUsingTurret == true)
         {
             //Debug.Log("You are no longer using turret");
-            isUsingTurret = false;
-            ChangeControlls.ControlType = 1;
-            Body.enabled = true;
+            UpdateTurretControlSettings(1, true, false);
         }
+    }
+
+    public void UpdateTurretControlSettings(int controlType, bool isGravityOn, bool isUsingTurret)
+    {
+        this.isUsingTurret = isUsingTurret;
+        ChangeControlls.ControlType = controlType;
+        Body.IsGravityOn = isGravityOn;
     }
 
     public void OnTurretRepair(InputAction.CallbackContext ctx)

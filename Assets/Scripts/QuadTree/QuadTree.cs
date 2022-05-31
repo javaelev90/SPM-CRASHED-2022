@@ -139,6 +139,9 @@ public class QuadTree<T>
 
     public void OnDrawGizmos(float positionYValue = 30)
     {
+        // Prevent error when in scene mode
+        if (positionYValue == null || boundary == null) return;
+
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube(new Vector3(boundary.x, positionYValue, boundary.y), new Vector3(boundary.width, 0f, boundary.height));
 

@@ -12,17 +12,17 @@ public class HealthBarHandler : MonoBehaviour
 
         healthBarImage.fillAmount = value;
         
-        if (value < 0.2f)
-        {
-            healthBarImage.color = Color.red;
-        }
-        else if (value < 0.4f)
-        {
-            healthBarImage.color = Color.yellow;
-        }
-        //else
+        //if (value < 0.2f)
         //{
-        //    healthBarImage.color = Color.green;
+        //    healthBarImage.color = Color.red;
+        //}
+        //else if (value < 0.4f)
+        //{
+        //    healthBarImage.color = Color.yellow;
+        //}
+        //else if(value >= 0.4f)
+        //{
+        //    healthBarImage.color = Color.white;
         //}
     }
 

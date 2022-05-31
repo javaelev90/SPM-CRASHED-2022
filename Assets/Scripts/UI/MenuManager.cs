@@ -35,7 +35,6 @@ public class MenuManager : MonoBehaviour
     public void JoinedLobby(JoinedLobbyEvent lobbyEvent)
     {
         mainMenu.SetActive(false);
-   
         lobbyMenu.SetActive(true);
     }
 
@@ -43,6 +42,5 @@ public class MenuManager : MonoBehaviour
     {
         mainMenu.SetActive(true);
         lobbyMenu.SetActive(false);
-     
     }
 }

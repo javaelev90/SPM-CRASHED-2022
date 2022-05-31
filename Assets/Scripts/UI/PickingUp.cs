@@ -11,6 +11,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [SerializeField] private LayerMask pickupLayer;
     [SerializeField] private LayerMask spaceShipLayer;
     [SerializeField] private LayerMask shipPartLayer;
+    [SerializeField] private LayerMask reviveLayer;
 
     [SerializeField] private float pickUpDistance = 3;
     [SerializeField] public AudioSource source;
@@ -22,7 +23,10 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [SerializeField] private InventorySystem inventorySystem;
     [SerializeField] private Transform dropTransform;
     [SerializeField] private float timeToDrop = 0.5f;
+    [SerializeField] private float timeToEatCooldown = 0.5f;
+    [SerializeField] private int eatHealthRestore = 10;
     private float timeToDropCounter;
+    private float timeToEatCounter;
     private bool canDrop;
     private bool canPickUp;
     private Transform mainCamera;
@@ -59,6 +63,11 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 canPickUp = true;
                 timeToDropCounter = 0f;
             }
+        }
+
+        if (timeToEatCounter >= 0)
+        {
+            timeToEatCounter -= Time.deltaTime;
         }
     }
 
@@ -113,7 +122,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     public void Revive()
     {
-        if (PickUpHitCheck(spaceShipLayer))
+        if (PickUpHitCheck(reviveLayer))
         {
             if (inventorySystem.Amount<ReviveBadge>() > 0)
             {
@@ -125,10 +134,14 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     public void Eat()
     {
-        if (inventorySystem.Amount<AlienMeat>() > 0)
+        if(timeToEatCounter <= 0)
         {
-            inventorySystem.Remove<AlienMeat>();
-            gameObject.GetComponent<HealthHandler>().AddHealth(10);
+            if (inventorySystem.Amount<AlienMeat>() > 0)
+            {
+                inventorySystem.Remove<AlienMeat>();
+                gameObject.GetComponent<HealthHandler>().AddHealth(eatHealthRestore);
+                timeToEatCounter = timeToEatCooldown;
+            }
         }
     }
 
