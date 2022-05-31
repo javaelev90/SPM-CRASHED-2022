@@ -912,7 +912,6 @@ MonoBehaviour:
   recyclingBehaviour: 3
   navMeshAgent: {fileID: 3536792490037529178}
   photonViewTargetId: -1
-  photonGroup: 0
   shouldBeCulled: 1
 --- !u!114 &3536792488537908559
 MonoBehaviour:
@@ -6012,6 +6011,7 @@ MonoBehaviour:
   skinWidth: 0.02
   groundCheckDistance: 0.1
   mass: 1
+  isGravityOn: 1
   gravity: 9.81
   airResistance: 0.3
   decelerationFactor: 1

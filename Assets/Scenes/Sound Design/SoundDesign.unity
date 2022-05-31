@@ -7622,6 +7622,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 721427431807471041, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3154500066523367930, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -79600,7 +79604,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7413377871239008371, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
   m_PrefabInstance: {fileID: 1189109713}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1189109720}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31372bb00e2a1b04d9f992ebe0bfab89, type: 3}
@@ -79626,27 +79630,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4632727497257510301, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
   m_PrefabInstance: {fileID: 1189109713}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1189109720 stripped
+--- !u!1 &1189109719 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 5251445432623203546, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+  m_CorrespondingSourceObject: {fileID: 692051660995244330, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
   m_PrefabInstance: {fileID: 1189109713}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1189109721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!1 &1189109722 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4835309470549732527, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+  m_PrefabInstance: {fileID: 1189109713}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1189109720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8abac46d3108df4fb19ed73f983c84e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogs: []
-  uiObject: {fileID: 0}
-  canSoldierPickup: 0
-  canEngineerPickup: 0
 --- !u!1 &1189109723 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5243190104998001167, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
@@ -102216,6 +102209,8 @@ MonoBehaviour:
   nightText: {fileID: 0}
   day: {fileID: 0}
   night: {fileID: 0}
+  effectTransform: {fileID: 0}
+  nightAlarmEffect: {fileID: 0}
   clip: {fileID: 8300000, guid: df16b38ad4ba67149abc90eb53bc26b1, type: 3}
 --- !u!1 &1579918400
 GameObject:
@@ -115230,9 +115225,21 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 1429329687534507440, guid: ecfdbd59bcd92fe439667a4edb023c66, type: 3}
+      propertyPath: missingPart
+      value: 
+      objectReference: {fileID: 1189109719}
+    - target: {fileID: 1429329687534507440, guid: ecfdbd59bcd92fe439667a4edb023c66, type: 3}
+      propertyPath: attachedPart
+      value: 
+      objectReference: {fileID: 1189109722}
     - target: {fileID: 1429329687550910955, guid: ecfdbd59bcd92fe439667a4edb023c66, type: 3}
       propertyPath: sceneViewId
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2951219062878166939, guid: ecfdbd59bcd92fe439667a4edb023c66, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5130504999394709298, guid: ecfdbd59bcd92fe439667a4edb023c66, type: 3}
       propertyPath: sceneViewId

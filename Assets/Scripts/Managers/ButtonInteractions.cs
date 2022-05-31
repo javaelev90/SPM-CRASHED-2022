@@ -38,11 +38,11 @@ public class ButtonInteractions : MonoBehaviour
     }
 
     private void OnEnable() {
-        Cursor.lockState = CursorLockMode.None;
+        //Cursor.lockState = CursorLockMode.None;
     }
 
     private void OnDisable() {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void Show(InputAction.CallbackContext ctx){
@@ -151,6 +151,7 @@ public class ButtonInteractions : MonoBehaviour
     {
        popUpSave.SetActive(false);
       isSaved = true;
+      Cursor.lockState = CursorLockMode.Locked;
       //länka till spargrej som kommer
       Debug.Log("Väntar på att göras klart");
     }
@@ -159,9 +160,15 @@ public class ButtonInteractions : MonoBehaviour
     {
       if(isSaved == true){
       popUpSaveInfo.SetActive(true);
-      Destroy(popUpSaveInfo, 3f);
-     
+     // StartCoroutine(SaveInfoTime());
     }
+    }
+
+    IEnumerator SaveInfoTime(){
+      yield return new WaitForSeconds(0);
+      popUpSaveInfo.SetActive(true);
+      yield return new WaitForSeconds(2);
+      popUpSaveInfo.SetActive(false);
     }
     public void OpenSoundWindow()
     {

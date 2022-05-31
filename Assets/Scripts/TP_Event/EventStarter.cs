@@ -24,6 +24,10 @@ public class EventStarter : MonoBehaviourPunCallbacks
     [Header("Ship Part")]
     public GameObject missingPart;
     public GameObject attachedPart;
+
+    public AudioSource source;
+  
+    public AudioClip triggerSound;
     
 
 
@@ -41,6 +45,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
                 eventSpawners.Add(child.GetComponent<ObjectSpawner>());
             }
         }
+        source = GetComponent<AudioSource>();
         
     }
 
@@ -55,6 +60,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
             EventSystem.Instance.FireEvent(new EventEvent(true));
 
             dome.SetActive(true);
+            source.Play();
             teleporter.SetActive(true);
 
             foreach (ObjectSpawner objectSpawner in eventSpawners)

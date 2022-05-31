@@ -309,7 +309,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 33600
   walk: {fileID: 8300000, guid: 0f32544d5f474714982c400523c9336d, type: 3}
-  explode: {fileID: 8300000, guid: e7fd944783ec92b40988052f8baee34e, type: 3}
+  explode: {fileID: 8300000, guid: 98e72369bb09a064b9aceb2d35575dd0, type: 3}
   attack: {fileID: 8300000, guid: 0f32544d5f474714982c400523c9336d, type: 3}
 --- !u!114 &281888583855016732
 MonoBehaviour:
@@ -328,6 +328,7 @@ MonoBehaviour:
   skinWidth: 0.03
   groundCheckDistance: 1
   mass: 1
+  isGravityOn: 1
   gravity: 9.81
   airResistance: 0.6
   decelerationFactor: 13
@@ -552,6 +553,8 @@ MonoBehaviour:
   readyToExplodeEffect: {fileID: 948836587826390393, guid: 6a1e1b12518a3f44a98c86a15e5c4df9, type: 3}
   SnailGooDecalPrefab: {fileID: 2713433594693982627, guid: 0e512d4ed6c872643a57df4658a9ce0e, type: 3}
   timeTillExplode: 10
+  source: {fileID: 0}
+  explode: {fileID: 8300000, guid: 98e72369bb09a064b9aceb2d35575dd0, type: 3}
 --- !u!54 &5720213624663781142
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -665,7 +668,6 @@ MonoBehaviour:
   recyclingBehaviour: 3
   navMeshAgent: {fileID: 5603274226023981931}
   photonViewTargetId: 0
-  photonGroup: 0
   shouldBeCulled: 1
 --- !u!114 &107882219648812594
 MonoBehaviour:

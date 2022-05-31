@@ -218,7 +218,7 @@ public class SlugEnemy : AIBaseLogic
             }
         }
         photonView.RPC(nameof(Explode), RpcTarget.All);
-        source.PlayOneShot(explode);
+        
     }
 
     [PunRPC]
@@ -226,8 +226,10 @@ public class SlugEnemy : AIBaseLogic
     {
         GameObject explosion = Instantiate(explosionEffects, transform.position, Quaternion.identity);
         snailEffects = explosion.GetComponent<G_SnailExplosion>();
+        source.PlayOneShot(explode);
         snailEffects.snail = gameObject;
         snailEffects.Explode();
+        
     }
 
     //[PunRPC]
