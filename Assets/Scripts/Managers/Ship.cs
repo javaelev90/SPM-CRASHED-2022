@@ -103,7 +103,7 @@ public class Ship : MonoBehaviourPunCallbacks
         if (!UppgradeShip())
         {
             shipUpgradePanel.ToggleErrorMessage(true);
-            shipUpgradePanel.SetErrorMessage("Something fucked up!");
+            shipUpgradePanel.SetErrorMessage("Not enough resources!");
         }
     }
 
@@ -131,7 +131,7 @@ public class Ship : MonoBehaviourPunCallbacks
             else
             {
                 shipUpgradeButton.interactable = true;
-                shipUpgradePanel.SetCostInfo($"Do you want to upgrade? \n Metal: {shipUpgradeCost[nextUpgrade].metalCost} \n Green Goo: {shipUpgradeCost[nextUpgrade].gooCost}");
+                shipUpgradePanel.SetCostInfo($"Do you want to repair the ship? \n Metal: {shipUpgradeCost[nextUpgrade].metalCost} \n Green Goo: {shipUpgradeCost[nextUpgrade].gooCost}");
             }
             shipUpgradePanel.ToggleErrorMessage(false);
             Cursor.lockState = CursorLockMode.None;
@@ -145,9 +145,10 @@ public class Ship : MonoBehaviourPunCallbacks
         OpenShipUpgradePanel();
     }
 
-    private void OpenPlayerUpgradePanel()
+    public void OpenPlayerUpgradePanel()
     {
         //photonView.RPC(nameof(OpenUpgradePanelRPC), RpcTarget.All);
+        shipUpgradePanel.gameObject.SetActive(false);
         playerUpgradePanal.SetActive(true);
     }
     //[PunRPC]

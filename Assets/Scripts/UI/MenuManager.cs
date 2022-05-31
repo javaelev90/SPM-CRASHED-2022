@@ -7,6 +7,7 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject lobbyMenu;
+    private AudioSource source;
 
  
     // Start is called before the first frame update
@@ -15,6 +16,8 @@ public class MenuManager : MonoBehaviour
         EventSystem.Instance.RegisterListener<EnterLobbyEvent>(EnterLobby);
         EventSystem.Instance.RegisterListener<JoinedLobbyEvent>(JoinedLobby);
         EventSystem.Instance.RegisterListener<LeaveLobbyEvent>(LeaveLobby);
+        source = GetComponent<AudioSource>();
+        source.Play();
     }
 
     public void EnterLobby(EnterLobbyEvent lobbyEvent)

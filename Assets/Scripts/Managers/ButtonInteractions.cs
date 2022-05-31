@@ -24,9 +24,18 @@ public class ButtonInteractions : MonoBehaviour
     [SerializeField] private GameObject popUpImage;
 
     [SerializeField] private Image controls;
+
+    private AudioSource source;
+
+    public AudioClip clip;
     private bool isSaved;
 
     public ShowPauseMenu pause;
+
+      private void Start()
+    {
+        source = GetComponent<AudioSource>();   
+    }
 
     private void OnEnable() {
         Cursor.lockState = CursorLockMode.None;
@@ -56,6 +65,7 @@ public class ButtonInteractions : MonoBehaviour
         popUpImage.SetActive(false);
         settingsPanel.SetActive(true);
         mainPanel.SetActive(false);
+        source.PlayOneShot(clip);
         
     }
 

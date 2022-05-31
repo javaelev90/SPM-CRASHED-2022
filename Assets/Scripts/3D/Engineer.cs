@@ -78,6 +78,7 @@ public class Engineer : Controller3D
     [SerializeField] private ParticleActivator shootingEffect;
     [SerializeField] GameObject hitPosition;
     [SerializeField] private AudioClip stunSound;
+    [SerializeField] private AudioClip placeTurret;
     private StungunCoolDownEvent stunGunEvent;
     private AudioSource audioSource;
 
@@ -245,6 +246,8 @@ public class Engineer : Controller3D
 
                         // Is no longer trying to place a turret
                         isTryingToPlaceTurret = false;
+
+                        audioSource.PlayOneShot(placeTurret);
                     }
 
                 }

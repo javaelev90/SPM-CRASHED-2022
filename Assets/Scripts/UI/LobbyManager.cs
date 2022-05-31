@@ -14,6 +14,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject lobbyPlayerPrefab;
     [SerializeField] List<CharacterChoice> choices;
 
+    private AudioSource source;
+
+    public AudioClip clip;
    
 
     private ArrayList currentRoomList = new ArrayList();
@@ -32,6 +35,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.GameVersion = "0.1";
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
+        source = GetComponent<AudioSource>();   
     
         if (PhotonNetwork.LocalPlayer.NickName == "")
         {
@@ -56,6 +60,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
             PhotonNetwork.JoinOrCreateRoom(lobbyNameInput.text, roomOptions, null, null);
             inputIsLongEnough = true;
+            source.PlayOneShot(clip);
         }
         EventSystem.Instance.FireEvent(new EnterLobbyEvent(inputIsLongEnough));
     }
@@ -185,6 +190,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             Debug.Log("Everyone is ready, starting game.");
             isStarted = true;
             PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.GameSceneName);
+            source.PlayOneShot(clip);
            
         }
     }
@@ -194,6 +200,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         ResetLobbySettings();
         EventSystem.Instance.FireEvent(new LeaveLobbyEvent());
+        source.PlayOneShot(clip);
+        source.Stop();
     }
 
     private void ResetLobbySettings()
