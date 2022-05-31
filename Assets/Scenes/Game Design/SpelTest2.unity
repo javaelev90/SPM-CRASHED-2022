@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 427306726}
-  m_IndirectSpecularColor: {r: 0.000017034381, g: 0.000000025772884, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.000017034523, g: 0.000000025772884, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -72594,7 +72594,6 @@ Transform:
   - {fileID: 1199196113}
   - {fileID: 1075824501}
   - {fileID: 297598197}
-  - {fileID: 1552673106}
   - {fileID: 1564130929}
   - {fileID: 1358788173}
   m_Father: {fileID: 0}
@@ -73123,7 +73122,7 @@ PrefabInstance:
       objectReference: {fileID: 6261632589528798244, guid: ca7e684d5473bdb4e88d53cb02713794, type: 3}
     - target: {fileID: 2615788331837618366, guid: 02a64d32d85778e45b8e5c1d1a61ff5a, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2615788331837618366, guid: 02a64d32d85778e45b8e5c1d1a61ff5a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -91445,84 +91444,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1552673105
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1339229061}
-    m_Modifications:
-    - target: {fileID: 912013002770570640, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: sceneViewId
-      value: 19
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 329.47
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 39.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 271.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570642, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_Name
-      value: TreeEnemyCustomWayPointObjectPool
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570642, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570643, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: maxPoolSize
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 912013002770570643, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-      propertyPath: pooledObjectPrefab
-      value: 
-      objectReference: {fileID: 3536792488537908558, guid: f26cbd884c46a0945b70ffa69292e855, type: 3}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
---- !u!4 &1552673106 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 912013002770570641, guid: 7a45b99139a21c74d94a97683a53e023, type: 3}
-  m_PrefabInstance: {fileID: 1552673105}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1555622699
 GameObject:
   m_ObjectHideFlags: 0
@@ -91781,7 +91702,7 @@ PrefabInstance:
       objectReference: {fileID: 4946720192697130266, guid: c27d8dfbface6b446bf0ba69b867873a, type: 3}
     - target: {fileID: 6126121458963941861, guid: 0813684ac89daff47a38a3a1405fa83a, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6126121458963941861, guid: 0813684ac89daff47a38a3a1405fa83a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -95374,6 +95295,8 @@ MonoBehaviour:
   nightText: {fileID: 0}
   day: {fileID: 0}
   night: {fileID: 0}
+  effectTransform: {fileID: 0}
+  nightAlarmEffect: {fileID: 0}
   clip: {fileID: 0}
 --- !u!1 &1652444478
 GameObject:
@@ -113833,6 +113756,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1913197448}
+  - component: {fileID: 1913197449}
   m_Layer: 0
   m_Name: SpawnPosition
   m_TagString: Untagged
@@ -113848,12 +113772,25 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913197447}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 326.07, y: 28.886, z: 310.73}
+  m_LocalPosition: {x: 321.56, y: 28.68, z: 310.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1913197449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913197447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac006fc47055dd3489ee0acd87f3b529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theMesh: {fileID: -6279812323752254843, guid: 80d7b3732805df64d8b51ef4578da6ed, type: 3}
 --- !u!1 &1914351646
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ public class GasEnemy : AIBaseLogic
     private float timeCounterWaypoint;
     private float timeCounterGas;
     private float timeCounterMelee;
+    private bool isAttacking;
     private Vector3 wayPoint;
 
     AudioSource source;
@@ -26,8 +27,6 @@ public class GasEnemy : AIBaseLogic
     // Start is called before the first frame update
     void Start()
     {
-        minMeleeRadius = viewRadius / 5f;
-        maxMeleeRadius = viewRadius / 2.5f;
         timeCounterGas = timeToGas;
         timeCounterMelee = timeToMelee;
         timeCounterWaypoint = timeToWayPoint;
@@ -71,6 +70,16 @@ public class GasEnemy : AIBaseLogic
                 MoveToWayPoint();
           
             }
+        }
+
+        if (agent.isOnNavMesh)
+        {
+            animator.SetBool("IsWalking", (Mathf.Abs(agent.velocity.x) > 0f || Mathf.Abs(agent.velocity.z) > 0f));
+        }
+
+        if(timeCounterMelee >= 0f && !isAttacking)
+        {
+            timeCounterMelee -= Time.deltaTime;
         }
     }
 
@@ -150,28 +159,33 @@ public class GasEnemy : AIBaseLogic
 
     private void Move()
     {
-        source.Play();
-
-        if (distanceToTarget < gasRadius)
+        if (!isAttacking)
         {
-            PoisonGas();
-        }
-
-        if (distanceToTarget < maxMeleeRadius && minMeleeRadius < distanceToTarget)
-        {
-            if (agent.isOnNavMesh) agent.isStopped = true;
-            Hit();
-        }
-        else
-        {
-            if (agent.isOnNavMesh) agent.isStopped = false;
             source.Play();
-        }
 
-        if (agent.isOnNavMesh && target != null)
-        {
-            agent.destination = target.position;
-            Rotate();
+            if (distanceToTarget < gasRadius)
+            {
+                PoisonGas();
+            }
+
+            if (distanceToTarget < maxMeleeRadius)
+            {
+                if (agent.isOnNavMesh)
+                {
+                    agent.isStopped = true;
+                    if (timeCounterMelee <= 0f) Hit();
+                }
+            }
+            else
+            {
+                if (agent.isOnNavMesh) agent.isStopped = false;
+            }
+
+            if (agent.isOnNavMesh && target != null)
+            {
+                agent.destination = target.position;
+                Rotate();
+            }
         }
     }
 
@@ -184,20 +198,24 @@ public class GasEnemy : AIBaseLogic
 
     private void Hit()
     {
-        timeCounterMelee -= Time.deltaTime;
-        if (timeCounterMelee <= 0f)
-        {
-            if (IsMasterClient && target != null)
-            {
-                HealthHandler healthHandler = target.GetComponent<HealthHandler>();
-                if (healthHandler != null)
-                {
-                    healthHandler.TakeDamage(hitDamage);
-                }
-            }
+        animator.SetBool("IsHitting", true);
+        timeCounterMelee = timeToMelee;
+        isAttacking = true;
+        source.PlayOneShot(angry);
+    }
 
-            timeCounterMelee = timeToMelee;
+    private void DealDamage()
+    {
+        animator.SetBool("IsHitting", false);
+        if(IsMasterClient && target != null && distanceToTarget < maxMeleeRadius && minMeleeRadius < distanceToTarget)
+        {
+            HealthHandler healthHandler = target.GetComponent<HealthHandler>();
+            if (healthHandler != null)
+            {
+                healthHandler.TakeDamage(hitDamage);
+            }
         }
+        isAttacking = false;
     }
 
     private void PoisonGas()
@@ -215,7 +233,6 @@ public class GasEnemy : AIBaseLogic
             }
 
             timeCounterGas = timeToGas;
-            source.PlayOneShot(angry);
         }
     }
 
