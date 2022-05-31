@@ -52,7 +52,9 @@ public class EventStarter : MonoBehaviourPunCallbacks
         if (eventStarted == false)
         {
             eventStarted = true;
-            EventSystem.Instance.FireEvent(new EventEvent(true));
+            EventEvent eventEvent = new EventEvent(true);
+            eventEvent.EventTime = eventTime;
+            EventSystem.Instance.FireEvent(eventEvent);
 
             dome.SetActive(true);
             teleporter.SetActive(true);

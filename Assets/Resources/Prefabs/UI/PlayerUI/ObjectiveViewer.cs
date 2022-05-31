@@ -10,8 +10,7 @@ public class ObjectiveViewer : MonoBehaviour
     [SerializeField] private RectTransform hideObjectivePosition;
     [SerializeField] private RectTransform objectivePanel;
     [SerializeField] private GameObject shipObjective;
-    [SerializeField] private GameObject dayObjective;
-    [SerializeField] private GameObject nightObjective;
+    [SerializeField] private TMP_Text objective;
     [SerializeField] private float smoothTime;
     [SerializeField] private TMP_Text upgradedPartsText;
     [SerializeField] private TMP_Text totalNumberText;
@@ -47,17 +46,23 @@ public class ObjectiveViewer : MonoBehaviour
 
     public void UpdateObjectiveText(ObjectiveUpdateEvent ev)
     {
-        if (ev.IsNight == true)
+        if (ev.IsShipPartEvent == false)
         {
-            dayObjective.SetActive(false);
-            nightObjective.SetActive(true);
-            shipObjective.SetActive(false);
-        }
+            if (ev.IsNight == true)
+            {
+                objective.text = "Defend the ship during the night!";
+                shipObjective.SetActive(false);
+            }
 
-        if (ev.IsNight == false)
+            if (ev.IsNight == false)
+            {
+                objective.text = "Explore and find ship parts!";
+                shipObjective.SetActive(true);
+            }
+        }
+        else
         {
-            dayObjective.SetActive(true);
-            nightObjective.SetActive(false);
+            objective.text = ev.ObjectiveDescription;
             shipObjective.SetActive(true);
         }
     }
@@ -72,5 +77,5 @@ public class ObjectiveViewer : MonoBehaviour
         upgradedPartsText.text = completed.ToString();
         totalNumberText.text = total.ToString();
     }
-     
+
 }

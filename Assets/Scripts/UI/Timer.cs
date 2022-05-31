@@ -26,11 +26,19 @@ public class Timer : MonoBehaviour
     [SerializeField] private GameObject night;
     [SerializeField] private RectTransform effectTransform;
     [SerializeField] private GameObject nightAlarmEffect;
+    [SerializeField] private GameObject eventTimeObject;
     private Image dayImage;
     private Image nightImage;
     private ObjectiveUpdateEvent ev;
 
+    // EventStarter parameters
+    private bool isEventStarted;
+    private float eventTime;
+    private float eventTimeCounter;
+
     public bool IsNight { get; private set; }
+
+
 
     [Header("Other stuff")]
     //[SerializeField] private LightingManager lightingManager;
@@ -67,16 +75,12 @@ public class Timer : MonoBehaviour
 
         if (!lightingManager.IsNight)
         {
-            //day.gameObject.SetActive(true);
-            //night.gameObject.SetActive(false);
             Color color = new Color(1, 1, 1, 0);
             nightImage.color = color;
             IsNight = lightingManager.IsNight;
         }
         else
         {
-            //day.gameObject.SetActive(false);
-            //night.gameObject.SetActive(true);
             Color color = new Color(1, 1, 1, 0);
             dayImage.color = color;
             IsNight = lightingManager.IsNight;
@@ -105,11 +109,27 @@ public class Timer : MonoBehaviour
     void Update()
     {
         timeLeft = lightingManager.TimeUntilCycle;
-        updateTimer(timeLeft);
 
-        if (timeLeft > 0 && timeLeft < 5 && !flashing)
+        if (isEventStarted)
         {
-            StartCoroutine(Flash3());
+            eventTimeCounter -= Time.deltaTime;
+            if (eventTimeCounter > 0 && eventTimeCounter < 3 && !flashing)
+            {
+                StartCoroutine(Flash3());
+            }
+
+            updateTimer(eventTimeCounter);
+            if (eventTimeCounter <= 0f)
+            {
+                isEventStarted = false;
+                eventTimeCounter = 0f;
+                eventTimeObject.SetActive(false);
+            }
+        }
+
+        if (timeLeft > 0 && timeLeft < 5)
+        {
+
             source.PlayOneShot(clip);
 
             if (effectTransform != null)
@@ -142,6 +162,8 @@ public class Timer : MonoBehaviour
                 nightImage.gameObject.SetActive(true);
                 nightImage.fillAmount = 1f;
                 ev.IsNight = lightingManager.IsNight;
+                ev.IsShipPartEvent = false;
+                ev.ObjectiveDescription = "Defend the ship!";
                 EventSystem.Instance.FireEvent(ev);
             }
 
@@ -174,6 +196,8 @@ public class Timer : MonoBehaviour
                 dayImage.gameObject.SetActive(true);
                 dayImage.fillAmount = 1f;
                 ev.IsNight = lightingManager.IsNight;
+                ev.IsShipPartEvent = false;
+                ev.ObjectiveDescription = "Go and find ship parts!";
                 EventSystem.Instance.FireEvent(ev);
             }
 
@@ -238,7 +262,7 @@ public class Timer : MonoBehaviour
         {
             setTextDisplay(!minutEtt.enabled);
             yield return new WaitForSeconds(flashduration);
-            if (timeLeft > 5)
+            if (eventTimeCounter > 5)
             {
                 flashing = false;
             }
@@ -251,7 +275,24 @@ public class Timer : MonoBehaviour
 
     public void DisplayingTime(EventEvent eventEvent)
     {
-        DisplayingTime(!eventEvent.Start);
+        ev.IsNight = lightingManager.IsNight;
+        ev.ObjectiveDescription = "Event started, secure ship part!";
+
+        eventTime = eventEvent.EventTime;
+
+        isEventStarted = eventEvent.Start;
+        ev.IsShipPartEvent = eventEvent.Start;
+
+        if (isEventStarted)
+        {
+            eventTimeCounter = eventTime;
+            eventTimeObject.SetActive(isEventStarted);
+        }
+        else
+        {
+            eventTimeObject.SetActive(isEventStarted);
+        }
+        EventSystem.Instance.FireEvent(ev);
     }
 
     public void DisplayingTime(bool on)

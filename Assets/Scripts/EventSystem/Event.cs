@@ -46,6 +46,7 @@ namespace EventCallbacksSystem
     public class EventEvent : Event
     {
         public bool Start { get; set; }
+        public float EventTime { get; set; }
 
         public EventEvent(bool start)
         {
@@ -201,6 +202,9 @@ namespace EventCallbacksSystem
     {
         public bool IsNight { get; set; }
         public bool IsShipPartEvent { get; set; }
+
+        public string ObjectiveDescription { get; set; }
+        
     }
 
     public class StungunCoolDownEvent : Event
