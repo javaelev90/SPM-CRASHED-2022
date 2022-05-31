@@ -200,6 +200,7 @@ namespace EventCallbacksSystem
     public class ObjectiveUpdateEvent : Event
     {
         public bool IsNight { get; set; }
+        public bool IsShipPartEvent { get; set; }
     }
 
     public class StungunCoolDownEvent : Event
