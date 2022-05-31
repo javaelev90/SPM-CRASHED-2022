@@ -35,7 +35,8 @@ public class Timer : MonoBehaviour
     private bool isEventStarted;
     private float eventTime;
     private float eventTimeCounter;
-
+    private bool IsUntilDawn;
+    private float timeUntilDawn;
     public bool IsNight { get; private set; }
 
 
@@ -49,6 +50,7 @@ public class Timer : MonoBehaviour
     private float flashTimer = 0;
     private float flashduration = 0.5f;
     private bool flashing = false;
+    private bool isEffectFlashing = false;
 
     private AudioSource source;
     private LightingManager lightingManager;
@@ -63,11 +65,14 @@ public class Timer : MonoBehaviour
     private void OnDisable()
     {
         StopCoroutine(SearchForLightManager());
+        StopCoroutine(Flash3());
+        StopCoroutine(Flash3Effect());
     }
 
     void Start()
     {
         EventSystem.Instance.RegisterListener<EventEvent>(DisplayingTime);
+        EventSystem.Instance.RegisterListener<ShipPartEvent>(TimeUntilDawn);
         source = GetComponent<AudioSource>();
         dayImage = day.GetComponent<Image>();
         nightImage = night.GetComponent<Image>();
@@ -127,11 +132,12 @@ public class Timer : MonoBehaviour
             }
         }
 
-        if (timeLeft > 0 && timeLeft < 5)
+        if (timeLeft > 0 && timeLeft < 5 && isEffectFlashing == false)
         {
 
+            StartCoroutine(Flash3Effect());
+            
             source.PlayOneShot(clip);
-
             if (effectTransform != null)
             {
                 var vfx = Instantiate(nightAlarmEffect, effectTransform.position, Quaternion.identity) as GameObject;
@@ -145,6 +151,11 @@ public class Timer : MonoBehaviour
         DayTime();
     }
 
+    private void TimeUntilDawn(ShipPartEvent ev)
+    {
+        timeUntilDawn = ev.TimeUntilDawn;
+        IsUntilDawn = true;
+    }
 
     private void NightTime()
     {
@@ -163,7 +174,7 @@ public class Timer : MonoBehaviour
                 nightImage.fillAmount = 1f;
                 ev.IsNight = lightingManager.IsNight;
                 ev.IsShipPartEvent = false;
-                ev.ObjectiveDescription = "Defend the ship!";
+                IsUntilDawn = false;
                 EventSystem.Instance.FireEvent(ev);
             }
 
@@ -177,7 +188,10 @@ public class Timer : MonoBehaviour
             nightImage.color = nightColor;
         }
 
-        nightImage.fillAmount -= (1f / nightLength) * Time.deltaTime;
+        if (IsUntilDawn == false)
+            nightImage.fillAmount -= (1f / nightLength) * Time.deltaTime;
+        else
+            nightImage.fillAmount -= (1f / (nightLength - timeUntilDawn)) * Time.deltaTime;
     }
 
     private void DayTime()
@@ -197,7 +211,7 @@ public class Timer : MonoBehaviour
                 dayImage.fillAmount = 1f;
                 ev.IsNight = lightingManager.IsNight;
                 ev.IsShipPartEvent = false;
-                ev.ObjectiveDescription = "Go and find ship parts!";
+                IsUntilDawn = false;
                 EventSystem.Instance.FireEvent(ev);
             }
 
@@ -211,7 +225,13 @@ public class Timer : MonoBehaviour
             nightImage.gameObject.SetActive(nightImage.color == nightColor);
         }
 
-        dayImage.fillAmount -= (1f / dayLength) * Time.deltaTime;
+
+
+        if (IsUntilDawn == false)
+            dayImage.fillAmount -= (1f / dayLength) * Time.deltaTime;
+        else
+            dayImage.fillAmount -= (1f / (dayLength - timeUntilDawn)) * Time.deltaTime;
+
     }
 
     private void updateTimer(float time)
@@ -271,6 +291,20 @@ public class Timer : MonoBehaviour
         setTextDisplay(true);
         //day.gameObject.SetActive(!day.gameObject.activeSelf);
         //night.gameObject.SetActive(!night.gameObject.activeSelf);
+    }
+
+    private IEnumerator Flash3Effect()
+    {
+        isEffectFlashing = true;
+
+        while (flashing)
+        {
+            yield return new WaitForSeconds(flashduration);
+            if (timeLeft > 7)
+            {
+                isEffectFlashing = false;
+            }
+        }
     }
 
     public void DisplayingTime(EventEvent eventEvent)
