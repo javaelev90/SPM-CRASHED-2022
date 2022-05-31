@@ -12645,6 +12645,7 @@ MonoBehaviour:
   gamepadSensitivity: 80
   minXrotation: -90
   maxXrotation: 90
+  maxClimbableAngel: 50
   stateMachine:
     currentState: {fileID: 0}
     queuedState: {fileID: 0}
@@ -12746,6 +12747,9 @@ MonoBehaviour:
   shipPartLayer:
     serializedVersion: 2
     m_Bits: 262144
+  reviveLayer:
+    serializedVersion: 2
+    m_Bits: 524288
   pickUpDistance: 3
   source: {fileID: 3505359930266707162}
   Goo: {fileID: 8300000, guid: 01d10acac1a458342915320b1129643c, type: 3}

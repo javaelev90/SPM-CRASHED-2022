@@ -11,6 +11,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [SerializeField] private LayerMask pickupLayer;
     [SerializeField] private LayerMask spaceShipLayer;
     [SerializeField] private LayerMask shipPartLayer;
+    [SerializeField] private LayerMask reviveLayer;
 
     [SerializeField] private float pickUpDistance = 3;
     [SerializeField] public AudioSource source;
@@ -121,7 +122,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
 
     public void Revive()
     {
-        if (PickUpHitCheck(spaceShipLayer))
+        if (PickUpHitCheck(reviveLayer))
         {
             if (inventorySystem.Amount<ReviveBadge>() > 0)
             {
