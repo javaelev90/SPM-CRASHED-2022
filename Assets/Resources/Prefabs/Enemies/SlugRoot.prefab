@@ -328,6 +328,7 @@ MonoBehaviour:
   skinWidth: 0.03
   groundCheckDistance: 1
   mass: 1
+  isGravityOn: 1
   gravity: 9.81
   airResistance: 0.6
   decelerationFactor: 13
@@ -665,7 +666,6 @@ MonoBehaviour:
   recyclingBehaviour: 3
   navMeshAgent: {fileID: 5603274226023981931}
   photonViewTargetId: 0
-  photonGroup: 0
   shouldBeCulled: 1
 --- !u!114 &107882219648812594
 MonoBehaviour:

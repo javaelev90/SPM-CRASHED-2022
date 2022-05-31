@@ -628,7 +628,6 @@ MonoBehaviour:
   recyclingBehaviour: 3
   navMeshAgent: {fileID: 5495731618562740615}
   photonViewTargetId: -1
-  photonGroup: 0
   shouldBeCulled: 1
 --- !u!114 &4946720192697130267
 MonoBehaviour:
@@ -1023,10 +1022,14 @@ MonoBehaviour:
   deadZoneRange: 0
   rotationSpeed: 4
   stoppingDistance: 0.5
+  stone: {fileID: 0}
   bullet: {fileID: 2720492583708200014, guid: 857bb64d64c9b32479e40ac65bca18f3, type: 3}
+  throwTransform: {fileID: 0}
   timeToThrow: 2
   stoneDamage: 20
   timeToWayPoint: 5
+  stoneProjectileAngle: 45
+  throwingMultiplier: 20
   walk: {fileID: 8300000, guid: cfbe109ff897e8845b183d89a6bf9c5a, type: 3}
   angry: {fileID: 0}
   attack: {fileID: 8300000, guid: b604b4d8329994741b72d1701a18a8ce, type: 3}
