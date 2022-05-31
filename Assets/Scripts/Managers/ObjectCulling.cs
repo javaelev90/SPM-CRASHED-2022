@@ -81,6 +81,13 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
         {
             if (pool.TryGetValue(activeObjectKeys[index], out PooledObject pooledObject))
             {
+                // Pooled object has been destroyed
+                if (pooledObject == null)
+                {
+                    pool.Remove(activeObjectKeys[index]);
+                    continue;
+                }
+                    
                 if (pooledObject.shouldBeCulled == false)
                     continue;
                 
@@ -119,6 +126,10 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
     {
         foreach (Point<PooledObject> point in pointsToUpdate)
         {
+            // Object has been destroyed
+            if (point.data == null)
+                continue;
+
             point.data.UpdateActiveState(active);
         }
     }

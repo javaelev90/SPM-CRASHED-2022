@@ -8,7 +8,7 @@ public class SoldierCharacter : Controller3D
 {
     [SerializeField] private LayerMask fireLayer;
     [SerializeField] private float interactionDistance = 1f;
-    [SerializeField] private Weapon weapon;
+    [SerializeField] public Weapon weapon;
 
     [Header("Punch settings")]
     [SerializeField] float punchRange = 2f;
