@@ -112,8 +112,9 @@ public class EventStarter : MonoBehaviourPunCallbacks
     private IEnumerator TeleportIn(Transform targetPlayer)
     {
         float timer = 0;
-        Vector3 startPosition = shipPart.transform.position;
-        Vector3 startSize = shipPart.transform.localScale;
+        Vector3 startPosition = shipPart.position;
+        Vector3 startSize = shipPart.localScale;
+        shipPart.gameObject.GetComponent<MeshCollider>().enabled = false;
 
         while (timer < eventTime)
         {
