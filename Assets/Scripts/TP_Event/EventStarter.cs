@@ -31,8 +31,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
 
     public List<ObjectSpawner> eventSpawners;
     private bool eventStarted = false;
-    private Transform player;
-    private Transform otherPlayer;
+    
 
     // Start is called before the first frame update
     private void Start()
@@ -45,8 +44,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
                 eventSpawners.Add(child.GetComponent<ObjectSpawner>());
             }
         }
-        player = GameManager.player.transform;
-        otherPlayer = GameManager.otherPlayer.transform;
+        
     }
 
     [PunRPC]
@@ -69,7 +67,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
                 objectSpawner.TriggerSpawner();
             }
 
-            StartCoroutine(TeleportIn(otherPlayer));
+            StartCoroutine(TeleportIn(GameManager.otherPlayer.transform));
         }
 
     }
@@ -93,7 +91,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
                 objectSpawner.TriggerSpawner();
             }
 
-            StartCoroutine(TeleportIn(player));
+            StartCoroutine(TeleportIn(GameManager.player.transform));
         }
         //timeDisplay.DisplayingTime(false);
         ////light.SetCycleOngoing(false);
