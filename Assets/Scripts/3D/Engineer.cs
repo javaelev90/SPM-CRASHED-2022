@@ -39,7 +39,7 @@ public class Engineer : Controller3D
 
     private  static bool textShown; 
 
-    //public GameObject canvas;
+    public GameObject canvas;
 
     public GameObject uiObject;
 
@@ -96,7 +96,7 @@ public class Engineer : Controller3D
         EventSystem.Instance.FireEvent(stunGunEvent);
         audioSource = GetComponent<AudioSource>();
         uiObject.gameObject.SetActive(false);
-        
+        canvas.SetActive(false);
     }
 
     protected override void Awake()
@@ -181,7 +181,7 @@ public class Engineer : Controller3D
             if (isUsingTurret == false && canPutDownTurret && outlinedTurret != null)
             {
                 //turretPos.position = hit.transform.position;
-              
+                canvas.SetActive(true);
                 Vector3 targetLocation = hit.point;
                 //outlinedTurret.transform.position = targetLocation;
                 //outlinedTurret.transform.position = hit.point;//turretPos.position;
@@ -208,6 +208,7 @@ public class Engineer : Controller3D
                     //Debug.Log("Holding button should show turret outline");
 
                     outlinedTurret = PhotonNetwork.Instantiate("Prefabs/Equipment/" + outlinedTurretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
+                    canvas.SetActive(false);
                     isPressed = true;
                 }
 
@@ -446,13 +447,13 @@ public class Engineer : Controller3D
 
     private void ShowTurret(){
         InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
-        if(inventorySystem.Amount<GreenGoo>() >= 2 && inventorySystem.Amount<Metal>() >= 2 && !textShown && player.gameObject.Equals(GameManager.player)){
-           uiObject.SetActive(true);
+        if(inventorySystem.Amount<GreenGoo>() >= 2 && inventorySystem.Amount<Metal>() >= 2 && !textShown && isMine){
+            uiObject.gameObject.SetActive(true);
             textShown = true;
         }
 
         if(isTryingToPlaceTurret == true){
-            uiObject.SetActive(false);
+            uiObject.gameObject.SetActive(false);
             textShown = true;
         }
     }
