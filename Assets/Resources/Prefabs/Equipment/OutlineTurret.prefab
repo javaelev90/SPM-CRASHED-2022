@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 2484556037354377144}
   - component: {fileID: -7345267210819156253}
   - component: {fileID: -4169134386981590170}
+  - component: {fileID: 3283881686639988905}
   m_Layer: 0
   m_Name: OutlineTurret
   m_TagString: Untagged
@@ -329,6 +330,19 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &3283881686639988905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8025784739738023711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3810064c298761a42b09627ced397d39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 5278445067199702739}
 --- !u!1001 &3607865756755221442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -438,6 +452,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86bdce55fd502ff488195cd0492ba969, type: 3}
+--- !u!1 &5278445067199702739 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8886018883331898641, guid: 86bdce55fd502ff488195cd0492ba969, type: 3}
+  m_PrefabInstance: {fileID: 3607865756755221442}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4640860334725734768 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8247800832430963378, guid: 86bdce55fd502ff488195cd0492ba969, type: 3}
