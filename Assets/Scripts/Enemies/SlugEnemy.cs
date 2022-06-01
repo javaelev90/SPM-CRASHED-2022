@@ -167,7 +167,6 @@ public class SlugEnemy : AIBaseLogic
 
     public void BlowUp(bool canBlowUp)
     {
-
         timeCounterExplosion -= Time.deltaTime;
         animator.SetBool("IsBlowingUp", true);
         if ((canBlowUp || timeCounterExplosion <= 0f) && isBlowingUp == false)
@@ -199,6 +198,8 @@ public class SlugEnemy : AIBaseLogic
             photonView.RPC(nameof(Explode), RpcTarget.All); // reset after debug
             source.PlayOneShot(explode);
             timeCounterExplosion = timeToExplosion;
+            animator.SetBool("IsBlowingUp", false);
+            isBlowingUp = false;
         }
     }
 
