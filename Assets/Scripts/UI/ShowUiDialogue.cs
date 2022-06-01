@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using EventCallbacksSystem;
+using Photon;
 
 public class ShowUiDialogue : MonoBehaviour
 {
@@ -22,7 +23,8 @@ public class ShowUiDialogue : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider player){
-        if(((canSoldierPickup && player.gameObject.GetComponent<SoldierCharacter>())) || ((canEngineerPickup && player.gameObject.GetComponent<Engineer>())))
+        
+        if(player.gameObject.Equals(GameManager.player))
         {
             Debug.Log("kolliderar");
             
@@ -35,6 +37,7 @@ public class ShowUiDialogue : MonoBehaviour
             }
         }
     }
+    
 
     private void OnTriggerExit(Collider player) {
         if(uiObject.activeSelf)

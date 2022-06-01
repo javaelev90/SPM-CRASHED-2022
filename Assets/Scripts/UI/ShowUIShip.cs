@@ -25,7 +25,8 @@ public class ShowUIShip : MonoBehaviour
     }
 
       private void OnTriggerEnter(Collider collider) {
-        if(collider.CompareTag("Player") && ship.hasObtained){
+         
+        if(collider.CompareTag("Player") && ship.hasObtained && collider.gameObject.Equals(GameManager.player)){
               uiObject.SetActive(true);
         }
     }
