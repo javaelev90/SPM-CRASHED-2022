@@ -67,6 +67,12 @@ public class SlugEnemy : AIBaseLogic
                 MoveToWayPoint();
             }
         }
+
+        if (agent.isOnNavMesh == true)
+        {
+            animator.SetBool("IsWalking", (Mathf.Abs(agent.velocity.x) > 0f || Mathf.Abs(agent.velocity.z) > 0f));
+        }
+
     }
 
     private void AggroBasedOnAttack()
@@ -104,7 +110,6 @@ public class SlugEnemy : AIBaseLogic
                 timeCounterAggro = timeToAggro;
             }
         }
-
     }
 
     private void MoveToWayPoint()
@@ -162,11 +167,12 @@ public class SlugEnemy : AIBaseLogic
 
     public void BlowUp(bool canBlowUp)
     {
-
         timeCounterExplosion -= Time.deltaTime;
-        if ((canBlowUp || timeCounterExplosion <= 0f)  && isBlowingUp == false)
+        animator.SetBool("IsBlowingUp", true);
+        if ((canBlowUp || timeCounterExplosion <= 0f) && isBlowingUp == false)
         {
             isBlowingUp = true;
+            Debug.Log("Is Blowing up " + isBlowingUp);
             Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, AttackableTargets);
             if (targets.Length > 0)
             {
@@ -176,7 +182,7 @@ public class SlugEnemy : AIBaseLogic
                     SlugEnemy enemy;
                     if (healthHandler != null)
                     {
-                        enemy = coll.GetComponent<SlugEnemy>();
+                        enemy = coll.GetComponent<SlugEnemy>(); // reset after debug
                         if (enemy && !(enemy.gameObject.GetInstanceID() == gameObject.GetInstanceID()))
                         {
                             enemy.BlowUp(true);
@@ -189,10 +195,10 @@ public class SlugEnemy : AIBaseLogic
                     }
                 }
             }
-            photonView.RPC(nameof(Explode), RpcTarget.All);
-            root.DeSpawn();
+            photonView.RPC(nameof(Explode), RpcTarget.All); // reset after debug
             source.PlayOneShot(explode);
             timeCounterExplosion = timeToExplosion;
+            animator.SetBool("IsBlowingUp", false);
             isBlowingUp = false;
         }
     }
@@ -201,6 +207,7 @@ public class SlugEnemy : AIBaseLogic
     public void BlowUp()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, AttackableTargets);
+        isBlowingUp = true;
         if (targets.Length > 0)
         {
             foreach (Collider coll in targets)
@@ -227,14 +234,8 @@ public class SlugEnemy : AIBaseLogic
         snailEffects = explosion.GetComponent<G_SnailExplosion>();
         snailEffects.snail = gameObject;
         snailEffects.Explode();
+        root.DeSpawn();
     }
-
-    //[PunRPC]
-    //private void ReadyToExplode()
-    //{
-
-    //    snailEffects.ReadyToExplode();
-    //}
 
     private void Rotate()
     {
