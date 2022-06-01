@@ -44,7 +44,11 @@ public class ShipHealth : HealthHandler
     {
         if (isAlive == true)
         {
-            RemoveHealth(amount);
+            if (photonView.IsMine)
+            {
+                RemoveHealth(amount);
+                photonView.RPC(nameof(SetHealthRPC), RpcTarget.Others, CurrentHealth);
+            }
         }
     }
     public override void Die()
