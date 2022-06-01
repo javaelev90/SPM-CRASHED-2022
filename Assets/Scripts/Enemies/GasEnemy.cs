@@ -32,7 +32,15 @@ public class GasEnemy : AIBaseLogic
         timeCounterWaypoint = timeToWayPoint;
         wayPoint = wayPointSystem.GetNewPosition;
         source = GetComponent<AudioSource>();
+    }
 
+    private void OnEnable()
+    {
+        base.OnEnable();
+        if (IsMasterClient)
+        {
+            InvokeRepeating(nameof(PoisonGas), timeToGas, timeToGas);
+        }
     }
 
     // Update is called once per frame
@@ -77,7 +85,7 @@ public class GasEnemy : AIBaseLogic
             animator.SetBool("IsWalking", (Mathf.Abs(agent.velocity.x) > 0f || Mathf.Abs(agent.velocity.z) > 0f));
         }
 
-        if(timeCounterMelee >= 0f && !isAttacking)
+        if(timeCounterMelee > 0f && !isAttacking)
         {
             timeCounterMelee -= Time.deltaTime;
         }
@@ -163,11 +171,6 @@ public class GasEnemy : AIBaseLogic
         {
             source.Play();
 
-            if (distanceToTarget < gasRadius)
-            {
-                PoisonGas();
-            }
-
             if (distanceToTarget < maxMeleeRadius)
             {
                 if (agent.isOnNavMesh)
@@ -207,47 +210,53 @@ public class GasEnemy : AIBaseLogic
     private void DealDamage()
     {
         animator.SetBool("IsHitting", false);
-        if(IsMasterClient && target != null && distanceToTarget < maxMeleeRadius && minMeleeRadius < distanceToTarget)
+        
+
+        if(IsMasterClient)
         {
-            HealthHandler healthHandler = target.GetComponent<HealthHandler>();
-            if (healthHandler != null)
+            Vector3 hitPosition = transform.TransformPoint(Vector3.RotateTowards(new Vector3(0f, 1.6f, maxMeleeRadius / 2), new Vector3(maxMeleeRadius / 2, 1.6f, maxMeleeRadius / 2), 2f, 10f));
+            Collider[] playersHitByMelee = Physics.OverlapSphere(hitPosition, maxMeleeRadius / 2, targetMask);
+
+            foreach (Collider player in playersHitByMelee)
             {
-                healthHandler.TakeDamage(hitDamage);
+                Debug.Log("Player hit");
+                HealthHandler healthHandler = player.gameObject.GetComponent<HealthHandler>();
+                if (healthHandler != null)
+                {
+                    healthHandler.TakeDamage(hitDamage);
+                }
             }
         }
+
         isAttacking = false;
     }
 
     private void PoisonGas()
     {
-        timeCounterGas -= Time.deltaTime;
-        if (timeCounterGas <= 0f)
-        {
-            if (IsMasterClient && target != null)
-            {
-                HealthHandler healthHandler = target.GetComponent<HealthHandler>();
-                if (healthHandler != null)
-                {
-                    healthHandler.TakeDamage(poisonDamage);
-                }
-            }
+        Collider[] playersHitByGas = Physics.OverlapSphere(transform.position, gasRadius, targetMask);
 
-            timeCounterGas = timeToGas;
+        foreach (Collider player in playersHitByGas)
+        {
+            HealthHandler healthHandler = player.gameObject.GetComponent<HealthHandler>();
+            if (healthHandler != null)
+            {
+                healthHandler.TakeDamage(poisonDamage);
+            }
         }
     }
 
     private void OnDrawGizmos()
     {
-        Debug.DrawLine(transform.position, transform.position + transform.forward * 5f, Color.blue);
-        Debug.DrawLine(transform.position, transform.position + directionToTarget * 5f, Color.red);
-        Gizmos.DrawWireSphere(transform.position, viewRadius);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, minMeleeRadius);
-        Gizmos.DrawWireSphere(transform.position, maxMeleeRadius);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, gasRadius);
+        //Debug.DrawLine(transform.position, transform.position + transform.forward * 5f, Color.blue);
+        //Debug.DrawLine(transform.position, transform.position + directionToTarget * 5f, Color.red);
+        //Gizmos.DrawWireSphere(transform.position, viewRadius);
+        //Gizmos.color = Color.green;
+        //Gizmos.DrawWireSphere(transform.position, minMeleeRadius);
+        //Gizmos.DrawWireSphere(transform.position, maxMeleeRadius);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(transform.position, gasRadius);
 
-        Gizmos.DrawSphere(-(directionToTarget * viewRadius - transform.position), 0.1f);
-        Debug.DrawLine(transform.position, -(directionToTarget * viewRadius - transform.position), Color.cyan);
+        //Gizmos.DrawSphere(-(directionToTarget * viewRadius - transform.position), 0.1f);
+        //Debug.DrawLine(transform.position, -(directionToTarget * viewRadius - transform.position), Color.cyan);
     }
 }
