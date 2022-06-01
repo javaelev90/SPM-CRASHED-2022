@@ -41,8 +41,14 @@ public class EnemyHealthHandler : HealthHandler
             //    }
             //}
             if (anim != null)
+            {
                 anim.CrossFade("TakeDamage.EnemyMoreHurt", 0f);
+                anim.SetBool("IsHurt", true);
+            }
         }
+
+        if (anim != null)
+            anim.SetBool("IsHurting", false);
     }
 
     public override void Die()
@@ -51,7 +57,7 @@ public class EnemyHealthHandler : HealthHandler
         {
             DropItem();
         }
-        if(TryGetComponent<SlugEnemy>(out SlugEnemy slugEnemy))
+        if (TryGetComponent<SlugEnemy>(out SlugEnemy slugEnemy))
         {
             slugEnemy.BlowUp();
         }
