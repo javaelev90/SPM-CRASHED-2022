@@ -32,9 +32,17 @@ public class GasEnemy : AIBaseLogic
         timeCounterWaypoint = timeToWayPoint;
         wayPoint = wayPointSystem.GetNewPosition;
         source = GetComponent<AudioSource>();
-
     }
 
+    private void OnEnable()
+    {
+        base.OnEnable();
+        if (IsMasterClient)
+        {
+            InvokeRepeating(nameof(PoisonGas), timeToGas, timeToGas);
+            Debug.Log("I am master");
+        }
+    }
     // Update is called once per frame
     protected override void Update()
     {
@@ -77,7 +85,7 @@ public class GasEnemy : AIBaseLogic
             animator.SetBool("IsWalking", (Mathf.Abs(agent.velocity.x) > 0f || Mathf.Abs(agent.velocity.z) > 0f));
         }
 
-        if(timeCounterMelee >= 0f && !isAttacking)
+        if(timeCounterMelee > 0f && !isAttacking)
         {
             timeCounterMelee -= Time.deltaTime;
         }
@@ -163,11 +171,6 @@ public class GasEnemy : AIBaseLogic
         {
             source.Play();
 
-            if (distanceToTarget < gasRadius)
-            {
-                PoisonGas();
-            }
-
             if (distanceToTarget < maxMeleeRadius)
             {
                 if (agent.isOnNavMesh)
@@ -220,19 +223,18 @@ public class GasEnemy : AIBaseLogic
 
     private void PoisonGas()
     {
-        timeCounterGas -= Time.deltaTime;
-        if (timeCounterGas <= 0f)
-        {
-            if (IsMasterClient && target != null)
-            {
-                HealthHandler healthHandler = target.GetComponent<HealthHandler>();
-                if (healthHandler != null)
-                {
-                    healthHandler.TakeDamage(poisonDamage);
-                }
-            }
+        Debug.Log("Gassing time");
+        Collider[] playersHitByGas = Physics.OverlapSphere(transform.position, gasRadius, targetMask);
 
-            timeCounterGas = timeToGas;
+        foreach (Collider player in playersHitByGas)
+        {
+            Debug.Log("Player found");
+            HealthHandler healthHandler = player.gameObject.GetComponent<HealthHandler>();
+            if (healthHandler != null)
+            {
+                Debug.Log("Player gassed");
+                healthHandler.TakeDamage(poisonDamage);
+            }
         }
     }
 
