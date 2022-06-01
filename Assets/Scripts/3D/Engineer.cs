@@ -422,7 +422,7 @@ public class Engineer : Controller3D
 
     private void ShowTurret(){
         InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
-        if(inventorySystem.Amount<GreenGoo>() >= 2 && inventorySystem.Amount<Metal>() >= 2 && !textShown){
+        if(inventorySystem.Amount<GreenGoo>() >= 2 && inventorySystem.Amount<Metal>() >= 2 && !textShown || player.gameObject.GetComponent<Engineer>()){
             uiObject.SetActive(true);
             textShown = true;
         }
