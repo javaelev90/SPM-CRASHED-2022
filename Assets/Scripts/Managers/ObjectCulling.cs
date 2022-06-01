@@ -34,7 +34,6 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
     private PlayerInfo otherPlayer;
 
     private float updateTimer = 0f;
-    private bool positionChanged = false;
     private bool foundOtherPlayer = false;
     private bool isInitialized = false;
 
@@ -195,7 +194,6 @@ public class ObjectCulling : MonoBehaviourPunCallbacks
                     inActiveObjects.Clear();
                     inActiveObjects.UnionWith(activeObjects);
                     activeObjects.Clear();
-                    positionChanged = false;
                 }
             }
         }

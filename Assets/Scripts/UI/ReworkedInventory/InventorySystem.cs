@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using EventCallbacksSystem;
+using Photon.Pun;
 
-public class InventorySystem : MonoBehaviour
+public class InventorySystem : MonoBehaviourPunCallbacks
 {
     private Dictionary<Type, GameObject> prefabs;
     private Dictionary<Type, int> amounts = new Dictionary<Type, int>();
@@ -30,6 +31,7 @@ public class InventorySystem : MonoBehaviour
             uiEvent.Amounts = amounts;
             uiEvent.type = keyType;
             EventSystem.Instance.FireEvent(uiEvent);
+            SyncInventory();
             return true;
         }
         return false;
@@ -51,6 +53,7 @@ public class InventorySystem : MonoBehaviour
             uiEvent.Amounts = amounts;
             uiEvent.type = keyType;
             EventSystem.Instance.FireEvent(uiEvent);
+            SyncInventory();
             return true;
         }
         return false;
@@ -124,5 +127,18 @@ public class InventorySystem : MonoBehaviour
 
         uiEvent.Amounts = amounts;
         EventSystem.Instance.FireEvent(uiEvent);
+    }
+
+    private void SyncInventory()
+    {
+        photonView.RPC(nameof(SyncInventoryRPC), RpcTarget.Others, amounts[typeof(GreenGoo)], amounts[typeof(Metal)], amounts[typeof(AlienMeat)]);
+    }
+
+    [PunRPC]
+    private void SyncInventoryRPC(int greenGoo, int metal, int alienMeat)
+    {
+        amounts[typeof(GreenGoo)] = greenGoo;
+        amounts[typeof(Metal)] = metal;
+        amounts[typeof(AlienMeat)] = alienMeat;
     }
 }

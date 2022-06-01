@@ -8,7 +8,7 @@ public class DataCollector
 {
     private GameDataHolder gameDataHolder;
 
-    public DataCollector(ref GameDataHolder gameDataHolder)
+    public DataCollector(GameDataHolder gameDataHolder)
     {
         this.gameDataHolder = gameDataHolder;
         EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(CollectGunDamageUpgradeEvent);
@@ -17,16 +17,31 @@ public class DataCollector
         EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(CollectTurretHealthUpgradeEvent);
     }
 
-    public void CollectData()
+    public GameDataHolder CollectData()
     {
-        CollectPlayerData(gameDataHolder.playerData, GameManager.player, GameManager.character);
+        if (GameManager.character == Character.ENGINEER)
+        {
+            CollectPlayerData(gameDataHolder.engineerData, GameManager.player, Character.ENGINEER);
+            if (GameManager.otherPlayer != null) 
+                CollectPlayerData(gameDataHolder.soldierData, GameManager.otherPlayer, Character.SOLDIER);
+        }
+        else
+        {
+            CollectPlayerData(gameDataHolder.soldierData, GameManager.player, Character.SOLDIER);
+            if(GameManager.otherPlayer != null) 
+                CollectPlayerData(gameDataHolder.engineerData, GameManager.otherPlayer, Character.ENGINEER);
+        }
+
         CollectProgressData();
         CollectPickupData();
+
+        return gameDataHolder;
     }
 
     private void CollectPlayerData(PlayerData playerData, GameObject playerObject, Character character)
     {
         playerData.character = character;
+        playerData.position = playerObject.transform.position;
 
         HealthHandler healthHandler = playerObject.GetComponent<HealthHandler>();
         if (healthHandler)
@@ -106,18 +121,30 @@ public class DataCollector
 
     private void CollectGunDamageUpgradeEvent(GunDamageUpgradeEvent upgradeEvent)
     {
-        gameDataHolder.playerData.upgrades.weaponDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
+        if (GameManager.character == Character.SOLDIER)
+            gameDataHolder.soldierData.upgrades.weaponDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
+        else
+            gameDataHolder.engineerData.upgrades.weaponDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
     }
     private void CollectGunFireRateUpgradeEvent(GunFireRateUpgradeEvent upgradeEvent)
     {
-        gameDataHolder.playerData.upgrades.weaponFireRateUpgrades.Add(upgradeEvent.UpgradePercent);
+        if (GameManager.character == Character.SOLDIER)
+            gameDataHolder.soldierData.upgrades.weaponFireRateUpgrades.Add(upgradeEvent.UpgradePercent);
+        else
+            gameDataHolder.engineerData.upgrades.weaponFireRateUpgrades.Add(upgradeEvent.UpgradePercent);
     }
     private void CollectTurretDamageUpgradeEvent(TurretDamageUpgradeEvent upgradeEvent)
     {
-        gameDataHolder.playerData.upgrades.turretDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
+        if (GameManager.character == Character.SOLDIER)
+            gameDataHolder.soldierData.upgrades.turretDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
+        else
+            gameDataHolder.engineerData.upgrades.turretDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
     }
     private void CollectTurretHealthUpgradeEvent(TurretHealthUpgradeEvent upgradeEvent)
     {
-        gameDataHolder.playerData.upgrades.turretHealthUpgrades.Add(upgradeEvent.UpgradeAmount);
+        if (GameManager.character == Character.SOLDIER)
+            gameDataHolder.soldierData.upgrades.turretHealthUpgrades.Add(upgradeEvent.UpgradeAmount);
+        else
+            gameDataHolder.engineerData.upgrades.turretHealthUpgrades.Add(upgradeEvent.UpgradeAmount);
     }
 }
