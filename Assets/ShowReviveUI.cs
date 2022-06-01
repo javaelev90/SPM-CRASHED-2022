@@ -7,7 +7,7 @@ public class ShowReviveUI : MonoBehaviour
 
     public GameObject uiObject;
 
-    InventorySystem inventory;
+     [SerializeField] private InventorySystem  inventory;
 
 
     // Start is called before the first frame update
@@ -22,13 +22,13 @@ public class ShowReviveUI : MonoBehaviour
         
     }
     private void OnTriggerEnter(Collider other) {
-        if(other.CompareTag("Player") && inventory.Amount<ReviveBadge>() > 0){
+        if(other.CompareTag("Player")  && other.gameObject.Equals(GameManager.player) && inventory.Amount<ReviveBadge>() > 0){
             uiObject.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if(other.CompareTag("Player") && inventory.Amount<ReviveBadge>() == 0){
+        if(other.CompareTag("Player") && inventory.Amount<ReviveBadge>() == 0 && other.gameObject.Equals(GameManager.player)){
             uiObject.SetActive(false);
         }
     }
