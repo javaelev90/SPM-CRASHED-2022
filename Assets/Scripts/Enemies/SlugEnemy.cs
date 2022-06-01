@@ -67,6 +67,11 @@ public class SlugEnemy : AIBaseLogic
                 MoveToWayPoint();
             }
         }
+
+        if (agent.isOnNavMesh)
+        {
+            animator.SetBool("IsWalking", (Mathf.Abs(agent.velocity.x) > 0f || Mathf.Abs(agent.velocity.z) > 0f));
+        }
     }
 
     private void AggroBasedOnAttack()
@@ -167,6 +172,7 @@ public class SlugEnemy : AIBaseLogic
         if ((canBlowUp || timeCounterExplosion <= 0f)  && isBlowingUp == false)
         {
             isBlowingUp = true;
+            animator.SetBool("IsBlowingUp", isBlowingUp);
             Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, AttackableTargets);
             if (targets.Length > 0)
             {
