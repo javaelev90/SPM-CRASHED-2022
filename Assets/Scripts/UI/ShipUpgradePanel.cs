@@ -11,9 +11,15 @@ public class ShipUpgradePanel : MonoBehaviour
     [SerializeField] private GameObject CostInfo;
 
     // Start is called before the first frame update
-    void Start()
+
+    private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void OnDisable()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Test Upgrade

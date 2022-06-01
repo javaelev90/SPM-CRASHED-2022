@@ -38,12 +38,19 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
     //private GameStateManager gameStateManager;
 
     private void OnEnable() {
-        Cursor.lockState = CursorLockMode.None;
+        if (pause == null)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+
         //gameStateManager = FindObjectOfType<GameStateManager>();
     }
 
     private void OnDisable() {
-        Cursor.lockState = CursorLockMode.Locked;
+        if (pause == null)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     private void Awake()
@@ -67,10 +74,10 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
                 pausedText.SetActive(false);
             }
 
-            if (MenuIsOpen() == false)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
+            //if (MenuIsOpen() == false)
+            //{
+            //    Cursor.lockState = CursorLockMode.Locked;
+            //}
         }
         
     }
@@ -78,7 +85,15 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
     public void Show(InputAction.CallbackContext ctx){
         if(ctx.performed){
             pause.gameObject.SetActive(!pause.gameObject.activeSelf);
-            Cursor.lockState = CursorLockMode.None;
+
+            if (pause.gameObject.activeSelf)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
             EventSystem.Instance.FireEvent(new LockControlsEvent(pause.gameObject.activeSelf));
         }
     }

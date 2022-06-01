@@ -42,6 +42,12 @@ public class PlayerUpgradePanel : MonoBehaviour
         GameManager.player.GetComponent<PlayerInput>().enabled = false;
     }
 
+    private void OnDisable()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        GameManager.player.GetComponent<PlayerInput>().enabled = true;
+    }
+
     public void HealthUpgrade()
     {
         EventSystem.Instance.FireEvent(new HealthUpgradeEvent(healthUpgradeAmount));
