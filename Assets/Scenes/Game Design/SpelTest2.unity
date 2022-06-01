@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 427306726}
-  m_IndirectSpecularColor: {r: 0.17660514, g: 0.22105262, b: 0.30335948, a: 1}
+  m_IndirectSpecularColor: {r: 0.17660485, g: 0.22105214, b: 0.30335885, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11829,7 +11829,7 @@ PrefabInstance:
     - target: {fileID: 3069849167318490858, guid: 4ab0d128439443746a85f7232d89eb38, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 61de166ac7cfa284b9f52a520daa2b54, type: 2}
+      objectReference: {fileID: 2100000, guid: c30c957be15c4904791569520a8ddb15, type: 2}
     - target: {fileID: 3069849167318490858, guid: 4ab0d128439443746a85f7232d89eb38, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -11837,7 +11837,7 @@ PrefabInstance:
     - target: {fileID: 3069849167318490859, guid: 4ab0d128439443746a85f7232d89eb38, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -7037502782376635450, guid: ca7398e72eecb724f9640ba115888c80, type: 3}
+      objectReference: {fileID: -7037502782376635450, guid: b38a6d6400eca3a46b20ef10064146ef, type: 3}
     - target: {fileID: 3069849167334632780, guid: 4ab0d128439443746a85f7232d89eb38, type: 3}
       propertyPath: pooledObjectPrefab
       value: 
@@ -12306,6 +12306,14 @@ PrefabInstance:
       propertyPath: players
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7014313746899425123, guid: 4ab0d128439443746a85f7232d89eb38, type: 3}
+      propertyPath: missingPart
+      value: 
+      objectReference: {fileID: 1520749309}
+    - target: {fileID: 7014313746899425123, guid: 4ab0d128439443746a85f7232d89eb38, type: 3}
+      propertyPath: attachedPart
+      value: 
+      objectReference: {fileID: 1520749296}
     - target: {fileID: 7423774090254865659, guid: 4ab0d128439443746a85f7232d89eb38, type: 3}
       propertyPath: sceneViewId
       value: 3
@@ -23390,6 +23398,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 3795976770687339512, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
+      propertyPath: missingPart
+      value: 
+      objectReference: {fileID: 1520749311}
+    - target: {fileID: 3795976770687339512, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
+      propertyPath: attachedPart
+      value: 
+      objectReference: {fileID: 1520749295}
     - target: {fileID: 4749693160167829544, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: sceneViewId
       value: 19
@@ -23541,7 +23557,7 @@ PrefabInstance:
     - target: {fileID: 9179345938377622128, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 7454759444067824869, guid: ca7398e72eecb724f9640ba115888c80, type: 3}
+      objectReference: {fileID: 7454759444067824869, guid: b38a6d6400eca3a46b20ef10064146ef, type: 3}
     - target: {fileID: 9179345938377622129, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
@@ -23549,7 +23565,7 @@ PrefabInstance:
     - target: {fileID: 9179345938377622129, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 61de166ac7cfa284b9f52a520daa2b54, type: 2}
+      objectReference: {fileID: 2100000, guid: c30c957be15c4904791569520a8ddb15, type: 2}
     - target: {fileID: 9179345938377622129, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -43657,6 +43673,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3795976770687339512, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
+      propertyPath: missingPart
+      value: 
+      objectReference: {fileID: 1520749312}
+    - target: {fileID: 3795976770687339512, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
+      propertyPath: attachedPart
+      value: 
+      objectReference: {fileID: 1520749294}
     - target: {fileID: 4749693160167829544, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: sceneViewId
       value: 17
@@ -43816,7 +43840,7 @@ PrefabInstance:
     - target: {fileID: 9179345938377622129, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 61de166ac7cfa284b9f52a520daa2b54, type: 2}
+      objectReference: {fileID: 2100000, guid: c30c957be15c4904791569520a8ddb15, type: 2}
     - target: {fileID: 9179345938377622129, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -91470,7 +91494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 594313844871775649, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 692051660995244330, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: m_Layer
@@ -91494,7 +91518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1123828038488394318, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1266666132028859875, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
       propertyPath: healthUpgradeAmount
@@ -91991,6 +92015,11 @@ GameObject:
 --- !u!1 &1520749311 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2782802082379410965, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
+  m_PrefabInstance: {fileID: 1520749291}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1520749312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7220925143707903787, guid: f2b845b26713fc549ba192f53a6c6e39, type: 3}
   m_PrefabInstance: {fileID: 1520749291}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1523530037
@@ -130657,6 +130686,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 3795976770687339512, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
+      propertyPath: missingPart
+      value: 
+      objectReference: {fileID: 1520749300}
+    - target: {fileID: 3795976770687339512, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
+      propertyPath: attachedPart
+      value: 
+      objectReference: {fileID: 1520749293}
     - target: {fileID: 4749693160167829544, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: sceneViewId
       value: 15
@@ -130792,7 +130829,7 @@ PrefabInstance:
     - target: {fileID: 9179345938377622128, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -2178734704976715501, guid: ca7398e72eecb724f9640ba115888c80, type: 3}
+      objectReference: {fileID: -2178734704976715501, guid: b38a6d6400eca3a46b20ef10064146ef, type: 3}
     - target: {fileID: 9179345938377622129, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
@@ -130800,7 +130837,7 @@ PrefabInstance:
     - target: {fileID: 9179345938377622129, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 61de166ac7cfa284b9f52a520daa2b54, type: 2}
+      objectReference: {fileID: 2100000, guid: c30c957be15c4904791569520a8ddb15, type: 2}
     - target: {fileID: 9179345938377622129, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -132163,6 +132200,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3795976770687339512, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
+      propertyPath: missingPart
+      value: 
+      objectReference: {fileID: 1520749310}
+    - target: {fileID: 3795976770687339512, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
+      propertyPath: attachedPart
+      value: 
+      objectReference: {fileID: 1520749299}
     - target: {fileID: 4749693160167829544, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: sceneViewId
       value: 17
@@ -132314,7 +132359,7 @@ PrefabInstance:
     - target: {fileID: 9179345938377622128, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 2320644316537131277, guid: ca7398e72eecb724f9640ba115888c80, type: 3}
+      objectReference: {fileID: 2320644316537131277, guid: b38a6d6400eca3a46b20ef10064146ef, type: 3}
     - target: {fileID: 9179345938377622129, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Materials.Array.size
       value: 2
@@ -132322,7 +132367,7 @@ PrefabInstance:
     - target: {fileID: 9179345938377622129, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 61de166ac7cfa284b9f52a520daa2b54, type: 2}
+      objectReference: {fileID: 2100000, guid: c30c957be15c4904791569520a8ddb15, type: 2}
     - target: {fileID: 9179345938377622129, guid: 352672ac9fc4d9d42a2ecf054b8189fd, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
