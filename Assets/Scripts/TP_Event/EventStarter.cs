@@ -54,18 +54,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
         //light.SetCycleOngoing(false);
         if (eventStarted == false)
         {
-            eventStarted = true;
-            EventEvent eventEvent = new EventEvent(true);
-            eventEvent.EventTime = eventTime;
-            EventSystem.Instance.FireEvent(eventEvent);
-
-            dome.SetActive(true);
-            teleporter.SetActive(true);
-
-            foreach (ObjectSpawner objectSpawner in eventSpawners)
-            {
-                objectSpawner.TriggerSpawner();
-            }
+            InitiatEvent();
 
             StartCoroutine(TeleportIn(GameManager.otherPlayer.transform));
         }
@@ -78,18 +67,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
         {
             photonView.RPC(nameof(StartEventRPC), RpcTarget.Others);
 
-            eventStarted = true;
-            EventEvent eventEvent = new EventEvent(true);
-            eventEvent.EventTime = eventTime;
-            EventSystem.Instance.FireEvent(eventEvent);
-
-            dome.SetActive(true);
-            teleporter.SetActive(true);
-
-            foreach (ObjectSpawner objectSpawner in eventSpawners)
-            {
-                objectSpawner.TriggerSpawner();
-            }
+            InitiatEvent();
 
             StartCoroutine(TeleportIn(GameManager.player.transform));
         }
@@ -105,6 +83,22 @@ public class EventStarter : MonoBehaviourPunCallbacks
         //}
 
         //StartCoroutine(TeleportIn(eventTime));
+    }
+
+    private void InitiatEvent()
+    {
+        eventStarted = true;
+        EventEvent eventEvent = new EventEvent(true);
+        eventEvent.EventTime = eventTime;
+        EventSystem.Instance.FireEvent(eventEvent);
+
+        dome.SetActive(true);
+        teleporter.SetActive(true);
+
+        foreach (ObjectSpawner objectSpawner in eventSpawners)
+        {
+            objectSpawner.TriggerSpawner();
+        }
     }
 
     private IEnumerator TeleportIn(Transform targetPlayer)
