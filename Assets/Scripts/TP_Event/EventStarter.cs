@@ -20,6 +20,8 @@ public class EventStarter : MonoBehaviourPunCallbacks
 
     [Header("Event")]
     public float eventTime = 30f;
+    public Transform shipPart;
+    public float pickUpTime = 2f;
 
     [Header("Ship Part")]
     public GameObject missingPart;
@@ -37,6 +39,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
 
     public List<ObjectSpawner> eventSpawners;
     private bool eventStarted = false;
+    
 
     // Start is called before the first frame update
     private void Start()
@@ -62,7 +65,9 @@ public class EventStarter : MonoBehaviourPunCallbacks
         if (eventStarted == false)
         {
             eventStarted = true;
-            EventSystem.Instance.FireEvent(new EventEvent(true));
+            EventEvent eventEvent = new EventEvent(true);
+            eventEvent.EventTime = eventTime;
+            EventSystem.Instance.FireEvent(eventEvent);
 
             dome.SetActive(true);
             source.Play();
@@ -73,14 +78,32 @@ public class EventStarter : MonoBehaviourPunCallbacks
                 objectSpawner.TriggerSpawner();
             }
 
-            StartCoroutine(TeleportIn(eventTime));
+            StartCoroutine(TeleportIn(GameManager.otherPlayer.transform));
         }
 
     }
     [ContextMenu("Start Event")]
     public void StartEvent()
     {
-        photonView.RPC(nameof(StartEventRPC), RpcTarget.All);
+        if (eventStarted == false)
+        {
+            photonView.RPC(nameof(StartEventRPC), RpcTarget.Others);
+
+            eventStarted = true;
+            EventEvent eventEvent = new EventEvent(true);
+            eventEvent.EventTime = eventTime;
+            EventSystem.Instance.FireEvent(eventEvent);
+
+            dome.SetActive(true);
+            teleporter.SetActive(true);
+
+            foreach (ObjectSpawner objectSpawner in eventSpawners)
+            {
+                objectSpawner.TriggerSpawner();
+            }
+
+            StartCoroutine(TeleportIn(GameManager.player.transform));
+        }
         //timeDisplay.DisplayingTime(false);
         ////light.SetCycleOngoing(false);
         //EventSystem.Instance.FireEvent(new EventEvent(true));
@@ -95,14 +118,25 @@ public class EventStarter : MonoBehaviourPunCallbacks
         //StartCoroutine(TeleportIn(eventTime));
     }
 
-    private IEnumerator TeleportIn(float eventTime)
+    private IEnumerator TeleportIn(Transform targetPlayer)
     {
         float timer = 0;
+        Vector3 startPosition = shipPart.position;
+        Vector3 startSize = shipPart.localScale;
+        shipPart.gameObject.GetComponent<MeshCollider>().enabled = false;
 
         while (timer < eventTime)
         {
             timer += Time.deltaTime;
             emissionFill.SetFloat("EmissionFill", timer / eventTime);
+            if (timer < pickUpTime)
+            {
+                shipPart.position = Vector3.Lerp(startPosition, targetPlayer.position + Vector3.up * 1.2f, timer / pickUpTime);
+                shipPart.localScale = Vector3.Lerp(startSize, Vector3.zero, timer / pickUpTime);
+            }else if(shipPart != null)
+            {
+                Destroy(shipPart.gameObject);
+            }
             yield return null;
         }
         ActivatTeleport();

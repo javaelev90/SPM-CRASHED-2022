@@ -16,9 +16,14 @@ public class SaveAndLoadHelper
         }
     }
 
+    public static bool SaveFileExists()
+    {
+        return File.Exists(Application.persistentDataPath + $"/{SaveFileName}.json");
+    }
+
     public static void SaveData(GameDataHolder gameDataHolder)
     {
-        string gameDataJSON = JsonUtility.ToJson(gameDataHolder);
+        string gameDataJSON = SerializeObjectToJson<GameDataHolder>(gameDataHolder);
         File.WriteAllText(Application.persistentDataPath + $"/{SaveFileName}.json", gameDataJSON);
     }
 
@@ -26,6 +31,16 @@ public class SaveAndLoadHelper
     {
         string gameDataJSON = File.ReadAllText(Application.persistentDataPath + $"/{SaveFileName}.json");
         return JsonUtility.FromJson<GameDataHolder>(gameDataJSON);
+    }
+
+    public static T LoadData<T>(string savedDataJSON)
+    {
+        return JsonUtility.FromJson<T>(savedDataJSON);
+    }
+
+    public static string SerializeObjectToJson<T>(T data)
+    {
+        return JsonUtility.ToJson(data);
     }
 
 }

@@ -10,11 +10,12 @@ public class PlayerData
     public Inventory inventory;
     public Upgrades upgrades;
     public List<TurretData> turrets;
-    public float currentHealth;
-    public float maxHealth;
-    public float ammo;
+    public int currentHealth;
+    public int maxHealth;
+    public int ammo;
+    public Vector3 position;
 
-    public PlayerData()
+    public void Initialize()
     {
         inventory = new Inventory();
         upgrades = new Upgrades();
@@ -32,8 +33,8 @@ public class PlayerData
     [System.Serializable]
     public class TurretData
     {
-        public float currentHealth;
-        public float maxHealth;
+        public int currentHealth;
+        public int maxHealth;
         public Vector3 position;
     }
 
@@ -45,7 +46,7 @@ public class PlayerData
         public List<int> weaponDamageUpgrades;
         public List<float> weaponFireRateUpgrades;
 
-        public Upgrades()
+        public void Initialize()
         {
             turretDamageUpgrades = new List<int>();
             turretHealthUpgrades = new List<int>();

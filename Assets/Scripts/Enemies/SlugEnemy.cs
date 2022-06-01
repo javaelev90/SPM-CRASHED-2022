@@ -29,8 +29,6 @@ public class SlugEnemy : AIBaseLogic
     // Start is called before the first frame update
     void Start()
     {
-        minBlowUpRadius = viewRadius / 4f;
-        maxBlowUpRadius = viewRadius / 1.5f;
         wayPoint = wayPointSystem.GetNewPosition;
         timeCounterExplosion = timeToExplosion;
         source = GetComponent<AudioSource>();
@@ -144,7 +142,7 @@ public class SlugEnemy : AIBaseLogic
     private void Move()
     {
 
-        if (distanceToTarget <= maxBlowUpRadius && minBlowUpRadius < distanceToTarget)
+        if (distanceToTarget < maxBlowUpRadius)
         {
             if (agent.isOnNavMesh) agent.isStopped = true;
             BlowUp(false);
@@ -155,7 +153,7 @@ public class SlugEnemy : AIBaseLogic
             source.Play();
         }
 
-        if (agent.isOnNavMesh && target != null)
+        if (agent.isOnNavMesh && target != null && isBlowingUp == false)
         {
             agent.destination = target.position;
             Rotate();
@@ -195,6 +193,7 @@ public class SlugEnemy : AIBaseLogic
             root.DeSpawn();
             source.PlayOneShot(explode);
             timeCounterExplosion = timeToExplosion;
+            isBlowingUp = false;
         }
     }
 
