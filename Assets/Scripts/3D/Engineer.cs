@@ -39,7 +39,7 @@ public class Engineer : Controller3D
 
     private  static bool textShown; 
 
-    public GameObject uiObject;
+    public Animator uiObject;
 
     [Header("TurretRepair")]
     public TurretCost turretRepairCosts;
@@ -93,7 +93,7 @@ public class Engineer : Controller3D
         stunGunEvent = new StungunCoolDownEvent(delayBetweenShots);
         EventSystem.Instance.FireEvent(stunGunEvent);
         audioSource = GetComponent<AudioSource>();
-        uiObject.SetActive(false);
+        uiObject.gameObject.SetActive(false);
     }
 
     protected override void Awake()
@@ -422,13 +422,13 @@ public class Engineer : Controller3D
 
     private void ShowTurret(){
         InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
-        if(inventorySystem.Amount<GreenGoo>() >= 2 && inventorySystem.Amount<Metal>() >= 2 && !textShown || player.gameObject.GetComponent<Engineer>()){
-            uiObject.SetActive(true);
+        if(inventorySystem.Amount<GreenGoo>() >= 2 && inventorySystem.Amount<Metal>() >= 2 && !textShown){
+           uiObject.gameObject.SetActive(true);
             textShown = true;
         }
 
         if(isTryingToPlaceTurret == true){
-            uiObject.SetActive(false);
+            uiObject.gameObject.SetActive(false);
             textShown = true;
         }
 
