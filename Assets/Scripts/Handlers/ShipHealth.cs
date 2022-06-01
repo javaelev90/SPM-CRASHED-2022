@@ -44,10 +44,7 @@ public class ShipHealth : HealthHandler
     {
         if (isAlive == true)
         {
-            if (photonView.IsMine)
-            {
-                RemoveHealth(amount);
-            }
+            RemoveHealth(amount);
         }
     }
     public override void Die()
