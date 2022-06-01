@@ -656,8 +656,8 @@ MonoBehaviour:
   timeToCoolWhenAttacked: 5
   timeStunned: 3
   animator: {fileID: 8377518181085013677}
-  minBlowUpRadius: 5
-  maxBlowUpRadius: 10
+  minBlowUpRadius: 4
+  maxBlowUpRadius: 7
   rotationSpeed: 4
   timeToWayPoint: 4
   timeToExplosion: 2
@@ -899,7 +899,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!95 &8377518181085013677
 Animator:
@@ -945,9 +945,9 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: IsHurt
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 0
-  - SynchronizeType: 0
+  - SynchronizeType: 1
     LayerIndex: 1
 --- !u!1 &8377518181663353856
 GameObject:
