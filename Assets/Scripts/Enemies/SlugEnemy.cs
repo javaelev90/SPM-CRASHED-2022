@@ -200,6 +200,7 @@ public class SlugEnemy : AIBaseLogic
             timeCounterExplosion = timeToExplosion;
             animator.SetBool("IsBlowingUp", false);
             isBlowingUp = false;
+            root.DeSpawn();
         }
     }
 
@@ -234,7 +235,7 @@ public class SlugEnemy : AIBaseLogic
         snailEffects = explosion.GetComponent<G_SnailExplosion>();
         snailEffects.snail = gameObject;
         snailEffects.Explode();
-        root.DeSpawn();
+
     }
 
     private void Rotate()
