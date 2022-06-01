@@ -26,8 +26,12 @@ public class EventStarter : MonoBehaviourPunCallbacks
     public GameObject attachedPart;
 
     public AudioSource source;
+
+    public AudioSource audioSource;
   
     public AudioClip triggerSound;
+
+    public AudioClip teleporterSound;
     
 
 
@@ -46,6 +50,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
             }
         }
         source = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         
     }
 
@@ -109,6 +114,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
     {
         swirl.Play();
         beam.Play();
+        audioSource.PlayOneShot(teleporterSound);
         if (PhotonNetwork.IsMasterClient)
         {
             teleportTimeDone = true;

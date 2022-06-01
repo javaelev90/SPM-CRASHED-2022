@@ -19,6 +19,8 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [SerializeField] public AudioClip Metal;
     [SerializeField] public AudioClip Meat;
 
+    [SerializeField] public AudioClip ReviveSound;
+
 
     [SerializeField] private InventorySystem inventorySystem;
     [SerializeField] private Transform dropTransform;
@@ -108,6 +110,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 inventorySystem.Add<ReviveBadge>();
                 otherPlayer = pickUpComponent.getPlayerToRevive();
                 pickUpPhotonView.RPC(nameof(pickUpComponent.ObjectDestroy), RpcTarget.All);
+                source.PlayOneShot(ReviveSound);
             }
         }
         else if (PickUpHitCheck(spaceShipLayer))
