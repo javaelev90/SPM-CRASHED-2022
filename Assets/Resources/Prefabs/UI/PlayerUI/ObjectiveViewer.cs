@@ -10,12 +10,14 @@ public class ObjectiveViewer : MonoBehaviour
     [SerializeField] private RectTransform hideObjectivePosition;
     [SerializeField] private RectTransform objectivePanel;
     [SerializeField] private GameObject shipObjective;
-    [SerializeField] private GameObject dayObjective;
-    [SerializeField] private GameObject nightObjective;
+    [SerializeField] private TMP_Text objective;
     [SerializeField] private float smoothTime;
     [SerializeField] private TMP_Text upgradedPartsText;
     [SerializeField] private TMP_Text totalNumberText;
     [SerializeField] private Timer timer;
+    [SerializeField] private GameObject objectiveUpdatedEffect;
+    [SerializeField] private RectTransform effectTransform;
+
 
     public bool IsDisplayingPanel { get; set; }
 
@@ -47,18 +49,32 @@ public class ObjectiveViewer : MonoBehaviour
 
     public void UpdateObjectiveText(ObjectiveUpdateEvent ev)
     {
-        if (ev.IsNight == true)
+        if (ev.IsShipPartEvent == false)
         {
-            dayObjective.SetActive(false);
-            nightObjective.SetActive(true);
-            shipObjective.SetActive(false);
-        }
+            if (ev.IsNight == true)
+            {
+                objective.text = "Defend the ship during the night!";
+                shipObjective.SetActive(false);
+            }
 
-        if (ev.IsNight == false)
+            if (ev.IsNight == false)
+            {
+                objective.text = "Explore and find ship parts!";
+                shipObjective.SetActive(true);
+            }
+        }
+        else
         {
-            dayObjective.SetActive(true);
-            nightObjective.SetActive(false);
+            objective.text = ev.ObjectiveDescription;
             shipObjective.SetActive(true);
+        }
+        
+        if (effectTransform != null)
+        {
+            var vfx = Instantiate(objectiveUpdatedEffect, effectTransform.position, Quaternion.identity) as GameObject;
+            vfx.transform.SetParent(effectTransform);
+            var ps = vfx.GetComponent<ParticleDestroyer>();
+            Destroy(vfx, ps.DestroyDelay);
         }
     }
 
@@ -72,5 +88,5 @@ public class ObjectiveViewer : MonoBehaviour
         upgradedPartsText.text = completed.ToString();
         totalNumberText.text = total.ToString();
     }
-     
+
 }

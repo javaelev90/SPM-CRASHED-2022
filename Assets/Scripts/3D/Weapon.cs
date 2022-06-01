@@ -34,6 +34,8 @@ public class Weapon : MonoBehaviourPunCallbacks
     [SerializeField] private InventorySystem inventory;
     [SerializeField] private int greenGooCost = 1;
 
+    private bool initialized = false;
+
     void Update()
     {
         Cooldown();
@@ -44,15 +46,24 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        sourceOne = GetComponent<AudioSource>();
-        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
-        EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage); // behövs två rader av samma?
-        sourceOne.volume = Random.Range(1.8f, 2.5f);
-        sourceOne.pitch = Random.Range(0.8f, 1.2f);
+        Initialize();
+    }
 
-        currentAmmo = maxAmmo;
-        ammunitionUpdateEvent = new WeaponAmmunitionUpdateEvent(currentAmmo, maxAmmo);
-        EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
+    private void Initialize()
+    {
+        if(initialized == false)
+        {
+            sourceOne = GetComponent<AudioSource>();
+            EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage);
+            EventSystem.Instance.RegisterListener<GunDamageUpgradeEvent>(UpgradeDamage); // behövs två rader av samma?
+            sourceOne.volume = Random.Range(1.8f, 2.5f);
+            sourceOne.pitch = Random.Range(0.8f, 1.2f);
+
+            currentAmmo = maxAmmo;
+            ammunitionUpdateEvent = new WeaponAmmunitionUpdateEvent(currentAmmo, maxAmmo);
+            EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
+            initialized = true;
+        }
     }
 
     private void Cooldown()
@@ -76,8 +87,7 @@ public class Weapon : MonoBehaviourPunCallbacks
             animator.CrossFadeInFixedTime("Shooting", 0.1f);
 
             currentAmmo--;
-            ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
-            EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
+            SetAmmo(currentAmmo);
 
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward,
                 out RaycastHit hitInfo, weaponRange, layersThatShouldBeHit))
@@ -107,16 +117,21 @@ public class Weapon : MonoBehaviourPunCallbacks
             {
                 currentAmmo = maxAmmo;
                 inventory.Remove<GreenGoo>();
-                ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
-                EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
+                SetAmmo(currentAmmo);
             }
             else if (currentAmmo == 0 && inventory.Amount<GreenGoo>() == 0)
             {
-                ammunitionUpdateEvent.AmmunitionAmount = currentAmmo;
-                EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
+                SetAmmo(currentAmmo);
             }
         }
 
+    }
+
+    public void SetAmmo(int ammo)
+    {
+        Initialize();
+        ammunitionUpdateEvent.AmmunitionAmount = ammo;
+        EventSystem.Instance.FireEvent(ammunitionUpdateEvent);
     }
 
     private void PlayShotEffects()

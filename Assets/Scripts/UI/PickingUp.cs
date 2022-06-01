@@ -116,7 +116,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
         }
         else if (PickUpHitCheck(shipPartLayer))
         {
-            pickup.transform.gameObject.GetComponent<EventStarter>().StartEvent();
+            pickup.transform.gameObject.GetComponent<Pickup_ShipPart>().PickUpPart();
         }
     }
 

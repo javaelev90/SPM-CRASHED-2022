@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
+using EventCallbacksSystem;
 
 [RequireComponent(typeof(PhotonView))]
 public class GameManager : MonoBehaviourPunCallbacks
@@ -15,20 +16,29 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] public ObjectCulling objectCulling;
     public static GameObject player;
     public static GameObject otherPlayer;
+    public static bool gameIsPaused = false;
 
     public static Character character;
+    public static GameManager Instance { get { return instance; } }
+    private static GameManager instance;
 
+    //public static GameStateManager gameStateManager;
     public GameObject loadScene;
 
     private bool IsMine { get { return photonView.IsMine; } }
     private bool gameIsOver = false;
+   
+    private bool loadSaveFile = false;
     
     private void Awake()
     {
+        instance = this;
+        //gameStateManager = GetComponent<GameStateManager>();
         character = (Character)PlayerPrefs.GetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName);
-        Initialize();
         Debug.Log($"Oh no, you chose the {character} charater");
-        StartCoroutine(FindOtherPlayer(character));
+        loadSaveFile = true;
+        Initialize();
+
         Destroy(loadScene, 10);
     }
 
@@ -55,10 +65,18 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             yield return new WaitForSeconds(0.2f);
         }
+        
+        //if (PhotonNetwork.IsMasterClient && gameStateManager.SaveExists() && loadSaveFile)
+        //{
+        //    gameStateManager.SyncOtherPlayerData(character == Character.SOLDIER ? Character.ENGINEER : Character.SOLDIER);
+        //}
     }
 
     private void Initialize()
     {
+        StartCoroutine(FindOtherPlayer(character));
+        //gameStateManager.Initialize();
+
         if (PhotonNetwork.IsMasterClient)
         {
             objectInstantiater.InitializeWorld();
@@ -73,10 +91,27 @@ public class GameManager : MonoBehaviourPunCallbacks
             player = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
 
+        //if (PhotonNetwork.IsMasterClient && gameStateManager.SaveExists() && loadSaveFile)
+        //{
+        //    gameStateManager.LoadPlayerData(ref player, character);
+        //}
+
         if (PhotonNetwork.IsMasterClient)
         {
             objectCulling.Initialize(player, character);
         }
+        PhotonNetwork.MinimalTimeScaleToDispatchInFixedUpdate = 0;
+    }
 
+    public void PauseGame(bool paused)
+    {
+        photonView.RPC(nameof(PauseGameRPC), RpcTarget.All, paused);
+    }
+
+    [PunRPC]
+    public void PauseGameRPC(bool paused)
+    {
+        gameIsPaused = paused;
+        Time.timeScale = paused ? 0f : 1f;
     }
 }

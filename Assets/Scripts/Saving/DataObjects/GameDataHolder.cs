@@ -5,16 +5,18 @@ using UnityEngine;
 [System.Serializable]
 public class GameDataHolder
 {
-    public PlayerData playerData;
-    public PlayerData otherPlayerData;
+    public PlayerData soldierData;
+    public PlayerData engineerData;
     public ProgressData progressData;
     public PickupData pickupData;
 
-    public GameDataHolder()
+    public void Initialize()
     {
         progressData = new ProgressData();
-        playerData = new PlayerData();
-        otherPlayerData = new PlayerData();
+        soldierData = new PlayerData();
+        soldierData.Initialize();
+        engineerData = new PlayerData();
+        engineerData.Initialize();
         pickupData = new PickupData();
     }
 }
