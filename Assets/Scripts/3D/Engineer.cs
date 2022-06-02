@@ -37,6 +37,12 @@ public class Engineer : Controller3D
     List<GameObject> objects = new List<GameObject>();
     private bool isTryingToPlaceTurret;
 
+    private  static bool textShown; 
+
+    public GameObject canvas;
+
+    public GameObject uiObject;
+
     [Header("TurretRepair")]
     public TurretCost turretRepairCosts;
     [SerializeField] private int healthToAdd = 10;
@@ -74,6 +80,7 @@ public class Engineer : Controller3D
     [SerializeField] private ParticleActivator shootingEffect;
     [SerializeField] GameObject hitPosition;
     [SerializeField] private AudioClip stunSound;
+    [SerializeField] private AudioClip placeTurret;
     private StungunCoolDownEvent stunGunEvent;
     private AudioSource audioSource;
 
@@ -88,11 +95,14 @@ public class Engineer : Controller3D
         stunGunEvent = new StungunCoolDownEvent(delayBetweenShots);
         EventSystem.Instance.FireEvent(stunGunEvent);
         audioSource = GetComponent<AudioSource>();
+        uiObject.gameObject.SetActive(false);
+        canvas.SetActive(false);
     }
 
     protected override void Awake()
     {
         base.Awake();
+        textShown = false;
     }
 
     // Update is called once per frame
@@ -112,6 +122,8 @@ public class Engineer : Controller3D
         {
             transform.position = usePositionPos.transform.position;
         }
+        ShowTurret();
+        
         //TurretHandling();
         //Debug.Log(targetTime);
     }
@@ -169,6 +181,7 @@ public class Engineer : Controller3D
             if (isUsingTurret == false && canPutDownTurret && outlinedTurret != null)
             {
                 //turretPos.position = hit.transform.position;
+                canvas.SetActive(true);
                 Vector3 targetLocation = hit.point;
                 //outlinedTurret.transform.position = targetLocation;
                 //outlinedTurret.transform.position = hit.point;//turretPos.position;
@@ -195,7 +208,7 @@ public class Engineer : Controller3D
                     //Debug.Log("Holding button should show turret outline");
 
                     outlinedTurret = PhotonNetwork.Instantiate("Prefabs/Equipment/" + outlinedTurretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
-
+                    canvas.SetActive(false);
                     isPressed = true;
                 }
 
@@ -242,6 +255,8 @@ public class Engineer : Controller3D
 
                         // Is no longer trying to place a turret
                         isTryingToPlaceTurret = false;
+
+                        audioSource.PlayOneShot(placeTurret);
                     }
 
                 }
@@ -428,5 +443,18 @@ public class Engineer : Controller3D
     {
         Gizmos.DrawWireSphere(transform.position, checkRadius);
         //Gizmos.DrawRay(transform.position, hit.transform.position);
+    }
+
+    private void ShowTurret(){
+        InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
+        if(inventorySystem.Amount<GreenGoo>() >= 2 && inventorySystem.Amount<Metal>() >= 2 && !textShown && isMine){
+            uiObject.gameObject.SetActive(true);
+            textShown = true;
+        }
+
+        if(isTryingToPlaceTurret == true){
+            uiObject.gameObject.SetActive(false);
+            textShown = true;
+        }
     }
 }

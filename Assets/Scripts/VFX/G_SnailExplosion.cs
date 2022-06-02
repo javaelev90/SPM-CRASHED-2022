@@ -11,16 +11,26 @@ public class G_SnailExplosion : MonoBehaviour
 
     public float timeTillExplode = 10f;
 
+   public AudioSource source;
+    public AudioClip explode;
+
     public void Explode()
     {
-        var vfx = Instantiate(explosionEffect, snail.transform.position, Quaternion.identity) as GameObject;
+        var vfx = Instantiate(explosionEffect, snail.transform.position, Quaternion.identity) as GameObject; 
+        source.PlayOneShot(explode);
         //vfx.transform.SetParent(this.transform); //   vfx.transform.SetParent(snail.transform);
         //var ps = vfx.GetComponent<ParticleSystem>();
         Destroy(vfx.gameObject, 10f);// ps.main.duration + ps.main.startLifetime.constantMax);
         Destroy(this.gameObject, 20f);// ps.main.duration + ps.main.startLifetime.constantMax);
+       
         //Instantiate(explosionEffect, this.transform.position, this.transform.rotation);
         SpawnDecal();
         //Destroy(this.gameObject);
+    }
+
+     private void Start()
+    {
+        source = GetComponent<AudioSource>();
     }
 
    

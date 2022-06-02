@@ -26,6 +26,14 @@ public class EventStarter : MonoBehaviourPunCallbacks
     [Header("Ship Part")]
     public GameObject missingPart;
     public GameObject attachedPart;
+
+    public AudioSource source;
+
+    public AudioSource audioSource;
+  
+    public AudioClip triggerSound;
+
+    public AudioClip teleporterSound;
     
 
 
@@ -44,6 +52,8 @@ public class EventStarter : MonoBehaviourPunCallbacks
                 eventSpawners.Add(child.GetComponent<ObjectSpawner>());
             }
         }
+        source = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         
     }
 
@@ -93,6 +103,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
         EventSystem.Instance.FireEvent(eventEvent);
 
         dome.SetActive(true);
+         source.Play();
         teleporter.SetActive(true);
 
         foreach (ObjectSpawner objectSpawner in eventSpawners)
@@ -131,6 +142,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
     {
         swirl.Play();
         beam.Play();
+        audioSource.PlayOneShot(teleporterSound);
         if (PhotonNetwork.IsMasterClient)
         {
             teleportTimeDone = true;

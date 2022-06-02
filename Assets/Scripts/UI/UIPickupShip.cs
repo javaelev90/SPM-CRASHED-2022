@@ -5,7 +5,7 @@ using UnityEngine;
 public class UIPickupShip : MonoBehaviour
 {
   
-   [SerializeField] DialoguePickups dialogs;
+   [SerializeField] Dialogue[]  dialogs;
 
      private static bool done = true;
     
@@ -13,23 +13,27 @@ public class UIPickupShip : MonoBehaviour
     // Start is called before the first frame update
 
     void OnTriggerEnter(Collider player){
-         if(done && player.gameObject.GetComponent<Engineer>())
-        {  
-        done = false; 
-    
-           
-                dialogs.beginDialogue();
-           
-        
-        }
+      Debug.Log("hejsan");
+      if(done &&  player.CompareTag("Player"))
+      {  
+          done = false; 
+          foreach (Dialogue dialogue in dialogs)
+          {
+            dialogue.beginDialogue();
+            Debug.Log("skriver ut");
+          }
+      }
     }
 
      void OnTriggerExit(Collider player)
     {
         if (player.CompareTag("Player"))
         {
-          StopCoroutine(dialogs.type);
-          dialogs.gameObject.SetActive(false);
+          //StopCoroutine(dialogs.type);
+           foreach (var d in dialogs)
+                {
+                    d.gameObject.SetActive(false);
+                }
         }
     }
 }

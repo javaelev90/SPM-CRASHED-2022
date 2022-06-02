@@ -25,6 +25,12 @@ public class Ship : MonoBehaviourPunCallbacks
     private InventorySystem inventory;
     private ShipUpgradeProgressionEvent progressionEvent;
 
+    public CapsuleCollider caps;
+
+    public bool hasObtained; 
+
+    public GameObject uiObject;
+
     [Serializable]
     public class ShipUpgradeCost
     {
@@ -44,6 +50,8 @@ public class Ship : MonoBehaviourPunCallbacks
         progressionEvent = new ShipUpgradeProgressionEvent(nextUpgrade, shipUpgradeCost.Count);
         source = GetComponent<AudioSource>();
         EventSystem.Instance.FireEvent(progressionEvent);
+        caps = GetComponent<CapsuleCollider>();
+        uiObject.SetActive(false);
     }
 
     public void newPartObtained(AttachPartEvent attachPartEvent)
@@ -55,10 +63,24 @@ public class Ship : MonoBehaviourPunCallbacks
                 shipUpgradeCost.partAvalibul = true;
                 shipUpgradeCost.partMissing = attachPartEvent.MissingPart;
                 shipUpgradeCost.partAttached = attachPartEvent.AttachedPart;
+                hasObtained = true;
+                uiObject.SetActive(true);
                 break;
             }
         }
         EventSystem.Instance.FireEvent(new ShipPartEvent(minTimeUntilDaw));
+    }
+
+    private void OnTriggerEnter(Collider collider) {
+        if(collider.CompareTag("Player") && hasObtained && caps.isTrigger){
+              uiObject.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if(other.CompareTag("Player") && UppgradeShip() && caps.isTrigger){
+            uiObject.SetActive(false);
+        }
     }
 
     public bool UppgradeShip()
@@ -66,7 +88,8 @@ public class Ship : MonoBehaviourPunCallbacks
         if (TakeResources())
         {
             photonView.RPC(nameof(UpgradeShipRPC), RpcTarget.All);
-            
+            hasObtained = false;
+            uiObject.SetActive(false);
             return true;
         }
         return false;
@@ -103,7 +126,7 @@ public class Ship : MonoBehaviourPunCallbacks
         if (!UppgradeShip())
         {
             shipUpgradePanel.ToggleErrorMessage(true);
-            shipUpgradePanel.SetErrorMessage("Something fucked up!");
+            shipUpgradePanel.SetErrorMessage("Not enough resources!");
         }
     }
 
@@ -131,7 +154,7 @@ public class Ship : MonoBehaviourPunCallbacks
             else
             {
                 shipUpgradeButton.interactable = true;
-                shipUpgradePanel.SetCostInfo($"Do you want to upgrade? \n Metal: {shipUpgradeCost[nextUpgrade].metalCost} \n Green Goo: {shipUpgradeCost[nextUpgrade].gooCost}");
+                shipUpgradePanel.SetCostInfo($"Do you want to repair the ship? \n Metal: {shipUpgradeCost[nextUpgrade].metalCost} \n Green Goo: {shipUpgradeCost[nextUpgrade].gooCost}");
             }
             shipUpgradePanel.ToggleErrorMessage(false);
             Cursor.lockState = CursorLockMode.None;
@@ -145,9 +168,10 @@ public class Ship : MonoBehaviourPunCallbacks
         OpenShipUpgradePanel();
     }
 
-    private void OpenPlayerUpgradePanel()
+    public void OpenPlayerUpgradePanel()
     {
         //photonView.RPC(nameof(OpenUpgradePanelRPC), RpcTarget.All);
+        shipUpgradePanel.gameObject.SetActive(false);
         playerUpgradePanal.SetActive(true);
     }
     //[PunRPC]

@@ -15,31 +15,59 @@ public class Dialogue : MonoBehaviour
     public bool isFirst;
     private bool isDone;
     private bool isTyping;
+
+    public bool startOfGame = true;
     // Start is called before the first frame update
     void Start()
     {
+
+        
       // EventSystem.Instance.RegisterListener<EventEvent>();
-        if (isFirst)
+        if (isFirst && startOfGame)
         {
+            textComponent.text = string.Empty;
+            startOfGame = false;
+            //beginDialogue();
+            StartCoroutine(StartOfGame());
+        }
+        else if(isFirst && !startOfGame){
             textComponent.text = string.Empty;
             beginDialogue();
         }
     }
 
     // Update is called once per frame
-    
-  void Update()
-    {
-        
-           // if(isTyping){  
-             //   isDone = true;
-            //}
+
+    private IEnumerator StartOfGame(){
+  
+
+            yield return new WaitForSeconds(10);
+            beginDialogue();
         
     }
-    void beginDialogue()
+    
+       void OnTriggerEnter(Collider player)
+    {
+        Debug.Log("hej");
+        if (player.CompareTag("Player") && isFirst)
+        {
+            textComponent.text = string.Empty;
+            beginDialogue();
+        }
+    }
+
+    void OnTriggerExit(Collider player)
+    {
+        if (player.CompareTag("Player"))
+        {
+           textComponent.enabled = false;
+        }
+    }
+   public void beginDialogue()
     {
         index = 0;
         StartCoroutine(Type());
+        
     }
 
     IEnumerator Type()
