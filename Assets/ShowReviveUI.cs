@@ -28,6 +28,7 @@ public class ShowReviveUI : MonoBehaviour
             if (inventory.Amount<ReviveBadge>() > 0)
             {
                 uiObject.SetActive(true);
+                Debug.Log("jag är död");
             }
             
         }
