@@ -126,14 +126,14 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
         // Set transform parameters
         if (pooledObject.navMeshAgent != null)
         {
-            //SpawnOnNavMesh(position, pooledObject.navMeshAgent);
-            pooledObject.photonView.RPC(nameof(pooledObject.SpawnOnNavMesh), RpcTarget.All, position);
+            SpawnOnNavMesh(position, pooledObject.navMeshAgent);
+            //pooledObject.photonView.RPC(nameof(pooledObject.SpawnOnNavMesh), RpcTarget.All, position);
         }
 
         // Set initialization parameters
         pooledObject.ObjectPool = this;
-        pooledObject.photonView.RPC(nameof(pooledObject.SetTargetViewId), RpcTarget.All, photonViewTargetId);
-        //pooledObject.photonViewTargetId = photonViewTargetId;
+        //pooledObject.photonView.RPC(nameof(pooledObject.SetTargetViewId), RpcTarget.All, photonViewTargetId);
+        pooledObject.photonViewTargetId = photonViewTargetId;
 
         if (parameters != null)
         {
