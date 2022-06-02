@@ -71,7 +71,7 @@ public class Ship : MonoBehaviourPunCallbacks
         EventSystem.Instance.FireEvent(new ShipPartEvent(minTimeUntilDaw));
     }
 
-   private void OnTriggerEnter(Collider collider) {
+ /*  private void OnTriggerEnter(Collider collider) {
       
         if(player.gameObject.Equals(GameManager.player) && hasObtained){
               uiObject.SetActive(true);
@@ -83,7 +83,7 @@ public class Ship : MonoBehaviourPunCallbacks
         if(player.gameObject.Equals(GameManager.player) && UppgradeShip()){
             uiObject.SetActive(false);
         }
-    }
+    }*/
 
     public bool UppgradeShip()
     {
@@ -91,7 +91,7 @@ public class Ship : MonoBehaviourPunCallbacks
         {
             photonView.RPC(nameof(UpgradeShipRPC), RpcTarget.All);
             hasObtained = false;
-            uiObject.SetActive(false);
+            
             return true;
         }
         return false;
@@ -104,6 +104,7 @@ public class Ship : MonoBehaviourPunCallbacks
         shipUpgradeCost[nextUpgrade].partAttached.SetActive(true);
         nextUpgrade++;
         source.PlayOneShot(connect);
+        uiObject.SetActive(false);
         shipUpgradePanel.gameObject.SetActive(false);
         OpenPlayerUpgradePanel();
         allShipPartsCollected = nextUpgrade == shipUpgradeCost.Count;
