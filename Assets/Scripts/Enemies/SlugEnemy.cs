@@ -226,6 +226,8 @@ public class SlugEnemy : AIBaseLogic
         }
         photonView.RPC(nameof(Explode), RpcTarget.All);
         source.PlayOneShot(explode);
+        animator.SetBool("IsBlowingUp", false);
+        isBlowingUp = false;
     }
 
     [PunRPC]
