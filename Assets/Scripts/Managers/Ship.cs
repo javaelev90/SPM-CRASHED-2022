@@ -78,7 +78,7 @@ public class Ship : MonoBehaviourPunCallbacks
     }
 
     private void OnTriggerExit(Collider other) {
-        if(other.CompareTag("Player") && UppgradeShip() && caps.isTrigger){
+        if(player.gameObject.Equals(GameManager.player) && UppgradeShip() && caps.isTrigger){
             uiObject.SetActive(false);
         }
     }
