@@ -23,6 +23,8 @@ public class Turret : MonoBehaviourPunCallbacks
     [SerializeField] private int turretHealthIncreaseAtUpgrade;
     [SerializeField] public Transform useTurretPosition;
     [SerializeField] public Transform useTurretBody;
+    [SerializeField] private float rangeWithEngineer;
+    [SerializeField] private float rangeWhenAutomatic;
 
     public AudioSource source;
     public AudioClip clip;
@@ -153,17 +155,8 @@ public class Turret : MonoBehaviourPunCallbacks
             source.pitch = Random.Range(0.8f, 1.4f);
             Debug.Log("Is shooting");
             */
-            float range;
-            if (engineerRef.isUsingTurret)
-            {
-                range = 50f;
-            }
-            else
-            {
-                range = 15f;
-            }
-
-            if(Physics.Raycast(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward, out RaycastHit hitInfo, range, enemyLayer))
+            
+            if(Physics.Raycast(turretMuzzlePoint.transform.position, turretBody.transform.rotation * Vector3.forward, out RaycastHit hitInfo, engineerRef.isUsingTurret ? rangeWithEngineer : rangeWhenAutomatic, enemyLayer))
             {
                 HealthHandler healthHandler = hitInfo.transform.GetComponent<HealthHandler>();
                 if (healthHandler)
