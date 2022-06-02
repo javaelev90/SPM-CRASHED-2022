@@ -29,12 +29,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //     receiving - disable character
     //     sending   - highlight selection
 
+    public AudioClip clip;
+    private AudioSource source;
+
     void Start()
     {
         PhotonNetwork.GameVersion = "0.1";
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
-    
+        source = GetComponent<AudioSource>();
         if (PhotonNetwork.LocalPlayer.NickName == "")
         {
             PhotonNetwork.LocalPlayer.NickName = "Player"+GetInstanceID();
@@ -65,6 +68,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
             PhotonNetwork.JoinOrCreateRoom(lobbyNameInput.text, roomOptions, TypedLobby.Default, null);
             inputIsLongEnough = true;
+            source.PlayOneShot(clip);
         }
         EventSystem.Instance.FireEvent(new EnterLobbyEvent(inputIsLongEnough));
     }
@@ -212,7 +216,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
             isStarted = true;
             PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.GameSceneName);
-           
+            source.PlayOneShot(clip);
         }
     }
 
