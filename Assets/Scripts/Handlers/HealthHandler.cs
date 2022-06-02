@@ -87,6 +87,12 @@ public abstract class HealthHandler : MonoBehaviourPunCallbacks
         UpdateHealthBar();
     }
 
+    [PunRPC]
+    protected void SetHealthRPC(int health)
+    {
+        SetHealth(health);
+    }
+
     protected void UpdateHealthBar()
     {
         if (gameObject.CompareTag("Player"))

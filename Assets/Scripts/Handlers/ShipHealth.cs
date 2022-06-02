@@ -47,6 +47,7 @@ public class ShipHealth : HealthHandler
             if (photonView.IsMine)
             {
                 RemoveHealth(amount);
+                photonView.RPC(nameof(SetHealthRPC), RpcTarget.Others, CurrentHealth);
             }
         }
     }
