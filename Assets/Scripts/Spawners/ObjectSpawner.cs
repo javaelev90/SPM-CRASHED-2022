@@ -55,6 +55,7 @@ public class ObjectSpawner : MonoBehaviour
     public void ResetSpawner()
     {
         spawnedObjects = 0;
+        cooldownCounter = delayBetweenSpawns;
         spawnerIsTriggered = false;
     }
 
