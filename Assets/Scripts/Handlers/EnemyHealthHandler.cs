@@ -13,7 +13,6 @@ public class EnemyHealthHandler : HealthHandler
     GameObject vfx;
 
     private bool hasBeenHurt = false;
-    [SerializeField] private Animator anim;
 
     public override void TakeDamage(int amount)
     {
@@ -40,15 +39,9 @@ public class EnemyHealthHandler : HealthHandler
             //        //gameObject.GetComponentInChildren<EnemyHurtAnimation>().PlayEnemyHurtAnim();
             //    }
             //}
-            if (anim != null)
-            {
-                anim.CrossFade("TakeDamage.EnemyMoreHurt", 0f);
-                anim.SetBool("IsHurt", true);
-            }
+            
         }
 
-        if (anim != null)
-            anim.SetBool("IsHurting", false);
     }
 
     public override void Die()
