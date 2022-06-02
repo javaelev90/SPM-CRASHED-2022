@@ -8,6 +8,6 @@ public class GlobalSettingsInitiailizer : MonoBehaviour
     private void Awake()
     {
         globalSettings = GlobalSettings.Instance;
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
     }
 }

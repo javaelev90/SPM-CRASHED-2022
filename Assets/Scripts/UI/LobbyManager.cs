@@ -45,6 +45,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LocalPlayer.NickName = "Player"+GetInstanceID();
         }
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
     }
 
     public override void OnConnectedToMaster()
@@ -111,8 +115,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         foreach (CharacterChoice choice in choices)
         {
-            choice.choiceButton.interactable = true;
-            PlayerChoice = Character.NONE;
+            if (choice.choiceButton != null)
+            {
+                choice.choiceButton.interactable = true;
+                PlayerChoice = Character.NONE;
+            }
+
         }
     }
 

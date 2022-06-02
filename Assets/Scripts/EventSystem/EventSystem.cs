@@ -27,7 +27,7 @@ namespace EventCallbacksSystem
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(gameObject);
+                //DontDestroyOnLoad(gameObject);
             }
 
         }
