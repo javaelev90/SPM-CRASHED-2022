@@ -137,7 +137,7 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
 
      public void MainMenuOpen()
     {
-        SceneManager.LoadScene("GameLobbyScene");
+        PhotonNetwork.LoadLevel("GameLobbyScene");
     }
 
      public void CloseExitWindow()

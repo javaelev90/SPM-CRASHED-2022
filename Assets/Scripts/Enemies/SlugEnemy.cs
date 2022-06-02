@@ -146,23 +146,24 @@ public class SlugEnemy : AIBaseLogic
 
     private void Move()
     {
-
-        if (distanceToTarget < maxBlowUpRadius)
+        if (isBlowingUp == false)
         {
-            if (agent.isOnNavMesh) agent.isStopped = true;
-            if (agent.isStopped == true)
+            if (distanceToTarget < maxBlowUpRadius)
+            {
+                if (agent.isOnNavMesh) agent.isStopped = true;
                 BlowUp(false);
-        }
-        else
-        {
-            if (agent.isOnNavMesh) agent.isStopped = false;
-            source.Play();
-        }
+            }
+            else
+            {
+                if (agent.isOnNavMesh) agent.isStopped = false;
+                source.Play();
+            }
 
-        if (agent.isOnNavMesh && target != null && isBlowingUp == false)
-        {
-            agent.destination = target.position;
-            Rotate();
+            if (agent.isOnNavMesh && target != null && isBlowingUp == false)
+            {
+                agent.destination = target.position;
+                Rotate();
+            }
         }
     }
 
@@ -225,7 +226,9 @@ public class SlugEnemy : AIBaseLogic
             }
         }
         photonView.RPC(nameof(Explode), RpcTarget.All);
-        
+        source.PlayOneShot(explode);
+        animator.SetBool("IsBlowingUp", false);
+        isBlowingUp = false;
     }
 
     [PunRPC]

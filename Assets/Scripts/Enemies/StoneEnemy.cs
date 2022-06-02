@@ -33,9 +33,6 @@ public class StoneEnemy : AIBaseLogic
     public AudioClip attack;
     private void Start()
     {
-        minThrowRange = viewRadius / 2f;
-        maxThrowRange = viewRadius / 1.5f;
-        deadZoneRange = viewRadius / 2.01f;
         fleePos = new GameObject();
         fleePos.name = "Fleeposition";
         wayPoint = wayPointSystem.GetNewPosition;
@@ -70,10 +67,10 @@ public class StoneEnemy : AIBaseLogic
                 AggroBasedOnAttack();
             }
 
-            if (isFleeing)
-            {
-                FleeToPosition();
-            }
+            //if (isFleeing)
+            //{
+            //    FleeToPosition();
+            //}
 
             if (!IsAggresive && !IsAttacked)
             {
@@ -123,12 +120,12 @@ public class StoneEnemy : AIBaseLogic
                 IsAttacked = false;
             }
 
-            if (distanceToTarget < deadZoneRange)
-            {
-                fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
-                isFleeing = true;
-                agent.isStopped = false;
-            }
+            //if (distanceToTarget < deadZoneRange)
+            //{
+            //    fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
+            //    isFleeing = true;
+            //    agent.isStopped = false;
+            //}
 
             Move();
         }
@@ -162,13 +159,13 @@ public class StoneEnemy : AIBaseLogic
     {
         if (IsWithinSight)
         {
-            if (distanceToTarget < deadZoneRange)
-            {
-                fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
-                isFleeing = true;
-                agent.isStopped = false;
-                IsAggresive = false;
-            }
+            //if (distanceToTarget < deadZoneRange)
+            //{
+            //    fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
+            //    isFleeing = true;
+            //    agent.isStopped = false;
+            //    IsAggresive = false;
+            //}
 
             if (IsAggresive)
             {
@@ -221,41 +218,37 @@ public class StoneEnemy : AIBaseLogic
 
         stoneProjectile.IsThrown = true;
         stoneProjectile.transform.forward = directionOfProjectile.normalized;
+        stoneProjectile.DamageDealer = stoneDamage;
         stoneProjectile.GetComponent<Rigidbody>().velocity = velocity * directionToTarget.normalized;
-        agent.isStopped = false;
     }
 
     private void PickupStone()
     {
-        //GameObject stoneObject = Instantiate(stone, throwTransform.position, Quaternion.identity);
         GameObject stoneObject = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + stone.name, throwTransform.position, Quaternion.identity);
         stoneProjectile = stoneObject.GetComponent<StoneProjectile>();
     }
 
-    private void FleeToPosition()
-    {
-        agent.destination = fleePos.transform.position;
-    }
-
     private void Move()
     {
-        if (distanceToTarget < maxThrowRange /*&& minThrowRange < distanceToTarget*/)
+        if (isThrowing == false)
         {
-            isFleeing = false;
-            if (agent.isOnNavMesh) agent.isStopped = true;
-            if (agent.isStopped == true && isThrowing == false)
+            if (distanceToTarget < maxThrowRange /*&& minThrowRange < distanceToTarget*/)
+            {
+                isFleeing = false;
+                if (agent.isOnNavMesh) agent.isStopped = true;
                 Throw();
-        }
-        else
-        {
-            if (agent.isOnNavMesh) agent.isStopped = false;
-            //source.Play();
-        }
+            }
+            else
+            {
+                if (agent.isOnNavMesh) agent.isStopped = false;
+                source.Play();
+            }
 
-        if (agent.isOnNavMesh && target != null)
-        {
-            agent.destination = target.position;
-            Rotate();
+            if (agent.isOnNavMesh && target != null)
+            {
+                agent.destination = target.position;
+                Rotate();
+            }
         }
     }
 

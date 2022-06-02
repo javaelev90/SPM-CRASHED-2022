@@ -125,8 +125,8 @@ public class EventStarter : MonoBehaviourPunCallbacks
             emissionFill.SetFloat("EmissionFill", timer / eventTime);
             if (timer < pickUpTime)
             {
-                shipPart.position = Vector3.Lerp(startPosition, targetPlayer.position + Vector3.up * 1.2f, timer / pickUpTime);
-                shipPart.localScale = Vector3.Lerp(startSize, Vector3.zero, timer / pickUpTime);
+                shipPart.position = Vector3.Lerp(startPosition, targetPlayer.position + (Vector3.up * 1.35f), Mathf.Pow(timer, 2)/ Mathf.Pow(pickUpTime, 2));
+                shipPart.localScale = Vector3.Lerp(startSize, Vector3.zero, Mathf.Log((timer / pickUpTime) + 1, 2)/* (-Mathf.Pow(timer - pickUpTime, 2) / Mathf.Pow(pickUpTime, 2)) + 1*/) ;
             }else if(shipPart != null)
             {
                 Destroy(shipPart.gameObject);
