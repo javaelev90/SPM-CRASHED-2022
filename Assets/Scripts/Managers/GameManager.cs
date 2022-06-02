@@ -36,9 +36,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         //gameStateManager = GetComponent<GameStateManager>();
         character = (Character)PlayerPrefs.GetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName);
         Debug.Log($"Oh no, you chose the {character} charater");
-        loadSaveFile = true;
+        loadSaveFile = PlayerPrefs.GetInt(GlobalSettings.LoadSaveFileSettingName) == 1;
         Initialize();
-
         Destroy(loadScene, 10);
     }
 
@@ -65,23 +64,37 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             yield return new WaitForSeconds(0.2f);
         }
-        
+
+        // Sync data if save file has been loaded
         //if (PhotonNetwork.IsMasterClient && gameStateManager.SaveExists() && loadSaveFile)
         //{
-        //    gameStateManager.SyncOtherPlayerData(character == Character.SOLDIER ? Character.ENGINEER : Character.SOLDIER);
+        //    // Should send data for the other character role
+        //    if (character == Character.SOLDIER)
+        //    {
+        //        gameStateManager.SyncOtherPlayerData(Character.ENGINEER);
+        //    }
+        //    else
+        //    {
+        //        gameStateManager.SyncOtherPlayerData(Character.SOLDIER);
+        //    }
+        //    // Send progress data
+        //    gameStateManager.SyncProgressData();
         //}
     }
 
     private void Initialize()
     {
-        StartCoroutine(FindOtherPlayer(character));
+        // Initialize save/load file manager
         //gameStateManager.Initialize();
+        // Store reference of other player when it has been created
+        StartCoroutine(FindOtherPlayer(character));
 
+        // Create some networked objects
         if (PhotonNetwork.IsMasterClient)
         {
             objectInstantiater.InitializeWorld();
         }
-
+        // Instantiate the chosen player prefab
         if (character == Character.SOLDIER)
         {
             player = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + soldierPrefab.name, spawnPoint.position, spawnPoint.rotation);
@@ -90,16 +103,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             player = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
-
+        // Load data from save file
         //if (PhotonNetwork.IsMasterClient && gameStateManager.SaveExists() && loadSaveFile)
         //{
         //    gameStateManager.LoadPlayerData(ref player, character);
+        //    gameStateManager.LoadProgressData();
         //}
-
+        // Start enemy culling
         if (PhotonNetwork.IsMasterClient)
         {
             objectCulling.Initialize(player, character);
         }
+        // Setting to allow GameObjects to receive RPCs when Time.timeScale = 0
         PhotonNetwork.MinimalTimeScaleToDispatchInFixedUpdate = 0;
     }
 

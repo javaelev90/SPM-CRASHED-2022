@@ -12,6 +12,7 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     private DataLoader dataLoader;
 
     private bool initialized = false;
+    private bool receivedRequestedData = false;
     private void Awake()
     {
         Initialize();
@@ -21,13 +22,18 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     {
         if (initialized == false)
         {
-            gameDataHolder = new GameDataHolder();
-            gameDataHolder.Initialize();
+            InitializeGameDataHolder();
             dataCollector = new DataCollector(gameDataHolder);
             dataLoader = new DataLoader();
             LoadData();
             initialized = true;
         }
+    }
+
+    private void InitializeGameDataHolder()
+    {
+        gameDataHolder = new GameDataHolder();
+        gameDataHolder.Initialize();
     }
 
     private void LoadData()
@@ -51,9 +57,32 @@ public class GameStateManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void LoadProgressData()
+    {
+        dataLoader.LoadProgressData(gameDataHolder.progressData);
+    }
+
     public void SaveGame()
     {
+        InitializeGameDataHolder();
         gameDataHolder = dataCollector.CollectData();
+        if (GameManager.otherPlayer != null)
+        {
+            CollectOtherPlayerData();
+            StartCoroutine(WaitForRequestedData());
+        }
+        else
+        {
+            SaveAndLoadHelper.SaveData(gameDataHolder);
+        }
+    }
+
+    IEnumerator WaitForRequestedData()
+    {
+        while(receivedRequestedData == false)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
         SaveAndLoadHelper.SaveData(gameDataHolder);
     }
 
@@ -62,10 +91,10 @@ public class GameStateManager : MonoBehaviourPunCallbacks
         return SaveAndLoadHelper.SaveFileExists();
     }
 
-    public void SyncOtherPlayerData(Character character)
+    public void SyncOtherPlayerData(Character otherCharacter)
     {
         string otherPlayerData = "";
-        if (character == Character.ENGINEER)
+        if (otherCharacter == Character.ENGINEER)
         {
             otherPlayerData = SaveAndLoadHelper.SerializeObjectToJson(gameDataHolder.engineerData);
         }
@@ -83,39 +112,58 @@ public class GameStateManager : MonoBehaviourPunCallbacks
         dataLoader.LoadLocalPlayerData(ref GameManager.player, playerData);
     }
 
-    ////TEST
-    //private void TestSaving()
-    //{
-    //    GameDataHolder gameDataHolder = new GameDataHolder();
+    public void SyncProgressData()
+    {
+        string progressDataJSON = SaveAndLoadHelper.SerializeObjectToJson(gameDataHolder.progressData);
+        photonView.RPC(nameof(SyncProgressDataRPC), RpcTarget.Others, progressDataJSON);
+    }
 
-    //    ProgressData progressData = new ProgressData();
-    //    PlayerData playerData = new PlayerData();
-    //    PickupData pickupData = new PickupData();
+    [PunRPC]
+    private void SyncProgressDataRPC(string progressDataJSON)
+    {
+        ProgressData progressData = SaveAndLoadHelper.LoadData<ProgressData>(progressDataJSON);
+        dataLoader.LoadProgressData(progressData);
+    }
 
-    //    gameDataHolder.pickupData = pickupData;
-    //    gameDataHolder.playerData = playerData;
-    //    gameDataHolder.progressData = progressData;
+    public void CollectOtherPlayerData()
+    {
+        receivedRequestedData = false;
+        photonView.RPC(nameof(RequestPlayerDataRPC), RpcTarget.Others);
+    }
+    
+    [PunRPC]
+    private void RequestPlayerDataRPC()
+    {
+        if (GameManager.character == Character.SOLDIER)
+        {
+            SendPlayerDataRequest(gameDataHolder.soldierData);
+        }
+        else
+        {
+            SendPlayerDataRequest(gameDataHolder.engineerData);
+        }
+    }
 
-    //    progressData.timeOfDay = 150f;
-    //    progressData.upgradeProgress = new List<Ship.ShipUpgradeCost>();
-    //    progressData.upgradeProgress[0] = new Ship.ShipUpgradeCost
-    //    {
-    //        gooCost = 1,
-    //        metalCost = 1,
-    //        partAvalibul = false,
-    //        partAttached = null,
-    //        partMissing = null
-    //    };
+    private void SendPlayerDataRequest(PlayerData playerData)
+    {
+        dataCollector.CollectPlayerData(playerData, GameManager.player, GameManager.character);
+        photonView.RPC(nameof(ReceivePlayerDataRPC), RpcTarget.Others, SaveAndLoadHelper.SerializeObjectToJson(playerData));
+    }
 
-    //    playerData.currentHealth = 10;
-    //    playerData.inventory.metal = 4;
-    //    playerData.inventory.greenGoo = 7;
-    //    playerData.inventory.alienMeat = 3;
-
-    //    pickupData.metal = new List<Vector3>() { new Vector3(350f, 36f, 350f) };
-
-    //    SaveAndLoadHelper.SaveData(gameDataHolder);
-    //}
+    [PunRPC]
+    private void ReceivePlayerDataRPC(string playerDataJSON)
+    {
+        PlayerData playerData = SaveAndLoadHelper.LoadData<PlayerData>(playerDataJSON);
+        if (playerData.character == Character.SOLDIER)
+        {
+            gameDataHolder.soldierData = playerData;
+        }
+        else
+        {
+            gameDataHolder.engineerData = playerData;
+        }
+        receivedRequestedData = true;
+    }
 
 
 

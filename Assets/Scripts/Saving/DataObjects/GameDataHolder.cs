@@ -13,10 +13,11 @@ public class GameDataHolder
     public void Initialize()
     {
         progressData = new ProgressData();
+        progressData.Initialize();
         soldierData = new PlayerData();
         soldierData.Initialize();
         engineerData = new PlayerData();
         engineerData.Initialize();
-        pickupData = new PickupData();
+        //pickupData = new PickupData();
     }
 }

@@ -22,23 +22,23 @@ public class DataCollector
         if (GameManager.character == Character.ENGINEER)
         {
             CollectPlayerData(gameDataHolder.engineerData, GameManager.player, Character.ENGINEER);
-            if (GameManager.otherPlayer != null) 
-                CollectPlayerData(gameDataHolder.soldierData, GameManager.otherPlayer, Character.SOLDIER);
+            //if (GameManager.otherPlayer != null) 
+            //    CollectPlayerData(gameDataHolder.soldierData, GameManager.otherPlayer, Character.SOLDIER);
         }
         else
         {
             CollectPlayerData(gameDataHolder.soldierData, GameManager.player, Character.SOLDIER);
-            if(GameManager.otherPlayer != null) 
-                CollectPlayerData(gameDataHolder.engineerData, GameManager.otherPlayer, Character.ENGINEER);
+            //if(GameManager.otherPlayer != null) 
+            //    CollectPlayerData(gameDataHolder.engineerData, GameManager.otherPlayer, Character.ENGINEER);
         }
 
         CollectProgressData();
-        CollectPickupData();
+        //CollectPickupData();
 
         return gameDataHolder;
     }
 
-    private void CollectPlayerData(PlayerData playerData, GameObject playerObject, Character character)
+    public void CollectPlayerData(PlayerData playerData, GameObject playerObject, Character character)
     {
         playerData.character = character;
         playerData.position = playerObject.transform.position;
@@ -82,19 +82,40 @@ public class DataCollector
         }
     }
 
-    private void CollectProgressData()
+    public void CollectProgressData()
     {
         LightingManager lightingManager = GameObject.FindObjectOfType<LightingManager>();
         if (lightingManager)
         {
             gameDataHolder.progressData.timeOfDay = lightingManager.TimeOfDay;
+            gameDataHolder.progressData.isNight = lightingManager.IsNight;
         }
 
         Ship ship = GameObject.FindObjectOfType<Ship>();
         if (ship)
         {
             gameDataHolder.progressData.upgradeLevel = ship.nextUpgrade;
-            gameDataHolder.progressData.upgradeProgress = ship.shipUpgradeCost;
+
+            foreach (Ship.ShipUpgradeCost shipProgress in ship.shipUpgradeCost)
+            {
+                if (shipProgress.partAttached != null && shipProgress.partMissing != null)
+                {
+                    gameDataHolder.progressData.upgradeProgress.Add(new ProgressData.ShipProgress
+                    {
+                        metalCost = shipProgress.metalCost,
+                        gooCost = shipProgress.gooCost,
+                        partAvailable = shipProgress.partAvalibul,
+                        partAttachedName = shipProgress.partAttached.name,
+                        partMissingName = shipProgress.partMissing.name
+                    });
+                }
+            }
+        }
+
+        Level1 level1 = GameObject.FindObjectOfType<Level1>();
+        if(level1)
+        {
+            gameDataHolder.progressData.tutorialIsDone = level1.TutorialIsDone;
         }
     }
 
@@ -121,30 +142,18 @@ public class DataCollector
 
     private void CollectGunDamageUpgradeEvent(GunDamageUpgradeEvent upgradeEvent)
     {
-        if (GameManager.character == Character.SOLDIER)
-            gameDataHolder.soldierData.upgrades.weaponDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
-        else
-            gameDataHolder.engineerData.upgrades.weaponDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
+        gameDataHolder.soldierData.upgrades.weaponDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
     }
     private void CollectGunFireRateUpgradeEvent(GunFireRateUpgradeEvent upgradeEvent)
     {
-        if (GameManager.character == Character.SOLDIER)
-            gameDataHolder.soldierData.upgrades.weaponFireRateUpgrades.Add(upgradeEvent.UpgradePercent);
-        else
-            gameDataHolder.engineerData.upgrades.weaponFireRateUpgrades.Add(upgradeEvent.UpgradePercent);
+        gameDataHolder.soldierData.upgrades.weaponFireRateUpgrades.Add(upgradeEvent.UpgradePercent);
     }
     private void CollectTurretDamageUpgradeEvent(TurretDamageUpgradeEvent upgradeEvent)
     {
-        if (GameManager.character == Character.SOLDIER)
-            gameDataHolder.soldierData.upgrades.turretDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
-        else
-            gameDataHolder.engineerData.upgrades.turretDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
+        gameDataHolder.engineerData.upgrades.turretDamageUpgrades.Add(upgradeEvent.UpgradeAmount);
     }
     private void CollectTurretHealthUpgradeEvent(TurretHealthUpgradeEvent upgradeEvent)
     {
-        if (GameManager.character == Character.SOLDIER)
-            gameDataHolder.soldierData.upgrades.turretHealthUpgrades.Add(upgradeEvent.UpgradeAmount);
-        else
-            gameDataHolder.engineerData.upgrades.turretHealthUpgrades.Add(upgradeEvent.UpgradeAmount);
+        gameDataHolder.engineerData.upgrades.turretHealthUpgrades.Add(upgradeEvent.UpgradeAmount);
     }
 }

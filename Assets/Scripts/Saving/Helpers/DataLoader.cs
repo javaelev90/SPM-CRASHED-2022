@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EventCallbacksSystem;
+using Photon.Pun;
 
 public class DataLoader
 {
@@ -18,73 +20,141 @@ public class DataLoader
         }
 
         InventorySystem inventorySystem = targetPlayer.GetComponent<InventorySystem>();
+        inventorySystem.Initialize();
         if (inventorySystem)
         {
             inventorySystem.Add<AlienMeat>(playerData.inventory.alienMeat);
             inventorySystem.Add<Metal>(playerData.inventory.metal);
             inventorySystem.Add<GreenGoo>(playerData.inventory.greenGoo);
         }
+        
 
         if (playerData.character == Character.ENGINEER)
         {
-            Engineer engineer = targetPlayer.GetComponent<Engineer>();
-
-            foreach (PlayerData.TurretData turretData in playerData.turrets)
-            {
-                GameObject turret = engineer.CreateTurret();
-                TurretHealthHandler turretHealthHandler = turret.GetComponent<TurretHealthHandler>();
-                turret.transform.position = turretData.position;
-                turretHealthHandler.CurrentHealth = turretData.currentHealth;
-                turretHealthHandler.MaxHealth = turretData.maxHealth;
-            }
+            LoadEngineerSpecificData(ref targetPlayer, playerData);
         }
         else
         {
-            SoldierCharacter soldier = targetPlayer.GetComponent<SoldierCharacter>();
-            soldier.weapon.SetAmmo(playerData.ammo);
+            LoadSoldierSpecificData(ref targetPlayer, playerData);
         }
     }
 
-    //private void CollectPlayerData(PlayerData playerData, GameObject playerObject, Character character)
-    //{
-    //    playerData.character = character;
+    private void LoadEngineerSpecificData(ref GameObject targetPlayer, PlayerData playerData)
+    {
+        Engineer engineer = targetPlayer.GetComponent<Engineer>();
 
-    //    HealthHandler healthHandler = playerObject.GetComponent<HealthHandler>();
-    //    if (healthHandler)
-    //    {
-    //        playerData.currentHealth = healthHandler.CurrentHealth;
-    //        playerData.maxHealth = healthHandler.MaxHealth;
-    //    }
+        foreach (PlayerData.TurretData turretData in playerData.turrets)
+        {
+            GameObject turret = engineer.CreateTurret(turretData.position);
+            TurretHealthHandler turretHealthHandler = turret.GetComponent<TurretHealthHandler>();
+            turretHealthHandler.CurrentHealth = turretData.currentHealth;
+            turretHealthHandler.MaxHealth = turretData.maxHealth;
+        }
+        if (playerData.upgrades != null)
+        {
+            FireEngineerEvents(playerData);
+        }
+    }
 
-    //    InventorySystem inventorySystem = playerObject.GetComponent<InventorySystem>();
-    //    if (inventorySystem)
-    //    {
-    //        playerData.inventory.alienMeat = inventorySystem.Amount<AlienMeat>();
-    //        playerData.inventory.metal = inventorySystem.Amount<Metal>();
-    //        playerData.inventory.greenGoo = inventorySystem.Amount<GreenGoo>();
-    //    }
+    private void LoadSoldierSpecificData(ref GameObject targetPlayer, PlayerData playerData)
+    {
+        SoldierCharacter soldier = targetPlayer.GetComponent<SoldierCharacter>();
+        soldier.weapon.SetAmmo(playerData.ammo);
 
-    //    if (playerData.character == Character.ENGINEER)
-    //    {
-    //        Turret[] turrets = GameObject.FindObjectsOfType<Turret>();
-    //        PlayerData.TurretData turretData;
-    //        HealthHandler turretHealthHandler;
+        if (playerData.upgrades != null)
+        {
+            FireSoldierEvents(playerData.upgrades);
+        }
+    }
 
-    //        foreach (Turret turret in turrets)
-    //        {
-    //            turretHealthHandler = turret.gameObject.GetComponent<HealthHandler>();
-    //            turretData = new PlayerData.TurretData
-    //            {
-    //                position = turret.transform.position,
-    //                maxHealth = turretHealthHandler.MaxHealth,
-    //                currentHealth = turretHealthHandler.CurrentHealth,
-    //            };
-    //            playerData.turrets.Add(turretData);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        playerData.ammo = GameManager.player.GetComponent<SoldierCharacter>().weapon.currentAmmo;
-    //    }
-    //}
+    private void FireEngineerEvents(PlayerData playerData)
+    {
+        foreach(int upgradeAmount in playerData.upgrades.turretDamageUpgrades)
+        {
+            EventSystem.Instance.FireEvent(new TurretDamageUpgradeEvent(upgradeAmount));
+        }
+
+        if (playerData.turrets.Count == 0)
+        {
+            foreach (int upgradeAmount in playerData.upgrades.turretHealthUpgrades)
+            {
+                EventSystem.Instance.FireEvent(new TurretHealthUpgradeEvent(upgradeAmount));
+            }
+        }
+    }
+
+    private void FireSoldierEvents(PlayerData.Upgrades playerUpgrades)
+    {
+        foreach (int upgradeAmount in playerUpgrades.weaponDamageUpgrades)
+        {
+            EventSystem.Instance.FireEvent(new GunDamageUpgradeEvent(upgradeAmount));
+        }
+        foreach (float upgradeAmount in playerUpgrades.weaponFireRateUpgrades)
+        {
+            EventSystem.Instance.FireEvent(new GunFireRateUpgradeEvent(upgradeAmount));
+        }
+    }
+
+    public void LoadProgressData(ProgressData progressData)
+    {
+        EventStarter[] shipPickupEvents = GameObject.FindObjectsOfType<EventStarter>();
+        Ship ship = GameObject.FindObjectOfType<Ship>();
+        ship.Initialize();
+        for (int index = 0; index < progressData.upgradeProgress.Count; index++)
+        {
+            ProgressData.ShipProgress shipProgress = progressData.upgradeProgress[index];
+            ship.shipUpgradeCost[index].metalCost = shipProgress.metalCost;
+            ship.shipUpgradeCost[index].gooCost = shipProgress.gooCost;
+            ship.shipUpgradeCost[index].partAvalibul = shipProgress.partAvailable;
+            ship.shipUpgradeCost[index].partAttached = FindChildObjectByName(ship.transform, "AttachedParts", shipProgress.partAttachedName);
+            ship.shipUpgradeCost[index].partMissing = FindChildObjectByName(ship.transform, "MissingParts", shipProgress.partMissingName);
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                for (int index2 = 0; index2 < shipPickupEvents.Length; index2++)
+                {
+                    EventStarter shipPickupEvent = shipPickupEvents[index2];
+                    if (shipPickupEvent.missingPart.name == shipProgress.partMissingName)
+                    {
+                        PhotonNetwork.Destroy(shipPickupEvent.gameObject);
+                        break;
+                    }
+                }
+            }
+        }
+        ship.nextUpgrade = progressData.upgradeLevel;
+        EventSystem.Instance.FireEvent(new ShipUpgradeProgressionEvent(ship.nextUpgrade, ship.shipUpgradeCost.Count));
+
+        LightingManager lightingManager = GameObject.FindObjectOfType<LightingManager>();
+        if (lightingManager)
+        {
+            lightingManager.TimeOfDay = progressData.timeOfDay;
+            lightingManager.IsNight = progressData.isNight;
+            lightingManager.TotalTimeWholeCycle = lightingManager.DayLength + lightingManager.NightLength;
+            if (progressData.isNight && PhotonNetwork.IsMasterClient)
+            {
+                float nightTimeLeft = lightingManager.TotalTimeWholeCycle - lightingManager.TimeOfDay;
+                if (nightTimeLeft < lightingManager.NightLength)
+                {
+                    lightingManager.SetupAndStartSpawning(nightTimeLeft);
+                }
+            }
+        }
+
+        Level1 level1 = GameObject.FindObjectOfType<Level1>();
+        if (level1)
+        {
+            if(progressData.tutorialIsDone == true)
+            {
+                level1.TutorialIsDone = progressData.tutorialIsDone;
+                level1.TutorialOver();
+            }
+        }
+    }
+
+    private GameObject FindChildObjectByName(Transform rootObject, string parentName, string objectName)
+    {
+        Transform parentTransform = rootObject.Find(parentName);
+        return parentTransform.Find(objectName).gameObject;
+    }
 }

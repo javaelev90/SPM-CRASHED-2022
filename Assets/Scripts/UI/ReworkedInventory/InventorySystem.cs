@@ -11,9 +11,20 @@ public class InventorySystem : MonoBehaviourPunCallbacks
     private Dictionary<Type, int> amounts = new Dictionary<Type, int>();
     private UpdateUIAmountsEvent uiEvent = new UpdateUIAmountsEvent();
 
+    private bool initialized = false;
+
     private void Awake()
     {
-        LoadPrefabs();
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        if (initialized == false)
+        {
+            LoadPrefabs();
+            initialized = true;
+        }
     }
 
     // add item
@@ -31,7 +42,6 @@ public class InventorySystem : MonoBehaviourPunCallbacks
             uiEvent.Amounts = amounts;
             uiEvent.type = keyType;
             EventSystem.Instance.FireEvent(uiEvent);
-            SyncInventory();
             return true;
         }
         return false;
@@ -53,7 +63,6 @@ public class InventorySystem : MonoBehaviourPunCallbacks
             uiEvent.Amounts = amounts;
             uiEvent.type = keyType;
             EventSystem.Instance.FireEvent(uiEvent);
-            SyncInventory();
             return true;
         }
         return false;
@@ -127,18 +136,5 @@ public class InventorySystem : MonoBehaviourPunCallbacks
 
         uiEvent.Amounts = amounts;
         EventSystem.Instance.FireEvent(uiEvent);
-    }
-
-    private void SyncInventory()
-    {
-        photonView.RPC(nameof(SyncInventoryRPC), RpcTarget.Others, amounts[typeof(GreenGoo)], amounts[typeof(Metal)], amounts[typeof(AlienMeat)]);
-    }
-
-    [PunRPC]
-    private void SyncInventoryRPC(int greenGoo, int metal, int alienMeat)
-    {
-        amounts[typeof(GreenGoo)] = greenGoo;
-        amounts[typeof(Metal)] = metal;
-        amounts[typeof(AlienMeat)] = alienMeat;
     }
 }

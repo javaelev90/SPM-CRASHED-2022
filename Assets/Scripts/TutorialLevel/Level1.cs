@@ -18,7 +18,7 @@ public class Level1 : MonoBehaviour
 
     public Timer time;
 
-    private bool tutorialIsDone = false;
+    public bool TutorialIsDone { get; set; }
     
     void Start()
     {
@@ -36,7 +36,8 @@ public class Level1 : MonoBehaviour
             
             time.DisplayingTime(true);
             time.Show(true);
-            
+            TutorialIsDone = true;
+
         }
     }
 

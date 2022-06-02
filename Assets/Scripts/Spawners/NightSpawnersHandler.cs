@@ -31,7 +31,10 @@ public class NightSpawnersHandler : MonoBehaviour
         {
             numberOfSpawnsStarted++;
             spawner.TriggerSpawner();
-            source.PlayOneShot(clip);
+            if (clip != null)
+            {
+                source.PlayOneShot(clip);
+            }
         }
     }
 
