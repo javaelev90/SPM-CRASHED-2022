@@ -146,23 +146,24 @@ public class SlugEnemy : AIBaseLogic
 
     private void Move()
     {
+        if (isBlowingUp == false)
+        {
+            if (distanceToTarget < maxBlowUpRadius)
+            {
+                if (agent.isOnNavMesh) agent.isStopped = true;
+                BlowUp(false);
+            }
+            else
+            {
+                if (agent.isOnNavMesh) agent.isStopped = false;
+                source.Play();
+            }
 
-        if (distanceToTarget < maxBlowUpRadius)
-        {
-            if (agent.isOnNavMesh) agent.isStopped = true;
-            //if (agent.isStopped == true)
-            BlowUp(false);
-        }
-        else
-        {
-            if (agent.isOnNavMesh) agent.isStopped = false;
-            source.Play();
-        }
-
-        if (agent.isOnNavMesh && target != null && isBlowingUp == false)
-        {
-            agent.destination = target.position;
-            Rotate();
+            if (agent.isOnNavMesh && target != null && isBlowingUp == false)
+            {
+                agent.destination = target.position;
+                Rotate();
+            }
         }
     }
 
