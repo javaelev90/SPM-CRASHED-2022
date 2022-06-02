@@ -10,19 +10,26 @@ public class EnterTeleporter : MonoBehaviour
     public EventStarter eventStarter;
     [SerializeField] private GameObject playersOnTeleporterText;
 
+    private void Update()
+    {
+        if (playerOnTeleport < 2)
+        {
+            playersOnTeleporterText.SetActive(true);
+        }
+        else 
+        {
+            playersOnTeleporterText.SetActive(false);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
             playerOnTeleport++;
-        if (playerOnTeleport == 1)
-        {
-            playersOnTeleporterText.SetActive(true);
-        }
         if((playerOnTeleport > 0 && !(GameManager.otherPlayer != null && GameManager.otherPlayer.activeSelf)) || playerOnTeleport > 1)
         {
             eventStarter.Teleport(true);
         }
-        
     }
 
     private void OnTriggerExit(Collider other)
@@ -32,6 +39,6 @@ public class EnterTeleporter : MonoBehaviour
             playerOnTeleport--;
             eventStarter.Teleport(false);
         }
-        playersOnTeleporterText.SetActive(false);
+        //playersOnTeleporterText.SetActive(false);
     }
 }
