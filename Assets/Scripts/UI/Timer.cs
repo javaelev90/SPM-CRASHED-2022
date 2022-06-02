@@ -54,7 +54,8 @@ public class Timer : MonoBehaviour
 
     private AudioSource source;
     private LightingManager lightingManager;
-
+    private static bool loadedData = false;
+    private bool initialized = false;
     public AudioClip clip;
 
     private void OnEnable()
@@ -70,6 +71,15 @@ public class Timer : MonoBehaviour
     }
 
     void Start()
+    {
+        if(initialized == false)
+        {
+            Initialize();
+            initialized = true;
+        }
+    }
+
+    private void Initialize()
     {
         EventSystem.Instance.RegisterListener<EventEvent>(DisplayingTime);
         EventSystem.Instance.RegisterListener<ShipPartEvent>(TimeUntilDawn);
@@ -171,7 +181,10 @@ public class Timer : MonoBehaviour
                 dayText.gameObject.SetActive(false);
                 nightText.gameObject.SetActive(true);
                 nightImage.gameObject.SetActive(true);
-                nightImage.fillAmount = 1f;
+                if (loadedData == false)
+                {
+                    nightImage.fillAmount = 1f;
+                }
                 ev.IsNight = lightingManager.IsNight;
                 ev.IsShipPartEvent = false;
                 //IsUntilDawn = false;
@@ -205,7 +218,11 @@ public class Timer : MonoBehaviour
                 nightText.gameObject.SetActive(false);
                 dayText.gameObject.SetActive(true);
                 dayImage.gameObject.SetActive(true);
-                dayImage.fillAmount = 1f;
+                if (loadedData == false)
+                {
+                    dayImage.fillAmount = 1f;
+                }
+                
                 ev.IsNight = lightingManager.IsNight;
                 ev.IsShipPartEvent = false;
                 //IsUntilDawn = false;
@@ -231,6 +248,22 @@ public class Timer : MonoBehaviour
 
         dayImage.fillAmount -= (1f / dayLength) * Time.deltaTime;
      }
+
+    public void LoadTime()
+    {
+        loadedData = true;
+        Initialize();
+        if (lightingManager.IsNight)
+        {
+            nightImage.gameObject.SetActive(true);
+            nightImage.fillAmount =  1f - ((lightingManager.TimeOfDay - lightingManager.DayLength) / lightingManager.NightLength);
+        }
+        else
+        {
+            dayImage.gameObject.SetActive(true);
+            dayImage.fillAmount = 1f - (lightingManager.TimeOfDay / lightingManager.DayLength);
+        }
+    }
 
     private void updateTimer(float time)
     {

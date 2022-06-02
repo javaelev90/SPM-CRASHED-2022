@@ -124,13 +124,18 @@ public class DataLoader
         }
         ship.nextUpgrade = progressData.upgradeLevel;
         EventSystem.Instance.FireEvent(new ShipUpgradeProgressionEvent(ship.nextUpgrade, ship.shipUpgradeCost.Count));
-
+        Timer timer = GameObject.FindObjectOfType<Timer>();
         LightingManager lightingManager = GameObject.FindObjectOfType<LightingManager>();
         if (lightingManager)
         {
             lightingManager.TimeOfDay = progressData.timeOfDay;
             lightingManager.IsNight = progressData.isNight;
             lightingManager.TotalTimeWholeCycle = lightingManager.DayLength + lightingManager.NightLength;
+            if (timer)
+            {
+                timer.LoadTime();
+            }
+            
             if (progressData.isNight && PhotonNetwork.IsMasterClient)
             {
                 float nightTimeLeft = lightingManager.TotalTimeWholeCycle - lightingManager.TimeOfDay;
@@ -138,6 +143,7 @@ public class DataLoader
                 {
                     lightingManager.SetupAndStartSpawning(nightTimeLeft);
                 }
+
             }
         }
 
