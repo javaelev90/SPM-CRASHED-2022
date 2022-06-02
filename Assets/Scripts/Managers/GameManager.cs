@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public static GameManager Instance { get { return instance; } }
     private static GameManager instance;
 
-    //public static GameStateManager gameStateManager;
+    public static GameStateManager gameStateManager;
     public GameObject loadScene;
 
     private bool IsMine { get { return photonView.IsMine; } }
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         PrefabManager.LoadPrefabs();
         instance = this;
-        //gameStateManager = GetComponent<GameStateManager>();
+        gameStateManager = GetComponent<GameStateManager>();
         character = (Character)PlayerPrefs.GetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName);
         Debug.Log($"Oh no, you chose the {character} charater");
         loadSaveFile = PlayerPrefs.GetInt(GlobalSettings.LoadSaveFileSettingName) == 1;
@@ -85,26 +85,26 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
 
         // Sync data if save file has been loaded
-        //if (PhotonNetwork.IsMasterClient && gameStateManager.SaveExists() && loadSaveFile)
-        //{
-        //    // Should send data for the other character role
-        //    if (character == Character.SOLDIER)
-        //    {
-        //        gameStateManager.SyncOtherPlayerData(Character.ENGINEER);
-        //    }
-        //    else
-        //    {
-        //        gameStateManager.SyncOtherPlayerData(Character.SOLDIER);
-        //    }
-        //    // Send progress data
-        //    gameStateManager.SyncProgressData();
-        //}
+        if (PhotonNetwork.IsMasterClient && gameStateManager.SaveExists() && loadSaveFile)
+        {
+            // Should send data for the other character role
+            if (character == Character.SOLDIER)
+            {
+                gameStateManager.SyncOtherPlayerData(Character.ENGINEER);
+            }
+            else
+            {
+                gameStateManager.SyncOtherPlayerData(Character.SOLDIER);
+            }
+            // Send progress data
+            gameStateManager.SyncProgressData();
+        }
     }
 
     private void Initialize()
     {
         // Initialize save/load file manager
-        //gameStateManager.Initialize();
+        gameStateManager.Initialize();
         // Store reference of other player when it has been created
         StartCoroutine(FindOtherPlayer(character));
 
@@ -123,11 +123,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             player = PhotonNetwork.Instantiate(GlobalSettings.PlayerCharacterPath + engineerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         }
         // Load data from save file
-        //if (PhotonNetwork.IsMasterClient && gameStateManager.SaveExists() && loadSaveFile)
-        //{
-        //    gameStateManager.LoadPlayerData(ref player, character);
-        //    gameStateManager.LoadProgressData();
-        //}
+        if (PhotonNetwork.IsMasterClient && gameStateManager.SaveExists() && loadSaveFile)
+        {
+            gameStateManager.LoadPlayerData(ref player, character);
+            gameStateManager.LoadProgressData();
+        }
         // Start enemy culling
         if (PhotonNetwork.IsMasterClient)
         {

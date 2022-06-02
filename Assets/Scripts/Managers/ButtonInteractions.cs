@@ -38,7 +38,7 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
     private bool isSaved;
 
     public ShowPauseMenu pause;
-    //private GameStateManager gameStateManager;
+    private GameStateManager gameStateManager;
 
       private void Start()
     {
@@ -51,7 +51,7 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
             Cursor.lockState = CursorLockMode.None;
         }
 
-        //gameStateManager = FindObjectOfType<GameStateManager>();
+        gameStateManager = FindObjectOfType<GameStateManager>();
     }
 
     private void OnDisable() {
@@ -214,7 +214,7 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
         //länka till spargrej som kommer
         Debug.Log("Väntar på att göras klart");
         EventSystem.Instance.FireEvent(new LockControlsEvent(pause.gameObject.activeSelf));
-        //gameStateManager.SaveGame();
+        gameStateManager.SaveGame();
     }
 
     public void SaveInfo()
