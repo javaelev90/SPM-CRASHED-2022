@@ -34,13 +34,8 @@ public class ShowReviveUI : MonoBehaviour
     }
 
     private void OnTriggerExit(Collider other) {
-        if(other.CompareTag("Player") && other.gameObject.Equals(GameManager.player)){
-            inventory = other.gameObject.GetComponent<InventorySystem>();
-            if (inventory.Amount<ReviveBadge>() == 0)
-            {
-                uiObject.SetActive(false);
-            }
-            
+        if(other.CompareTag("Player") && inventory.Amount<ReviveBadge>() == 0 && other.gameObject.Equals(GameManager.player)){
+            uiObject.SetActive(false);
         }
     }
 }
