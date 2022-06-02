@@ -20,8 +20,11 @@ public class ShowReviveUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+          if(inventory.Amount<ReviveBadge>() == 0){
+            uiObject.SetActive(false);
+        }
     }
+    
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player")  && other.gameObject.Equals(GameManager.player)){
             inventory = other.gameObject.GetComponent<InventorySystem>();
@@ -33,10 +36,5 @@ public class ShowReviveUI : MonoBehaviour
             
         }
     }
-
-    private void OnTriggerExit(Collider other) {
-        if(other.CompareTag("Player") && inventory.Amount<ReviveBadge>() == 0 && other.gameObject.Equals(GameManager.player)){
-            uiObject.SetActive(false);
-        }
-    }
 }
+
