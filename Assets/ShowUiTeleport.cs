@@ -19,9 +19,11 @@ public class ShowUiTeleport : MonoBehaviour
         
         if(player.gameObject.Equals(GameManager.player))
         {
-            
-            uiObject.SetActive(true);
-            Destroy(uiObject, 5);
+            if (uiObject)
+            {
+                uiObject.SetActive(true);
+                Destroy(uiObject, 5);
+            }
         }
     }
 

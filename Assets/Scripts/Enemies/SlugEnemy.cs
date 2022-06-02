@@ -35,6 +35,17 @@ public class SlugEnemy : AIBaseLogic
         source = GetComponent<AudioSource>();
     }
 
+    private void OnDisable()
+    {
+        base.OnDisable();
+
+        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsBlowingUp", false);
+        isBlowingUp = false;
+        canBlowUp = false;
+        distanceToTarget = maxBlowUpRadius + 5;
+    }
+
     // Update is called once per frame
     protected override void Update()
     {

@@ -59,6 +59,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     {
         if (findTargets != null)
             StopCoroutine(findTargets);
+        target = null;
     }
 
     protected virtual void Update() { }

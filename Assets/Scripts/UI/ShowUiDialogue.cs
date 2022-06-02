@@ -26,28 +26,33 @@ public class ShowUiDialogue : MonoBehaviour
         
         if(player.gameObject.Equals(GameManager.player))
         {
-            Debug.Log("kolliderar");
-            
-            uiObject.SetActive(true);
+            if (uiObject != null)
+            {
+                uiObject.SetActive(true);
+            }
             foreach (DialogueTrigger dialogue in dialogs)
             {
-                
-                dialogue.beginDialogue();
-                Debug.Log("skriver ut");
+                if (dialogue.gameObject.activeInHierarchy)
+                {
+                    dialogue.beginDialogue();
+                }
             }
         }
     }
     
 
     private void OnTriggerExit(Collider player) {
-        if(uiObject.activeSelf)
+        if (uiObject != null)
         {
-           uiObject.SetActive(false);
-           //StopCoroutine(dialogs.type);
-           foreach (var d in dialogs)
+            if (uiObject.activeSelf)
+            {
+                uiObject.SetActive(false);
+                //StopCoroutine(dialogs.type);
+                foreach (var d in dialogs)
                 {
                     d.gameObject.SetActive(false);
                 }
+            }
         }
     }
 }

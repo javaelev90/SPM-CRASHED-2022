@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         Debug.Log($"Oh no, you chose the {character} charater");
         loadSaveFile = PlayerPrefs.GetInt(GlobalSettings.LoadSaveFileSettingName) == 1;
         Initialize();
-        Destroy(loadScene, 10);
+        Destroy(loadScene, 5);
     }
 
     private void Update()

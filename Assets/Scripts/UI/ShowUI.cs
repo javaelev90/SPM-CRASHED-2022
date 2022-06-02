@@ -33,7 +33,10 @@ public class ShowUI : MonoBehaviour
             done = false;
             foreach (DialoguePickups dialogue in dialogs)
             {
-                dialogue.beginDialogue();
+                if (dialogue.gameObject.activeInHierarchy)
+                {
+                    dialogue.beginDialogue();
+                }
             }
         }
     }

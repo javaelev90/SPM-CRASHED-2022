@@ -4,36 +4,42 @@ using UnityEngine;
 
 public class UIPickupShip : MonoBehaviour
 {
-  
-   [SerializeField] Dialogue[]  dialogs;
 
-     private static bool done = true;
-    
+    [SerializeField] Dialogue[] dialogs;
+
+    private static bool done = true;
+
 
     // Start is called before the first frame update
 
-    void OnTriggerEnter(Collider player){
-      Debug.Log("hejsan");
-      if(done &&  player.CompareTag("Player"))
-      {  
-          done = false; 
-          foreach (Dialogue dialogue in dialogs)
-          {
-            dialogue.beginDialogue();
-            Debug.Log("skriver ut");
-          }
-      }
+    void OnTriggerEnter(Collider player)
+    {
+        if (done && player.CompareTag("Player"))
+        {
+            done = false;
+            foreach (Dialogue dialogue in dialogs)
+            {
+                if (dialogue != null && dialogue.gameObject.activeInHierarchy)
+                {
+                    dialogue.beginDialogue();
+                }
+            }
+        }
     }
 
-     void OnTriggerExit(Collider player)
+    void OnTriggerExit(Collider player)
     {
-        if (player.CompareTag("Player"))
+        if (player != null)
         {
-          //StopCoroutine(dialogs.type);
-           foreach (var d in dialogs)
+            if (player.CompareTag("Player"))
+            {
+                //StopCoroutine(dialogs.type);
+                foreach (var d in dialogs)
                 {
+                    if(d != null && d.gameObject.activeInHierarchy)
                     d.gameObject.SetActive(false);
                 }
+            }
         }
     }
 }
