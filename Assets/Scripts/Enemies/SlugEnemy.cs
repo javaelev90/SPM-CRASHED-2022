@@ -249,6 +249,7 @@ public class SlugEnemy : AIBaseLogic
     {
         GameObject explosion = Instantiate(explosionEffects, transform.position, Quaternion.identity);
         snailEffects = explosion.GetComponent<G_SnailExplosion>();
+        source.PlayOneShot(explode);
         snailEffects.snail = gameObject;
         snailEffects.Explode();
 

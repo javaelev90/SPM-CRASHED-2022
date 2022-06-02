@@ -18,6 +18,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //[SerializeField] GameObject startGameButton;
     //[SerializeField] Toggle loadSaveFile;
 
+    private AudioSource source;
+
+    public AudioClip clip;
+   
+
     private ArrayList currentRoomList = new ArrayList();
     public Character PlayerChoice { get; set; }
     public bool IsMaster { get { return PhotonNetwork.IsMasterClient; } }
@@ -29,8 +34,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //     receiving - disable character
     //     sending   - highlight selection
 
-    public AudioClip clip;
-    private AudioSource source;
 
     void Start()
     {
@@ -217,6 +220,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             isStarted = true;
             PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.GameSceneName);
             source.PlayOneShot(clip);
+           
         }
     }
 
@@ -225,6 +229,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         ResetLobbySettings();
         EventSystem.Instance.FireEvent(new LeaveLobbyEvent());
+        source.PlayOneShot(clip);
+        source.Stop();
     }
 
     private void ResetLobbySettings()

@@ -10,10 +10,14 @@ public class TurretHealthHandler : HealthHandler
     [SerializeField] private GameObject[] pickups;
     [SerializeField] private int amountToSpawn = 5;
     [SerializeField] private float offsetY = 1f;
+
+    public AudioSource audioSource;
+    public AudioClip die;
     
     private void Start()
     {
         EventSystem.Instance.RegisterListener<TurretHealthUpgradeEvent>(UpgradeTurretHealth);
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void UpgradeTurretHealth(TurretHealthUpgradeEvent turretHealthUpgradeEvent)
@@ -40,6 +44,7 @@ public class TurretHealthHandler : HealthHandler
     {
         gameObject.transform.GetChild(1).gameObject.SetActive(false);
         gameObject.transform.GetChild(3).gameObject.SetActive(true);
+        audioSource.PlayOneShot(die);
     }
 
     public void Revived()
@@ -47,6 +52,7 @@ public class TurretHealthHandler : HealthHandler
         gameObject.transform.GetChild(1).gameObject.SetActive(true);
         gameObject.transform.GetChild(3).gameObject.SetActive(false);
         UpdateHealthBar();
+        audioSource.Stop();
     }
 
     public void AddTurretHealth(int amount)

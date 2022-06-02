@@ -28,6 +28,9 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
 
     [SerializeField] private Image controls;
 
+    private AudioSource source;
+
+    public AudioClip clip;
     [SerializeField] private GameObject pausedText;
 
 
@@ -36,6 +39,11 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
 
     public ShowPauseMenu pause;
     //private GameStateManager gameStateManager;
+
+      private void Start()
+    {
+        source = GetComponent<AudioSource>();   
+    }
 
     private void OnEnable() {
         if (pause == null)
@@ -116,6 +124,7 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
         popUpImage.SetActive(false);
         settingsPanel.SetActive(true);
         mainPanel.SetActive(false);
+        source.PlayOneShot(clip);
         
     }
 
@@ -212,9 +221,15 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
     {
       if(isSaved == true){
       popUpSaveInfo.SetActive(true);
-      Destroy(popUpSaveInfo, 3f);
-     
+     // StartCoroutine(SaveInfoTime());
     }
+    }
+
+    IEnumerator SaveInfoTime(){
+      yield return new WaitForSeconds(0);
+      popUpSaveInfo.SetActive(true);
+      yield return new WaitForSeconds(2);
+      popUpSaveInfo.SetActive(false);
     }
     public void OpenSoundWindow()
     {

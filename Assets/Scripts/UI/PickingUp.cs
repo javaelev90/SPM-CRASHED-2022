@@ -5,6 +5,7 @@ using Photon.Pun;
 using EventCallbacksSystem;
 using UnityEngine.InputSystem;
 
+
 public class PickingUp : MonoBehaviourPunCallbacks
 {
     [Header("Interaction layers")]
@@ -18,6 +19,8 @@ public class PickingUp : MonoBehaviourPunCallbacks
     [SerializeField] public AudioClip Goo;
     [SerializeField] public AudioClip Metal;
     [SerializeField] public AudioClip Meat;
+
+    [SerializeField] public AudioClip ReviveSound;
 
 
     [SerializeField] private InventorySystem inventorySystem;
@@ -33,6 +36,13 @@ public class PickingUp : MonoBehaviourPunCallbacks
     private GameObject otherPlayer;
     private RaycastHit pickup;
     private Pickup_Typs.Pickup itemTypeToDrop;
+
+    public GameObject uiObject;
+
+     private  static bool textShown; 
+
+     
+     private  static bool hasDropped; 
 
     private void OnEnable()
     {
@@ -50,6 +60,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
         source = GetComponent<AudioSource>();
+         uiObject.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -69,6 +80,8 @@ public class PickingUp : MonoBehaviourPunCallbacks
         {
             timeToEatCounter -= Time.deltaTime;
         }
+
+        ShowDrop();
     }
 
     public void ItemTypeToDrop(TypeToInventoryEvent e)
@@ -108,6 +121,7 @@ public class PickingUp : MonoBehaviourPunCallbacks
                 inventorySystem.Add<ReviveBadge>();
                 otherPlayer = pickUpComponent.getPlayerToRevive();
                 pickUpPhotonView.RPC(nameof(pickUpComponent.ObjectDestroy), RpcTarget.All);
+                source.PlayOneShot(ReviveSound);
             }
         }
         else if (PickUpHitCheck(spaceShipLayer))
@@ -153,9 +167,21 @@ public class PickingUp : MonoBehaviourPunCallbacks
             {
                 canDrop = false;
                 photonView.RPC(nameof(DropItemRPC), RpcTarget.MasterClient, itemTypeToDrop);
+                hasDropped= true;
             }
         }
         
+    }
+
+    public void ShowDrop(){
+        InventorySystem inventorySystem = gameObject.GetComponent<InventorySystem>();
+        if(inventorySystem.Amount<GreenGoo>() >= 3 && inventorySystem.Amount<Metal>() >= 3 && !textShown &&  photonView.IsMine){
+            uiObject.SetActive(true);
+            textShown = true;
+        }
+        if(hasDropped){
+            uiObject.SetActive(false);
+        }
     }
 
     private bool HasAmountToDrop(Pickup_Typs.Pickup typ)

@@ -10,12 +10,17 @@ public class CharacterChoice : MonoBehaviourPunCallbacks
     [SerializeField] public Character character;
     LobbyManager lobbyManager;
 
+      private AudioSource source;
+
+    public AudioClip clip;
+
     public Toggle choiceButton;
 
     private void Awake()
     {
         choiceButton = GetComponent<Toggle>();
         lobbyManager = FindObjectOfType<LobbyManager>();
+        source = GetComponent<AudioSource>();
     }
 
     [PunRPC]
@@ -36,6 +41,7 @@ public class CharacterChoice : MonoBehaviourPunCallbacks
         if (lobbyManager.PlayerChoice != character && choiceButton.interactable)
         {
             lobbyManager.PlayerChoice = character;
+             source.PlayOneShot(clip);
         } 
         else if (lobbyManager.PlayerChoice == character)
         {

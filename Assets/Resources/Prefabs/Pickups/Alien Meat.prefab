@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 409723025857300660}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.05, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalPosition: {x: 0.05, y: 0, z: -0.953}
+  m_LocalScale: {x: 0.36004898, y: 0.36004898, z: 0.36004898}
   m_Children: []
   m_Father: {fileID: 5532362713974051641}
   m_RootOrder: 2
@@ -44,8 +44,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 2.0985806
+  m_Center: {x: 0, y: 0, z: 2.9014204}
 --- !u!54 &7253782137204163732
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiObject: {fileID: 4684706987037326264}
+  dialogs: []
   canSoldierPickup: 1
   canEngineerPickup: 1
 --- !u!1 &545991012442934884
@@ -346,7 +347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 100}
+  m_AnchoredPosition: {x: 0, y: 300}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6913869940774947817
