@@ -68,6 +68,12 @@ public class PlayerHealthHandler : HealthHandler
         UpdateDeathCamera(null, true);
         playerUI.transform.SetParent(deathCamera.transform);
         Destroy(Instantiate(deathParticles, transform.position, transform.rotation), 10f);
+
+        if (!GameManager.player.GetComponent<HealthHandler>().isAlive && !GameManager.otherPlayer.GetComponent<HealthHandler>().isAlive && PhotonNetwork.IsMasterClient)
+        {
+            EventSystem.Instance.FireEvent(new GameOverEvent("Both players died"));
+            //PhotonNetwork.LoadLevel("DeathScreen");
+        }
     }
 
     public override void DropItem()
@@ -110,6 +116,7 @@ public class PlayerHealthHandler : HealthHandler
     private void UpdateActiveStateRPC(bool active)
     {
         transform.root.gameObject.SetActive(active);
+        isAlive = active;
     }
 
     public void UpgradeHealth(HealthUpgradeEvent healthUpgradeEvent)
