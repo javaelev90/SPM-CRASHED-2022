@@ -170,6 +170,7 @@ public class StoneEnemy : AIBaseLogic
         animator.SetBool("IsThrowing", false);
         isThrowing = false;
 
+
         Vector3 directionOfProjectile = target.transform.position - transform.position;
         //float height = directionOfProjectile.y;
         directionOfProjectile.y = 0f;
@@ -179,18 +180,25 @@ public class StoneEnemy : AIBaseLogic
         //throwingMultiplier += height / Mathf.Tan(angleToRadians);
         float velocity = Mathf.Sqrt(throwingMultiplier * Physics.gravity.magnitude / Mathf.Sin(2 * angleToRadians));
 
-        stoneProjectile.IsThrown = true;
-        stoneProjectile.transform.forward = directionOfProjectile.normalized;
-        stoneProjectile.DamageDealer = stoneDamage;
-        stoneProjectile.GetComponent<Rigidbody>().velocity = velocity * directionToTarget.normalized;
+        if (IsMasterClient)
+        {
+            stoneProjectile.IsThrown = true;
+            stoneProjectile.transform.forward = directionOfProjectile.normalized;
+            stoneProjectile.DamageDealer = stoneDamage;
+            stoneProjectile.GetComponent<Rigidbody>().velocity = velocity * directionToTarget.normalized;
+        }
+
     }
 
     private void PickupStone()
     {
-        if (stoneProjectile == null || stoneProjectile.IsThrown == true)
+        if (IsMasterClient)
         {
-            GameObject stoneObject = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + stone.name, throwTransform.position, Quaternion.identity);
-            stoneProjectile = stoneObject.GetComponent<StoneProjectile>();
+            if (stoneProjectile == null || stoneProjectile.IsThrown == true)
+            {
+                GameObject stoneObject = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + stone.name, throwTransform.position, Quaternion.identity);
+                stoneProjectile = stoneObject.GetComponent<StoneProjectile>();
+            }
         }
     }
 
