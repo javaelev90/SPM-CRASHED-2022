@@ -20,6 +20,7 @@ public class SlugEnemy : AIBaseLogic
     private float timeCounterChainReaction;
     private Vector3 wayPoint;
     private bool isBlowingUp;
+    private bool canBlowUp;
 
     AudioSource source;
     public AudioClip walk;
@@ -72,6 +73,18 @@ public class SlugEnemy : AIBaseLogic
         {
             animator.SetBool("IsWalking", (Mathf.Abs(agent.velocity.x) > 0f || Mathf.Abs(agent.velocity.z) > 0f));
         }
+
+
+        if (timeCounterExplosion > 0f && canBlowUp == true)
+        {
+            timeCounterExplosion -= Time.deltaTime;
+            animator.SetBool("IsBlowingUp", canBlowUp);
+            if (timeCounterExplosion <= 0f)
+            {
+                BlowUp(true);
+            }
+        }
+
 
     }
 
@@ -146,12 +159,12 @@ public class SlugEnemy : AIBaseLogic
 
     private void Move()
     {
-        if (isBlowingUp == false)
+        if (canBlowUp == false)
         {
             if (distanceToTarget < maxBlowUpRadius)
             {
                 if (agent.isOnNavMesh) agent.isStopped = true;
-                BlowUp(false);
+                canBlowUp = true;
             }
             else
             {
@@ -167,13 +180,15 @@ public class SlugEnemy : AIBaseLogic
         }
     }
 
-    public void BlowUp(bool canBlowUp)
+
+    private void BlowUp(bool isTriggeredToBlowUp)
     {
-        timeCounterExplosion -= Time.deltaTime;
-        animator.SetBool("IsBlowingUp", true);
-        if ((canBlowUp || timeCounterExplosion <= 0f) && isBlowingUp == false)
+        if (isTriggeredToBlowUp && canBlowUp)
         {
-            isBlowingUp = true;
+            canBlowUp = false;
+            animator.SetBool("IsBlowingUp", canBlowUp);
+            timeCounterExplosion = timeToExplosion;
+            
             Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, AttackableTargets);
             if (targets.Length > 0)
             {
@@ -198,9 +213,6 @@ public class SlugEnemy : AIBaseLogic
             }
             photonView.RPC(nameof(Explode), RpcTarget.All); // reset after debug
             source.PlayOneShot(explode);
-            timeCounterExplosion = timeToExplosion;
-            animator.SetBool("IsBlowingUp", false);
-            isBlowingUp = false;
             root.DeSpawn();
         }
     }
