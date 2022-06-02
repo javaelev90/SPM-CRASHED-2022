@@ -51,7 +51,7 @@ public class Ship : MonoBehaviourPunCallbacks
         source = GetComponent<AudioSource>();
         EventSystem.Instance.FireEvent(progressionEvent);
         caps = GetComponent<CapsuleCollider>();
-       // uiObject.SetActive(false);
+        uiObject.SetActive(false);
     }
 
     public void newPartObtained(AttachPartEvent attachPartEvent)
@@ -64,24 +64,24 @@ public class Ship : MonoBehaviourPunCallbacks
                 shipUpgradeCost.partMissing = attachPartEvent.MissingPart;
                 shipUpgradeCost.partAttached = attachPartEvent.AttachedPart;
                 hasObtained = true;
-               // uiObject.SetActive(true);
+                uiObject.SetActive(true);
                 break;
             }
         }
         EventSystem.Instance.FireEvent(new ShipPartEvent(minTimeUntilDaw));
     }
 
-   /* private void OnTriggerEnter(Collider collider) {
-        if(player.gameObject.Equals(GameManager.player) && hasObtained){
+    private void OnTriggerEnter(Collider collider) {
+        if(collider.CompareTag("Player") && hasObtained && caps.isTrigger){
               uiObject.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if(player.gameObject.Equals(GameManager.player) && UppgradeShip() && caps.isTrigger){
+        if(other.CompareTag("Player") && UppgradeShip() && caps.isTrigger){
             uiObject.SetActive(false);
         }
-    }*/
+    }
 
     public bool UppgradeShip()
     {
@@ -89,7 +89,7 @@ public class Ship : MonoBehaviourPunCallbacks
         {
             photonView.RPC(nameof(UpgradeShipRPC), RpcTarget.All);
             hasObtained = false;
-          //  uiObject.SetActive(false);
+            uiObject.SetActive(false);
             return true;
         }
         return false;
