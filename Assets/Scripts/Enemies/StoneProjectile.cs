@@ -28,13 +28,13 @@ public class StoneProjectile : MonoBehaviourPunCallbacks
             counter -= Time.deltaTime;
             if (counter <= 0f)
             {
-                PhotonNetwork.Destroy(gameObject);
+                DestroyProjectile();
             }
         }
     }
 
     [PunRPC]
-    public void DestoryProjectile()
+    public void DestroyProjectile()
     {
         if (PhotonNetwork.IsMasterClient)
         {
@@ -54,6 +54,6 @@ public class StoneProjectile : MonoBehaviourPunCallbacks
             }
         }
 
-        DestoryProjectile();
+        DestroyProjectile();
     }
 }
