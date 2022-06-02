@@ -57,7 +57,8 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
 
     private void OnDisable()
     {
-        StopCoroutine(findTargets);
+        if (findTargets != null)
+            StopCoroutine(findTargets);
     }
 
     protected virtual void Update() { }
