@@ -606,6 +606,7 @@ GameObject:
   - component: {fileID: 8377518181085013677}
   - component: {fileID: 8377518181085013676}
   - component: {fileID: 4415643382285607619}
+  - component: {fileID: 8262241114503486742}
   m_Layer: 9
   m_Name: SlugPrefab
   m_TagString: EnemyMainBody
@@ -954,8 +955,6 @@ MonoBehaviour:
     LayerIndex: 1
 --- !u!136 &4415643382285607619
 CapsuleCollider:
---- !u!82 &8262241114503486742
-AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -964,10 +963,17 @@ AudioSource:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.30224332
-  m_Height: 1.0683742
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.26302114, z: 0.03418708}
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &8262241114503486742
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8377518181085013674}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
