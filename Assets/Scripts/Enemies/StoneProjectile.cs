@@ -26,7 +26,7 @@ public class StoneProjectile : MonoBehaviourPunCallbacks
             counter -= Time.deltaTime;
             if (counter <= 0f)
             {
-                //PhotonNetwork.Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
                 Destroy(gameObject);
             }
         }
@@ -46,7 +46,7 @@ public class StoneProjectile : MonoBehaviourPunCallbacks
         HealthHandler healthHandler;
         if ((healthHandler = collision.gameObject.GetComponent<HealthHandler>()) != null)
         {
-            //healthHandler.TakeDamage(damageDealer);
+            healthHandler.TakeDamage(damageDealer);
         }
     }
 }
