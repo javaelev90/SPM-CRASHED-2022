@@ -70,10 +70,10 @@ public class StoneEnemy : AIBaseLogic
                 AggroBasedOnAttack();
             }
 
-            if (isFleeing)
-            {
-                FleeToPosition();
-            }
+            //if (isFleeing)
+            //{
+            //    FleeToPosition();
+            //}
 
             if (!IsAggresive && !IsAttacked)
             {
@@ -123,12 +123,12 @@ public class StoneEnemy : AIBaseLogic
                 IsAttacked = false;
             }
 
-            if (distanceToTarget < deadZoneRange)
-            {
-                fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
-                isFleeing = true;
-                agent.isStopped = false;
-            }
+            //if (distanceToTarget < deadZoneRange)
+            //{
+            //    fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
+            //    isFleeing = true;
+            //    agent.isStopped = false;
+            //}
 
             Move();
         }
@@ -162,13 +162,13 @@ public class StoneEnemy : AIBaseLogic
     {
         if (IsWithinSight)
         {
-            if (distanceToTarget < deadZoneRange)
-            {
-                fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
-                isFleeing = true;
-                agent.isStopped = false;
-                IsAggresive = false;
-            }
+            //if (distanceToTarget < deadZoneRange)
+            //{
+            //    fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
+            //    isFleeing = true;
+            //    agent.isStopped = false;
+            //    IsAggresive = false;
+            //}
 
             if (IsAggresive)
             {
@@ -232,10 +232,10 @@ public class StoneEnemy : AIBaseLogic
         stoneProjectile = stoneObject.GetComponent<StoneProjectile>();
     }
 
-    private void FleeToPosition()
-    {
-        agent.destination = fleePos.transform.position;
-    }
+    //private void FleeToPosition()
+    //{
+    //    agent.destination = fleePos.transform.position;
+    //}
 
     private void Move()
     {
