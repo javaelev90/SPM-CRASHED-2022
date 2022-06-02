@@ -71,7 +71,7 @@ public class PlayerHealthHandler : HealthHandler
 
         if (!GameManager.player.GetComponent<HealthHandler>().isAlive && !GameManager.otherPlayer.GetComponent<HealthHandler>().isAlive && PhotonNetwork.IsMasterClient)
         {
-            EventSystem.Instance.FireEvent(new GameOverEvent("Both players died"));
+            //EventSystem.Instance.FireEvent(new GameOverEvent("Both players died"));
             //PhotonNetwork.LoadLevel("DeathScreen");
         }
     }
