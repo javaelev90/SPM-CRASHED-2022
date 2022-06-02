@@ -132,7 +132,7 @@ public class LightingManager : MonoBehaviour
     public void SetMinTimeUntilDawn(ShipPartEvent shipPartEvent)
     {
 
-        if (timeOfDay < dayLength - shipPartEvent.TimeUntilDawn)
+        if (timeOfDay < dayLength - shipPartEvent.TimeUntilDawn && !IsNight)
         {
             timeOfDay = dayLength - shipPartEvent.TimeUntilDawn;
         }
