@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8469949677003337766}
   - component: {fileID: -679922629812296273}
   - component: {fileID: 6257144599801780261}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: StoneProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 3
   damageDealer: 0
+  hasCollided: 0
 --- !u!54 &566674106863564848
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -165,7 +166,7 @@ GameObject:
   - component: {fileID: 6805506334843220095}
   - component: {fileID: 3096808296578149142}
   - component: {fileID: 2905888323835320120}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: polySurface47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
