@@ -17,7 +17,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     [SerializeField] protected PooledObject root;
     protected List<Transform> visibleTargets = new List<Transform>();
     protected Transform target;
-    protected Transform eventTarget;
+    [SerializeField] protected Transform eventTarget;
     protected float distanceToTarget;
     protected Vector3 directionToTarget;
 
