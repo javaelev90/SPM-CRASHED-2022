@@ -20,11 +20,11 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private NightSpawnersHandler nightSpawnersHandler;
 
     private float timeOfSunrise;
-    private float totalTimeWholeCycle;
+    public float TotalTimeWholeCycle { get; set; }
     private readonly float MAGICAL_SUNRISE_STARTER_NUMBER = 10;
     private bool cycleOngoing = true;
 
-    public bool IsNight { get; private set; }
+    public bool IsNight { get; set; }
     public float TimeOfDay { get { return timeOfDay; } set { timeOfDay = value; } }
     public float DayLength { get { return dayLength; } }
     public float NightLength { get { return nightLength; } }
@@ -38,8 +38,8 @@ public class LightingManager : MonoBehaviour
         EventSystem.Instance.RegisterListener<ShipPartEvent>(SetMinTimeUntilDawn);
         timeOfSunrise = dayLength / 2;
         IsNight = timeOfDay > dayLength;
-        totalTimeWholeCycle = dayLength + nightLength;
-        nightSpawnersHandler.SetupSpawners(nightLength - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER));
+        TotalTimeWholeCycle = dayLength + nightLength;
+        //nightSpawnersHandler.SetupSpawners(nightLength - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER));
         cycleOngoing = true;
     }
 
@@ -60,15 +60,15 @@ public class LightingManager : MonoBehaviour
             timeOfDay += Time.deltaTime;
             timeOfDay %= dayLength * 2;
 
-            if (timeOfDay > dayLength && timeOfDay < totalTimeWholeCycle - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER) && !IsNight)
+            if (timeOfDay > dayLength && timeOfDay < TotalTimeWholeCycle - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER) && !IsNight)
             {
                 IsNight = true;
-                nightSpawnersHandler.StartNightSpawning();              
+                SetupAndStartSpawning(nightLength - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER));              
             }
-            else if (timeOfDay >= totalTimeWholeCycle - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER) && IsNight)
+            else if (timeOfDay >= TotalTimeWholeCycle - (nightLength / MAGICAL_SUNRISE_STARTER_NUMBER) && IsNight)
             {
                 IsNight = false;
-                timeOfDay -= totalTimeWholeCycle;
+                timeOfDay -= TotalTimeWholeCycle;
                 nightSpawnersHandler.StopNightSpawning();
             }
 
@@ -78,6 +78,12 @@ public class LightingManager : MonoBehaviour
         {
             UpdateLighting((timeOfDay + timeOfSunrise) / (dayLength * 2));
         }
+    }
+    public void SetupAndStartSpawning(float elapsedNightTime)
+    {
+        TotalTimeWholeCycle = dayLength + nightLength;
+        nightSpawnersHandler.SetupSpawners(elapsedNightTime);
+        nightSpawnersHandler.StartNightSpawning();
     }
 
     private void UpdateLighting(float timePercent)

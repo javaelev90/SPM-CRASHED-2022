@@ -50,7 +50,6 @@ public class StoneEnemy : AIBaseLogic
                 IsAttacked = true;
                 timeStunnedCounter = timeStunned;
                 IsStunned = false;
-                isFleeing = false;
                 agent.isStopped = false;
             }
         }
@@ -66,11 +65,6 @@ public class StoneEnemy : AIBaseLogic
             {
                 AggroBasedOnAttack();
             }
-
-            //if (isFleeing)
-            //{
-            //    FleeToPosition();
-            //}
 
             if (!IsAggresive && !IsAttacked)
             {
@@ -120,13 +114,6 @@ public class StoneEnemy : AIBaseLogic
                 IsAttacked = false;
             }
 
-            //if (distanceToTarget < deadZoneRange)
-            //{
-            //    fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
-            //    isFleeing = true;
-            //    agent.isStopped = false;
-            //}
-
             Move();
         }
     }
@@ -159,53 +146,30 @@ public class StoneEnemy : AIBaseLogic
     {
         if (IsWithinSight)
         {
-            //if (distanceToTarget < deadZoneRange)
-            //{
-            //    fleePos.transform.position = transform.position + -(directionToTarget * viewRadius);
-            //    isFleeing = true;
-            //    agent.isStopped = false;
-            //    IsAggresive = false;
-            //}
-
             if (IsAggresive)
             {
                 Move();
             }
         }
-        else
-        {
-            isFleeing = false;
-        }
+
     }
 
     private void Throw()
     {
-        Rotate();
         if (animator.GetBool("IsThrowing") == false)
         {
             animator.SetBool("IsThrowing", true);
             isThrowing = true;
         }
 
-        //timer -= Time.deltaTime;
-
-        //if (timer <= 0f)
-        //{
-        //    //GameObject bull = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + bullet.name, transform.position, Quaternion.identity);
-        //    //Projectile proj = bull.GetComponent<Projectile>();
-        //    //proj.DamageDealer = stoneDamage;
-        //    //proj.Velocity += directionToTarget * 10f;
-        //    //proj.IsShot = true;
-        //    //source.PlayOneShot(attack);
-        //    animator.SetBool("IsThrowing", false);
-        //    timer = timeToThrow;
-        //}
+        Rotate();
     }
 
     private void ThrowStone()
     {
         animator.SetBool("IsThrowing", false);
         isThrowing = false;
+
 
         Vector3 directionOfProjectile = target.transform.position - transform.position;
         //float height = directionOfProjectile.y;
@@ -216,16 +180,26 @@ public class StoneEnemy : AIBaseLogic
         //throwingMultiplier += height / Mathf.Tan(angleToRadians);
         float velocity = Mathf.Sqrt(throwingMultiplier * Physics.gravity.magnitude / Mathf.Sin(2 * angleToRadians));
 
-        stoneProjectile.IsThrown = true;
-        stoneProjectile.transform.forward = directionOfProjectile.normalized;
-        stoneProjectile.DamageDealer = stoneDamage;
-        stoneProjectile.GetComponent<Rigidbody>().velocity = velocity * directionToTarget.normalized;
+        if (IsMasterClient)
+        {
+            stoneProjectile.IsThrown = true;
+            stoneProjectile.transform.forward = directionOfProjectile.normalized;
+            stoneProjectile.DamageDealer = stoneDamage;
+            stoneProjectile.GetComponent<Rigidbody>().velocity = velocity * directionToTarget.normalized;
+        }
+
     }
 
     private void PickupStone()
     {
-        GameObject stoneObject = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + stone.name, throwTransform.position, Quaternion.identity);
-        stoneProjectile = stoneObject.GetComponent<StoneProjectile>();
+        if (IsMasterClient)
+        {
+            if (stoneProjectile == null || stoneProjectile.IsThrown == true)
+            {
+                GameObject stoneObject = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + stone.name, throwTransform.position, Quaternion.identity);
+                stoneProjectile = stoneObject.GetComponent<StoneProjectile>();
+            }
+        }
     }
 
     private void Move()

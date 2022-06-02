@@ -153,8 +153,7 @@ public class Engineer : Controller3D
                 if (aIBaseLogic)
                 {
                     //Debug.Log("Enemy stunned");
-                    aIBaseLogic.StunnedBy(transform);
-                    Destroy(Instantiate(hitPosition, hit.point, Quaternion.LookRotation(hit.normal)), 10f);
+                    aIBaseLogic.StunnedBy(photonView.ViewID, hit.point, hit.normal);
                 }
             }
             // Add cooldown time
@@ -226,7 +225,7 @@ public class Engineer : Controller3D
                     }
 
 
-                    turretObject = CreateTurret();
+                    turretObject = CreateTurret(turretPos.position);
 
                     if (turretObject != null)
                     {
@@ -289,9 +288,9 @@ public class Engineer : Controller3D
         }
     }
 
-    public GameObject CreateTurret()
+    public GameObject CreateTurret(Vector3 turretPosition)
     {
-        GameObject turret = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPos.position, Quaternion.identity);
+        GameObject turret = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPosition, Quaternion.identity);
         if (turret != null)
         {
             turretCount++;

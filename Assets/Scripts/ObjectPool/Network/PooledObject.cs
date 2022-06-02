@@ -91,6 +91,13 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         CustomRecycleFunction?.Invoke();
     }
 
+    [PunRPC]
+    public void SetTargetViewIdAndNavMeshActive(int id)
+    {
+        photonViewTargetId = id;
+        navMeshAgent.enabled = true;
+    }
+
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         ObjectPool = PhotonView.Find((int)info.photonView.InstantiationData[0]).gameObject.GetComponent<PhotonObjectPool>();

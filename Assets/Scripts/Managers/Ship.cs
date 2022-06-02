@@ -24,6 +24,7 @@ public class Ship : MonoBehaviourPunCallbacks
     public float minTimeUntilDaw = 120f;
     private InventorySystem inventory;
     private ShipUpgradeProgressionEvent progressionEvent;
+    private bool initialized = false;
 
     public CapsuleCollider caps;
 
@@ -43,15 +44,23 @@ public class Ship : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        Minimap.Instance.Ship = gameObject;
-        EventSystem.Instance.RegisterListener<AttachPartEvent>(newPartObtained);
-        EventSystem.Instance.RegisterListener<ShipUppgradPanelEvent>(OpenShipUpgradePanel);
-        nextUpgrade = 0;
-        progressionEvent = new ShipUpgradeProgressionEvent(nextUpgrade, shipUpgradeCost.Count);
-        source = GetComponent<AudioSource>();
-        EventSystem.Instance.FireEvent(progressionEvent);
-        caps = GetComponent<CapsuleCollider>();
-        uiObject.SetActive(false);
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        if (initialized == false)
+        {
+            Minimap.Instance.Ship = gameObject;
+            EventSystem.Instance.RegisterListener<AttachPartEvent>(newPartObtained);
+            EventSystem.Instance.RegisterListener<ShipUppgradPanelEvent>(OpenShipUpgradePanel);
+            nextUpgrade = 0;
+            progressionEvent = new ShipUpgradeProgressionEvent(nextUpgrade, shipUpgradeCost.Count);
+            source = GetComponent<AudioSource>();
+            EventSystem.Instance.FireEvent(progressionEvent);
+            initialized = true;
+             uiObject.SetActive(false);
+        }
     }
 
     public void newPartObtained(AttachPartEvent attachPartEvent)
