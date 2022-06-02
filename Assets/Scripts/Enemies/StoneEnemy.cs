@@ -170,22 +170,24 @@ public class StoneEnemy : AIBaseLogic
         animator.SetBool("IsThrowing", false);
         isThrowing = false;
 
-
-        Vector3 directionOfProjectile = target.transform.position - transform.position;
-        //float height = directionOfProjectile.y;
-        directionOfProjectile.y = 0f;
-
-        float angleToRadians = stoneProjectileAngle * Mathf.Deg2Rad;
-        directionOfProjectile.y = throwingMultiplier * Mathf.Tan(angleToRadians);
-        //throwingMultiplier += height / Mathf.Tan(angleToRadians);
-        float velocity = Mathf.Sqrt(throwingMultiplier * Physics.gravity.magnitude / Mathf.Sin(2 * angleToRadians));
-
-        if (IsMasterClient)
+        if (target != null)
         {
-            stoneProjectile.IsThrown = true;
-            stoneProjectile.transform.forward = directionOfProjectile.normalized;
-            stoneProjectile.DamageDealer = stoneDamage;
-            stoneProjectile.GetComponent<Rigidbody>().velocity = velocity * directionToTarget.normalized;
+            Vector3 directionOfProjectile = target.transform.position - transform.position;
+            //float height = directionOfProjectile.y;
+            directionOfProjectile.y = 0f;
+
+            float angleToRadians = stoneProjectileAngle * Mathf.Deg2Rad;
+            directionOfProjectile.y = throwingMultiplier * Mathf.Tan(angleToRadians);
+            //throwingMultiplier += height / Mathf.Tan(angleToRadians);
+            float velocity = Mathf.Sqrt(throwingMultiplier * Physics.gravity.magnitude / Mathf.Sin(2 * angleToRadians));
+
+            if (IsMasterClient)
+            {
+                stoneProjectile.IsThrown = true;
+                stoneProjectile.transform.forward = directionOfProjectile.normalized;
+                stoneProjectile.DamageDealer = stoneDamage;
+                stoneProjectile.GetComponent<Rigidbody>().velocity = velocity * directionToTarget.normalized;
+            }
         }
 
     }
