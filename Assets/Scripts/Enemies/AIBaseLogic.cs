@@ -46,7 +46,7 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
     [Header("Animator")]
     [SerializeField] protected Animator animator;
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         root.CustomInitializeFunction = Initialize;
         findTargets = StartCoroutine("FindTargetsWithDelay", delayToNewTarget);

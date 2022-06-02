@@ -442,10 +442,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.54896945
-  m_Height: 1.968926
+  m_Radius: 0.5681208
+  m_Height: 1.9242396
   m_Direction: 1
-  m_Center: {x: -0.091400206, y: 0.9954901, z: 0.041894376}
+  m_Center: {x: -0.072248876, y: 1.0178332, z: 0.041894376}
 --- !u!114 &1739065221834887127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,7 +506,7 @@ MonoBehaviour:
   bullet: {fileID: 0}
   throwTransform: {fileID: 879418201918866834}
   timeToThrow: 2
-  stoneDamage: 20
+  stoneDamage: 40
   timeToWayPoint: 4
   stoneProjectileAngle: 65
   throwingMultiplier: 20
@@ -680,8 +680,8 @@ MonoBehaviour:
   hit: {fileID: 0}
   itemDropPrefab: {fileID: 0}
   dropOffsetY: 1
-  MaxHealth: 120
-  CurrentHealth: 120
+  MaxHealth: 150
+  CurrentHealth: 150
   isAlive: 1
   damage: 5
   intervale: 1.5
@@ -1208,7 +1208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6439255935435181916}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.13420856, y: 0.037768126, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1398849504165500264}
@@ -1313,7 +1313,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6893954301090781733}
   m_LocalRotation: {x: -0.13799651, y: -0.072444, z: 0.040541444, w: 0.9869475}
-  m_LocalPosition: {x: -0.084208556, y: 1.0472319, z: 0.02379577}
+  m_LocalPosition: {x: 0.05, y: 1.085, z: 0.02379577}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8299384916720892460}
