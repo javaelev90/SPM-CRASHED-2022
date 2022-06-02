@@ -150,7 +150,8 @@ public class SlugEnemy : AIBaseLogic
         if (distanceToTarget < maxBlowUpRadius)
         {
             if (agent.isOnNavMesh) agent.isStopped = true;
-            BlowUp(false);
+            if (agent.isStopped == true)
+                BlowUp(false);
         }
         else
         {
@@ -172,7 +173,6 @@ public class SlugEnemy : AIBaseLogic
         if ((canBlowUp || timeCounterExplosion <= 0f) && isBlowingUp == false)
         {
             isBlowingUp = true;
-            Debug.Log("Is Blowing up " + isBlowingUp);
             Collider[] targets = Physics.OverlapSphere(transform.position, maxBlowUpRadius, AttackableTargets);
             if (targets.Length > 0)
             {
