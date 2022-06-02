@@ -141,8 +141,7 @@ public class Engineer : Controller3D
                 if (aIBaseLogic)
                 {
                     //Debug.Log("Enemy stunned");
-                    aIBaseLogic.StunnedBy(transform);
-                    Destroy(Instantiate(hitPosition, hit.point, Quaternion.LookRotation(hit.normal)), 10f);
+                    aIBaseLogic.StunnedBy(photonView.ViewID, hit.point, hit.normal);
                 }
             }
             // Add cooldown time

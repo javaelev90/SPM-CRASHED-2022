@@ -63,13 +63,24 @@ public class AIBaseLogic : MonoBehaviourPunCallbacks
 
     protected virtual void Update() { }
 
-    public void StunnedBy(Transform target)
+    public void StunnedBy(int photonViewId, Vector3 hitPoint, Vector3 hitNormal)
     {
-        this.target = target;
+        photonView.RPC(nameof(StunnedByRPC), RpcTarget.All, photonViewId, hitPoint, hitNormal);
+    }
+
+    [PunRPC]
+    public void StunnedByRPC(int photonViewId, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        this.target = PhotonView.Find(photonViewId).transform;
         IsStunned = true;
         timeStunnedCounter = timeStunned;
         directionToTarget = (target.position - transform.position).normalized;
         distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+        if (GameManager.PrefabManager.stunEffectPrefab != null)
+        {
+            Destroy(Instantiate(GameManager.PrefabManager.stunEffectPrefab, hitPoint, Quaternion.LookRotation(hitNormal)), timeStunned);
+        }
     }
 
     public void FindAttackingTarget(Transform target)
