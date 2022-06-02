@@ -1725,7 +1725,7 @@ MonoBehaviour:
     m_ActionName: Player/UseTurret[/XInputControllerWindows/leftTrigger,/Keyboard/t]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4909781168820433211}
         m_TargetAssemblyTypeName: PlayerUIListener, Assembly-CSharp
         m_MethodName: FirstSlot
         m_Mode: 0
@@ -1741,7 +1741,7 @@ MonoBehaviour:
     m_ActionName: Player/Num1[/Keyboard/1]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4909781168820433211}
         m_TargetAssemblyTypeName: PlayerUIListener, Assembly-CSharp
         m_MethodName: SecondSlot
         m_Mode: 0
@@ -1825,7 +1825,7 @@ MonoBehaviour:
     m_ActionName: Player/RepairTurret[/Keyboard/r]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4909781168820433211}
         m_TargetAssemblyTypeName: PlayerUIListener, Assembly-CSharp
         m_MethodName: ObjectiveShow
         m_Mode: 0
@@ -1857,7 +1857,7 @@ MonoBehaviour:
     m_ActionName: Player/ShowPauseMenu[/Keyboard/escape]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4909781168820433211}
         m_TargetAssemblyTypeName: PlayerUIListener, Assembly-CSharp
         m_MethodName: ThirdSlot
         m_Mode: 0
@@ -3396,11 +3396,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 641137327987738267, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
   m_PrefabInstance: {fileID: 1552951558}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &8922995541685489380 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8922995540805740514, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+--- !u!114 &4909781168820433211 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4909781169431746621, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
   m_PrefabInstance: {fileID: 1552951558}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641137328582291357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f284e77e848ec4b8c35f7132d7a21c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2615217344704750359 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2615217345970375185, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
@@ -3415,6 +3421,11 @@ MonoBehaviour:
 --- !u!224 &3188175261329748077 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3188175262477932907, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
+  m_PrefabInstance: {fileID: 1552951558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &8922995541685489380 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8922995540805740514, guid: f8bd39d23033f8440aa9268acb71ccdb, type: 3}
   m_PrefabInstance: {fileID: 1552951558}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5204893957605509824
@@ -3704,6 +3715,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5510816813930139584, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
   m_PrefabInstance: {fileID: 9044887938546033159}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4495014406897604462 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4892204836988482921, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
+  m_PrefabInstance: {fileID: 9044887938546033159}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8446593080147799763 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 629859698614144212, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
@@ -3715,11 +3731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae72c0c5b312a804ab3a21336dfca8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &4495014406897604462 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4892204836988482921, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}
-  m_PrefabInstance: {fileID: 9044887938546033159}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5547672003020540683 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3564792497713129740, guid: 98392f0b37abca84bbf19301e9e5b7d1, type: 3}

@@ -20,6 +20,13 @@ public class StoneProjectile : MonoBehaviourPunCallbacks
         counter = timer;
     }
 
+
+    public void InitializeStone()
+    {
+        
+    }
+
+
     // Update is called once per frame
     void Update()
     {
