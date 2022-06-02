@@ -20,8 +20,12 @@ public class ShowReviveUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-          if(inventory.Amount<ReviveBadge>() == 0){
-            uiObject.SetActive(false);
+        if (inventory != null)
+        {
+            if (inventory.Amount<ReviveBadge>() == 0)
+            {
+                uiObject.SetActive(false);
+            }
         }
     }
     
