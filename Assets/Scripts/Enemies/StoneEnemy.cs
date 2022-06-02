@@ -228,7 +228,7 @@ public class StoneEnemy : AIBaseLogic
     private void PickupStone()
     {
         //GameObject stoneObject = Instantiate(stone, throwTransform.position, Quaternion.identity);
-        GameObject stoneObject = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + stone.name, transform.position, Quaternion.identity);
+        GameObject stoneObject = PhotonNetwork.Instantiate(GlobalSettings.MiscPath + stone.name, throwTransform.position, Quaternion.identity);
         stoneProjectile = stoneObject.GetComponent<StoneProjectile>();
     }
 
