@@ -6,6 +6,7 @@ using Photon.Realtime;
 using TMPro;
 using System;
 using EventCallbacksSystem;
+using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -13,6 +14,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject playerList;
     [SerializeField] GameObject lobbyPlayerPrefab;
     [SerializeField] List<CharacterChoice> choices;
+    //[Header("Master Client UI elements")]
+    //[SerializeField] GameObject startGameButton;
+    //[SerializeField] Toggle loadSaveFile;
 
     private ArrayList currentRoomList = new ArrayList();
     public Character PlayerChoice { get; set; }
@@ -93,6 +97,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             }
             SyncOptions();
         }
+        //UpdateLobbyUI();
     }
 
     public override void OnLeftRoom()
@@ -103,6 +108,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             PlayerChoice = Character.NONE;
         }
     }
+
+    //private void UpdateLobbyUI()
+    //{
+    //    if (IsMaster)
+    //    {
+    //        loadSaveFile.gameObject.SetActive(SaveAndLoadHelper.SaveFileExists());
+    //        loadSaveFile.isOn = false;
+    //        startGameButton.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        startGameButton.SetActive(false);
+    //        loadSaveFile.gameObject.SetActive(false);
+    //    }
+    //}
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -136,6 +156,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         RemovePlayer(otherPlayer);
+        //UpdateLobbyUI();
     }
 
     private void RemovePlayer(Player otherPlayer)
@@ -187,7 +208,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (IsMaster && AreAllPlayersReady() && isStarted == false)
         {
-            Debug.Log("Everyone is ready, starting game.");
+            //PlayerPrefs.SetInt(GlobalSettings.LoadSaveFileSettingName, loadSaveFile.isOn ? 1 : 0);
+
             isStarted = true;
             PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.GameSceneName);
            
@@ -204,8 +226,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void ResetLobbySettings()
     {
         PlayerChoice = Character.NONE;
-        PlayerPrefs.SetInt("CharacterChoice", (int)Character.NONE);
+        PlayerPrefs.SetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName, (int)Character.NONE);
         currentRoomList.Clear();
+        //UpdateLobbyUI();
     }
 
 }

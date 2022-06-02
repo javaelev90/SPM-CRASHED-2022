@@ -19,6 +19,7 @@ public class PlayerData
     {
         inventory = new Inventory();
         upgrades = new Upgrades();
+        upgrades.Initialize();
         turrets = new List<TurretData>();
     }
 
