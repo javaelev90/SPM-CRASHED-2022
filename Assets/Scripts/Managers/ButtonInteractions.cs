@@ -220,13 +220,13 @@ public class ButtonInteractions : MonoBehaviourPunCallbacks
     public void SaveInfo()
     {
       if(isSaved == true){
-      popUpSaveInfo.SetActive(true);
-     // StartCoroutine(SaveInfoTime());
-    }
+            //popUpSaveInfo.SetActive(true);
+            StartCoroutine(SaveInfoTime());
+        }
     }
 
     IEnumerator SaveInfoTime(){
-      yield return new WaitForSeconds(0);
+
       popUpSaveInfo.SetActive(true);
       yield return new WaitForSeconds(2);
       popUpSaveInfo.SetActive(false);
