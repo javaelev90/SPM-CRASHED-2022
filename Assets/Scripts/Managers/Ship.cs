@@ -72,7 +72,7 @@ public class Ship : MonoBehaviourPunCallbacks
     }
 
     private void OnTriggerEnter(Collider collider) {
-        if(collider.CompareTag("Player") && hasObtained && caps.isTrigger){
+        if(player.gameObject.Equals(GameManager.player) && hasObtained){
               uiObject.SetActive(true);
         }
     }
