@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public static GameObject player;
     public static GameObject otherPlayer;
     public static bool gameIsPaused = false;
-
+    public static PrefabManager prefabManager;
     public static Character character;
     public static GameManager Instance { get { return instance; } }
     private static GameManager instance;
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     
     private void Awake()
     {
+        PrefabManager.LoadPrefabs();
         instance = this;
         //gameStateManager = GetComponent<GameStateManager>();
         character = (Character)PlayerPrefs.GetInt(GlobalSettings.GameSettings.CharacterChoicePropertyName);
@@ -128,5 +129,31 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         gameIsPaused = paused;
         Time.timeScale = paused ? 0f : 1f;
+    }
+
+    public class PrefabManager
+    {
+        public static GameObject stunEffectPrefab;
+        private static bool hasLoadedPrefabs = false;
+
+        public static void LoadPrefabs()
+        {
+            if (hasLoadedPrefabs == false)
+            {
+                System.Object[] prefabs = Resources.LoadAll(GlobalSettings.GameSettings.ParticleEffectPath, typeof(GameObject));
+
+                if (prefabs.Length > 0)
+                {
+                    foreach (System.Object i in prefabs)
+                    {
+                        if (((GameObject)i).name == "P_hitImpact_stunGun")
+                        {
+                            stunEffectPrefab = (GameObject)i;
+                        }
+                    }
+                }
+                hasLoadedPrefabs = true;
+            }
+        }
     }
 }
