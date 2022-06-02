@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Pickup_ShipPart : MonoBehaviour
 {
-    [SerializeField] GameObject textColliderObject;
+    //[SerializeField] GameObject textColliderObject;
     public EventStarter eventStarter;
 
     public void PickUpPart()
     {
-        textColliderObject.SetActive(false);
+       // textColliderObject.SetActive(false);
         eventStarter.StartEvent();
     }
 }

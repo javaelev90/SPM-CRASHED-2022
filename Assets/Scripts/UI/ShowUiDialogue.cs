@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using EventCallbacksSystem;
-using Photon;
+using Photon.Pun;
 
 public class ShowUiDialogue : MonoBehaviour
 {

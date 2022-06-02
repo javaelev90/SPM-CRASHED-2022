@@ -36,6 +36,8 @@ public class EventStarter : MonoBehaviourPunCallbacks
     public AudioClip teleporterSound;
     
 
+    public GameObject uiObject;
+
 
     public List<ObjectSpawner> eventSpawners;
     private bool eventStarted = false;
@@ -54,6 +56,7 @@ public class EventStarter : MonoBehaviourPunCallbacks
         }
         source = GetComponent<AudioSource>();
         audioSource = GetComponent<AudioSource>();
+        uiObject.SetActive(false);
         
     }
 
