@@ -136,7 +136,7 @@ public class Timer : MonoBehaviour
         {
 
             StartCoroutine(Flash3Effect());
-            
+
             source.PlayOneShot(clip);
             if (effectTransform != null)
             {
@@ -174,7 +174,7 @@ public class Timer : MonoBehaviour
                 nightImage.fillAmount = 1f;
                 ev.IsNight = lightingManager.IsNight;
                 ev.IsShipPartEvent = false;
-                IsUntilDawn = false;
+                //IsUntilDawn = false;
                 EventSystem.Instance.FireEvent(ev);
             }
 
@@ -188,10 +188,7 @@ public class Timer : MonoBehaviour
             nightImage.color = nightColor;
         }
 
-        if (IsUntilDawn == false)
-            nightImage.fillAmount -= (1f / nightLength) * Time.deltaTime;
-        else
-            nightImage.fillAmount -= (1f / (nightLength - timeUntilDawn)) * Time.deltaTime;
+        nightImage.fillAmount -= (1f / nightLength) * Time.deltaTime;
     }
 
     private void DayTime()
@@ -211,7 +208,7 @@ public class Timer : MonoBehaviour
                 dayImage.fillAmount = 1f;
                 ev.IsNight = lightingManager.IsNight;
                 ev.IsShipPartEvent = false;
-                IsUntilDawn = false;
+                //IsUntilDawn = false;
                 EventSystem.Instance.FireEvent(ev);
             }
 
@@ -225,14 +222,15 @@ public class Timer : MonoBehaviour
             nightImage.gameObject.SetActive(nightImage.color == nightColor);
         }
 
+        if (IsUntilDawn == true)
+        {
+            dayImage.fillAmount = timeUntilDawn / dayLength;
+            IsUntilDawn = false;
+        }
 
 
-        if (IsUntilDawn == false)
-            dayImage.fillAmount -= (1f / dayLength) * Time.deltaTime;
-        else
-            dayImage.fillAmount -= (1f / (dayLength - timeUntilDawn)) * Time.deltaTime;
-
-    }
+        dayImage.fillAmount -= (1f / dayLength) * Time.deltaTime;
+     }
 
     private void updateTimer(float time)
     {
