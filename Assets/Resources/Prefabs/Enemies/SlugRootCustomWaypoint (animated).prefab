@@ -173,6 +173,7 @@ GameObject:
   - component: {fileID: 223297969574025082}
   - component: {fileID: 223297969574025081}
   - component: {fileID: 223297969574025087}
+  - component: {fileID: 5687843107231570060}
   m_Layer: 9
   m_Name: SlugPrefab
   m_TagString: EnemyMainBody
@@ -517,6 +518,20 @@ MonoBehaviour:
     LayerIndex: 0
   - SynchronizeType: 0
     LayerIndex: 1
+--- !u!136 &5687843107231570060
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223297969574025083}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.29175147
+  m_Height: 1.172694
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.27258548, z: 0.086346984}
 --- !u!1 &486272627224713280
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,7 +544,7 @@ GameObject:
   - component: {fileID: 486272627224713283}
   - component: {fileID: 486272627224713282}
   - component: {fileID: 486272627224713281}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -618,7 +633,7 @@ GameObject:
   - component: {fileID: 486272627317377247}
   - component: {fileID: 486272627317377246}
   - component: {fileID: 486272627317377245}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Enemy HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -727,7 +742,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5546651688996535142}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -748,7 +763,7 @@ Transform:
   - {fileID: 4580777206529415697}
   m_Father: {fileID: 2709746042959819251}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -15.818637, y: -0.27179295, z: -2.5863683}
 --- !u!1 &2692597267771938958
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +773,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4580777206529415697}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -779,7 +794,7 @@ Transform:
   - {fileID: 5747395021985538349}
   m_Father: {fileID: 5546651688996535142}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -8.892963, y: -0.10876927, z: 3.4814115}
 --- !u!1 &2861832631966561571
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,7 +804,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1833172269957975666}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -810,7 +825,7 @@ Transform:
   - {fileID: 634458349527954725}
   m_Father: {fileID: 2388510859825355165}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -12.878779, y: 0.5743634, z: -0.13898785}
 --- !u!1 &3178355704977591157
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,7 +835,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5747395021985538349}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -841,7 +856,7 @@ Transform:
   - {fileID: 2388510859825355165}
   m_Father: {fileID: 4580777206529415697}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -16.16139, y: 0.20199463, z: 0.27956706}
 --- !u!1 &3744031765639703420
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,7 +866,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2709746042959819251}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,7 +887,7 @@ Transform:
   - {fileID: 5546651688996535142}
   m_Father: {fileID: 5929329635797756065}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 35.006516, y: 0.03718512, z: 0.25402886}
 --- !u!1 &4597727524039545864
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,7 +897,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5929329635797756065}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -903,7 +918,7 @@ Transform:
   - {fileID: 2709746042959819251}
   m_Father: {fileID: 223297969574025080}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98021, y: 0, z: 0}
 --- !u!1 &4775686824418759280
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,7 +928,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 634458349527954725}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -934,7 +949,7 @@ Transform:
   - {fileID: 1102703201800757648}
   m_Father: {fileID: 1833172269957975666}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.5241704, y: 0.5420977, z: -0.07637822}
 --- !u!1 &4984336725181885570
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,7 +961,7 @@ GameObject:
   - component: {fileID: 4162489043257483753}
   - component: {fileID: 5945635581439236071}
   - component: {fileID: 2686924645513731266}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LOW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1037,10 +1052,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.23662934
-  m_Height: 1.4060354
+  m_Radius: 0.273607
+  m_Height: 1.4467106
   m_Direction: 2
-  m_Center: {x: -0.009916425, y: 0.16101822, z: -0.6104369}
+  m_Center: {x: -0.009916425, y: 0.15362266, z: -1.2076261}
 --- !u!1 &5093464424001004420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,7 +1065,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2388510859825355165}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1071,7 +1086,7 @@ Transform:
   - {fileID: 1833172269957975666}
   m_Father: {fileID: 5747395021985538349}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.7611595, y: 0.12314579, z: -1.3127488}
 --- !u!1 &5765494963636443250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,7 +1096,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1102703201800757648}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bone.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1101,4 +1116,4 @@ Transform:
   m_Children: []
   m_Father: {fileID: 634458349527954725}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 3.2428727, y: -0.0000033146428, z: 0.0034233856}
