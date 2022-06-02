@@ -50,8 +50,8 @@ public class StoneProjectile : MonoBehaviourPunCallbacks
             if ((healthHandler = collision.gameObject.GetComponent<HealthHandler>()) != null)
             {
                 healthHandler.TakeDamage(damageDealer);
+                hasCollided = true;
             }
-            hasCollided = true;
         }
 
         DestoryProjectile();
