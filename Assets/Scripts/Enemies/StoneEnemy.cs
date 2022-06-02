@@ -221,6 +221,7 @@ public class StoneEnemy : AIBaseLogic
 
         stoneProjectile.IsThrown = true;
         stoneProjectile.transform.forward = directionOfProjectile.normalized;
+        stoneProjectile.DamageDealer = stoneDamage;
         stoneProjectile.GetComponent<Rigidbody>().velocity = velocity * directionToTarget.normalized;
         agent.isStopped = false;
     }
