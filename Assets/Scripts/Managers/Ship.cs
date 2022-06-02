@@ -71,16 +71,18 @@ public class Ship : MonoBehaviourPunCallbacks
         EventSystem.Instance.FireEvent(new ShipPartEvent(minTimeUntilDaw));
     }
 
-   private void OnTriggerEnter(Collider collider) {
-      
-        if(player.gameObject.Equals(GameManager.player) && hasObtained){
-              uiObject.SetActive(true);
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Player") && hasObtained && caps.isTrigger)
+        {
+            uiObject.SetActive(true);
         }
     }
 
-    private void OnTriggerExit(Collider other) {
-  
-        if(player.gameObject.Equals(GameManager.player) && UppgradeShip()){
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && UppgradeShip() && caps.isTrigger)
+        {
             uiObject.SetActive(false);
         }
     }
