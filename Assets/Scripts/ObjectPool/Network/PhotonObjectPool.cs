@@ -121,10 +121,9 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
             return;
         }
         PooledObject pooledObject = pooledObjects.Dequeue();
-        pooledObject.transform.SetParent(transform);
-
-        // Set transform parameters
+        //pooledObject.transform.SetParent(transform);
         pooledObject.transform.SetPositionAndRotation(position, rotation);
+        // Set transform parameters
         if (pooledObject.navMeshAgent != null)
         {
             SpawnOnNavMesh(position, pooledObject.navMeshAgent);

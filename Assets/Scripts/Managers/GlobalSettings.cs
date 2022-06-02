@@ -15,6 +15,7 @@ public class GlobalSettings : SingletonScriptableObject<GlobalSettings>
     [SerializeField] private string prefabsEquipmentPath;
     [SerializeField] private string prefabsMiscPath;
     [SerializeField] private string saveFileName;
+    [SerializeField] private string loadSaveFileSettingName;
     [SerializeField] private GameSettings gameSettings;
 
     public static string ResourcesPath { get { return Instance.resourcesPath; } }
@@ -25,5 +26,6 @@ public class GlobalSettings : SingletonScriptableObject<GlobalSettings>
     public static string EquipmentPath { get { return Instance.prefabsEquipmentPath; } }
     public static string MiscPath { get { return Instance.prefabsMiscPath; } }
     public static string SaveFileName { get { return Instance.saveFileName; } }
+    public static string LoadSaveFileSettingName { get { return Instance.loadSaveFileSettingName; } }
     public static GameSettings GameSettings { get { return Instance.gameSettings; } }
 }

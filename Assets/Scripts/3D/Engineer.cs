@@ -213,7 +213,7 @@ public class Engineer : Controller3D
                     }
 
 
-                    turretObject = CreateTurret();
+                    turretObject = CreateTurret(turretPos.position);
 
                     if (turretObject != null)
                     {
@@ -274,9 +274,9 @@ public class Engineer : Controller3D
         }
     }
 
-    public GameObject CreateTurret()
+    public GameObject CreateTurret(Vector3 turretPosition)
     {
-        GameObject turret = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPos.position, Quaternion.identity);
+        GameObject turret = PhotonNetwork.Instantiate("Prefabs/Equipment/" + turretPrefab.name, turretPosition, Quaternion.identity);
         if (turret != null)
         {
             turretCount++;
