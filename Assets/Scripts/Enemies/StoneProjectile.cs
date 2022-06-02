@@ -21,15 +21,15 @@ public class StoneProjectile : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (IsThrown)
-        {
-            counter -= Time.deltaTime;
-            if (counter <= 0f)
-            {
-                PhotonNetwork.Destroy(gameObject);
-                Destroy(gameObject);
-            }
-        }
+        //if (IsThrown)
+        //{
+        //    counter -= Time.deltaTime;
+        //    if (counter <= 0f)
+        //    {
+        //        PhotonNetwork.Destroy(gameObject);
+        //        Destroy(gameObject);
+        //    }
+        //}
     }
 
     [PunRPC]
@@ -47,6 +47,7 @@ public class StoneProjectile : MonoBehaviourPunCallbacks
         if ((healthHandler = collision.gameObject.GetComponent<HealthHandler>()) != null)
         {
             healthHandler.TakeDamage(damageDealer);
+            DestoryProjectile();
         }
     }
 }
