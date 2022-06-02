@@ -92,9 +92,20 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     }
 
     [PunRPC]
-    public void SetTargetViewIdAndNavMeshActive(int id)
+    public void SetTargetViewId(int id)
     {
         photonViewTargetId = id;
+    }
+
+    [PunRPC]
+    public void SpawnOnNavMesh(Vector3 spawnPosition)
+    {
+        if (NavMesh.SamplePosition(spawnPosition, out NavMeshHit hit, 10f, -1))
+        {
+            spawnPosition = hit.position;
+        }
+
+        navMeshAgent.Warp(spawnPosition);
         navMeshAgent.enabled = true;
     }
 
