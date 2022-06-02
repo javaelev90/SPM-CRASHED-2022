@@ -129,6 +129,7 @@ public class SlugEnemy : AIBaseLogic
     {
         if (eventTarget)
         {
+            Debug.Log(eventTarget.position);
             agent.SetDestination(eventTarget.position);
             source.Play();
         }
