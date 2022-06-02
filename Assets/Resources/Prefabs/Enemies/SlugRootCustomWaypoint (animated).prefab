@@ -163,7 +163,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 223297969574025080}
-  - component: {fileID: 486272627989756723}
   - component: {fileID: 223297969574025060}
   - component: {fileID: 5681744527852032078}
   - component: {fileID: 3702629084370167510}
@@ -198,20 +197,6 @@ Transform:
   m_Father: {fileID: 223297969047199190}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &486272627989756723
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223297969574025083}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.2188248
-  m_Height: 1.4922825
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.21863982, z: 0.015162647}
 --- !u!114 &223297969574025060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,6 +219,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 33088
   root: {fileID: 1746919206489415722}
+  eventTarget: {fileID: 0}
   wayPointSystem: {fileID: 223297968855486129}
   timeToAggro: 1
   timeToCoolWhenAttacked: 5
@@ -354,7 +340,6 @@ MonoBehaviour:
   intervale: 1.5
   rootObject: {fileID: 1746919206489415722}
   hitVFX: {fileID: 1644440166643503569, guid: 560b2ad335432e4438a787f03e419393, type: 3}
-  anim: {fileID: 223297969574025082}
 --- !u!82 &6537802001907738426
 AudioSource:
   m_ObjectHideFlags: 0
@@ -960,6 +945,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4162489043257483753}
   - component: {fileID: 5945635581439236071}
+  - component: {fileID: 2686924645513731266}
   m_Layer: 0
   m_Name: LOW
   m_TagString: Untagged
@@ -1041,6 +1027,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0000760773, y: 0.0053850883, z: -0.0031539265}
     m_Extent: {x: 0.0025146455, y: 0.0065251025, z: 0.0056564445}
   m_DirtyAABB: 0
+--- !u!136 &2686924645513731266
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4984336725181885570}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.23662934
+  m_Height: 1.4060354
+  m_Direction: 2
+  m_Center: {x: -0.009916425, y: 0.16101822, z: -0.6104369}
 --- !u!1 &5093464424001004420
 GameObject:
   m_ObjectHideFlags: 0
