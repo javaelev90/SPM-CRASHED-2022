@@ -12,7 +12,9 @@ public class StoneProjectile : MonoBehaviourPunCallbacks
     private float counter;
 
     public bool IsThrown { get; set; }
-    // Start is called before the first frame update
+    public bool hasCollided;
+    
+
     void Start()
     {
         counter = timer;
@@ -42,12 +44,16 @@ public class StoneProjectile : MonoBehaviourPunCallbacks
 
     private void OnCollisionEnter(Collision collision)
     {
-        HealthHandler healthHandler;
-        if ((healthHandler = collision.gameObject.GetComponent<HealthHandler>()) != null)
+        if (hasCollided == false)
         {
-            healthHandler.TakeDamage(damageDealer);
+            HealthHandler healthHandler;
+            if ((healthHandler = collision.gameObject.GetComponent<HealthHandler>()) != null)
+            {
+                healthHandler.TakeDamage(damageDealer);
+            }
+            hasCollided = true;
         }
-        
+
         DestoryProjectile();
     }
 }
