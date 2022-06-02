@@ -91,6 +91,12 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         CustomRecycleFunction?.Invoke();
     }
 
+    [PunRPC]
+    public void SetTargetViewID(int id)
+    {
+        photonViewTargetId = id;
+    }
+
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         ObjectPool = PhotonView.Find((int)info.photonView.InstantiationData[0]).gameObject.GetComponent<PhotonObjectPool>();

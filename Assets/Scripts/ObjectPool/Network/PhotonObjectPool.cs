@@ -131,7 +131,9 @@ public class PhotonObjectPool : MonoBehaviourPunCallbacks
 
         // Set initialization parameters
         pooledObject.ObjectPool = this;
-        pooledObject.photonViewTargetId = photonViewTargetId;
+        pooledObject.photonView.RPC(nameof(pooledObject.SetTargetViewID), RpcTarget.All, photonViewTargetId);
+        //pooledObject.photonViewTargetId = photonViewTargetId;
+
         if (parameters != null)
         {
             pooledObject.Initialize(parameters);
