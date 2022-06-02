@@ -92,9 +92,10 @@ public class PooledObject : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     }
 
     [PunRPC]
-    public void SetTargetViewID(int id)
+    public void SetTargetViewIdAndNavMeshActive(int id)
     {
         photonViewTargetId = id;
+        navMeshAgent.enabled = true;
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
