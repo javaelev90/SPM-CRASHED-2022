@@ -39,8 +39,6 @@ public class Engineer : Controller3D
 
     private  static bool textShown; 
 
-    public GameObject canvas;
-
     public GameObject uiObject;
 
     [Header("TurretRepair")]
@@ -96,7 +94,7 @@ public class Engineer : Controller3D
         EventSystem.Instance.FireEvent(stunGunEvent);
         audioSource = GetComponent<AudioSource>();
         uiObject.gameObject.SetActive(false);
-        canvas.SetActive(false);
+        //canvas.SetActive(false);
     }
 
     protected override void Awake()
@@ -180,7 +178,7 @@ public class Engineer : Controller3D
             if (isUsingTurret == false && canPutDownTurret && outlinedTurret != null)
             {
                 //turretPos.position = hit.transform.position;
-                canvas.SetActive(true);
+                //canvas.SetActive(true);
                 Vector3 targetLocation = hit.point;
                 //outlinedTurret.transform.position = targetLocation;
                 //outlinedTurret.transform.position = hit.point;//turretPos.position;
@@ -207,7 +205,7 @@ public class Engineer : Controller3D
                     //Debug.Log("Holding button should show turret outline");
 
                     outlinedTurret = PhotonNetwork.Instantiate("Prefabs/Equipment/" + outlinedTurretPrefab.name, turretPos.position, Quaternion.identity);//(pathTurret, turretPos.position, Quaternion.identity);
-                    canvas.SetActive(false);
+                    //canvas.SetActive(false);
                     isPressed = true;
                 }
 
