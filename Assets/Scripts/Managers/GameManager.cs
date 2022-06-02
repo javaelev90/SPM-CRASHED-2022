@@ -51,7 +51,25 @@ public class GameManager : MonoBehaviourPunCallbacks
                 gameIsOver = true;
                 PhotonNetwork.LoadLevel(GlobalSettings.GameSettings.WinSceneName);
             }
+
+            if(!player.GetComponent<HealthHandler>().isAlive && !otherPlayer.GetComponent<HealthHandler>().isAlive && gameIsOver == false)
+            {
+                photonView.RPC(nameof(FireGameOverEvent), RpcTarget.All, "Both players died!");
+                gameIsOver = true;
+            }
+
+            if(!ship.GetComponent<HealthHandler>().isAlive && gameIsOver == false)
+            {
+                photonView.RPC(nameof(FireGameOverEvent), RpcTarget.All, "Ship has been destroyed");
+                gameIsOver = true;
+            }
         }
+    }
+
+    [PunRPC]
+    private void FireGameOverEvent(string text)
+    {
+        EventSystem.Instance.FireEvent(new GameOverEvent(text));
     }
 
     IEnumerator FindOtherPlayer(Character character)

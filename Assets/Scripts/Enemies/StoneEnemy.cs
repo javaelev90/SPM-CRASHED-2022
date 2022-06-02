@@ -170,7 +170,7 @@ public class StoneEnemy : AIBaseLogic
         animator.SetBool("IsThrowing", false);
         isThrowing = false;
 
-        if (target != null)
+        if (target != null && stoneProjectile != null)
         {
             Vector3 directionOfProjectile = target.transform.position - transform.position;
             //float height = directionOfProjectile.y;
