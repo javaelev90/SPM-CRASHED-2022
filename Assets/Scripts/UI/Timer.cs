@@ -181,9 +181,14 @@ public class Timer : MonoBehaviour
                 dayText.gameObject.SetActive(false);
                 nightText.gameObject.SetActive(true);
                 nightImage.gameObject.SetActive(true);
+                // Fix for loading save file
                 if (loadedData == false)
                 {
                     nightImage.fillAmount = 1f;
+                }
+                else
+                {
+                    loadedData = false;
                 }
                 ev.IsNight = lightingManager.IsNight;
                 ev.IsShipPartEvent = false;
@@ -218,9 +223,14 @@ public class Timer : MonoBehaviour
                 nightText.gameObject.SetActive(false);
                 dayText.gameObject.SetActive(true);
                 dayImage.gameObject.SetActive(true);
+                // Fix for loading save file
                 if (loadedData == false)
                 {
                     dayImage.fillAmount = 1f;
+                }
+                else
+                {
+                    loadedData = false;
                 }
                 
                 ev.IsNight = lightingManager.IsNight;

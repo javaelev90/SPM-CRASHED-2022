@@ -106,8 +106,13 @@ public class DataLoader
             ship.shipUpgradeCost[index].metalCost = shipProgress.metalCost;
             ship.shipUpgradeCost[index].gooCost = shipProgress.gooCost;
             ship.shipUpgradeCost[index].partAvalibul = shipProgress.partAvailable;
-            ship.shipUpgradeCost[index].partAttached = FindChildObjectByName(ship.transform, "AttachedParts", shipProgress.partAttachedName);
-            ship.shipUpgradeCost[index].partMissing = FindChildObjectByName(ship.transform, "MissingParts", shipProgress.partMissingName);
+            GameObject attachedPart = FindChildObjectByName(ship.transform, "AttachedParts", shipProgress.partAttachedName);
+            GameObject missingPart = FindChildObjectByName(ship.transform, "MissingParts", shipProgress.partMissingName);
+
+            ship.shipUpgradeCost[index].partAttached = attachedPart;
+            ship.shipUpgradeCost[index].partMissing = missingPart;
+            attachedPart.SetActive(true);
+            missingPart.SetActive(false);
 
             if (PhotonNetwork.IsMasterClient)
             {

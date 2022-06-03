@@ -20,6 +20,7 @@ public class ShipUpgradePanel : MonoBehaviour
     private void OnDisable()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        GameManager.player.GetComponent<PlayerInput>().enabled = true;
     }
 
     // Test Upgrade
