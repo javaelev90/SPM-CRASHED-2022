@@ -209,7 +209,7 @@ public class Controller3D : MonoBehaviourPunCallbacks
                 input = Vector3.ProjectOnPlane(input, Body.GroundHit.normal).normalized;
                 if (input.y + Body.GroundHit.point.y > 0)
                 {
-                    Debug.Log(input);
+                    //Debug.Log(input);
                     input.y = 0;
                 }
                 input = Vector3.ProjectOnPlane(Body.GroundHit.normal, Body.GroundHit.normal).normalized + input;

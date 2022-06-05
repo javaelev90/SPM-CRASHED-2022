@@ -22,7 +22,7 @@ public class ForestZone : MonoBehaviour
         {
             source.PlayOneShot(triggerSound);
             played = true;
-            Debug.Log("Spelar");
+            //Debug.Log("Spelar");
         }
     }
 
